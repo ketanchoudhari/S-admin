@@ -1,0 +1,44 @@
+@import 'src/assets/scss/tables';
+
+.event {
+
+}
+
+.bookmaker, .fancy {
+  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgb(194, 194, 194);
+  background-color: #eee;
+}
+
+input {
+  margin: 0;
+  margin-right: 8px;
+}
+
+select {
+  width: 180px;
+  margin: 0;
+  margin-right: 8px;
+}
+
+.panel-header {
+  display: flex;
+
+  height: 23px;
+  border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+  margin-bottom: 4px;
+
+  button {
+    display: flex;
+    width: 100%;
+    border: 0;
+    align-items: center;
+    background-color: transparent;
+  }
+
+  .event-name {
+    margin-right: 4px;
+  }
+}

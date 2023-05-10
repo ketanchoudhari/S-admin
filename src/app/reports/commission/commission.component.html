@@ -1,0 +1,334 @@
+<div class="main_wrap">
+  <!-- function -->
+
+  <h2>Agent commision</h2>
+
+  <div class="function-wrap">
+    <ul class="input-list">
+      <div id="statusCondition" style="display: none">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select name="betStatus" id="betStatus"></select>
+        </li>
+      </div>
+
+      <li></li>
+
+      <li><label>Period</label></li>
+      <li>
+        <input
+          id="startDate"
+          class="cal-input"
+          type="text"
+          placeholder="YYYY-MM-DD"
+          [(ngModel)]="fromDate"
+          [dpDayPicker]="dateConfig"
+          [theme]="'dp-material'"
+          [mode]="'day'"
+          autocomplete="off"
+        />
+        <input
+          id="startTime"
+          class="time-input disable"
+          type="text"
+          [(ngModel)]="fromTime"
+          [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'"
+          [mode]="'time'"
+          placeholder="09:00"
+          maxlength="5"
+        />
+        to
+        <input
+          id="endDate"
+          class="cal-input"
+          type="text"
+          placeholder="YYYY-MM-DD"
+          [(ngModel)]="toDate"
+          [dpDayPicker]="dateConfig"
+          [theme]="'dp-material'"
+          [mode]="'day'"
+          autocomplete="off"
+        />
+        <input
+          id="endTime"
+          class="time-input disable"
+          type="text"
+          [(ngModel)]="toTime"
+          [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'"
+          [mode]="'time'"
+          placeholder="08:59"
+          maxlength="5"
+        />
+      </li>
+      <li style="display: none">(TimeZone:IST)</li>
+
+      <li _ngcontent-dbf-c70="">
+        <a
+          _ngcontent-dbf-c70=""
+          id="getPL"
+          class="btn-send"
+          (click)="getTurnover()"
+          >Get commission</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <ul class="report-tab-wrap" style="display: flex">
+    <li
+      class="report-tab"
+      id="reportType_sportsBook"
+      [class.select]="selectedTabIndex === 0"
+      (click)="selectTab(0)"
+    >
+      Fancy
+    </li>
+    <li
+      class="report-tab"
+      id="reportType_exchange"
+      [class.select]="selectedTabIndex === 1"
+      (click)="selectTab(1)"
+    >
+      Casino
+    </li>
+    <li
+      class="report-tab"
+      id="reportType_exchange"
+      [class.select]="selectedTabIndex === 2"
+      (click)="selectTab(2)"
+    >
+      Bookmaker
+    </li>
+    <li
+      class="report-tab"
+      id="reportType_exchange"
+      [class.select]="selectedTabIndex === 3"
+      (click)="selectTab(3)"
+    >
+      Exchange
+    </li>
+  </ul>
+  <div id="widthAll" class="">
+    <table
+      id="resultTable"
+      class="table01 margin-table sortable"
+      style="display: table"
+    >
+      <tbody>
+        <tr>
+          <th width="10%" class="align-L">Agent Name</th>
+          <th width="10%" class="align-L">Turnover</th>
+          <th width="13%" class="align-L">Commission</th>
+          <th id="logoTh" width="10%">Action</th>
+        </tr>
+        <ng-template [ngIf]="selectedTabIndex == 0">
+          <tr *ngFor="let row of turnOverList; trackBy: trackByIndex">
+            <td class="align-L">{{ row.userName }}</td>
+            <td class="align-L">{{ row.fancyTurnover | number: "0.2" }}</td>
+            <td class="align-L">{{ row.fancyCommission | number: "0.2" }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmSettleArc(row)"
+              >
+                Settle
+              </button>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmRejectArc(row)"
+              >
+                Reject
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template [ngIf]="selectedTabIndex == 1">
+          <tr *ngFor="let row of turnOverList; trackBy: trackByIndex">
+            <td class="align-L">{{ row.userName }}</td>
+            <td class="align-L">{{ row.casinoTurnover | number: "0.2" }}</td>
+            <td class="align-L">{{ row.casinoCommission | number: "0.2" }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmSettleArc(row)"
+              >
+                Settle
+              </button>
+              <button type="button" class="btn-send" (click)="confirmRejectArc(row)">Reject</button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template [ngIf]="selectedTabIndex == 2">
+          <tr *ngFor="let row of turnOverList; trackBy: trackByIndex">
+            <td class="align-L">{{ row.userName }}</td>
+            <td class="align-L">{{ row.bookTurnover | number: "0.2" }}</td>
+            <td class="align-L">{{ row.bookCommission | number: "0.2" }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmSettleArc(row)"
+              >
+                Settle
+              </button>
+              <button type="button" class="btn-send" (click)="confirmRejectArc(row)">Reject</button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template [ngIf]="selectedTabIndex == 3">
+          <tr *ngFor="let row of turnOverList; trackBy: trackByIndex">
+            <td class="align-L">{{ row.userName }}</td>
+            <td class="align-L">{{ row.exchangeTurnover | number: "0.2" }}</td>
+            <td class="align-L">
+              {{ row.exchangeCommission | number: "0.2" }}
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmSettleArc(row)"
+              >
+                Settle
+              </button>
+              <button
+                type="button"
+                class="btn-send"
+                (click)="confirmRejectArc(row)"
+              >
+                Reject
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-modal [(open)]="confirmSettleModalOpen" [width]="'590px'">
+  <h3 class="modal-header">
+    Settle {{ tabSportMap[selectedTabIndex] }} for {{ selectedRow?.userName }}
+  </h3>
+
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th width="10%" class="align-L">Agent Name</th>
+          <th width="10%" class="align-L">Turnover</th>
+          <th width="13%" class="align-L">Commission</th>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 0">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.fancyTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.fancyCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 1">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.casinoTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.casinoCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 2">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.bookTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.bookCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 3">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.exchangeTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.exchangeCommission | number: "0.2" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button type="button" (click)="settleArc()" class="btn-send">
+        Confirm Settle
+      </button>
+    </div>
+  </div>
+</app-modal>
+<app-modal [(open)]="confirmRejectModalOpen" [width]="'590px'">
+  <h3 class="modal-header">
+    Reject {{ tabSportMap[selectedTabIndex] }} for {{ selectedRow?.userName }}
+  </h3>
+
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th width="10%" class="align-L">Agent Name</th>
+          <th width="10%" class="align-L">Turnover</th>
+          <th width="13%" class="align-L">Commission</th>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 0">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.fancyTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.fancyCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 1">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.casinoTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.casinoCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 2">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.bookTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.bookCommission | number: "0.2" }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedTabIndex == 3">
+          <td class="align-L">{{ selectedRow?.userName }}</td>
+          <td class="align-L">
+            {{ selectedRow?.exchangeTurnover | number: "0.2" }}
+          </td>
+          <td class="align-L">
+            {{ selectedRow?.exchangeCommission | number: "0.2" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button type="button" (click)="rejectArc()" class="btn-send">
+        Confirm Reject
+      </button>
+    </div>
+  </div>
+</app-modal>

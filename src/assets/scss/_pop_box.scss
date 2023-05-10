@@ -1,0 +1,151 @@
+.pop_bg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 80;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+
+  .close_pop {
+    top: 9px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 750px) {
+  
+}
+
+.close_pop {
+  position: absolute;
+  right: 15px;
+  background-position: -41px -632px;
+  height: 16px;
+  width: 17px;
+}
+
+.pop_box,
+.pop_refer {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  background-color: #eee;
+  width: 500px;
+  border-radius: 5px;
+  padding: 15px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+
+  h3 {
+    font-size: 16px;
+    color: #3b5160;
+    margin-bottom: 18px;
+  }
+
+  .pt_allowed_box {
+    margin-bottom: 5px;
+  }
+
+  .btn-wrap {
+    display: flex;
+    justify-content: center;
+
+    & button {
+      margin-right: 4px;
+    };
+  }
+
+  .btn-send {
+    width: 55%;
+    margin: 15px 0 0;
+  }
+}
+@media (max-width: 450px) {
+  .pop_box,
+.pop_refer {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  background-color: #eee;
+  width: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+
+  h3 {
+    font-size: 16px;
+    color: #3b5160;
+    margin-bottom: 18px;
+  }
+
+  .pt_allowed_box {
+    margin-bottom: 5px;
+  }
+
+  .btn-wrap {
+    display: flex;
+    justify-content: center;
+
+    & button {
+      margin-right: 4px;
+    };
+  }
+
+  .btn-send {
+    width: 55%;
+    margin: 15px 0 0;
+  }
+}
+}
+
+
+.pop_box .form_list,
+.pop_refer .form_list,
+.pop_box .add_account_box dl,
+.add_account_box .pop_box dl,
+.pop_refer .add_account_box dl,
+.add_account_box .pop_refer dl,
+.pop_box .pt_allowed dl,
+.pt_allowed .pop_box dl,
+.pop_refer .pt_allowed dl,
+.pt_allowed .pop_refer dl {
+  padding: 0 10px;
+}
+
+.form_list,
+.add_account_box,
+.pt_allowed {
+  dl {
+    dd {
+      line-height: 24px;
+      margin-bottom: 6px;
+      position: relative;
+      // margin-bottom: 10px;
+      padding-left: 132px;
+
+      input {
+        width: 160px;
+        margin: 0;
+      }
+    }
+    dt {
+      width: 122px;
+      margin-right: 10px;
+      line-height: 24px;
+    }
+  }
+}
+
+::ng-deep .pop_box,
+::ng-deep .pop_refer {
+  h3 {
+    font-size: 16px;
+    color: #3b5160;
+    margin-bottom: 18px;
+  }
+}

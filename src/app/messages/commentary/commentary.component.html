@@ -1,0 +1,162 @@
+<div class="main_wrap">
+  <h2>Commentary</h2>
+  <div class="function-wrap">
+    <div>
+      <button class="btn" (click)="deleteSelectedComments()">Delete</button>
+      <span class="spacer"></span>
+      <a (click)="openAddNewModal()" class="btn-send">Add New</a>
+    </div>
+
+    <div>
+      <span class="spacer"></span>
+      <p class="vertical-align: middle">Total Records: {{ commentaries.length }}</p>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table01">
+      <thead>
+        <tr class="ng-table-sort-header">
+          <th width="3%">
+            <div ng-if="template" ng-include="template">
+              <input
+                type="checkbox"
+                id="select_all"
+                name="filter-checkbox"
+                [checked]="isAllSelected"
+                (change)="onSelectAll($event)"
+              />
+            </div>
+          </th>
+          <th width="3%">Edit</th>
+          <th width="300" class="align-L">Commentary</th>
+          <th class="align-L">Description</th>
+          <th width="8%" class="align-L">Is Active</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let commentary of commentaries; let i = index">
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="selectedItems[i]"
+              data-ng-class="checkAll"
+              aria-label="checkbox"
+              class="ng-pristine ng-untouched ng-valid ng-empty"
+            />
+          </td>
+
+          <td title=" 'Edit' ">
+            <a (click)="openEditModal(i)">
+              <i class="fa fa-pencil-square-o fa-2x"></i>
+            </a>
+          </td>
+
+          <td title=" 'Commentary' " class="align-L">
+            {{ commentary.eventName }}
+          </td>
+
+          <td title="'Show Text'" class="align-L">{{ commentary.description }}</td>
+
+          <td width="8%" title=" 'IsActive' " class="align-L">
+            <a *ngIf="commentary.active">
+              <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <pagination-template #pagination="paginationApi">
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a class="disable" (click)="pagination.previous()">Prev</a>
+    </li>
+    <li id="pageNumber">
+      <ng-template *ngFor="let page of pagination.pages">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </ng-template>
+
+      <a class="select" style="pointer-events: none">1 </a>
+    </li>
+    <li id="pageNumber"><a href="javascript:void(0);">2</a></li>
+    <li id="next">
+      <a [class.disabled]="pagination.isLastPage()" (click)="pagination.next()"
+        >Next</a>
+    </li>
+  </ul>
+</pagination-template> -->
+
+<app-modal [(open)]="isAddNewModalOpen">
+  <div class="modal-header">
+    <h3>Add New Commentary</h3>
+  </div>
+  <div class="modal-content">
+    <div class="ticker-details">
+      <div class="commentary-detail">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="newCommentary.sportName" readonly disabled>
+        </div>
+        <div class="input-group">
+          <select [(ngModel)]="newCommentary.commentary">
+            <option value="" disabled selected>Select an event</option>
+            <option *ngFor="let event of events" [value]="event.eventId">{{ event.eventName }}</option>
+          </select>
+        </div>
+      </div>
+      <textarea placeholder="Description" name="desc" id="desc" rows="5" [(ngModel)]="newCommentary.description"></textarea>
+      <div class="container">
+        <label for="isActive">
+          <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="newCommentary.active" />&nbsp;Is Active
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button class="btn-send" (click)="createNewComment()" [disabled]="!events.length">Add New</button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="isEditModalOpen">
+  <div class="modal-header">
+    <h3>Edit Commentary</h3>
+  </div>
+  <div class="modal-content">
+    <div class="ticker-details">
+      <div class="commentary-detail">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="newCommentary.sportName" readonly disabled>
+        </div>
+        <div class="input-group">
+          <input type="text" readonly placeholder="Name" [ngModel]="editCommentary.eventName" disabled>
+        </div>
+      </div>
+      <textarea placeholder="Description" name="desc" id="desc" rows="5" [(ngModel)]="editCommentary.description"></textarea>
+      <div class="container">
+        <label for="isActive">
+          <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="editCommentary.active" /> Is Active
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button class="btn-send" (click)="updateCommentary()">Edit</button>
+    </div>
+  </div>
+</app-modal>

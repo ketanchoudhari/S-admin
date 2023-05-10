@@ -1,0 +1,118 @@
+<div class="main_wrap">
+  <ul class="report-tab-wrap" style="display: block">
+    <li
+      class="report-tab select"
+      id="reportType_sportsBook"
+      [class.select]="selectedTabIndex === 0"
+      (click)="selectTab(0)"
+    >
+      {{Update?.RacesList}}
+    </li>
+  </ul>
+  <div class="function-wrap">
+    <ul class="input-list">
+      <li *ngIf="currentUser?.userType === commonService.vrnlUserType">
+        <label>{{Update?.UserList}}:</label>
+        <ng-select
+          name="sortCondition"
+          id="sortCondition"
+          [(ngModel)]="selectedUser"
+        >
+          <ng-option value="" selected="selected">{{Update?.SelectUser}}</ng-option>
+          <ng-option value="{{ users.userId }}" *ngFor="let users of usersList">
+            {{ users.userName }}
+          </ng-option>
+        </ng-select>
+      </li>
+      <li *ngIf="currentUser?.userType === commonService.whitelabelUserType">
+        <input
+          type="radio"
+          id="events_0"
+          name="event"
+          (change)="filterSport($event)"
+          value="0"
+          checked=""
+        />
+        <label for="events_0">{{Update?.All}}</label>
+        <input
+          type="radio"
+          id="events_7"
+          name="event"
+          (change)="filterSport($event)"
+          value="7"
+        />
+        <label for="events_7">Horse</label>
+
+        <input
+          type="radio"
+          id="events_4339"
+          name="event"
+          (change)="filterSport($event)"
+          value="4339"
+        />
+        <label for="events_4339">Greyhound</label>
+      </li>
+      <li class="spacer">&nbsp;&nbsp;</li>
+      <li class="import-button">
+        <button class="btn-send" (click)="onActiveCasino()">{{Update?.Import}}</button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="main_wrap">
+  <table *ngIf="selectedTabIndex === 0" id="table_DL" class="table01 table-pt">
+    <thead>
+      <tr class="ng-table-sort-header">
+        <th width="3%">
+          <div>
+            <input
+              type="checkbox"
+              id="select_all"
+              [(ngModel)]="selectAll"
+              (click)="toggleSelectAll($event.target.checked)"
+            />
+          </div>
+        </th>
+        <th>{{Update?.RaceName}}</th>
+        <th *ngIf="currentUser?.userType === whitelabelUserType">{{Update?.CountryName}}</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="currentUser?.userType === commonService.vrnlUserType">
+      <tr *ngFor="let teenpatti of races">
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="racesSelectMap[teenpatti.eventTypeId]"
+          />
+        </td>
+
+        <td>
+          {{ teenpatti.raceName }}
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody *ngIf="currentUser?.userType === whitelabelUserType">
+      <tr *ngFor="let teenpatti of races">
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="
+              racesSelectMap[
+                teenpatti.eventTypeId + '-' + teenpatti.country.countryCode
+              ]
+            "
+          />
+        </td>
+
+        <td>
+          {{ teenpatti.raceName }}
+        </td>
+        <td>
+          {{ teenpatti.country.country }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

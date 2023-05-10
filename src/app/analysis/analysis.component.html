@@ -1,0 +1,54 @@
+
+
+<div class="full-wrap">
+  <div class="analysis-list" *ngFor="let b of books; trackBy: trackByIndex">
+    <ng-container>
+        <div class="analysis-item webkit-scrollbar" *ngFor="let book of b.exchangeBooks; trackBy: trackByIndex">
+        <div class="analysis-header">
+          <a
+            [routerLink]="['reportbet', book.eventId]"
+            class="label-control match-label"
+            style="text-align: center"
+            >{{book.sportName | titlecase}} - {{ book.eventName }}
+          </a>
+        </div>
+        <div class="body">
+          <div class="runner-container" *ngFor="let selection of book.selections; trackBy: trackByFn">
+            <div class="runner">
+              <div>{{ selection.selName }}</div>
+              <div class="volume" [ngClass]="{'profit-text': selection.totalPL>0, 'loss-text': selection.totalPL<=0}">{{selection.totalPL | number: '0.2'}}</div>
+            </div>
+            <div class="back">{{selection.backOdd1}} </div>
+            <div class="lay">{{selection.layOdd1}}</div>
+          </div>
+          <span class="spacer"></span>
+          <div class="runner">Total Bets</div>
+          <div class="bets">{{book.nbBets}}</div>
+        </div>
+      </div>
+      <div class="analysis-item" *ngFor="let book of b.fancyBooks">
+        <div class="analysis-header">
+          <a
+            [routerLink]="['reportbet', book.eventId]"
+            class="label-control match-label"
+            style="text-align: center"
+            >{{book.sportName | titlecase}} - {{ book.eventName }}
+          </a>
+        </div>
+        <!-- <div class="body">
+          <div class="runner-container" *ngFor="let selection of book.selections; trackBy: trackByFn">
+            <div class="runner">
+              <div>{{ selection.selName }}</div>
+              <div class="volume" [ngClass]="{'profit-text': selection.totalPL>0, 'loss-text': selection.totalPL<=0}">{{selection.totalPL | number: '0.2'}}</div>
+            </div>
+            <div class="back">{{selection.backOdd1}} </div>
+            <div class="lay">{{selection.layOdd1}}</div>
+          </div>
+          <span class="spacer"></span>
+          <div class="runner">Total Bets</div>
+          <div class="bets">{{book.nbBets}}</div>
+        </div> -->
+      </div>
+    </ng-container>
+  </div>
+</div>

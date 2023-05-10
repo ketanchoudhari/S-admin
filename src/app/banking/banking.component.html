@@ -1,0 +1,832 @@
+<div class="full-wrap">
+  
+
+  <h2>{{Update?.Banking}}</h2>
+  <div class="total_all" *ngIf="isPremiumSite">
+    <div id="message-{{user.userId}}" class="message-wrap" [ngClass]="[user.result == 'SUCCESS'?'success':'error']" *ngFor="let user of transFertresult;let i = index;trackBy: trackById">
+      <a class="btn-close">Close</a>
+      <p *ngIf="user.result !== 'Insufficient funds'">User: {{user.userName}}; {{user.txnType==1?'Deposit':'Withdraw'}} Successful</p>
+      <p *ngIf="user.result == 'Insufficient funds'">User: {{user.userName}}; {{user.result}}</p>
+    </div>
+    <div id="message-error" class="message-wrap error" *ngIf="transFertErrorresult">
+      <a class="btn-close">Close</a>
+      <p>{{transFertErrorresult}}</p>
+    </div>
+    <div class="input-list" style="margin: 8px 0;">
+      <div id="userSearchUl" class="search-wrap">
+        <input
+          class="search-input"
+        appInputRestriction="noSpecialChars"
+          type="text"
+          name="searchUserId" id="searchUserId" placeholder="{{Update?.EnteruserId}}..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filterByTerm($event,true)"
+        />
+        <button id="searchUserId" class="search-but">
+          {{Update?.Search}}
+        </button>
+      </div>
+      <div class="flex-1"></div>
+    </div>
+    <!-- <ul class="input-list" id="companySearchUl">
+			<li>
+				<a class="btn-send" href="#" id="search">Search</a>
+			</li>
+		</ul> -->
+    <!-- <ul class="input-list" id="accountStatusUl">
+			<li><strong>Status</strong></li>
+			<li>
+				<select class="" name="accountStatus" id="accountStatus">
+					
+					<option value="0">ACTIVE
+					</option>
+					
+					<option value="1">SUSPENDED
+					</option>
+					
+					<option value="2">LOCKED
+					</option>
+					
+					<option value="-1">ALL</option>
+				</select>
+			</li>
+		</ul> -->
+  </div>
+  
+  <div class="function-wrap clearfix" *ngIf="isPremiumSite">
+    <dl class="banking-head float-L">
+      <dt>{{Update?.YourBalance}}
+      </dt>
+      <dd id="yourBalance"><span><ng-container *ngIf="showCurrency"  >
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+    </span>
+      {{ usersData?.balance | indianCurrency }}</dd>
+    </dl>
+    <ul class="input-list float-R" style="display: none;">
+      <li><label>Sort by
+      </label></li>
+      <li>
+        <select id="sort">
+          <option value="userId">UID
+          </option>
+          <option value="site">Site
+          </option>
+          <option value="currencyType">Currency
+          </option>
+        </select>
+      </li>
+    </ul>
+  </div>
+  <div id="totalBox" class="total_box filtertotaldivweb" *ngIf="!isPremiumSite">
+    <dl id="yourBalance" class="total_dl">
+      <dt>Available Balance</dt>
+
+      <dd id="myCreditLimit">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.balance | indianCurrency }}
+      </dd>
+    </dl>
+    <!-- <dl id="trnsferBalance" class="total_dl" *ngIf="!activeTheme.name.includes('cricBuzzer')">
+      <dt>Transfer Limit</dt>
+
+      <dd id="myCreditLimit">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ (usersData?.creditRef < totalRow?.totalCredRefdown) ? 0 : usersData?.creditRef - totalRow?.totalCredRefdown | indianCurrency }}
+      </dd>
+    </dl> -->
+    <dl id="balanceDownline" class="total_dl">
+      <dt>Balance in Downline</dt>
+      <dd id="myCreditLimit">
+        <ng-container *ngIf="showCurrency">
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+
+        {{ usersData?.downlineBalance | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="totalExposureDL" class="total_dl">
+      <dt>Total Exposure</dt>
+      <dd id="totalExposure">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.totalExposure | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="creditLimitDL" class="total_dl">
+      <dt>Credit Reference</dt>
+      <dd id="myCreditLimit">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.creditRef | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="creditGivenOutDL" class="total_dl">
+      <dt>Reference PL</dt>
+      <dd id="totalCreditGivenOut">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ ((usersData?.refPL === 0) ? totalRow?.refPL : usersData?.refPL) | indianCurrency }}
+      </dd>
+    </dl>
+
+    <dl id="creditAvailBalDL" class="total_dl" style="display: none">
+      <dt>Credit Avail Bal</dt>
+      <dd id="myCreditAvailBal">
+        even 
+      </dd>
+    </dl>
+    <dl id="totalBalanceDL" class="total_dl" style="display: none">
+      <dt>Total Balance</dt>
+      <dd id="totalBalance">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.totalBalance | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="myCurrentPLDL" class="total_dl" style="display: none">
+      <dt>Today P/L with Upline</dt>
+      <dd id="myCurrentPL"> 0.0</dd>
+    </dl>
+    <dl id="availableBalanceDL" class="total_dl" style="display: none">
+      <dt>Total Avail. bal.</dt>
+      <dd id="totalAvailBal">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.totalAvailableBalance | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="masterBalanceDL" class="total_dl" style="display: none">
+      <dt>Balance</dt>
+      <dd id="mastersBalance">
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            {{ currentUser?.currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ fixCurrency }}
+          </ng-container>
+        </ng-container>
+        {{ usersData?.totalBalance | indianCurrency }}
+      </dd>
+    </dl>
+    <dl id="masterAvailableBalanceDL" class="total_dl" style="display: none">
+      <dt>Available Balance</dt>
+      <dd id="mastersAvailBal">
+      </dd>
+    </dl>
+    <dl id="transferablePLWithUplineDL" class="total_dl" style="display: none">
+      <dt>Transferable P/L with Upline</dt>
+      <dd id="transferablePLWithUpline"> 0.00</dd>
+    </dl>
+  </div>
+  <div *ngIf="showTotalBox" id="totalBox" class="total_box filtertotaldivmob">
+    <dl id="creditLimitDL" class="total_dl_mob">
+      <dt>Credit Reference</dt>
+      <dd id="myCreditLimit" class="push">
+        <strong> {{ usersData?.creditRef | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="balanceDownline" class="total_dl_mob">
+      <dt>Balance in Downline</dt>
+      <dd id="myCreditLimit" class="push">
+        <strong> {{ usersData?.downlineBalance | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency">
+          <ng-container *ngIf="!fixCurrency">
+           ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="yourBalance" class="total_dl_mob">
+      <dt>Available Balance</dt>
+      <dd id="myCreditLimit" class="push">
+        <strong>{{ usersData?.balance | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="totalExposureDL" class="total_dl_mob">
+      <dt>Total Exposure</dt>
+      <dd id="totalExposure" class="push">
+        <strong>{{ usersData?.totalExposure | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="creditGivenOutDL" class="total_dl_mob">
+      <dt>Reference PL</dt>
+      <dd id="totalCreditGivenOut" class="push">
+        <strong> {{ ((usersData?.refPL === 0) ? totalRow?.refPL : usersData?.refPL) | indianCurrency }} </strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+
+    <dl *ngIf="isShow" id="creditAvailBalDL" class="total_dl_mob" style="display: none">
+      <dt>Credit Avail Bal</dt>
+      <dd id="myCreditAvailBal" class="push">
+        <!-- even {{ userData.currencyTypeName }} {{ userData.myCreditAvailBal }} -->
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="totalBalanceDL" class="total_dl_mob" style="display: none">
+      <dt>Total Balance</dt>
+      <dd id="totalBalance" class="push">
+        <strong> {{ usersData?.totalBalance | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="myCurrentPLDL" class="total_dl_mob" style="display: none">
+      <dt>Today P/L with Upline</dt>
+      <!-- <dd id="myCurrentPL">{{ userData.currencyTypeName }} 0.0</dd> -->
+    </dl>
+    <dl *ngIf="isShow" id="availableBalanceDL" class="total_dl_mob" style="display: none">
+      <dt>Total Avail. bal.</dt>
+      <dd id="totalAvailBal" class="push">
+        <strong> {{ usersData?.totalAvailableBalance | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="masterBalanceDL" class="total_dl_mob" style="display: none">
+      <dt>Balance</dt>
+      <dd id="mastersBalance" class="push">
+        <strong>  {{ usersData?.totalBalance | indianCurrency }}</strong>
+        <ng-container *ngIf="showCurrency"  >
+          <ng-container *ngIf="!fixCurrency">
+            ({{ currentUser?.currencyCode }})
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            ({{ fixCurrency }})
+          </ng-container>
+        </ng-container>
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="masterAvailableBalanceDL" class="total_dl_mob" style="display: none">
+      <dt>Available Balance</dt>
+      <dd id="mastersAvailBal" class="push">
+        <!-- {{ userData.currencyTypeName }}
+          {{ userData.mastersAvailBal + userData.totalBalance | indianCurrency }} -->
+      </dd>
+    </dl>
+    <dl *ngIf="isShow" id="transferablePLWithUplineDL" class="total_dl_mob" style="display: none">
+      <dt>Transferable P/L with Upline</dt>
+      <!-- <dd id="transferablePLWithUpline">{{ userData.currencyTypeName }} 0.00</dd> -->
+    </dl>
+    <div class="text-center">
+      <span (click)="showHide()" id="user">
+        <i [ngClass]="showUp ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      </span>
+    </div>
+  </div>
+  <input *ngIf="!isPremiumSite"
+  class="search-input"
+appInputRestriction="noSpecialChars"
+  type="text"
+  name="searchUserId" id="searchUserId" placeholder="Enter userId..."
+  [(ngModel)]="searchTerm"
+  (ngModelChange)="filterByTerm($event,true)"
+/>
+  <form
+    [formGroup]="transferForm"
+    (ngSubmit)="
+      (transferDelay)
+        ? timeouttransfer()
+        : transfer()
+    "
+  >
+    <!-- Report Table -->
+    <div class="over-wrap" style="max-height: calc(100% - 108px)">
+      <!-- <div class="function-wrap clearfix"> -->
+
+      <ul class="report-tab-wrap box">
+        <li
+          class="report-tab"
+          id="reportType_sportsBook"
+          [class.select]="selectedTabIndex === 0"
+          (click)="selectTab(0)"
+        >
+        {{Update?.CreditReference}}
+        </li>
+        <li
+          class="report-tab"
+          id="reportType_exchange"
+          [class.select]="selectedTabIndex === 1"
+          (click)="selectTab(1)"
+          *ngIf="!showSettlementTab"
+        >
+          {{(activeTheme.name === 'lc247')?'Winner':'Settlement'}}
+        </li>
+      </ul>
+
+      <!-- </div> -->
+      <div class="table-responsive data-table" >
+      <table id="table_transfer" class="table01 tab-transfer tab-banking">
+        <tbody>
+          <tr>
+            <th id="userIdTH" width="15%" class="align-L" data-name="userName">UID</th>
+            <th id="siteTH" width="5%" style="display: none">Site</th>
+            <th id="currencyTypeTH" width="5%" style="display: none">
+              Currency
+            </th>
+            <!-- <th width="9%">Balance</th> -->
+            <th width="11%" data-name="availableBalance">{{Update?.AvailableBalance}}</th>
+            <th
+              width="11%"
+              *ngIf="currentUser?.userType !== commonService.agentUserType"
+             data-name="downlineBalance"
+            >
+              {{Update?.BalanceinDownline}}
+            </th>
+            <th width="11%" data-name="exposure">
+              <ng-container
+                *ngIf="
+                  currentUser?.userType === commonService.agentUserType;
+                  else exposureLabelTemp
+                "
+              >
+                {{Update?.exposure}}
+              </ng-container>
+              <ng-template #exposureLabelTemp>
+                {{Update?.ExposureinDownline}}
+              </ng-template>
+            </th>
+            <th width="20%" class="align-C border-l">{{Update?.DepositWithdraw}}</th>
+            <th width="11%" class="border-l">{{Update?.CreditReference}}</th>
+            <!-- <th width="10">Settlement</th> -->
+            <th width="10%" data-name="refPL">{{Update?.ReferencePL}}</th>
+            <th width="10" class="border-l">{{Update?.Remark}}</th>
+            <th width="47" class="full-amount">
+              <a id="allLog" routerLink="/banking/bankinglog" class="btn-send"
+                >{{Update?.All}}</a
+              >
+            </th>
+          </tr>
+        </tbody>
+        <tbody id="content">
+          <tr
+            formArrayName="users"
+            id="{{ user.userName }}"
+            [ngClass]="(user.userStatus == 0)?'':'suspended'"
+            *ngFor="
+              let user of usersData?.users
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: p };
+              let i = index;
+              trackBy: trackById
+            "
+          >
+            <ng-container
+              *ngIf="usersArray && usersArray.length"
+              [formGroupName]="itemsPerPage * (p - 1) + i"
+            >
+              <td class="td-uid">
+                <span class="order">{{ itemsPerPage * (p - 1) + i + 1 }} .</span
+                ><span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ user.userType }}"></span>
+                {{ user.userName }}
+              </td>
+              <td id="siteCol" style="display: none">Sky</td>
+              <td id="currencyTypeCol" style="display: none">PTH</td>
+              <!-- <td id="balance">{{ user.balance | indianCurrency }}</td> -->
+              <td>
+                {{ user.availableBalance | indianCurrency }}
+              </td>
+              <td
+                id="balanceDownline"
+                *ngIf="currentUser?.userType !== commonService.agentUserType"
+              >
+                {{ user.downlineBalance | indianCurrency }}
+              </td>
+              <td id="userExposure"><span class="red">({{ user.exposure | indianCurrency }})</span></td>
+              <td class="DW-amount">
+                <div *ngIf="selectedTabIndex == 0" class="displayfelx">
+                  <input
+                    style="display: none"
+                    type="radio"
+                    formControlName="txnType"
+                    value="1"
+                    #txnType
+                    [(ngModel)]="user.selectDW"
+                  />
+                  <input
+                    style="display: none"
+                    type="radio"
+                    formControlName="txnType"
+                    #txnType
+                    value="2"
+                    [(ngModel)]="user.selectDW"
+                  />
+                  <ul
+                    class="btn_list-DW"
+                    [ngClass]="{
+                      'select-D': user.selectDW === 1,
+                      'select-W': user.selectDW === 2
+                    }"
+                  >
+                    <li>
+                      <button
+                        type="button"
+                        class="btn"
+                        (click)="selectTxType(user, 1)"
+                      >
+                        D
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        class="btn"
+                        (click)="selectTxType(user, 2)"
+                        [disabled]="user.refPL !== 0 && !currentUser.prepaid"
+                        [class.disable]="user.refPL !== 0 && !currentUser.prepaid"
+                      >
+                        W
+                      </button>
+                    </li>
+                  </ul>
+                  <!-- <button
+                    *ngIf="currentUser?.prepaid && activeTheme.name.includes('betswiz')"
+                    type="button"
+                    class="btn float-L"
+                    name="Full Withdraw"
+                    [ngClass]="{'selectedWith': user.selectDW === 3}"
+                    (click)="selectFWtype(user,3,itemsPerPage * (p - 1) + i)"
+                  >
+                    FW
+                  </button> -->
+                  <span class="plus"
+                    *ngIf="user.selectDW == 1"
+                    style="
+                      position: absolute;font-weight: 700;
+                      left: 75px;
+                      line-height: 29px;
+                      font-size: 13px;
+                      color: rgb(56, 179, 56);
+                    "
+                    >+</span
+                  >
+                  <span class="minus"
+                    *ngIf="user.selectDW == 2"
+                    style="position: absolute;font-weight: 700;
+                    left: 75px;
+                    line-height: 29px;font-size: 13px; color: #d0021b"
+                    >-</span
+                  >
+                  <input
+                    name="amount"
+                    formControlName="amount"
+                    class=""
+                    type="number"
+                    placeholder="0"
+                    #amount
+                    numberOnly
+                    [allowDecimals]="true"
+                  />
+                  <button
+                    type="button"
+                    (click)="setFullAmount(user, itemsPerPage * (p - 1) + i)"
+                    class="btn float-L"
+                    [class.disable]="user.selectDW !== 2"
+                    [disabled]="user.selectDW !== 2"
+                  >
+                    Full
+                  </button>
+                </div>
+                <div *ngIf="selectedTabIndex == 1" class="displayfelx">
+                  <input
+                    style="display: none"
+                    type="radio"
+                    formControlName="txnType"
+                    value="1"
+                    #txnType
+                    [(ngModel)]="user.selectDW"
+                  />
+                  <input
+                    style="display: none"
+                    type="radio"
+                    formControlName="txnType"
+                    #txnType
+                    value="2"
+                    [(ngModel)]="user.selectDW"
+                  />
+                  <ul
+                    class="btn_list-DW"
+                    [ngClass]="{
+                      'select-D': user.selectDW === 1,
+                      'select-W': user.selectDW === 2
+                    }"
+                  >
+                    <li>
+                      <button
+                        id="wBtnD_{{ user.userId }}"
+                        type="button"
+                        (click)="selectTxType(user, 1)"
+                        class="btn float-L"
+                        disabled
+                        [class.disable]="user.refPL >= 0"
+                        [ngClass]="{ selectedDep: user.selectDW == 1 }"
+                        [disabled]="user.refPL >= 0"
+                      >
+                        D
+                      </button>
+                    </li>
+
+                    <li>
+                      <button
+                        id="wBtnW_{{ user.userId }}"
+                        class="btn float-L"
+                        type="button"
+                        disabled
+                        (click)="selectTxType(user, 2)"
+                        [class.disable]="user.refPL <= 0"
+                        [ngClass]="{ selectedWith: user.selectDW == 2 }"
+                        [disabled]="user.refPL <= 0"
+                      >
+                        W
+                      </button>
+                    </li>
+                  </ul>
+                  <span class="plus"
+                    *ngIf="user.selectDW == 1"
+                    style="
+                      
+                      font-size: 13px;
+                      color: rgb(56, 179, 56);
+                    "
+                    >+</span
+                  >
+                  <span class="minus"
+                    *ngIf="user.selectDW == 2"
+                    style=" font-size: 13px; color: #d0021b"
+                    >-</span
+                  >
+                  <input
+                    name="amount"
+                    formControlName="amount"
+                    class=""
+                    type="number"
+                    placeholder="0"
+                    #amount
+                    numberOnly
+                    [allowDecimals]="true"
+                  />
+                  <button
+                    type="button"
+                    (click)="setFullPL(user, itemsPerPage * (p - 1) + i)"
+                    class="btn float-L"
+                    [class.disable]="user.selectDW == null"
+                    [disabled]="user.selectDW == null"
+                  >
+                    Full
+                  </button>
+                </div>
+              </td>
+              <td class="credit-amount">
+                <!-- <a
+                  id="userCreditReference"
+                  [style.display]="user.editCreditRef ? 'none' : 'inline-flex'"
+                >
+                  {{ user.creditRef | indianCurrency }}</a
+                >
+                <input
+                  name="editCreditReference"
+                  class=""
+                  type="number"
+                  formControlName="creditRef"
+                  placeholder="0"
+                  maxlength="18"
+                  min="0"
+                  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                  [style.display]="user.editCreditRef ? 'inline-flex' : 'none'"
+                />
+                <a
+                  (click)="editCreditRef(user)"
+                  class="btn"
+                  [style.display]="user.editCreditRef ? 'none' : 'inline-flex'"
+                  >Edit</a
+                >
+                <a
+                  (click)="cancelEditCreditRef(user)"
+                  class="btn"
+                  [style.display]="user.editCreditRef ? 'inline-flex' : 'none'"
+                  >Cancel</a
+                > -->
+                <div style="display: inline-flex; align-items: center">
+                  <span style="margin-right: 4px">{{
+                    user.creditRef | indianCurrency
+                  }}</span>
+                </div>
+              </td>
+              <!-- <td>
+                <input type="checkbox" name="key" formControlName="key" [(ngModel)]="user.key">
+              </td> -->
+              <td id="userReferencePL">
+                <span *ngIf="user.refPL < 0" class="loss-text"> ({{ user.refPL | indianCurrency }})
+                </span>
+                  <span *ngIf="user.refPL >= 0">{{ user.refPL | indianCurrency }}
+                  </span>
+              </td>
+              <td class="border-l">
+                <input
+                  formControlName="remark"
+                  class=""
+                  type="text"
+                  placeholder="Remark"
+                />
+              </td>
+              <td class="full-amount">
+                <a
+                  id="log"
+                  [routerLink]="['/banking/bankinglog', user.userId]"
+                  class="btn"
+                  >Log</a
+                >
+              </td>
+            </ng-container>
+          </tr>
+          <tr id="totalTempTr" class="total">
+            <td class="align-L">Total</td>
+            <td id="totalAvailableBalance">
+              {{ totalRow?.availableDW | indianCurrency }}
+            </td>
+            <td
+              id="totalBalanceDownline"
+              *ngIf="currentUser?.userType !== commonService.agentUserType"
+            >
+              {{ totalRow?.downlineBalance | indianCurrency }}
+            </td>
+            <td id="totalExposure"><span class="red">({{ totalRow?.exposure | indianCurrency }})</span>
+            </td>
+            <td id="totalCreditReference" class="" colspan="2">
+              {{ totalRow?.creditRef | indianCurrency }}
+            </td>
+            <td id="totalReferencePL">
+              <span *ngIf="totalRow?.refPL < 0" class="loss-text"> ({{ totalRow?.refPL * -1 | indianCurrency }})
+              </span>
+                <span *ngIf="totalRow?.refPL >= 0">{{ totalRow?.refPL | indianCurrency }}
+                </span>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="submit-wrap" id="settlementBar">
+      <ul>
+        <li>
+          <a id="clearAllBtn" (click)="cancelAll()" class="btn">Clear All</a>
+        </li>
+        <li class="submit-payment">
+          <input
+            formControlName="password"
+            id="paymentPassword"
+            type="password"
+            placeholder="Password"
+          />
+          <button id="submit" class="btn-send" [disabled]="submitted">
+            Submit <span id="submitCount">{{ validRow }} </span> Payment
+          </button>
+        </li>
+      </ul>
+    </div>
+  </form>
+</div>
+
+<pagination-template
+  #pagination="paginationApi"
+  *ngIf="usersData?.users && usersData?.users.length > 10"
+  (pageChange)="p = $event"
+>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+        >Prev</a
+      >
+      <ng-template #prevTemp>
+        <a (click)="pagination.previous()">Prev</a>
+      </ng-template>
+    </li>
+    <ng-container *ngFor="let page of pagination.pages">
+      <li id="pageNumber">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          class="btn"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+      <ng-template #nextTemp>
+        <a (click)="pagination.next()">Next</a>
+      </ng-template>
+    </li>
+  </ul>
+</pagination-template>

@@ -1,0 +1,237 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <h2>Fancy List</h2>
+  </div>
+  <div class="main_wrap">
+    <div class="function-wrap">
+      <div>
+        <select name="sport" id="sport">
+          <option value="all">Select Sport</option>
+          <option value="cricket">Cricket</option>
+          <option value="soccer">Soccer</option>
+          <option value="tennis">Tennis</option>
+        </select>
+
+        <select name="tournament" id="tournament">
+          <option value="0">Select Tournament</option>
+          <option value="1">Indian Premier League</option>
+          <option value="2">WTA Rogers Cup</option>
+          <option value="3">Australia Cup</option>
+        </select>
+
+        <select name="match" id="match">
+          <option value="0">Select Match</option>
+          <option value="1">
+            Rajsthan Royals v Royal Challangers Banglore
+          </option>
+          <option value="2">
+            Royal Challangers Banglore v Cennai Super Kings
+          </option>
+          <option value="3">Chennai Super Kings v Kings XI Punjab</option>
+        </select>
+
+        <select name="status" id="status">
+          <option value="0">Select Status</option>
+          <option value="1">Open</option>
+          <option value="2">Inactive</option>
+          <option value="3">Settled</option>
+          <option value="4">Closed</option>
+        </select>
+        <span class="spacer"></span>
+        <a class="btn-send" target="_blank" routerLink="new">Add new</a>
+      </div>
+      <div>
+        <button class="btn">Set Close</button>
+        <span>
+          <input type="checkbox" name="settled" id="settled" /> Settled
+        </span>
+
+        <div>
+          <input
+            type="number"
+            placeholder="Enter result"
+            min="0"
+            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+          />
+        </div>
+        <button class="btn">Set Result</button>
+        <span class="spacer"></span>
+        <div>
+          <span class="label"> Total Records: </span>
+          987
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main_wrap">
+  <div class="total_all">
+    <div class="spacer"></div>
+    <div class="download-reports">
+      <button class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+    </div>
+  </div>
+  <table class="table01 table-pt">
+    <thead>
+      <tr class="ng-table-sort-header">
+        <th width="2%">
+          <input type="checkbox" name="filter-checkbox" value="" />
+        </th>
+        <th>Edit</th>
+        <th>Fancy Type</th>
+        <th>Fancy Code</th>
+        <th>Bet Name</th>
+        <th>Match</th>
+        <th>Status</th>
+        <th>Mode Rate</th>
+        <th>Rate</th>
+        <th>Active</th>
+        <th>Allow Bet</th>
+        <th>Commission</th>
+        <th>Cancel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="ng-scope"
+        data-ng-repeat="fancy in $data |orderBy:column:reverse"
+      >
+        <td width="2%" class="ng-binding">
+          <input
+            type="checkbox"
+            data-ng-model="checkboxes.items[fancy.id]"
+            value="1"
+            data-ng-class="checkAll"
+            aria-label="checkbox"
+          />
+        </td>
+        <td width="2%" title="'Edit'">
+          <a routerLink="edit" target="_blank">
+            <i class="fa fa-pencil-square-o fa-2x"></i>
+          </a>
+        </td>
+        <td
+          title="'Fancy Type' "
+          data-sortable=" 'fancyType' "
+          data-title-text="Fancy Type"
+          class="ng-binding"
+        >
+          Session
+        </td>
+        <td
+          title="'Fancy Code' "
+          data-sortable=" 'fancyCode' "
+          data-title-text="Fancy Code"
+          class="ng-binding"
+        >
+          7852395
+        </td>
+        <td
+          title="'Bet Name' "
+          data-sortable=" 'betName' "
+          data-title-text="Bet Name"
+          class="ng-binding"
+        >
+          75 OVER RUN ENG 2
+        </td>
+        <td title="'Match' " data-sortable=" 'match' " data-title-text="Match">
+          <b style="font-weight: bold" class="ng-binding"
+            >Sri Lanka v England (2nd Test)</b
+          ><br /><span style="font-size: 12px" class="ng-binding"
+            >2018-11-18 09:59:28</span
+          >
+        </td>
+
+        <td
+          title="'Status' "
+          data-sortable=" 'betStatus' "
+          data-title-text="Status"
+          class="ng-binding"
+        >
+          INACTIVE
+        </td>
+        <td title=" 'Mode Rate' ">
+          <label
+            >Auto
+
+            <input
+              type="radio"
+              class=""
+              name="Bookflt1"
+              value="auto"
+              aria-label="radio1"
+            />
+          </label>
+
+          <label
+            >Manual
+            <input
+              type="radio"
+              class=""
+              name="Bookflt1"
+              value="manual"
+              id="manual"
+              aria-label="radio2"
+            />
+          </label>
+        </td>
+        <td title=" 'Rate' " class="">
+          <a
+            data-ng-show="isManual== 'manual'"
+            routerLink="fancyrate"
+            target="_blank"
+            class="ng-scope ng-hide"
+          >
+            <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+          </a>
+          <a
+            data-ng-show="isManual == 'auto'"
+            href="fancyrate"
+            target="_blank"
+            class="ng-scope ng-hide"
+            style="display: none"
+            ><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+          </a>
+        </td>
+
+        <td title="'Active'">
+          <a>
+            <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+          </a>
+        </td>
+
+        <td title="'Allow Bet'">
+          <a *ngIf="true">
+            <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+          </a>
+
+          <!-- <a>
+            <i class="fa fa-times-circle fa-2x" style="color: red"></i>
+          </a> -->
+        </td>
+
+        <td title="'commission'" data-title-text="commission" class="ng-scope">
+          <a>
+            <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+          </a>
+
+          <!-- <a>
+            <i class="fa fa-cross-circle fa-2x" style="color: green"></i>
+          </a> -->
+        </td>
+
+        <td title="'Cancel'" data-title-text="Cancel" class="ng-scope">
+          <button class="btn-cancel" title="Cancel Bet">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

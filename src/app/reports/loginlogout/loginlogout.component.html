@@ -1,0 +1,249 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <div class="total_all">
+      <h2>{{Update?.LoginDetails}}</h2>
+      <div class="spacer"></div>
+      <span class="total-users">
+        {{Update?.TotalRecords}}: {{loginList?.length}}
+      </span>
+      <div class="download-reports">
+        <button [appExportData]="'xls'" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'pdf'" orientation="landscape" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'csv'" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    
+    </div>
+    <div class="filterdivmob">
+      <span>
+        <label>{{Update?.Last}}:</label>
+        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+          <option value="100">100 Txn</option>
+          <option value="50">50 Txn</option>
+          <option value="25">25 Txn</option>
+          <option value="10" selected="">10 Txn</option>
+          <option value=downline.length>Full</option>
+        </select>
+      </span>
+      <li id="getPL" (click)="getLogintReport()" class="btn-send">{{Update?.ShowDefault}}</li>
+    </div>
+  </div>
+  
+  <div class="main_wrap">
+   
+    <ul class="report-tab-wrap" >
+      <li
+        class="report-tab"
+        id="reportType_exchange"
+        [class.select]="selectedTabIndex === 0"
+        (click)="selectTab(0)"
+      >
+        {{Update?.Login}}
+      </li>
+
+      <li
+        class="report-tab"
+        id="reportType_casino"
+        [class.select]="selectedTabIndex === 1"
+        (click)="selectTab(1)"
+      >
+        {{Update?.Logout}}
+      </li>
+
+      <li
+        class="report-tab"
+        id="reportType_sportsBook"
+        [class.select]="selectedTabIndex === 2"
+        (click)="selectTab(2)"
+      >
+        {{Update?.Unsuccessful}}
+      </li>
+      <div style="float: right;" class="filterdivweb">
+        <span>
+          <label>{{Update?.Last}}:</label>
+          <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+            <option value="100">100 Txn</option>
+            <option value="50">50 Txn</option>
+            <option value="25">25 Txn</option>
+            <option value="10" selected="">10 Txn</option>
+            <option value=downline.length>Full</option>
+          </select>
+        </span>
+        <li id="getPL" (click)="getLogintReport()" class="btn-send">{{Update?.ShowDefault}}</li>
+      </div>
+    </ul>
+    
+    <div class="table-responsive data-table" >
+    <div class="table-container">
+      <table
+        *ngIf="selectedTabIndex === 0"
+        id="table_DL"
+        class="table01"
+        style="text-align: center; white-space: nowrap"
+      >
+        <thead>
+          <tr>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="userName">{{Update?.UserName}}</th>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="loginTime">{{Update?.LoginDateTime}}</th>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="loginStatus">{{Update?.LoginStatus}}</th>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="loginIp">{{Update?.IPAddress}}</th>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="ISP">ISP</th>
+            <th class="sort_asc" [appSort]="loginList" data-order="asc" data-name="origin">{{Update?.CityStateCountry}}</th>
+            <!-- <th>Info</th>
+            <th>Imei address</th>
+            <th>Mobile model /browser version</th>
+            <th>Machine id</th> -->
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- ngRepeat: loginologout in $data -->
+          <tr
+            class="ng-scope"
+            *ngFor="
+              let login of loginList
+                | paginate: { itemsPerPage: n, currentPage: p }
+            "
+          >
+            <td>{{ login.userName }}</td>
+            <td>{{ login.loginTime | date: "yyyy-MM-dd HH:mm:ss" :timeFormat}}</td>
+            <td class="login">{{ loginStatusMap[login.loginStatus] }}</td>
+            <td>{{ login.loginIp }}</td>
+            <td>{{ login.ISP }}</td>
+            <td>{{ login.origin }}</td>
+            <!-- <td title="'Info'" data-title-text="Info"> -->
+            <!-- ngIf: bet.source!='web' -->
+            <!-- <a style="font-weight: bolder"
+                ><i class="fa fa-mobile fa-2x" aria-hidden="true"> </i> </a
+              > -->
+            <!-- end ngIf: bet.source!='web' -->
+            <!-- </td> -->
+            <!-- <td title="'Imei address'">49-015420-323751-8</td>
+
+            <td title="'Mobile model /browser version'">71.0.3578.98</td>
+            <td title="'Machine id'">02-50-F2-6E-AF-0C</td> -->
+          </tr>
+        </tbody>
+      </table>
+
+      <table
+        *ngIf="selectedTabIndex === 1"
+        id="table_DL"
+        class="table01"
+        style="text-align: center; white-space: nowrap"
+      >
+        <thead>
+          <tr>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="userName">{{Update?.UserName}}</th>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="loginTime">{{Update?.LoginDateTime}}</th>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="loginStatus">{{Update?.LoginStatus}}</th>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="loginIp">{{Update?.IPAddress}}</th>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="ISP">ISP</th>
+            <th class="sort_asc" [appSort]="logoutList" data-order="asc" data-name="origin">{{Update?.CityStateCountry}}</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- ngRepeat: loginologout in $data -->
+          <tr class="ng-scope" *ngFor="let login of logoutList | paginate: { itemsPerPage: 10, currentPage: p }">
+            <td>{{ login.userName }}</td>
+            <td>{{ login.loginTime | date: "yyyy-MM-dd HH:mm:ss" :timeFormat }}</td>
+            <td class="logout">{{ loginStatusMap[login.loginStatus] }}</td>
+            <td>{{ login.loginIp }}</td>
+            <td>{{ login.ISP }}</td>
+            <td>{{ login.origin }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        id="table_DL"
+        *ngIf="selectedTabIndex === 2"
+        class="table01 unsuccessful"
+        style="text-align: center; white-space: nowrap"
+      >
+        <thead>
+          <tr>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="userName">{{Update?.UserName}}</th>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="loginTime">{{Update?.LoginDateTime}}</th>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="loginStatus">{{Update?.LoginStatus}}</th>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="loginIp">{{Update?.IPAddress}}</th>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="ISP">ISP</th>
+            <th class="sort_asc" [appSort]="failedLoginList" data-order="asc" data-name="origin">{{Update?.CityStateCountry}}</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- ngRepeat: loginologout in $data -->
+          <tr
+            class="ng-scope"
+            *ngFor="
+              let login of failedLoginList
+                | paginate: { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <td>{{ login.userName }}</td>
+            <td>{{ login.loginTime | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}</td>
+            <td class="failed">{{ loginStatusMap[login.loginStatus] }}</td>
+            <td>{{ login.loginIp }}</td>
+            <td>{{ login.ISP }}</td>
+            <td>{{ login.origin }}</td>
+            <!-- <td>
+              <button class="btn">B</button>
+              <button class="btn">Reset</button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination-template
+  *ngIf="loginList && loginList?.length > n"
+  #pagination="paginationApi"
+  (pageChange)="p = $event"
+>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+        >Prev</a
+      >
+      <ng-template #prevTemp>
+        <a (click)="pagination.previous()">Prev</a>
+      </ng-template>
+    </li>
+    <ng-container *ngFor="let page of pagination.pages">
+      <li id="pageNumber">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          class="btn"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+      <ng-template #nextTemp>
+        <a (click)="pagination.next()">Next</a>
+      </ng-template>
+    </li>
+  </ul>
+</pagination-template>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,119 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <h2>Book Detail</h2>
+  </div>
+  <div class="main_wrap">
+    <div class="row">
+      <div class="input-group">
+        <label for="fancy-label">Sport Name: </label>
+        <select name="sportName" id="fancyType">
+          <option value="0">Select Sport</option>
+          <option value="1">Cricket</option>
+          <option value="2">Soccer</option>
+          <option value="3">Tennis</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="fancy-label">Tournament: </label>
+        <select name="fancyType" id="fancyType">
+          <option value="0">Select Tournament</option>
+          <option value="1">Indian Premier League</option>
+          <option value="2">Australia Cup</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="match-label">Match: </label>
+        <select name="match" id="match">
+          <option value="0">Select Match</option>
+          <option value="1">Royal Challangers Banglore v Mumbai Indians</option>
+          <option value="2">Kings XI Punjab v Channai Super Kings</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="fancy-label">Header Name: </label>
+        <input type="text" placeholder="Header name" />
+      </div>
+      <span></span>
+      <span></span>
+      <div class="input-group">
+        <label for="fancy-label">Min Stake: </label>
+        <input
+          type="number"
+          placeholder="Min Stake"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <div class="input-group">
+        <label for="fancy-label">Max Stake: </label>
+        <input
+          type="number"
+          placeholder="Max Stake"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <span></span>
+      <div class="input-group">
+        <label for="fancy-label">Min Rate: </label>
+        <input
+          type="number"
+          placeholder="Min Rate"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <div class="input-group">
+        <label for="fancy-label">Max Rate: </label>
+        <input
+          type="number"
+          placeholder="Max Rate"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <span></span>
+
+      <div class="input-group">
+        <label for="rates-range">Maximum Profit: </label>
+        <input
+          type="number"
+          placeholder="Maximum Profit"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <span></span>
+      <span></span>
+
+      <div class="input-group">
+        <label for="rates-difference">Rates Difference: </label>
+        <input
+          type="number"
+          placeholder="Rates Difference"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <span></span>
+      <span></span>
+
+      <div class="input-group">
+        <label for="maxStake">Max Stake Per Rate: </label>
+        <input
+          type="number"
+          placeholder="Max Stake Per Rate"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="action">
+      <button class="btn-send">Save & Close</button>
+      <button class="btn-send">Save & Add New</button>
+      <button class="btn">Cancel</button>
+    </div>
+  </div>
+</div>

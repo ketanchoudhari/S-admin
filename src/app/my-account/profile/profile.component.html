@@ -1,0 +1,186 @@
+<h2>{{Update?.Profile}}</h2>
+<div class="event-left">
+  <div class="profile-wrap">
+    <h3>{{Update?.AboutYou}}</h3>
+    <dl>
+      <dt>{{Update?.FullName}}</dt>
+      <dd>{{ currentUserProfile?.name }}</dd>
+
+      <ng-template [ngIf]="currentUserProfile?.domainName != ''">
+        <dt>{{Update?.Domain}}</dt>
+        <dd>{{ currentUserProfile?.domainName }}</dd>
+      </ng-template>
+      <dt>{{Update?.Password}}</dt>
+      <dd class="edit-pass">
+        <p *ngIf="showPassword; else censoredTemp"></p>
+        <ng-template #censoredTemp>
+          ********************************
+        </ng-template>
+        <a class="favor-set" (click)="openChangePassModal()">{{Update?.Edit}}</a>
+      </dd>
+    </dl>
+  </div>
+</div>
+<div class="event-right">
+  <div class="profile-wrap">
+    <h3>Limits &amp; Commission</h3>
+    <dl>
+      <dt>{{Update?.ExposureLimit}}</dt>
+      <dd id="mainwalletExposureLimit">{{currentUserProfile?.exposureLimit | indianCurrency}} </dd>
+
+      <ng-template [ngIf]="!isClient">
+        <dt>{{Update?.Share}}(%)</dt>
+        <dd>
+          <span *ngIf="currentUserProfile?.sharePercent"
+            >{{ currentUserProfile?.sharePercent }}%</span
+          >
+        </dd>
+
+        <dt>{{Update?.CricketShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.cricketSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.CricketFancyShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.cricketFancySharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.SoccerShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.soccerSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.SoccerGoalShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.soccerGoalsSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.TennisShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.tennisSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.IndianCasinoShare}}(%)</dt>
+        <dd>
+          <span>{{ currentUserProfile?.indianCasinoSharing }}%</span>
+        </dd>
+      </ng-template>
+    </dl>
+  </div>
+  <div class="profile-wrap" style="display: none">
+    <h3>PT</h3>
+    <dl>
+      <dt>My PT Allowed</dt>
+      <dd>0%</dd>
+    </dl>
+    <dl>
+      <dt>My Fancy Bet PT</dt>
+      <dd>0%</dd>
+    </dl>
+    <dl>
+      <dt>Sportsbook PT</dt>
+      <dd>0%</dd>
+    </dl>
+    <dl>
+      <dt>Sportsbook Premium PT</dt>
+      <dd>0%</dd>
+    </dl>
+    <dl>
+      <dt>My Book Maker PT</dt>
+      <dd>0%</dd>
+    </dl>
+    <dl>
+      <dt>Casino PT Allowed</dt>
+      <dd>LIVE: 0%, RNG: 0%, SLOT: 0%, VIRTUAL: 0%</dd>
+    </dl>
+  </div>
+</div>
+
+<app-modal [(open)]="changePassModalOpen">
+  <form [formGroup]="changePassForm" (ngSubmit)="changePass()">
+    <div class="modal-header">
+      <h3>{{Update?.changepass}}</h3>
+    </div>
+    <div class="modal-content">
+      <dl class="form_list">
+        <dt>{{Update?.newpass}}</dt>
+        <dd>
+          <input
+            appInputRestriction="noSpecialChars2"
+            type="password"
+            formControlName="newpassword"
+            placeholder="Enter"
+            aria-autocomplete="list"
+          />
+          <span class="must">＊</span>
+          <div class="errors" *ngIf="changePassForm.get('newpassword').invalid &&
+          (changePassForm.get('newpassword').touched ||
+          changePassForm.get('newpassword').dirty)">
+
+              <div *ngIf="changePassForm.get('newpassword').hasError('required')">
+                Password is required
+              </div>
+
+              <div *ngIf="changePassForm.get('newpassword').errors.minlength">
+                Password must be at least 8 characters
+              </div>
+
+              <div class="error-text" *ngIf="changePassForm.get('newpassword').hasError('passwordStrength')">
+                {{changePassForm.get('newpassword').errors['passwordStrength']}}
+              </div>
+         </div>
+          <span id="newPasswordErrorText" class="error-text"></span>
+        </dd>
+        <dt>{{Update?.newcinfrompass}}</dt>
+        <dd>
+          <input
+            appInputRestriction="noSpecialChars2"
+            formControlName="confirm"
+            type="password"
+            placeholder="Enter"
+          />
+          <span class="must">＊</span>
+          <div class="errors" *ngIf="changePassForm.get('confirm').invalid &&
+                (changePassForm.get('confirm').touched ||
+                changePassForm.get('confirm').dirty)">
+
+              <div *ngIf="changePassForm.get('confirm').hasError('required')">
+               Confirm password is required
+              </div>
+          </div>
+          <span
+            *ngIf="
+              f?.get('confirm').invalid &&
+              f.get('confirm').hasError('isNotMatching')
+            "
+            class="error-text"
+            >Passwords don't match
+          </span>
+        </dd>
+        <dt>{{Update?.yourpass}}</dt>
+        <dd>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter"
+          />
+          <span class="must">＊</span>
+          <div class="errors" *ngIf="changePassForm.get('password').invalid &&
+              (changePassForm.get('password').touched ||
+              changePassForm.get('password').dirty)">
+
+                <div *ngIf="changePassForm.get('password').hasError('required')">
+                  Password is required
+                </div>
+            </div>
+        </dd>
+        <dd>
+          <button id="changePasswordBtn" type="submit" class="btn-send">
+            {{Update?.change}}
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </form>
+</app-modal>

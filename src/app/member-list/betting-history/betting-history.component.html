@@ -1,0 +1,223 @@
+
+<div class="box" style="align-items: baseline;">
+  <h3>{{Update?.BettingHistory}}</h3>
+  <div class="push" >
+      <a id="getPL" style="vertical-align: baseline;" (click)="getBetHistory()" class="btn-send">{{Update?.ShowDefault}}</a>
+  </div>
+</div>
+<ul class="report-tab-wrap" style="display: block">
+  <li class="report-tab" id="reportType_exchange" [class.select]="selectedTabIndex === 0" (click)="selectTab(0)">
+    {{Update?.Exchange}}
+  </li>
+
+  <li class="report-tab" id="reportType_casino" [class.select]="selectedTabIndex === 1" (click)="selectTab(1)">
+    {{Update?.Casino}}
+  </li>
+
+  <!-- <li
+    class="report-tab"
+    id="reportType_sportsBook"
+    [class.select]="selectedTabIndex === 2"
+    (click)="selectTab(2)"
+  >
+    Sportsbook
+  </li>
+
+  <li
+    class="report-tab"
+    id="reportType_bookMaker"
+    [class.select]="selectedTabIndex === 3"
+    (click)="selectTab(3)"
+  >
+    BookMaker
+  </li> -->
+</ul>
+<div class="function-wrap">
+  <ul class="input-list">
+    <div id="statusCondition" style="display: none">
+      <li><label>{{Update?.BetStatus}}:</label></li>
+      <li>
+        <select name="betStatus" id="betStatus"></select>
+      </li>
+    </div>
+
+    <li><label>{{Update?.Period}}</label></li>
+    <li class="blockdis">
+      <div class="webhide ">
+      <input id="startDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+        [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+      <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+        [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" />
+        </div>
+      to
+      <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+        [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+      <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+        [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+    </li>
+  </ul>
+
+  <ul class="input-list">
+    <li>
+      <a id="today" (click)="getReportDate('today')" class="btn">{{Update?.Justfortoday}}</a>
+    </li>
+    <li>
+      <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">{{Update?.Fromyesterday}}</a>
+    </li>
+    <li style="display: none">
+      <a id="last7days" href="#" class="btn">Last 7 days</a>
+    </li>
+    <li style="display: none">
+      <a id="last30days" href="#" class="btn">Last 30 days</a>
+    </li>
+    <li style="display: none">
+      <a id="last2months" href="#" class="btn">Last 2 Months</a>
+    </li>
+    <li style="display: none">
+      <a id="last3months" href="#" class="btn">Last 3 Months</a>
+    </li>
+    <li>
+      <a id="getPL" (click)="getBetHistory()" class="btn-send">{{Update?.GetPL}}</a>
+    </li>
+  </ul>
+
+  <div>
+    <span>
+      <label>{{Update?.Last}}:</label>
+      <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+        <option value="100">100 Txn</option>
+        <option value="50">50 Txn</option>
+        <option value="25">25 Txn</option>
+        <option value="10" selected="">10 Txn</option>
+        <option value=bettingHistory.length>Full</option>
+      </select>
+    </span>
+    <div class="download-reports">
+      <button [appExportData]="'xls'" class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button [appExportData]="'pdf'" [orientation]="'landscape'" class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button [appExportData]="'csv'" class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+<div id="report">
+  <div class="table-responsive data-table" style="overflow: auto;white-space: nowrap">
+  <table id="table_DL" class="table-s" style="display: table">
+    <tbody>
+      <tr>
+        <th width="15%" class="align-L sort_asc"  [appSort]="bettingHistory" data-order="asc" data-name="betId">{{Update?.BetID}}</th>
+        <th width="9%" class="align-L sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="userName">PL ID</th>
+        <th width="" class="align-L sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="eventName">{{Update?.Market}}</th>
+        <th width="12%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="selName"> {{Update?.Selection}}</th>
+        <th width="4%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="betType">{{Update?.Type}}</th>
+        <th width="8%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="betTime">{{Update?.BetPlaced}}</th>
+        <th width="7%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="odds">{{Update?.Odds}}</th>
+        <th width="8%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="stake">{{Update?.Stake1}}</th>
+        <th width="10%" class="sort_asc" [appSort]="bettingHistory" data-order="asc" data-name="PL">{{Update?.ProfitLoss}}</th>
+        <th width="10%" id="userCancelTitle" style="display: none">
+          User Cancel
+        </th>
+      </tr>
+
+      <ng-container *ngFor="let bet of bettingHistory | paginate: { itemsPerPage: n, currentPage: p };">
+        <tr style="display: table-row">
+          <td class="align-L">
+            <a id="betID" class="expand-close" (click)="toggleExpand($event, 'sub_' + bet.betId)">{{ bet.betId }}</a>
+          </td>
+          <td class="align-L" id="playerID">{{ selectedUser.userName }}</td>
+          <td id="matchTitle" class="align-L">
+            {{ bet.sportName | uppercase
+            }}<img class="fromto" src="assets/images/transparent.gif" /><strong>{{ bet.eventName }}</strong><img
+              class="fromto" src="assets/images/transparent.gif" />{{
+            bet.betType.toLowerCase() === "yes" || bet.betType.toLowerCase() === "no"
+            ? "FANCY BET"
+            : bet.marketName
+            }}
+          </td>
+          <td id="matchSelection">{{ bet.selName }}</td>
+          <td>
+            <span id="matchType" [ngClass]="bet.betType">{{ bet.betType | titlecase }}
+            </span>
+          </td>
+          <td>
+            <span id="betPlaced" class="small-date">{{ bet.betTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+          </td>
+          <td id="matchOddsReq">{{ bet.odds.replace(":", "/") }}</td>
+          <td id="matchStake">{{ bet.stake | indianCurrency }}</td>
+          <td>
+            <span id="pol" class="small-date">
+              <span class="green" *ngIf="bet.PL>0; else profitTemp">{{ bet.PL | number: '0.2'}} </span>
+              <ng-template #profitTemp>
+                <span class="red">({{ bet.PL | number: '0.2' }})</span>
+              </ng-template>
+            </span>
+          </td>
+        </tr>
+        <tr id="sub_{{ bet.betId }}" class="expand" style="display: none;">
+          <td colspan="2"></td>
+          <td colspan="8">
+            <img class="expand-arrow" src="assets/images/transparent.gif" />
+            <table id="txTable0">
+              <tbody>
+                <tr>
+                  <th>Bet taken</th>
+                  <th width="16%">Odds</th>
+                  <th width="17%">Stake</th>
+                  <th width="24%">Profit/Loss</th>
+                </tr>
+                <tr style="display: table-row" class="even">
+                  <td>
+                    <span id="betTaken" class="small-date">{{bet.betTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                  </td>
+                  <td id="txOddsReq">{{bet.odds.replace(':', '/')}}</td>
+                  <td id="txStake">{{bet.stake | number: '0.2'}}</td>
+                  <td id="txLiability">
+                    <span class="green" *ngIf="bet.PL > 0; else profitTemp">{{bet.PL | number: '0.2'}} </span>
+                    <ng-template #profitTemp>
+                      <span class="red">({{bet.PL | number: '0.2'}})</span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <pagination-template *ngIf="bettingHistory && bettingHistory.length > n" #pagination="paginationApi"
+    (pageChange)="p = $event">
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+        <ng-template #prevTemp>
+          <a (click)="pagination.previous()">Prev</a>
+        </ng-template>
+      </li>
+      <ng-container *ngFor="let page of pagination.pages">
+        <li id="pageNumber">
+          <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+            page.value }}
+          </a>
+          <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value }}
+          </a>
+        </li>
+      </ng-container>
+  
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+        <ng-template #nextTemp>
+          <a (click)="pagination.next()">Next</a>
+        </ng-template>
+      </li>
+    </ul>
+  </pagination-template>
+  </div>
+
+

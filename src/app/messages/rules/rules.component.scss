@@ -1,0 +1,22 @@
+@import 'src/assets/scss/tables';
+
+::ng-deep .ck-editor__editable_inline {
+  min-height: 250px;
+
+  ol {
+    margin: initial;
+  }
+}
+
+.total_all .btn-send {
+  display: flex;
+  align-items: center;
+}
+
+.rules_show {
+  border: solid 1px #222;
+  padding: 1em;
+  margin-bottom: 1em;
+  min-height: 100px;
+  border-radius: 5px;
+}

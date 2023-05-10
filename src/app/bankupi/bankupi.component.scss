@@ -1,0 +1,244 @@
+@import "src/assets/scss/tables";
+@import "src/assets/scss/pop_box";
+
+.report-tab-wrap {
+  position: relative;
+  margin-top: 16px;
+  list-style-type: none;
+
+  .report-tab {
+    display: inline-block;
+    padding: 5px 24px 9px;
+    margin-right: 2px;
+    background-color: #ffffff;
+    border: 1px solid #3b5160;
+    border-radius: 3px 3px 0 0;
+    color: #3b5160;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.select {
+      background-color: #3b5160;
+      color: #ffffff;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #3b5160;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 750px) {
+  .report-tab-wrap {
+    position: relative;
+    margin-top: 16px;
+    list-style-type: none;
+  
+    .report-tab {
+      display: inline-block;
+      padding: 5px 5px 5px;
+      margin-right: 2px;
+      background-color: #ffffff;
+      border: 1px solid #3b5160;
+      border-radius: 3px 3px 0 0;
+      color: #3b5160;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+  
+      &.select {
+        background-color: #3b5160;
+        color: #ffffff;
+  
+        &:before {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background-color: #3b5160;
+        }
+      }
+    }
+  }
+
+  .web{
+    display: none;
+  }
+}
+
+.import-button{
+    margin-left: 3%;
+}
+
+.main{
+  background-image: linear-gradient(-180deg, #2e4b5e 0%, #243a48 82%);
+  color: #fff;
+  font-size: 3.73333vw;
+  line-height: 2.2;
+  margin-top: 8px;
+}
+.accordion{
+  background-color: #fff;
+  border-bottom: 1px solid #000;
+}
+.accordion dt{
+  color: #000;
+  border-radius: 0 0 8px 8px;
+  font-size: 4vw;
+  font-weight: 600;
+}
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10000000000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.frame-wrap{
+  height: auto !important;
+  top: 40% !important;
+}
+
+.dialogbody{
+  margin: 8px 12px 18px 12px;
+  font-size: 14px;
+}
+
+.bankupidialog{
+  margin: 8px !important;
+  right: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pop_bg{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 80;
+  background: linear-gradient(45deg, rgb(0 0 0 / 64%), rgb(0 0 0 / 47%));  
+}
+
+
+.pop_box {
+  position: fixed;
+  top: 110px;
+  left: 50%;
+  background-color: #eee;
+  width: 400px;
+  border-radius: 5px;
+  padding: 15px;
+  transform: translate(-50%);
+}
+
+.pop_box h3 {
+  font-size: 16px !important;
+  color: #3b5160;
+  margin-bottom: 18px;
+}
+
+.btn-padding {
+  padding: 0 16px 0 16px;
+}
+
+.btn-margin{
+  float: right;
+  margin-top: 12px;
+  display: flex;
+}
+
+.starimg{
+  width: 16px;
+  vertical-align: sub;
+}
+
+.dialog{
+  background-image: linear-gradient(-180deg, #2e4b5e 0%, #243a48 82%);
+  padding: 12px;
+}
+
+.setting-block {
+  font-size: 4vw;
+  color: #e0e6e6;
+  border-bottom: 1px solid #e0e6e6;
+  padding: 1.86667vw 0 0 1.86667vw;
+  flex-wrap: wrap;
+}
+
+.setting-block dd {
+  flex: 0 1 8.33333vw;
+}
+
+.setting-block dd a{
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 32px;
+  font-size: 4vw;
+}
+
+#select{
+  width: 100%;
+}
+
+#select option{
+  width:150px;   
+}
+
+
+.action{
+  width: 26px;
+  height: 26px;
+  margin-left: 3px;   
+  font-size: 0;
+  text-indent: -99999px;
+  float: right;
+  background-position: -32px -1423px;
+  background-image: url(/assets/images/agent-sf42eb279ae.1b7f59561d954e93ce49.png);
+  background-repeat: no-repeat;
+  touch-action: manipulation;
+}
+
+.btn_replay{
+  height: 24px;
+  width: 24px;
+  margin: 0 0 0 10px;
+}
+
+.bankInput_1{
+  margin: 6px 0 0 0; width: 100%;
+}
+
+.bankInput_2{
+  margin: 10px 0 10px 0; width: 100%;
+}
+
+.bankInput_3{
+   width: 100%;
+}
+
+ul .btn{
+  margin-right: 10px;
+}

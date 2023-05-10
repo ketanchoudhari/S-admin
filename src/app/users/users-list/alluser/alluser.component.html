@@ -1,0 +1,194 @@
+<div class="main_wrap">
+  <div id="message" class="message-wrap" [ngClass]="[userStatusresult.errorCode ==0?'success':'error']" *ngIf="userStatusresult">
+    <a class="btn-close">Close</a>
+    <p *ngIf="userStatusresult.errorCode ==0">Changed status successfully</p>
+    <p *ngIf="userStatusresult.errorCode ==1">{{userStatusresult.errorDescription}}</p>
+  </div>
+    <div class="function-wrap">
+      <div style="background-color: #e0e6e6;line-height: 25px;" class="box">
+        <div>
+          <input #searchInput [(ngModel)]="searchTerm" (ngModelChange)="filterByTerm($event)" class="search-input"
+            type="text" name="userId" id="userId" placeholder="Find member...">
+        </div>
+        <!-- <div class="push">
+          <label>Total Users : {{usersListHolder?.length}}</label>
+        </div> -->
+        <div class="push">
+          <button class="btn-send " (click)="onRefresh()">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="totalBox" class="total_box">
+    <dl id="totalUsersDL" class="total_dl">
+      <dt>Total Users</dt>
+      <dd id="totalUsers">
+        <ng-container *ngIf="userType==4 || userType==5 || userType==6 || userType==7">
+          {{totalUser}}
+        </ng-container>
+        <ng-container *ngIf="userType==1 || userType==2 || userType==3">
+          {{totalAdmin + totalPlayer}}
+        </ng-container>
+      </dd>
+    </dl>
+  
+    <dl id="totalAdminDL" class="total_dl" style="display: block">
+      <dt>Total Admin</dt>
+      <dd id="totalAdmin">
+        {{totalAdmin}}
+      </dd>
+    </dl>
+    <dl id="totalPLayerDL" class="total_dl">
+      <dt>Total Players</dt>
+      <dd id="totalPLayer">
+        {{totalPlayer}}
+      </dd>
+    </dl>
+    <dl id="totalOnlineDL" class="total_dl">
+      <dt>Online Users</dt>
+      <dd id="totalOnline">
+        {{totalOnlineUser}}
+      </dd>
+    </dl>
+  </div>
+  <cdk-virtual-scroll-viewport itemSize="18" style="height:80vh">
+    <div class="main_wrap">
+      <div class="agent_path">
+        <div class="table-responsive data-table">
+          <table class="table01 table-pt">
+            <thead class="header">
+              <tr>
+                <th class="header align-L sort_asc" [appSort]="usersList" data-order="asc" data-name="u" colspan=""
+                  rowspan="2">User Name</th>
+                  <th class="header align-L sort_asc" [appSort]="usersList" data-order="asc" data-name="n" colspan=""
+                  rowspan="2">Domain Name</th>
+                <th class="header align-L" colspan="" rowspan="2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *cdkVirtualFor="let user of usersList">
+                <td class="align-L"><span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ user.t }}"></span>{{user.u}} </td>
+                <td class="align-L">{{user.n}} </td>
+                <td id="actionCol">
+                  <ul class="action">
+                    <li>
+                      <a id="profile{{ i }}" class="profile" title="Account Summary"
+                        [routerLink]="['sub', user.d, 'accountSummary']"
+                        [state]="{ userType: user.t }">Profile</a>
+                    </li>
+                    <li *ngIf="showActions">
+                      <a
+                        id="change{{ i }}"
+                        class="status"
+                        title="Change Status"
+                        (click)="openChangeStatusModal(user)"
+                        >Change Status</a
+                      >
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <!-- <tr colspan="2" *ngIf="usersList.length===0">No Data...</tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </cdk-virtual-scroll-viewport>
+  <app-modal [(open)]="changeStatusOpen" (openChange)="resetStatusModal()">
+    <div class="modal-header">
+      <h3>Change Status</h3>
+    </div>
+    <div class="modal-content">
+      <div class="status_id">
+        <p id="changeAccount">
+          <span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ statusUser?.userType }} "></span
+          >{{ statusUser?.userName }}
+        </p>
+        <p
+          [ngClass]="{
+            'status-active': statusUser?.userStatus === 0,
+            'status-suspend': statusUser?.userStatus === 1,
+            'status-lock': statusUser?.userStatus === 2
+          }"
+          id="originalStatus"
+        >
+          <img src="assets/images/transparent.gif" />{{
+            statusMap[statusUser?.userStatus]
+          }}
+        </p>
+      </div>
+      <div class="white-wrap">
+        <ul id="statusBtn" class="status_but">
+          <li>
+            <a
+              id="activeBtn"
+              class="but_active"
+              [ngClass]="{
+                disable: statusUser?.userStatus === 0,
+                open: selectedStatus === 0
+              }"
+              [attr.disabled]="statusUser?.userStatus === 0"
+              (click)="selectStatus($event, 0)"
+            >
+              <img class="" src="assets/images/transparent.gif" />
+              Active
+            </a>
+          </li>
+          <li>
+            <a
+              id="suspendBtn"
+              class="{{(isPremiumSite)?'but_locked':'but_suspend'}}"
+              [ngClass]="{
+                disable: statusUser?.userStatus === 1,
+                open: selectedStatus === 1
+              }"
+              [attr.disabled]="statusUser?.userStatus === 1"
+              (click)="selectStatus($event, 1)"
+            >
+              <img class="" src="assets/images/transparent.gif" />
+              {{(isPremiumSite)?'Locked':'Suspend'}}
+            </a>
+          </li>
+          <li>
+            <a
+              id="lockedBtn"
+              class="{{(isPremiumSite)?'but_suspend':'but_locked'}}"
+              [ngClass]="{
+                disable: statusUser?.userStatus === 2,
+                open: selectedStatus === 2
+              }"
+              [attr.disabled]="statusUser?.userStatus === 2"
+              (click)="selectStatus($event, 2)"
+            >
+              <img class="" src="assets/images/transparent.gif" />
+              {{(isPremiumSite)?'Suspend':'Locked'}}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <form
+          [formGroup]="statusForm"
+          (ngSubmit)="changeStatus()"
+          class="btn_box inline-form"
+        >
+          <div class="form_list">
+            <label>Password: </label>
+            <input
+              id="changeStatusPassword"
+              type="password"
+              placeholder="Enter"
+              formControlName="password"
+              required
+            />
+          </div>
+          <div class="btn_box">
+            <button id="changeStatusBtn" class="btn-send" type="submit">
+              Change
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </app-modal>

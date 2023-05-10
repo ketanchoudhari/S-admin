@@ -1,0 +1,68 @@
+@import "src/assets/scss/tables";
+.box {
+    display: flex;
+  }
+.push {
+    margin-left: auto;
+}
+.table01 .action {
+  .btn {
+    font-size: inherit;
+    text-indent: unset;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+  }
+}
+.total_box {
+  width: 100%;
+  padding: 8px 0;
+  margin-top: 8px;
+  display: flex;
+
+  .total_dl {
+    width: 14.96815%;
+    padding: 0 10px;
+    border-right: 1px solid #d2d2d2;
+
+    dt {
+      font-size: 12px;
+      margin: 0 0 5px 0;
+      color: #9b9b9b;
+    }
+    dd {
+      font-size: 15px;
+      color: #243a48;
+      line-height: 20px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 750px) {
+
+  .total_box {
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 8px;
+    display: flex;
+  
+    .total_dl {
+      width: 100%;
+      padding: 0 10px;
+      border-right: 1px solid #d2d2d2;
+  
+      dt {
+        font-size: 12px;
+        margin: 0 0 5px 0;
+        color: #9b9b9b;
+      }
+      dd {
+        font-size: 15px;
+        color: #243a48;
+        line-height: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}

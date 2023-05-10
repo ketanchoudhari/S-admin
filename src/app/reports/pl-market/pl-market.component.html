@@ -1,0 +1,385 @@
+<div class="main_wrap">
+  <div class="box">
+    <h2>{{Update?.ProfitLossReportbyMarket}}</h2>
+    <h2 class="push"><a id="default" class="btn-send" (click)="getMarketPL()">{{Update?.ShowDefault}}</a></h2>    
+  </div>
+  <!-- function -->
+
+  <div class="function-wrap">
+    <ul class="input-list flowroot">
+      <div id="statusCondition" style="display: none">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select name="betStatus" id="betStatus"></select>
+        </li>
+      </div>
+
+      <li><label>{{Update?.Sports}}</label></li>
+      <li>
+        <select id="func_sports" (change)="selectSport($event.target.value)">
+          <option value="0" selected="selected">{{Update?.All}}</option>
+
+          <option value="soccer">SOCCER</option>
+          <option value="tennis">TENNIS</option>
+          <option value="cricket">CRICKET</option>
+          <option value="horse racing">HORSE_RACING</option>
+          <option value="greyhound racing">GREYHOUND_RACING</option>
+          <option value="casino">CASINO</option>
+          <!-- <option value="1" data-eventreporttype="1">SOCCER_BOOK</option> -->
+
+          <!-- <option value="4" data-eventreporttype="1">CRICKET_BOOK</option>
+
+          <option value="5">RUGBY_UNION</option>
+
+          <option value="7">HORSE_RACING</option>
+
+          <option value="4339">GREYHOUND_RACING</option>
+
+          <option value="6423">AMERICAN_FOOTBALL</option>
+
+          <option value="7522">BASKETBALL</option>
+
+          <option value="2378962">ELECTION</option>
+
+          <option value="9999999">FANCYBET</option>
+
+          <option value="2378961">POLITICS</option>
+
+          <option value="-99">CASINO</option>
+
+          <option value="-97">BPOKER</option>
+
+          <option value="-100" data-eventreporttype="4">BINARY</option> -->
+        </select>
+      </li>
+
+      <li></li>
+
+      <li><label>{{Update?.Period}}</label></li>
+      <li class="blockdis">
+        <div class="webhide ">
+          <input id="startDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" [disabled]="toTimeinput" />
+        </div>
+        to
+        <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" [disabled]="toTimeinput"/>
+      </li>
+      <li style="display: none">({{Update?.TimeZone}}:IST)</li>
+    </ul>
+
+    <ul class="input-list flowroot">
+      <li>
+        <a id="today" (click)="getReportDate('today')" class="btn">{{Update?.Justfortoday}}</a>
+      </li>
+      <li>
+        <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">{{Update?.Fromyesterday}}</a>
+      </li>
+      <li style="display: none">
+        <a id="last7days" href="#" class="btn">Last 7 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last30days" href="#" class="btn">Last 30 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last2months" href="#" class="btn">Last 2 Months</a>
+      </li>
+      <li style="display: none">
+        <a id="last3months" href="#" class="btn">Last 3 Months</a>
+      </li>
+      <li>
+        <a id="getPL" (click)="getMarketPL()" class="btn-send">{{Update?.GetPL}}</a>
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="total_all">
+    <span>
+      <label>{{Update?.Last}}:</label>
+      <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+        <option value="100">100 Txn</option>
+        <option value="50">50 Txn</option>
+        <option value="25">25 Txn</option>
+        <option value="10" selected="">10 Txn</option>
+        <option value=marketReport.length>Full</option>
+      </select>
+    </span>
+    <div class="spacer"></div>
+
+    <span class="total-users">
+      {{Update?.TotalRecords}}: {{marketReport?.length}}
+    </span>
+    <div class="download-reports">
+      <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button [appExportData]="'pdf'" class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <!-- <button [appExportData]="'csv'" class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button> -->
+      <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Report Table -->
+
+  <div id="reportDiv" class="over-wrap" style="max-height: calc(100% - 32px - 93px)">
+    <div class="table-responsive data-table">
+      <table id="table_DL" class="table01 table-pt">
+        <tbody>
+          <tr id="head">
+            <th id="header_eventName" width="" class="align-L sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "sport">{{Update?.Event}}</th>
+            <!-- <th width="15%" class="sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "stake">Stake</th> -->
+            <th width="15%" class="sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "playerPL">{{Update?.PlayerPL}}</th>
+            <th id="header_profitLoss_downLine" width="15%" class="sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "downLinePL">
+              {{Update?.DownlinePL}}
+            </th>
+
+            <th id="header_tax_agent_3" width="15%" class="" style="display: none">
+              Master Comm.
+            </th>
+            <th id="header_rebate_agent_3" width="15%" class="" style="display: none">
+              Master Rebate
+            </th>
+            <th id="header_tax_agent_2" width="15%" class="sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "commision">Super Comm.</th>
+            <th id="header_rebate_agent_2" width="15%" class="" style="display: none">
+              Super Rebate
+            </th>
+            <th id="header_payout_agent_1" width="15%" class="" style="display: none">
+              SS PT
+            </th>
+            <th id="header_tax_agent_1" width="15%" class="" style="display: none">
+              SS Comm.
+            </th>
+            <th id="header_rebate_agent_1" width="15%" class="" style="display: none">
+              SS Rebate
+            </th>
+            <th id="header_profitLoss_agent_1" width="15%" class="" style="display: none">
+              SS Total
+            </th>
+            <th width="15%" class="sort_asc" [appSort] = "marketReport" data-order="asc" data-name = "upLinePL">{{Update?.UplinePL}}</th>
+          </tr>
+        </tbody>
+        <tbody id="content">
+          <ng-container *ngFor="let pl of marketReport | paginate: { itemsPerPage: n, currentPage: p }">
+            <tr id="main_{{ pl.eventId }}_1">
+              <td class="align-L">
+                <a (click)="
+                  toggleExpand(
+                    $event,
+                    'sub_' + pl.eventId + '_',
+                    pl.markets.length
+                  )
+                " id="_byMarket" class="expand-close"></a>
+                <a><span id="_eventType">{{ pl.sport | titlecase }}</span>
+                  <img class="fromto" src="assets/images/transparent.gif" />
+                  <strong id="_eventName">{{ pl.eventName }}</strong></a>
+              </td>
+              <!-- <td id="_stake">
+                <span *ngIf="pl.stake < 0; else plusStake" class="red">({{ pl.stake | indianCurrency }})</span>
+                <ng-template #plusStake>
+                  <span>{{ pl.stake | indianCurrency }}</span>
+                </ng-template>
+              </td> -->
+              <td id="_profitLoss">
+                <span *ngIf="pl.playerPL < 0; else plusPlayerPL" class="red">({{ pl.playerPL | indianCurrency }})
+                </span>
+                <ng-template #plusPlayerPL>
+                  <span>{{ pl.playerPL | indianCurrency }} </span>
+                </ng-template>
+              </td>
+              <td>
+                <span *ngIf="pl.downLinePL < 0; else plusDownPLTemp" class="red">({{ pl.downLinePL | indianCurrency
+                  }})</span>
+                <ng-template #plusDownPLTemp>
+                  <span>{{ pl.downLinePL | indianCurrency }}</span>
+                </ng-template>
+              </td>
+
+              <td id="_tax3" style="display: none">0.00</td>
+              <td id="_rebate3" style="display: none">0.00</td>
+              <td id="_tax2">
+                <span *ngIf="pl.commision < 0; else plusCommisionTemp" class="red">({{ pl.commision | indianCurrency
+                  }})</span>
+                <ng-template #plusCommisionTemp>
+                  <span>{{ pl.commision | indianCurrency }}</span>
+                </ng-template>
+              </td>
+              <td id="_rebate2" style="display: none">0.00</td>
+              <td id="_payout1" style="display: none">0.00</td>
+              <td id="_tax1" style="display: none">0.00</td>
+              <td id="_rebate1" style="display: none">0.00</td>
+              <td id="_profitLoss1" style="display: none">0.00</td>
+              <td id="_profitLossUpLine">{{ pl.upLinePL | indianCurrency }}</td>
+            </tr>
+            <tr id="sub_{{ pl.eventId }}_{{ i }}" *ngFor="let market of pl.markets; index as i" style="display: none"
+              class="expand first">
+              <td class="align-L">
+                <a id="_sportName" class="ico_account">{{
+                  market.marketName | uppercase
+                  }}</a>
+              </td>
+              <td id="sport_stake">
+                <span *ngIf="market.stake < 0; else plusStake" class class="red">
+                  ({{ market.stake | indianCurrency }})
+                </span>
+                <ng-template #plusStake>
+                  <span>{{ market.stake | indianCurrency }}</span>
+                </ng-template>
+              </td>
+              <td id="sport_profitLoss">
+                <span *ngIf="market.playerPL < 0; else plusPlayerPLTemp" class="red">
+                  ({{ market.playerPL | indianCurrency }})
+                </span>
+                <ng-template #plusPlayerPLTemp>
+                  <span>
+                    {{ market.playerPL | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+              <td id="sport_profitLossDownLine">
+                <span *ngIf="market.downLinePL < 0; else plusDownlinePL" class="red">
+                  ({{ market.downLinePL | indianCurrency }})
+                </span>
+                <ng-template #plusDownlinePL>
+                  <span>
+                    {{ market.downLinePL | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+
+              <td id="sport_tax3" style="display: none">0.00</td>
+              <td id="sport_rebate3" style="display: none">0.00</td>
+              <td id="sport_tax2">
+                <span *ngIf="market.commision < 0; else plusCommision" class="red">
+                  ({{ market.commision | indianCurrency }})
+                </span>
+                <ng-template #plusCommision>
+                  <span>
+                    {{ market.commision | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+              <td id="sport_rebate2" style="display: none">0.00</td>
+              <td id="sport_payout1" style="display: none">0.00</td>
+              <td id="sport_tax1" style="display: none">0.00</td>
+              <td id="sport_rebate1" style="display: none">0.00</td>
+              <td id="sport_profitLoss1" style="display: none">0.00</td>
+              <td id="sport_profitLossUpLine">
+                <span *ngIf="market.upLinePL < 0; else plusUpLinePL" class="red">
+                  ({{ market.upLinePL | indianCurrency }})
+                </span>
+                <ng-template #plusUpLinePL>
+                  <span>
+                    {{ market.upLinePL | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+            </tr>
+          </ng-container>
+          <tr class="total">
+            <td class="align-L">Total</td>
+            <!-- <td id="_totalStake">
+              <span *ngIf="totalRow.stake < 0; else plusStakeTotal" class="red">
+                ({{ totalRow.stake | indianCurrency }})
+              </span>
+              <ng-template #plusStakeTotal>
+                <span>
+                  {{ totalRow.stake | indianCurrency }}
+                </span>
+              </ng-template>
+            </td> -->
+            <td id="_totalProfitLoss">
+              <span *ngIf="totalRow.playerPL < 0; else plusPlayerPLTotal" class="red">
+                ({{ totalRow.playerPL | indianCurrency }})
+              </span>
+              <ng-template #plusPlayerPLTotal>
+                <span>
+                  {{ totalRow.playerPL | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalProfitLossDownLine">
+              <span *ngIf="totalRow.downLinePL < 0; else plusdownLinePLTotal" class="red">
+                ({{ totalRow.downLinePL | indianCurrency }})
+              </span>
+              <ng-template #plusdownLinePLTotal>
+                <span>
+                  {{ totalRow.downLinePL | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+
+            <td id="_totalTax3" style="display: none">0.00</td>
+            <td id="_totalRebate3" style="display: none">0.00</td>
+            <td id="_totalTax2">
+              <span *ngIf="totalRow.commision < 0; else pluscommisionTotal" class="red">
+                ({{ totalRow.commision | indianCurrency }})
+              </span>
+              <ng-template #pluscommisionTotal>
+                <span>
+                  {{ totalRow.commision | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalRebate2" style="display: none">0.00</td>
+            <td id="_totalPayout1" style="display: none">0.00</td>
+            <td id="_totalTax1" style="display: none">0.00</td>
+            <td id="_totalRebate1" style="display: none">0.00</td>
+            <td id="_totalProfitLoss1" style="display: none">0.00</td>
+            <td id="_totalProfitLossUpLine">
+              <span *ngIf="totalRow.upLinePL < 0; else plusupLinePLTotal" class="red">
+                ({{ totalRow.upLinePL | indianCurrency }})
+              </span>
+              <ng-template #plusupLinePLTotal>
+                <span>
+                  {{ totalRow.upLinePL | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-template #pagination="paginationApi" *ngIf="marketReport && marketReport.length > 10"
+        (pageChange)="p = $event">
+        <ul id="pageNumberContent" class="pages">
+          <li id="prev">
+            <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+            <ng-template #prevTemp>
+              <a (click)="pagination.previous()">Prev</a>
+            </ng-template>
+          </li>
+          <ng-container *ngFor="let page of pagination.pages">
+            <li id="pageNumber">
+              <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value"
+                class="btn">{{ page.value }}
+              </a>
+              <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value
+                }}
+              </a>
+            </li>
+          </ng-container>
+
+          <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+          <li id="next">
+            <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+            <ng-template #nextTemp>
+              <a (click)="pagination.next()">Next</a>
+            </ng-template>
+          </li>
+        </ul>
+      </pagination-template>
+    </div>
+  </div>
+</div>

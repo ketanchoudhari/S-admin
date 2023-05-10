@@ -1,0 +1,1219 @@
+
+
+.full-wrap {
+  position: relative;
+  min-width: 1350px;
+  max-width: calc(100% - 0px);
+  // height: calc(100% - 105px);
+  margin: 0 auto;
+}
+
+
+@media (max-width: 750px) {
+  .full-wrap {
+    min-width: 100%;
+    padding: 5px;
+  }
+
+  .hidemob{
+    display: none;
+  }
+  .middle-pane{
+    display: block !important;
+  }
+
+  .tabs {
+    width: 100% !important;
+    white-space: nowrap;
+    padding: 2px !important;
+  }
+  .tabs ul li {
+    padding: 0px !important;
+  }
+
+  label >span{
+    line-height: 20px;
+    font-size: 12px;
+  }
+
+  .game-team td, .game-scores td {
+    font-size: 15px;
+  }
+
+  .h3, h3{
+    font-size: 17px;
+  }
+  
+}
+.container{
+  min-width: 100%;
+}
+
+@import "src/assets/scss/tables";
+@import "src/vars";
+
+.middle-pane {
+  display: flex;
+  justify-content: space-evenly;
+
+  & > div {
+    flex: 1;
+  }
+
+  .left-col {
+    display: flex;
+    flex-flow: column;
+  }
+  .right-col {
+    display: flex;
+    flex-flow: column;
+  }
+
+  .table-container {
+
+    td {
+      padding: 0.3rem;
+    }
+  }
+}
+
+.backheader {
+  background-color: lighten($color: $back, $amount: 10%) !important;
+}
+
+.layheader {
+  background-color: $lay !important;
+}
+
+.odd {
+  width: 10%;
+  text-align: center;
+}
+
+table {
+  &.match-0dds,
+  &.fancy {
+    td {
+      padding: 0.3rem;
+    }
+  }
+}
+
+.sessionbetbox a,
+.liabilitybox {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+
+  color: #1e1e1e;
+
+  & > * {
+    margin-right: 8px;
+  }
+}
+
+.liabilitybox {
+  & > div {
+    flex: 1;
+  }
+  & > div {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.table-container {
+  // height: 100%;
+  overflow-y: auto;
+}
+
+::ng-deep {
+  .btn_box {
+    margin-top: 8px;
+  }
+
+  .white-wrap input[type="text"] {
+    background-color: #eee;
+  }
+}
+
+.switch1 {
+  position: relative;
+}
+
+.btn_box .btn {
+  margin-right: 8px;
+}
+
+.backlay {
+  margin-right: 8px;
+}
+
+.total_all {
+  align-items: center;
+}
+
+.table-s caption {
+  line-height: 2;
+}
+
+.sub-row {
+  padding-left: 4px;
+  border-left: rgb(87, 87, 87);
+  td {
+    padding: 0.1em!important;
+    padding-left: 4px !important;
+
+  }
+}
+
+
+
+
+.table-container{
+  // overflow: scroll;
+}
+
+
+
+.toggleable-list-title{
+  background-color: #3b5160;
+    border-bottom: 1px solid #7e97a7;
+    color: #fff;
+    line-height: 2;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.widget-caption{
+  padding-left: 10px;
+}
+
+
+
+
+
+
+
+.game-team, .game-scores {
+  width: 100%;
+  background-color: #1b2d38;
+  color: #fff;
+  line-height: 22px;
+  font-size: 18px;
+  font-weight: 700;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 12px;
+}
+table {
+  /* width: 100%; */
+}
+table {
+  border-collapse: collapse;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+table {
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  white-space: normal;
+  line-height: normal;
+  font-weight: normal;
+  font-size: medium;
+  font-style: normal;
+  color: -internal-quirk-inherit;
+  text-align: start;
+  border-spacing: 2px;
+  border-color: grey;
+  font-variant: normal;
+}
+
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+// .game-team, .game-scores {
+//   width: 100%;
+//   background-color: #1b2d38;
+//   color: #fff;
+//   line-height: 22px;
+//   font-size: 18px;
+//   font-weight: 700;
+// }
+
+
+.game-team .game-visit, .game-scores .game-visit {
+  padding: 5px 30px;
+}
+.align-R, .table01, .table-s, .slip-back input, .slip-lay input, .slip-back textarea, .slip-lay textarea, .slip-back .col-profit, .slip-lay .col-profit, .slip-back .inn_runs dd, .slip-lay .inn_runs dd, .time_zone, .path ul, .slip-head .col-profit, .matched-head .col-profit, .cashout-wrap dl, .game-team .game-visit, .game-scores .game-visit, .bets .refer-book, .bets-HS .refer-book, .bets-GH .refer-book, .quick-bet-confirm li {
+  text-align: right;
+}
+.game-team td, .game-scores td {
+  position: relative;
+  width: 40%;
+  height: 28px;
+  vertical-align: top;
+}
+
+
+.game-team .game-vs, .game-scores .game-vs {
+  width: 20%;
+  font-size: 12px;
+  color: #243a48;
+  line-height: 16px;
+  vertical-align: top;
+}
+
+.game-team .game-home, .game-scores .game-home {
+  padding: 5px 30px;
+}
+.game-team td, .game-scores td {
+  position: relative;
+  width: 40%;
+  height: 28px;
+  vertical-align: top;
+}
+
+
+.game-team .game-visit span, .game-scores .game-visit span {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  background-position: -388px -656px;
+  height: 38px;
+  width: 26px;
+}
+.displayB, .delete, .btn, .btn-send, .pages a, .calendarTable_inputBox input, .calendarTable_inputBox textarea, .slip-wrap h3 a, .matched-wrap h3 a, .live-wrap h3 a, .tv-wrap h3 a, .game-wrap h3 a, .game-highlight-wrap h3 a, .game-wrap-horse h3 a, .favor-wrap h3 a, .sub_path h3 a, .slip-back dt:hover .full-amount, .slip-lay dt:hover .full-amount, .slip-back dd:hover .full-amount, .slip-lay dd:hover .full-amount, .btn-live, .btn-book, .account-wrap ul a, .more_drop-list a, .selection-list a, .fancy-suspend span, .fancy-suspend-white span, .power-wrap h3 img, .power-wrap-b img, .login-wrap .btn-login, .cricexch .login-wrap .btn-signup, .header a, .account-wrap li .refresh-bar, .account-wrap a, .language, .flag, .menu-wrap a, .menu li:hover ul, .setting-wrap li:hover ul, .menu-list a, .menu-list .Go, .favor-set, .path .path-back, .path-pop a, .short-amount, .odd-add a, .stake-popup a, .slider-bar span, .slider-bar a, .live:before, .load-pending strong, .favor, .kv-wrap a, .marquee-list li a, .tab-highlight a, .tab-markets a, .event-left .slip-head span, .event-right .slip-head span, .event-left .matched-head span, .event-right .matched-head span, .live-list a, .live-list a:after, .game-list-col dd a, .game-list-col dd a span, .game-list-col dd .info, .game-head a, .game-team .game-visit span, .game-scores .game-visit span, .game-team .game-home span, .game-scores .game-home span, .game-team .game-vs span, .game-scores .game-vs span, .game-scores ul .scores-box span, .game-progress:after, .sum-status, .score-pop:before, .score-pop-last:before, .tab-HS a, .bets td a, .bets-HS td a, .bets-GH td a, .bets td span, .bets-HS td span, .bets-GH td span, .more, .suspend span, .bets .suspend span, .bets-HS .suspend span, .bets-GH .suspend span, .line_markets-team .game-vs div:before, .line_markets-team .game-vs div:after, .line_market-name span, .quick_bet-wrap .btn span, .quick_bet-wrap .btn-send span, .quick_bet-wrap .pages a span, .pages .quick_bet-wrap a span, .quick_bet-wrap .calendarTable_inputBox input span, .calendarTable_inputBox .quick_bet-wrap input span, .quick_bet-wrap .calendarTable_inputBox textarea span, .calendarTable_inputBox .quick_bet-wrap textarea span, .game-fancy .info-inplay, .game-fancy.in-play:before, .fancy-head .in-play span:before, .fancy-info dt span, .sportsbook-head h4:after, .sportsbook-head .tc-content h5:after, .tc-content .sportsbook-head h5:after, .close_pop, .error-text, .go-back, .pop-close, .tab a, .expand-close, .expand-open, .selection, .initial-balance dt span, .final-balance dt span, .announce-footer .confirm-checkbox, .cricexch .support-wrap, .cricexch .power-wrap, .cricexch .policy-link, .cricexch .RnR-link {
+  display: block;
+}
+.main-sprite, .btn-close, .icon-time, .icon-live, .icon-irun, .icon-predict, .icon-cashout, .icon-in_play, .icon-no_play, .icon-cricket, .icon-type_soccer, .icon-tennis, .icon-basketball, .icon-dog, .icon-HR, .icon-racing, .game-wrap .to-expand, .game-highlight-wrap .to-expand, .game-wrap-horse .to-expand, .close.game-wrap .to-expand, .close.game-highlight-wrap .to-expand, .close.game-wrap-horse .to-expand, .o_spondemo .game-wrap .to-expand, .o_spondemo .game-highlight-wrap .to-expand, .o_spondemo .game-wrap-horse .to-expand, .o_spondemo .close.game-wrap .to-expand, .o_spondemo .close.game-highlight-wrap .to-expand, .o_spondemo .close.game-wrap-horse .to-expand, .favor, .favor.select, .marquee-wrap:before, .upcome-head dt, .tab-highlight a, .tab-markets a, .tab-highlight a.select, .tab-markets a.select, .login_to_go .close, .support-mail img, .support-app img, .support-telegram img, .live-list a:after, .icon-TV_head, .game-list-col:hover .to-win, .game-list-col:hover .to-lose, .game-list-col dd .info, .game-list-col .col-visit, .game-list-col .col-home, .game-list-col .col-draw, .game-head .favor, .game-head .favor.select, .game-head .refresh, .game-team .game-visit span, .game-scores .game-visit span, .game-team .game-home span, .game-scores .game-home span, .game-scores ul .scores-box, .its_turn, .icon-card-yellow, .icon-card-red, .icon-soccer, .score-pop:before, .score-pop-last:before, .scores-event img, .scores-line img, .tab-HS .more_drop, .tab-HS .more_drop.select, .for-agent .fancy-head h4:after, .for-agent .fancy-head .tc-content h5:after, .tc-content .for-agent .fancy-head h5:after, .bets tr:hover .to-win, .bets-HS tr:hover .to-win, .bets-GH tr:hover .to-win, .bets tr:hover .to-lose, .bets-HS tr:hover .to-lose, .bets-GH tr:hover .to-lose, .bets .back-all, .bets-HS .back-all, .bets-GH .back-all, .bets .lay-all, .bets-HS .lay-all, .bets-GH .lay-all, .bets.disable .back-all, .disable.bets-HS .back-all, .disable.bets-GH .back-all, .bets.disable .lay-all, .disable.bets-HS .lay-all, .disable.bets-GH .lay-all, .uniform, .to-win, .to-lose, .more, .line_markets-team .game-visit span, .line_markets-team .game-home span, .line_markets-team .game-vs div:before, .line_markets-team .game-vs div:after, .btn-rules img, .line_market-name, .add-pin, .delete-pin, .col-info .add-pin, .col-info .delete-pin, h3 .add-pin, h3 .delete-pin, h4 .add-pin, .tc-content h5 .add-pin, h4 .delete-pin, .tc-content h5 .delete-pin, .arrow-dialog, .one_click-setting .a-edit img, .one_click-stake, .quick_bet-wrap .odd-add .up, .quick_bet-wrap .odd-add .down, .quick_bet-wrap .odd-add.disable .up, .quick_bet-wrap .odd-add.disable .down, .edit img, .game-fancy .info-inplay, .game-fancy.in-play:before, .game-bookmaker.in-play:before, .fancy-head .in-play span:before, .btn-fancybet_rules, .sportsbook-head h4:after, .sportsbook-head .tc-content h5:after, .tc-content .sportsbook-head h5:after, .o_12bet .game-wrap .to-expand, .o_12bet .game-wrap.close .to-expand, .o_12bet .tab-highlight a, .o_12bet .tab-markets a, .o_12bet .tab-highlight a.select, .o_12bet .tab-markets a.select, .o_12bet .game-wrap-horse .to-expand, .o_12bet .game-wrap-horse.close .to-expand, .o_12bet .add-pin h3, .o_12bet .delete-pin h3, .o_12bet .one_click-stake, .o_dafabet .game-wrap .to-expand, .o_dafabet .game-wrap.close .to-expand, .o_dafabet .tab-highlight a, .o_dafabet .tab-markets a, .o_dafabet .tab-highlight a.select, .o_dafabet .tab-markets a.select, .o_dafabet .game-wrap-horse .to-expand, .o_dafabet .game-wrap-horse.close .to-expand, .o_dafabet .add-pin h3, .o_dafabet .delete-pin h3, .o_dafabet .one_click-stake, .mazaplay .one_click-setting .a-edit img, .mazaplay .one_click-stake, .mysports247 .one_click-setting .a-edit img, .mysports247 .one_click-stake, .cricexch .login_to_go .close, .cricexch .one_click-setting .a-edit img, .cricexch .one_click-stake, .o_spondemo .tab-highlight, .o_spondemo .tab-markets, .o_spondemo .tab-highlight a, .o_spondemo .tab-markets a, .o_spondemo .tab-highlight a.select, .o_spondemo .tab-markets a.select, .o_spondemo .add-pin h3, .o_spondemo .delete-pin h3, .o_spondemo .one_click-stake, .skyinplay .one_click-setting .a-edit img, .skyinplay .one_click-stake, .bigexch .one_click-setting .a-edit img, .bigexch .one_click-stake, .masterexchange .login_to_go .close, .masterexchange .one_click-setting .a-edit img, .masterexchange .one_click-stake, .matador .one_click-setting .a-edit img, .matador .one_click-stake, .fairenter .one_click-setting .a-edit img, .fairenter .one_click-stake, .lucky7 .one_click-setting .a-edit img, .lucky7 .one_click-stake, .qexch .one_click-setting .a-edit img, .qexch .one_click-stake, .betmygame .one_click-setting .a-edit img, .betmygame .one_click-stake, .fancyfair .one_click-setting .a-edit img, .fancyfair .one_click-stake, .maruti .one_click-setting .a-edit img, .maruti .one_click-stake, .marutibook .one_click-setting .a-edit img, .marutibook .one_click-stake {
+  background-image: url(../../../assets/images/sprite/main-se21de741bc.png);
+  background-repeat: no-repeat;
+}
+.game-team .game-vs div, .game-scores .game-vs div {
+  height: 34px;
+  background-color: #eee;
+  white-space: nowrap;
+}
+div {
+  display: block;
+}
+.game-team .game-vs, .game-scores .game-vs {
+  width: 20%;
+  font-size: 12px;
+  color: #243a48;
+  line-height: 16px;
+  vertical-align: top;
+}
+
+
+.align-C, .loading li, .btn, .btn-send, .pages a, .calendarTable_inputBox input, .calendarTable_inputBox textarea, .change_pass, .slip-back dd, .slip-lay dd, .btn-live, .btn-book, .fancy-suspend span, .fancy-suspend-white span, .browser-wrap, .saddle_1, .saddle_1A, .saddle_1B, .saddle_1C, .saddle_1D, .saddle_1X, .saddle_1Y, .saddle_2, .saddle_2B, .saddle_2C, .saddle_2X, .saddle_3, .saddle_3C, .saddle_3D, .saddle_3E, .saddle_3X, .saddle_4, .saddle_4D, .saddle_4X, .saddle_5, .saddle_6, .saddle_7, .saddle_8, .saddle_9, .saddle_10, .saddle_11, .saddle_11F, .saddle_12, .saddle_12F, .saddle_13, .saddle_13F, .saddle_14, .saddle_14F, .saddle_15, .saddle_15F, .saddle_16, .saddle_16F, .saddle_17, .saddle_17F, .saddle_18, .saddle_18F, .saddle_19, .saddle_19F, .saddle_20, .saddle_20F, .saddle_21, .saddle_21F, .saddle_22, .saddle_22F, .saddle_23, .saddle_23F, .saddle_24, .saddle_24F, .saddle_25, .saddle_25F, .saddle_26, .saddle_26F, .saddle_27, .saddle_27F, .saddle_28, .saddle_28F, .saddle_29, .saddle_29F, .saddle_30, .saddle_30F, .login-wrap .btn-login, .cricexch .login-wrap .btn-signup, .account-wrap ul .logout a, .stake-set .stake_edit-input, .odds-set .stake_edit-input, .col-edit a, .slip-wrap p, .slip-head li, .matched-head li, .stake-popup a, .load-pending, .tab-highlight li, .tab-markets li, .message-wrap p, .dialog-wrap h4, .dialog-wrap-w h4, .dialog-wrap .tc-content h5, .tc-content .dialog-wrap h5, .dialog-wrap-w .tc-content h5, .tc-content .dialog-wrap-w h5, .dialog-wrap .break li, .dialog-wrap-w .break li, .support-wrap, .game-list-col dd a, .game-team .game-vs, .game-scores .game-vs, .game-scores ul .scores-box, .tennis .scores-box, .sum-status, .tab-HS a, .bets td, .bets-HS td, .bets-GH td, .horse-box li, .suspend, .btn-rules, .rules-wrap h3, .closed-next, .one_click-setting a, .one_click-stake, .one_click-stake input, .one_click-stake textarea, .quick_bet-progress .progress-bar-txt, .quick_bet-message dd, .fancy-info dt span, .confirm_box .white-wrap, .go-back, .pop-close, .tab a, .pages, .chart-wrap, .initial-balance dt span, .final-balance dt span, .announce-footer, .announce-content table, .article-date, .news-wrap h2 {
+    text-align: center;
+}
+
+
+.game-team .game-vs span, .game-scores .game-vs span {
+  color: #7e97a7;
+  font-weight: 400;
+}
+.displayB, .delete, .btn, .btn-send, .pages a, .calendarTable_inputBox input, .calendarTable_inputBox textarea, .slip-wrap h3 a, .matched-wrap h3 a, .live-wrap h3 a, .tv-wrap h3 a, .game-wrap h3 a, .game-highlight-wrap h3 a, .game-wrap-horse h3 a, .favor-wrap h3 a, .sub_path h3 a, .slip-back dt:hover .full-amount, .slip-lay dt:hover .full-amount, .slip-back dd:hover .full-amount, .slip-lay dd:hover .full-amount, .btn-live, .btn-book, .account-wrap ul a, .more_drop-list a, .selection-list a, .fancy-suspend span, .fancy-suspend-white span, .power-wrap h3 img, .power-wrap-b img, .login-wrap .btn-login, .cricexch .login-wrap .btn-signup, .header a, .account-wrap li .refresh-bar, .account-wrap a, .language, .flag, .menu-wrap a, .menu li:hover ul, .setting-wrap li:hover ul, .menu-list a, .menu-list .Go, .favor-set, .path .path-back, .path-pop a, .short-amount, .odd-add a, .stake-popup a, .slider-bar span, .slider-bar a, .live:before, .load-pending strong, .favor, .kv-wrap a, .marquee-list li a, .tab-highlight a, .tab-markets a, .event-left .slip-head span, .event-right .slip-head span, .event-left .matched-head span, .event-right .matched-head span, .live-list a, .live-list a:after, .game-list-col dd a, .game-list-col dd a span, .game-list-col dd .info, .game-head a, .game-team .game-visit span, .game-scores .game-visit span, .game-team .game-home span, .game-scores .game-home span, .game-team .game-vs span, .game-scores .game-vs span, .game-scores ul .scores-box span, .game-progress:after, .sum-status, .score-pop:before, .score-pop-last:before, .tab-HS a, .bets td a, .bets-HS td a, .bets-GH td a, .bets td span, .bets-HS td span, .bets-GH td span, .more, .suspend span, .bets .suspend span, .bets-HS .suspend span, .bets-GH .suspend span, .line_markets-team .game-vs div:before, .line_markets-team .game-vs div:after, .line_market-name span, .quick_bet-wrap .btn span, .quick_bet-wrap .btn-send span, .quick_bet-wrap .pages a span, .pages .quick_bet-wrap a span, .quick_bet-wrap .calendarTable_inputBox input span, .calendarTable_inputBox .quick_bet-wrap input span, .quick_bet-wrap .calendarTable_inputBox textarea span, .calendarTable_inputBox .quick_bet-wrap textarea span, .game-fancy .info-inplay, .game-fancy.in-play:before, .fancy-head .in-play span:before, .fancy-info dt span, .sportsbook-head h4:after, .sportsbook-head .tc-content h5:after, .tc-content .sportsbook-head h5:after, .close_pop, .error-text, .go-back, .pop-close, .tab a, .expand-close, .expand-open, .selection, .initial-balance dt span, .final-balance dt span, .announce-footer .confirm-checkbox, .cricexch .support-wrap, .cricexch .power-wrap, .cricexch .policy-link, .cricexch .RnR-link {
+  display: block;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.game-team .game-vs div, .game-scores .game-vs div {
+  height: 34px;
+  background-color: #eee;
+  white-space: nowrap;
+}
+.game-team .game-vs, .game-scores .game-vs {
+  width: 20%;
+  font-size: 12px;
+  color: #243a48;
+  line-height: 16px;
+  vertical-align: top;
+}
+.align-C, .loading li, .btn, .btn-send, .pages a, .calendarTable_inputBox input, .calendarTable_inputBox textarea, .change_pass, .slip-back dd, .slip-lay dd, .btn-live, .btn-book, .fancy-suspend span, .fancy-suspend-white span, .browser-wrap, .saddle_1, .saddle_1A, .saddle_1B, .saddle_1C, .saddle_1D, .saddle_1X, .saddle_1Y, .saddle_2, .saddle_2B, .saddle_2C, .saddle_2X, .saddle_3, .saddle_3C, .saddle_3D, .saddle_3E, .saddle_3X, .saddle_4, .saddle_4D, .saddle_4X, .saddle_5, .saddle_6, .saddle_7, .saddle_8, .saddle_9, .saddle_10, .saddle_11, .saddle_11F, .saddle_12, .saddle_12F, .saddle_13, .saddle_13F, .saddle_14, .saddle_14F, .saddle_15, .saddle_15F, .saddle_16, .saddle_16F, .saddle_17, .saddle_17F, .saddle_18, .saddle_18F, .saddle_19, .saddle_19F, .saddle_20, .saddle_20F, .saddle_21, .saddle_21F, .saddle_22, .saddle_22F, .saddle_23, .saddle_23F, .saddle_24, .saddle_24F, .saddle_25, .saddle_25F, .saddle_26, .saddle_26F, .saddle_27, .saddle_27F, .saddle_28, .saddle_28F, .saddle_29, .saddle_29F, .saddle_30, .saddle_30F, .login-wrap .btn-login, .cricexch .login-wrap .btn-signup, .account-wrap ul .logout a, .stake-set .stake_edit-input, .odds-set .stake_edit-input, .col-edit a, .slip-wrap p, .slip-head li, .matched-head li, .stake-popup a, .load-pending, .tab-highlight li, .tab-markets li, .message-wrap p, .dialog-wrap h4, .dialog-wrap-w h4, .dialog-wrap .tc-content h5, .tc-content .dialog-wrap h5, .dialog-wrap-w .tc-content h5, .tc-content .dialog-wrap-w h5, .dialog-wrap .break li, .dialog-wrap-w .break li, .support-wrap, .game-list-col dd a, .game-team .game-vs, .game-scores .game-vs, .game-scores ul .scores-box, .tennis .scores-box, .sum-status, .tab-HS a, .bets td, .bets-HS td, .bets-GH td, .horse-box li, .suspend, .btn-rules, .rules-wrap h3, .closed-next, .one_click-setting a, .one_click-stake, .one_click-stake input, .one_click-stake textarea, .quick_bet-progress .progress-bar-txt, .quick_bet-message dd, .fancy-info dt span, .confirm_box .white-wrap, .go-back, .pop-close, .tab a, .pages, .chart-wrap, .initial-balance dt span, .final-balance dt span, .announce-footer, .announce-content table, .article-date, .news-wrap h2 {
+  text-align: center;
+}
+.game-team, .game-scores {
+  width: 100%;
+  background-color: #1b2d38;
+  color: #fff;
+  line-height: 22px;
+  font-size: 18px;
+  font-weight: 700;
+}
+// <style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 12px;
+}
+
+
+.game-team .game-home span, .game-scores .game-home span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: -388px -295px;
+  height: 38px;
+  width: 26px;
+}
+.displayB, .delete, .btn, .btn-send, .pages a, .calendarTable_inputBox input, .calendarTable_inputBox textarea, .slip-wrap h3 a, .matched-wrap h3 a, .live-wrap h3 a, .tv-wrap h3 a, .game-wrap h3 a, .game-highlight-wrap h3 a, .game-wrap-horse h3 a, .favor-wrap h3 a, .sub_path h3 a, .slip-back dt:hover .full-amount, .slip-lay dt:hover .full-amount, .slip-back dd:hover .full-amount, .slip-lay dd:hover .full-amount, .btn-live, .btn-book, .account-wrap ul a, .more_drop-list a, .selection-list a, .fancy-suspend span, .fancy-suspend-white span, .power-wrap h3 img, .power-wrap-b img, .login-wrap .btn-login, .cricexch .login-wrap .btn-signup, .header a, .account-wrap li .refresh-bar, .account-wrap a, .language, .flag, .menu-wrap a, .menu li:hover ul, .setting-wrap li:hover ul, .menu-list a, .menu-list .Go, .favor-set, .path .path-back, .path-pop a, .short-amount, .odd-add a, .stake-popup a, .slider-bar span, .slider-bar a, .live:before, .load-pending strong, .favor, .kv-wrap a, .marquee-list li a, .tab-highlight a, .tab-markets a, .event-left .slip-head span, .event-right .slip-head span, .event-left .matched-head span, .event-right .matched-head span, .live-list a, .live-list a:after, .game-list-col dd a, .game-list-col dd a span, .game-list-col dd .info, .game-head a, .game-team .game-visit span, .game-scores .game-visit span, .game-team .game-home span, .game-scores .game-home span, .game-team .game-vs span, .game-scores .game-vs span, .game-scores ul .scores-box span, .game-progress:after, .sum-status, .score-pop:before, .score-pop-last:before, .tab-HS a, .bets td a, .bets-HS td a, .bets-GH td a, .bets td span, .bets-HS td span, .bets-GH td span, .more, .suspend span, .bets .suspend span, .bets-HS .suspend span, .bets-GH .suspend span, .line_markets-team .game-vs div:before, .line_markets-team .game-vs div:after, .line_market-name span, .quick_bet-wrap .btn span, .quick_bet-wrap .btn-send span, .quick_bet-wrap .pages a span, .pages .quick_bet-wrap a span, .quick_bet-wrap .calendarTable_inputBox input span, .calendarTable_inputBox .quick_bet-wrap input span, .quick_bet-wrap .calendarTable_inputBox textarea span, .calendarTable_inputBox .quick_bet-wrap textarea span, .game-fancy .info-inplay, .game-fancy.in-play:before, .fancy-head .in-play span:before, .fancy-info dt span, .sportsbook-head h4:after, .sportsbook-head .tc-content h5:after, .tc-content .sportsbook-head h5:after, .close_pop, .error-text, .go-back, .pop-close, .tab a, .expand-close, .expand-open, .selection, .initial-balance dt span, .final-balance dt span, .announce-footer .confirm-checkbox, .cricexch .support-wrap, .cricexch .power-wrap, .cricexch .policy-link, .cricexch .RnR-link {
+  display: block;
+}
+.main-sprite, .btn-close, .icon-time, .icon-live, .icon-irun, .icon-predict, .icon-cashout, .icon-in_play, .icon-no_play, .icon-cricket, .icon-type_soccer, .icon-tennis, .icon-basketball, .icon-dog, .icon-HR, .icon-racing, .game-wrap .to-expand, .game-highlight-wrap .to-expand, .game-wrap-horse .to-expand, .close.game-wrap .to-expand, .close.game-highlight-wrap .to-expand, .close.game-wrap-horse .to-expand, .o_spondemo .game-wrap .to-expand, .o_spondemo .game-highlight-wrap .to-expand, .o_spondemo .game-wrap-horse .to-expand, .o_spondemo .close.game-wrap .to-expand, .o_spondemo .close.game-highlight-wrap .to-expand, .o_spondemo .close.game-wrap-horse .to-expand, .favor, .favor.select, .marquee-wrap:before, .upcome-head dt, .tab-highlight a, .tab-markets a, .tab-highlight a.select, .tab-markets a.select, .login_to_go .close, .support-mail img, .support-app img, .support-telegram img, .live-list a:after, .icon-TV_head, .game-list-col:hover .to-win, .game-list-col:hover .to-lose, .game-list-col dd .info, .game-list-col .col-visit, .game-list-col .col-home, .game-list-col .col-draw, .game-head .favor, .game-head .favor.select, .game-head .refresh, .game-team .game-visit span, .game-scores .game-visit span, .game-team .game-home span, .game-scores .game-home span, .game-scores ul .scores-box, .its_turn, .icon-card-yellow, .icon-card-red, .icon-soccer, .score-pop:before, .score-pop-last:before, .scores-event img, .scores-line img, .tab-HS .more_drop, .tab-HS .more_drop.select, .for-agent .fancy-head h4:after, .for-agent .fancy-head .tc-content h5:after, .tc-content .for-agent .fancy-head h5:after, .bets tr:hover .to-win, .bets-HS tr:hover .to-win, .bets-GH tr:hover .to-win, .bets tr:hover .to-lose, .bets-HS tr:hover .to-lose, .bets-GH tr:hover .to-lose, .bets .back-all, .bets-HS .back-all, .bets-GH .back-all, .bets .lay-all, .bets-HS .lay-all, .bets-GH .lay-all, .bets.disable .back-all, .disable.bets-HS .back-all, .disable.bets-GH .back-all, .bets.disable .lay-all, .disable.bets-HS .lay-all, .disable.bets-GH .lay-all, .uniform, .to-win, .to-lose, .more, .line_markets-team .game-visit span, .line_markets-team .game-home span, .line_markets-team .game-vs div:before, .line_markets-team .game-vs div:after, .btn-rules img, .line_market-name, .add-pin, .delete-pin, .col-info .add-pin, .col-info .delete-pin, h3 .add-pin, h3 .delete-pin, h4 .add-pin, .tc-content h5 .add-pin, h4 .delete-pin, .tc-content h5 .delete-pin, .arrow-dialog, .one_click-setting .a-edit img, .one_click-stake, .quick_bet-wrap .odd-add .up, .quick_bet-wrap .odd-add .down, .quick_bet-wrap .odd-add.disable .up, .quick_bet-wrap .odd-add.disable .down, .edit img, .game-fancy .info-inplay, .game-fancy.in-play:before, .game-bookmaker.in-play:before, .fancy-head .in-play span:before, .btn-fancybet_rules, .sportsbook-head h4:after, .sportsbook-head .tc-content h5:after, .tc-content .sportsbook-head h5:after, .o_12bet .game-wrap .to-expand, .o_12bet .game-wrap.close .to-expand, .o_12bet .tab-highlight a, .o_12bet .tab-markets a, .o_12bet .tab-highlight a.select, .o_12bet .tab-markets a.select, .o_12bet .game-wrap-horse .to-expand, .o_12bet .game-wrap-horse.close .to-expand, .o_12bet .add-pin h3, .o_12bet .delete-pin h3, .o_12bet .one_click-stake, .o_dafabet .game-wrap .to-expand, .o_dafabet .game-wrap.close .to-expand, .o_dafabet .tab-highlight a, .o_dafabet .tab-markets a, .o_dafabet .tab-highlight a.select, .o_dafabet .tab-markets a.select, .o_dafabet .game-wrap-horse .to-expand, .o_dafabet .game-wrap-horse.close .to-expand, .o_dafabet .add-pin h3, .o_dafabet .delete-pin h3, .o_dafabet .one_click-stake, .mazaplay .one_click-setting .a-edit img, .mazaplay .one_click-stake, .mysports247 .one_click-setting .a-edit img, .mysports247 .one_click-stake, .cricexch .login_to_go .close, .cricexch .one_click-setting .a-edit img, .cricexch .one_click-stake, .o_spondemo .tab-highlight, .o_spondemo .tab-markets, .o_spondemo .tab-highlight a, .o_spondemo .tab-markets a, .o_spondemo .tab-highlight a.select, .o_spondemo .tab-markets a.select, .o_spondemo .add-pin h3, .o_spondemo .delete-pin h3, .o_spondemo .one_click-stake, .skyinplay .one_click-setting .a-edit img, .skyinplay .one_click-stake, .bigexch .one_click-setting .a-edit img, .bigexch .one_click-stake, .masterexchange .login_to_go .close, .masterexchange .one_click-setting .a-edit img, .masterexchange .one_click-stake, .matador .one_click-setting .a-edit img, .matador .one_click-stake, .fairenter .one_click-setting .a-edit img, .fairenter .one_click-stake, .lucky7 .one_click-setting .a-edit img, .lucky7 .one_click-stake, .qexch .one_click-setting .a-edit img, .qexch .one_click-stake, .betmygame .one_click-setting .a-edit img, .betmygame .one_click-stake, .fancyfair .one_click-setting .a-edit img, .fancyfair .one_click-stake, .maruti .one_click-setting .a-edit img, .maruti .one_click-stake, .marutibook .one_click-setting .a-edit img, .marutibook .one_click-stake {
+  background-image: url(../../../assets/images/sprite/main-se21de741bc.png);
+  background-repeat: no-repeat;
+}
+
+
+
+.game-team .game-home, .game-scores .game-home {
+  padding: 5px 30px;
+}
+.game-team td, .game-scores td {
+  position: relative;
+  width: 40%;
+  height: 28px;
+  vertical-align: top;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+// user agent stylesheet
+td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+.game-team, .game-scores {
+  width: 100%;
+  background-color: #1b2d38;
+  color: #fff;
+  line-height: 22px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.table-container2{
+  width: 700px;
+  overflow-y: scroll;
+}
+
+.tag-live {
+  position: absolute;
+  top: -6px;
+  right: 3px;
+  min-width: 33px;
+  height: 12px;
+  border-radius: 3px;
+  padding-right: 3px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 10px;
+  line-height: 12px;
+  background-image: linear-gradient(
+180deg, #fb3434 0%, #e80505 100%);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 50%);
+  display: flex;
+}
+
+
+// .page-contents > *{
+//   opacity: 0;
+//   transform: translateY(20px);
+//   transition: opacity 0.2s, transform 0.2s;
+//   @for $c from 1 through 20{
+//     &:nth-child(#{$c}){
+//       transition-delay: 1s + ($c * 0.2s);
+//     }
+//   }
+// }
+
+
+.table-s .btn{
+  background: #eee;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    color: #1e1e1e;
+    font-weight: bold;
+    line-height: 15px;
+    font-size: 12px;
+    padding: 0 4px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    outline: 0;
+    font-family: Tahoma, Helvetica, sans-serif;
+    display: inline-block;
+}
+
+.market-name h2{
+  font-size: 15px;
+  padding: 5px;
+}
+
+
+
+
+@import "src/assets/scss/tables";
+
+.selectedDep {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  background: #5bab03;
+  box-shadow: inset 0 1px 3px 0 rgb(0 0 0 / 50%);
+}
+
+.selectedWith {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  background: #d0021b;
+  box-shadow: inset 0 1px 3px 0 rgb(0 0 0 / 50%);
+}
+
+.report-tab-wrap {
+  position: relative;
+  // margin-top: 16px;
+  list-style-type: none;
+
+  .report-tab {
+    display: inline-block;
+    padding: 5px 24px 9px;
+    margin-right: 2px;
+    background-color: #ffffff;
+    border: 1px solid #3b5160;
+    border-radius: 3px 3px 0 0;
+    color: #3b5160;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.select {
+      background-color: #3b5160;
+      color: #ffffff;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #3b5160;
+      }
+    }
+  }
+}
+
+.activated-text {
+  margin-left: 4%;
+}
+
+.import-button {
+  margin-left: 3%;
+}
+
+.activated-switch {
+  margin-left: 5px;
+}
+
+.total_box {
+  width: 100%;
+  padding: 8px 0;
+  margin-top: 8px;
+  display: flex;
+
+  .total_dl {
+    min-width: 14.96815%;
+    padding: 0 10px;
+    border-right: 1px solid #d2d2d2;
+
+    dt {
+      font-size: 12px;
+      margin: 0 0 5px 0;
+      color: #9b9b9b;
+    }
+    dd {
+      font-size: 15px;
+      color: #243a48;
+      line-height: 20px;
+      font-weight: bold;
+    }
+  }
+}
+
+.banking-head {
+  margin-bottom: 10px;
+  display: flex;
+
+  dt {
+    font-size: 13px;
+    font-weight: bold;
+    color: #3b5160;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: -5px;
+    border-right: 1px solid #7e97a7;
+
+    &:not(:first-child) {
+      border-left: 1px solid #7e97a7;
+      margin-left: 10px;
+    }
+  }
+
+  dd {
+    height: 30px;
+    font-size: 23px;
+    font-weight: bold;
+    padding-left: 10px;
+
+    span {
+      font-size: 13px;
+      line-height: 15px;
+      font-weight: normal;
+      color: #3b5160;
+      margin: 8px 5px 0 0;
+    }
+  }
+
+  dt,
+  dd {
+    line-height: 30px;
+    vertical-align: top;
+  }
+}
+
+.tab-transfer {
+  margin-bottom: 0;
+
+  input,
+  textarea,
+  .member_select a,
+  .member_select a {
+    border: 1px solid #aaa;
+    padding: 4px 5px;
+    box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    height: 30px;
+  }
+}
+
+.btn_list-DW li:first-of-type a {
+  border-radius: 4px 0 0 4px;
+  border-right-width: 0;
+}
+
+.btn_list-DW li:last-of-type a {
+  border-radius: 0 4px 4px 0;
+}
+.btn_list-DW .btn,
+.btn_list-DW .btn-send,
+.btn_list-DW .pages a,
+.pages .btn_list-DW a,
+.btn_list-DW .calendarTable_inputBox input,
+.calendarTable_inputBox .btn_list-DW input,
+.btn_list-DW .calendarTable_inputBox textarea,
+.calendarTable_inputBox .btn_list-DW textarea,
+.btn_list-DW .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .btn_list-DW a,
+.btn_list-DW .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .btn_list-DW a,
+.btn_list-DW .total_all .btn_replay,
+.total_all .btn_list-DW .btn_replay,
+.btn_list-DW .btn_expand,
+.btn_list-DW .add_member {
+  width: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #3b5160;
+}
+
+.tab-banking .btn,
+.tab-banking .btn-send,
+.tab-banking .pages a,
+.pages .tab-banking a,
+.tab-banking .calendarTable_inputBox input,
+.calendarTable_inputBox .tab-banking input,
+.tab-banking .calendarTable_inputBox textarea,
+.calendarTable_inputBox .tab-banking textarea,
+.tab-banking .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .tab-banking a,
+.tab-banking .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .tab-banking a,
+.tab-banking .total_all .btn_replay,
+.total_all .tab-banking .btn_replay,
+.tab-banking .btn_expand,
+.tab-banking .add_member {
+  width: 45px;
+}
+.tab-transfer .btn,
+.tab-transfer .btn-send,
+.tab-transfer .pages a,
+.pages .tab-transfer a,
+.tab-transfer .calendarTable_inputBox input,
+.calendarTable_inputBox .tab-transfer input,
+.tab-transfer .calendarTable_inputBox textarea,
+.calendarTable_inputBox .tab-transfer textarea,
+.tab-transfer .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .tab-transfer a,
+.tab-transfer .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .tab-transfer a,
+.tab-transfer .total_all .btn_replay,
+.total_all .tab-transfer .btn_replay,
+.tab-transfer .btn_expand,
+.tab-transfer .add_member {
+  width: 45px;
+  height: 28px;
+  line-height: 28px;
+}
+
+.tab-transfer td {
+  padding: 4px 10px;
+  line-height: 25px;
+}
+
+.DW-amount {
+  border-left: 1px solid #7e97a7;
+}
+
+.btn_list-DW {
+  li:first-of-type {
+    a, button {
+      border-radius: 4px 0 0 4px;
+      border-right-width: 0;
+    }
+  }
+  li:nth-of-type(2) {
+    a, button {
+      border-radius: 0 4px 4px 0;
+      // border-right-width: 0;
+    }
+  }
+}
+
+.btn_list-DW.select-D li:first-of-type {
+  a,
+  button {
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background: #5bab03;
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.btn_list-DW.select-W li:last-of-type {
+  a,
+  button {
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background: #d0021b;
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.btn_list-DW {
+  position: relative;
+  display: flex;
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.btn_list-DW .btn,
+.btn_list-DW .btn-send,
+.btn_list-DW .pages a,
+.pages .btn_list-DW a,
+.btn_list-DW .calendarTable_inputBox input,
+.calendarTable_inputBox .btn_list-DW input,
+.btn_list-DW .calendarTable_inputBox textarea,
+.calendarTable_inputBox .btn_list-DW textarea,
+.btn_list-DW .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .btn_list-DW a,
+.btn_list-DW .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .btn_list-DW a,
+.btn_list-DW .total_all .btn_replay,
+.total_all .btn_list-DW .btn_replay,
+.btn_list-DW .btn_expand,
+.btn_list-DW .add_member {
+  width: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #3b5160;
+}
+
+.DW-amount input,
+.DW-amount textarea,
+.DW-amount .member_select a,
+.member_select .DW-amount a {
+  width: calc(100% - 63px - 47px - 14px);
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 7px;
+}
+
+.credit-amount {
+  border-left: 1px solid #7e97a7;
+}
+
+.credit-amount .btn,
+.credit-amount .btn-send,
+.credit-amount .pages a,
+.pages .credit-amount a,
+.credit-amount .calendarTable_inputBox input,
+.calendarTable_inputBox .credit-amount input,
+.credit-amount .calendarTable_inputBox textarea,
+.calendarTable_inputBox .credit-amount textarea,
+.credit-amount .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .credit-amount a,
+.credit-amount .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .credit-amount a,
+.credit-amount .total_all .btn_replay,
+.total_all .credit-amount .btn_replay,
+.credit-amount .btn_expand,
+.credit-amount .add_member {
+  width: 48px;
+  margin-left: 7px;
+}
+
+.submit-wrap .btn-send {
+  width: 228px;
+  margin-left: 5px;
+}
+
+.credit-amount {
+  input {
+    width: calc(100% - 50px - 7px);
+  }
+  .btn {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* search form */
+.search-wrap {
+  margin-right: 10px;
+  position: relative;
+  &::before {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 2px;
+    display: block;
+    content: "";
+    width: 19px;
+    height: 19px;
+    background-image: url("/assets/images/search-icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: translateY(-50%);
+  }
+  .search-input {
+    width: 280px;
+    height: 32px;
+    border: 1px solid #aaa;
+    box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.1);
+    padding-left: 25px;
+    margin: 0;
+  }
+  .search-but {
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    width: 60px;
+    height: 25px;
+    border: 0;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    background-color: var(--primary);
+    color: var(--on-primary);
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// right panel
+
+
+
+// @import "bourbon";
+
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700|Raleway:300,400';
+
+
+/* colors */
+$blue: #428BFF;
+$red: #FF4A53;
+$dark: #333;
+
+$accent: $blue;
+$accent-inactive: desaturate($accent, 85%);
+$secondary: $accent-inactive;
+
+
+/* tab setting */
+$tab-count: 3;
+$indicator-width: 50px;
+$indicator-height: 4px;
+
+/* breakpoints */
+$breakpoints: (
+  medium: #{$tab-count*250px},
+  small: #{$tab-count*150px}
+);
+
+
+label >span{
+  line-height: 20px;
+}
+
+/* selectors relative to radio inputs */
+$label-selector: "~ ul > li";
+$slider-selector: "~ .slider";
+$content-selector: "~ .content > section";
+
+@mixin tabs(
+  $label-selector: $label-selector,
+  $slider-selector: $slider-selector,
+  $content-selector: $content-selector) {
+
+  @for $i from 1 through $tab-count {
+    &:nth-of-type(#{$i}):checked {
+      #{$label-selector}:nth-child(#{$i}) {
+        @content;
+      }
+
+      #{$slider-selector} {
+        transform: translateX(#{100% * ($i - 1)});
+      }
+
+      #{$content-selector}:nth-child(#{$i}) {
+        display: block;
+      }
+    }
+  }
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #efefef;
+  color: $dark;
+  font-family: "Raleway";
+  height: 100%;
+
+  h1 {
+    text-align: center;
+    color: $accent;
+    font-weight: 300;
+    padding: 40px 0 20px 0;
+    margin: 0;
+  }
+}
+
+.tabs {
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  background: white;
+  padding: 20px;
+  padding-bottom: 20px;
+  width: 740px;
+  height: auto;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 5px;
+  min-width: #{$tab-count * 60px};
+  input[name="tab-control"] {
+    display: none;
+  }
+
+  .content section h2,
+  ul li label {
+    font-family: "Montserrat";
+    font-weight: bold;
+    font-size: 18px;
+    color: $accent;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    li {
+      box-sizing: border-box;
+      flex: 1;
+      width: #{100%/$tab-count};
+      padding: 0 10px;
+      text-align: center;
+
+      label {
+        transition: all 0.3s ease-in-out;
+        color: $secondary;
+        padding: 5px auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        white-space: nowrap;
+        -webkit-touch-callout: none;
+        // @include user-select(none);
+
+        br {
+          display: none;
+        }
+
+        svg {
+          fill: $secondary;
+          height: 1.2em;
+          vertical-align: bottom;
+          margin-right: 0.2em;
+          transition: all 0.2s ease-in-out;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          outline: 0;
+          color: lighten($secondary, 15%);
+          svg {
+            fill: lighten($secondary, 15%);
+          }
+        }
+      }
+    }
+  }
+
+  .slider {
+    position: relative;
+    width: #{100%/$tab-count};
+    transition: all 0.33s cubic-bezier(0.38, 0.8, 0.32, 1.07);
+    .indicator {
+      position: relative;
+      width: $indicator-width;
+      max-width: 100%;
+      margin: 0 auto;
+      height: $indicator-height;
+      background: $accent;
+      border-radius: 1px;
+    }
+
+  }
+
+  .content {
+    margin-top: 30px;
+
+    section {
+      display: none;
+      animation: {
+        name: content;
+        direction: normal;
+        duration: 0.3s;
+        timing-function: ease-in-out;
+        iteration-count: 1;
+      }
+      line-height: 1.4;
+
+      h2 {
+        color: $accent;
+        display: none;
+        &::after {
+          content: "";
+          position: relative;
+          display: block;
+          width: 30px;
+          height: 3px;
+          background: $accent;
+          margin-top: 5px;
+          left: 1px;
+        }
+      }
+    }
+  }
+
+  input[name="tab-control"] {
+    @include tabs {
+      > label {
+        cursor: default;
+        color: $accent;
+
+        svg {
+          fill: $accent;
+        }
+
+        @media (max-width: map-get($breakpoints, small)) {
+          background: rgba(0, 0, 0, 0.08);
+        }
+      }
+    }
+  }
+
+  @keyframes content {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, medium)) {
+    ul li label {
+      white-space: initial;
+
+      br {
+        display: initial;
+      }
+
+      svg {
+        height: 1.5em;
+      }
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, small)) {
+    ul li label {
+      padding: 5px;
+      border-radius: 5px;
+
+      span {
+        //  display: none;
+      }
+    }
+
+    .slider {
+      // display: none;
+    }
+
+    .content {
+      margin-top: 20px;
+      section h2 {
+        display: block;
+      }
+    }
+  }
+}
+
+
+.pages li{
+  flex: 0 !important;
+}
+
+.padding{
+  padding: 6px;
+}
+.btn-back.spark,
+.spark.btn-lay,
+.bets .back-1.spark,
+.bets .back-2.spark,
+.bets .back-3.spark,
+.bets-HS .back-1.spark,
+.bets-GH .back-1.spark a,
+.back-gradient dd.spark a,
+.lay-gradient dd.spark a {
+    animation: sparkBack 0.5s ease
+}
+
+@keyframes sparkBack {
+    0% {
+        background-color: #72BBEF;
+        color: #1E1E1E
+    }
+
+    50% {
+        background-color: #F8E71C;
+        color: #fff
+    }
+
+    100% {
+        background-color: #72BBEF;
+        color: #1E1E1E
+    }
+}
+
+.btn-lay.spark,
+.bets .lay-1.spark,
+.bets .lay-2.spark,
+.bets .lay-3.spark,
+.bets-HS .lay-1.spark a,
+.bets-GH .lay-1.spark a,
+.lay-gradient dd.spark a {
+    animation: sparkLay 0.5s ease
+}
+
+@keyframes sparkLay {
+    0% {
+        background-color: #FAA9BA;
+        color: #1E1E1E
+    }
+
+    50% {
+        background-color: #26F1F8;
+        color: #fff
+    }
+
+    100% {
+        background-color: #FAA9BA;
+        color: #1E1E1E
+    }
+} 

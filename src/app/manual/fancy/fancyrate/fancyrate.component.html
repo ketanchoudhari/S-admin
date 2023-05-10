@@ -1,0 +1,291 @@
+<div class="full-wrap">
+  <h2>
+    Cricket > T10 Cricket League > Bengal Tigers v Maratha Arabians > Fancy Rate
+  </h2>
+  <div class="total_all">
+    <ul class="input-list">
+      <li id="eventType_checkBox">
+        <input type="radio" name="" id="events_all" value="0" />Inactive
+      </li>
+      <li>
+        <input type="radio" name="events" id="events_1" value="1" />
+        Close
+      </li>
+      <li><input type="checkbox" name="" id="" /> Bet Allow</li>
+    </ul>
+    <a class="btn_replay" id="refresh_Top_Racing"
+      ><img src="assets/images/transparent.gif" />
+    </a>
+  </div>
+  <div class="flex input-list">
+    <div class="input-group">
+      <label for="rateDifference"> Rate Difference: </label>
+      <input type="number" id="rateDifference" />
+    </div>
+    <div class="input-group">
+      <label for="maxStakePerRate"> Max Stake Per Rate: </label>
+      <input type="number" id="maxStakePerRate" />
+    </div>
+
+    <div class="input-group">
+      <label for="minStake"> Min Stake: </label>
+      <input
+        type="number"
+        id="minStake"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="maxStake"> Max Stake: </label>
+      <input
+        type="number"
+        id="maxStake"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="rateRange"> Rate Range: </label>
+      <input
+        type="number"
+        id="rateRange"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+  </div>
+  <div class="grid">
+    <div class="rate-wrapper" *ngFor="let x of fancyRateList">
+      <ng-template [ngIf]="!x.blank">
+        <label for="q"> {{ x.name }}<span *ngIf="x.inc">+</span>= </label>
+        <input type="text" /><input *ngIf="!x.inc" type="text" />
+      </ng-template>
+    </div>
+    <span></span>
+    <span></span>
+    <button class="btn-send">Save</button>
+  </div>
+
+  <div class="middle-panel">
+    <div class="no-block">
+      <div class="header">No</div>
+      <div class="grid-input">
+        <input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+        <input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+        <input type="number" name="" id="" /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+    </div>
+    <div class="yes-block">
+      <div class="header">Yes</div>
+
+      <div class="grid-input">
+        <input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+        <input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+        <input type="number" name="" id="" /><input
+          type="number"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+      </div>
+    </div>
+    <div class="action-block">
+      <div class="header">Action</div>
+      <div style="display: flex">
+        <input type="text" class="action-input" />
+      </div>
+      <div style="display: flex">
+        <label for="" style="margin-right: 8px">
+          <input type="radio" />Active
+        </label>
+        <input type="radio" />
+        Ball Running
+      </div>
+      <div>
+        <p style="background-color: red; color: #eee; padding: 8px">
+          Note: Must Capslock disable when you enter fancy rate.
+        </p>
+      </div>
+    </div>
+    <div class="downline-block">
+      <table class="table01">
+        <thead>
+          <tr>
+            <th class="align-L">MDL<small>[UserName]</small></th>
+            <th class="align-R" style="display: none"></th>
+          </tr>
+        </thead>
+        <tbody
+          id="fancybook-tbody"
+          style="overflow-y: auto !important; max-height: 200px !important"
+        >
+          <tr>
+            <td></td>
+            <!-- ngRepeat: analysis in Fancybook track by $index -->
+          </tr>
+        </tbody>
+        <tfoot class="brodertop">
+          <tr id="trMDLPl_-3">
+            <th class="align-R">Admin P&amp;L&nbsp;</th>
+            <td class="align-R" style="display: none; color: red">
+              <b class="ng-binding"></b>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table01">
+      <thead>
+        <tr>
+          <th class="header">Action</th>
+
+          <th class="header">ID</th>
+
+          <th class="header">Whitelabel</th>
+
+          <th class="header">Super Master</th>
+
+          <th class="header">Master</th>
+
+          <th class="header">Client</th>
+
+          <th class="header">Back/Lay</th>
+
+          <th class="header">Score/Rate</th>
+
+          <th class="header">Stake</th>
+
+          <th class="header">Matched Time</th>
+
+          <th width="3%" class="header">Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="" *ngFor="let l of [1, 1, 1, 1]">
+          <td title="'Action'">
+            <button class="btn btn-xs btn-danger">X</button>
+          </td>
+          <td title="'ID'" class="ng-binding">1</td>
+          <td title="'Whitelabel'" class="ng-binding">Leanne Graham</td>
+          <td title="'Super Master'" class="ng-binding">Bret</td>
+          <td title="'Master'" class="ng-binding">master1</td>
+          <td title="'Client'" class="ng-binding">client1</td>
+          <td title="'Back/Lay'" class="ng-binding">back</td>
+          <td title="'Score/Rate'" class="ng-binding">167/1.05</td>
+          <td title="'Stake'" class="ng-binding">500</td>
+          <td
+            title="'Matched Time'"
+            data-title-text="Matched Time"
+            class="ng-binding"
+          >
+            02/01/2019
+          </td>
+          <td title="'Info'">
+            <a title=""
+              ><i class="fa fa-mobile-phone fa-2x" aria-hidden="true"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<pagination-template #pagination="paginationApi">
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a
+        href="javascript:void(0);"
+        class="disable"
+        (click)="pagination.previous()"
+        >Prev</a
+      >
+    </li>
+    <li id="pageNumber">
+      <ng-template *ngFor="let page of pagination.pages">
+        <!-- <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+        <!-- <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+      </ng-template>
+
+      <a class="select" style="pointer-events: none">1 </a>
+    </li>
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a
+        href="javascript:void(0);"
+        [class.disabled]="pagination.isLastPage()"
+        (click)="pagination.next()"
+        >Next</a
+      >
+    </li>
+  </ul>
+</pagination-template>

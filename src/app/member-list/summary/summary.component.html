@@ -1,0 +1,769 @@
+<h2>{{Update?.AccountSummary}}</h2>
+<ul class="acc-info">
+  <li class="user">
+    <span class="{{(isPremiumSite)?'premium':''}} lv_{{ user?.userType }}"></span> {{ user?.userName }}
+  </li>
+  <li class="status_all">
+    <strong id="status"> </strong>
+  </li>
+</ul>
+<table class="table01">
+  <tbody>
+    <tr>
+      <th width="20%" class="align-L">{{Update?.Wallet}}</th>
+
+      <th width="25%">{{Update?.AvailabletoBet}}</th>
+      <th width="">{{Update?.Fundsavailabletowithdraw}}</th>
+      <th width="25%">{{Update?.Currentexposure}}</th>
+    </tr>
+
+    <tr>
+      <td class="align-L">{{Update?.Mainwallet}}</td>
+
+      <td id="availableToBet">{{ user?.balance | indianCurrency }}</td>
+      <td id="availableToWithDraw">{{ user?.balance | indianCurrency }}</td>
+      <td id="currentExposure">{{ user?.exposure | indianCurrency }}</td>
+    </tr>
+  </tbody>
+</table>
+<h2 *ngIf="accountParents.length>0">Account Details</h2>
+<table class="table01">
+  <tbody>
+    <tr>
+      <th width="20%" class="align-L"*ngFor="let level of accountParents">{{getHierachylevel(level?.userType).name}}</th>
+    </tr>
+
+    <tr>
+      <td class="align-L"*ngFor="let level of accountParents"><span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ level?.userType }}"></span>&nbsp;{{level?.userName}}</td>
+    </tr>
+  </tbody>
+</table>
+<h2>{{Update?.Profile}}</h2>
+<div class="event-left">
+  <div class="profile-wrap">
+    <h3>{{Update?.About}} {{ user?.userName }}</h3>
+    <dl>
+      <dt>{{Update?.FullName}}</dt>
+      <dd>{{ user?.name }}</dd>
+
+      <ng-template [ngIf]="user?.domainName != ''">
+        <dt>{{Update?.Domain}}</dt>
+        <dd>{{ user?.domainName }}</dd>
+      </ng-template>
+      <dt>{{Update?.Password}}</dt>
+      <dd>
+        <span *ngIf="!isShowPassword; else censoredTemp">
+          ***********************
+        </span>
+        <ng-template #censoredTemp>
+          {{ userPassword ? userPassword?.pwd : "Not Available" }}
+        </ng-template>
+        <a
+          style="cursor: pointer"
+          *ngIf="currentUser.userType == commonService.vrnlUserType"
+          (click)="showPassword()"
+          >Show</a
+        >
+        <a
+          *ngIf="user?.parentId === currentUser.userId"
+          class="favor-set"
+          (click)="openChangePassModal()"
+          >{{Update?.Edit}}</a
+        >
+      </dd>
+    </dl>
+  </div>
+
+  <!-- <div class="profile-wrap">
+    <h3>Contact Details</h3>
+    <dl>
+      <dt>Primary number</dt>
+      <dd></dd>
+    </dl>
+  </div> -->
+</div>
+
+<div class="event-right">
+  <div class="profile-wrap">
+    <h3>{{Update?.LimitsCommission}}</h3>
+    <dl>
+      <dt *ngIf="user?.userType === commonService.clientUserType">{{Update?.ExposureLimit}}</dt>
+      <dd
+        *ngIf="user?.userType === commonService.clientUserType"
+        id="mainwalletExposureLimit"
+      >
+        {{ user?.exposureLimit | number: "0.2" }}
+
+        <a
+          *ngIf="user?.parentId === currentUser?.userId"
+          class="favor-set"
+          (click)="openExposureLimitModal()"
+          >{{Update?.Edit}}</a
+        >
+      </dd>
+
+      <ng-template [ngIf]="!isClient">
+        <dt>{{Update?.Share}}(%)</dt>
+        <dd>
+          <span *ngIf="user?.sharePercent" id="commission"
+            >{{ user?.sharePercent }}%</span
+          >
+        </dd>
+
+        <dt>{{Update?.CricketShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.cricketSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.CricketFancyShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.cricketFancySharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.SoccerShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.soccerSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.SoccerGoalShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.soccerGoalsSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.TennisShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.tennisSharing }}%</span>
+        </dd>
+
+        <dt>{{Update?.IndianCasinoShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.indianCasinoSharing }}%</span>
+        </dd>
+        <dt>{{Update?.HorseRaceShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.horseRaceSharing }}%</span>
+        </dd>
+        <dt>{{Update?.GreyhoundRaceShare}}(%)</dt>
+        <dd>
+          <span id="commission">{{ user?.dogRaceSharing }}%</span>
+        </dd>
+      </ng-template>
+    </dl>
+  </div>
+
+  <div class="profile-wrap" style="display: none">
+    <h3>PT</h3>
+    <dl class="casinopt-list-wrap">
+      <dt>PT Setting</dt>
+      <dd>
+        <a
+          href="#"
+          class="favor-set"
+          onclick="PlayerPTAllowedHandler.showDialog()"
+          >Edit</a
+        >
+      </dd>
+
+      <dd class="dl_list">
+        <img class="expand-arrow" src="assets/images/transparent.gif" />
+        <dl class="casinopt-list-head">
+          <dt></dt>
+
+          <dd>SUP</dd>
+
+          <dd>SUP (Actual)</dd>
+
+          <dd>MA (Actual)</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Soccer</dt>
+
+          <dd id="profile_soccer_4_PT_setting">0%</dd>
+
+          <dd id="profile_soccer_4_PT">0%</dd>
+
+          <dd id="profile_soccer_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Tennis</dt>
+
+          <dd id="profile_tennis_4_PT_setting">0%</dd>
+
+          <dd id="profile_tennis_4_PT">0%</dd>
+
+          <dd id="profile_tennis_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Cricket</dt>
+
+          <dd id="profile_cricket_4_PT_setting">0%</dd>
+
+          <dd id="profile_cricket_4_PT">0%</dd>
+
+          <dd id="profile_cricket_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Rugby Union</dt>
+
+          <dd id="profile_rugby_union_4_PT_setting">0%</dd>
+
+          <dd id="profile_rugby_union_4_PT">0%</dd>
+
+          <dd id="profile_rugby_union_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Horse Racing</dt>
+
+          <dd id="profile_horse_racing_4_PT_setting">0%</dd>
+
+          <dd id="profile_horse_racing_4_PT">0%</dd>
+
+          <dd id="profile_horse_racing_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Greyhound Racing</dt>
+
+          <dd id="profile_greyhound_racing_4_PT_setting">0%</dd>
+
+          <dd id="profile_greyhound_racing_4_PT">0%</dd>
+
+          <dd id="profile_greyhound_racing_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>American Football</dt>
+
+          <dd id="profile_american_football_4_PT_setting">0%</dd>
+
+          <dd id="profile_american_football_4_PT">0%</dd>
+
+          <dd id="profile_american_football_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Basketball</dt>
+
+          <dd id="profile_basketball_4_PT_setting">0%</dd>
+
+          <dd id="profile_basketball_4_PT">0%</dd>
+
+          <dd id="profile_basketball_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Politics</dt>
+
+          <dd id="profile_politics_4_PT_setting">0%</dd>
+
+          <dd id="profile_politics_4_PT">0%</dd>
+
+          <dd id="profile_politics_3_PT">0%</dd>
+        </dl>
+      </dd>
+
+      <div style="display: none">
+        <dt>Fancy Bet PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Fancy Bet</dt>
+            <dd id="profile_company_fancy_bet_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt>Book Maker PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Book Maker</dt>
+            <dd id="profile_company_book_maker_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt style="width: 200px">SportsBook PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>PT</dt>
+            <dd id="profile_is_allow_sportsbookTennis">ON</dd>
+
+            <dt>Sportsbook</dt>
+            <dd id="profile_company_sportsbook_tennis_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt style="width: 200px">SportsBook - Premium PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Premium PT</dt>
+            <dd id="profile_is_allow_sportsbookPremiumCricket">ON</dd>
+
+            <dt>Premium</dt>
+            <dd id="profile_company_sportsbookPremiumCricket_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt>Binary PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Binary</dt>
+            <dd id="profile_company_binary_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="event-left" *ngIf="!isClient && !isPremiumSite">
+  <div class="profile-wrap">
+    <h3>Agent Rolling Commission</h3>
+    <dl>
+      <ng-template [ngIf]="!isClient">
+        <dt>fancy(%)</dt>
+        <dd>
+          <span *ngIf="user?.agentRollingCommission?.fancy" id="commission"
+            >{{ user?.agentRollingCommission?.fancy }}%</span
+          >
+        </dd>
+        <dt>exchange(%)</dt>
+        <dd>
+          <span *ngIf="user?.agentRollingCommission?.exchange" id="commission"
+            >{{ user?.agentRollingCommission?.exchange }}%</span
+          >
+        </dd>
+        <dt>casino(%)</dt>
+        <dd>
+          <span *ngIf="user?.agentRollingCommission?.casino" id="commission"
+            >{{ user?.agentRollingCommission?.casino }}%</span
+          >
+        </dd>
+        <dt>bookmaker(%)</dt>
+        <dd>
+          <span *ngIf="user?.agentRollingCommission?.bookMaker " id="commission"
+            >{{ user?.agentRollingCommission?.bookMaker }}%</span
+          >
+        </dd>
+      </ng-template>
+    </dl>
+  </div>
+</div>
+<div class="event-left" *ngIf="!isClient && !isPremiumSite" >
+  <div class="profile-wrap"  >
+    <h3>Rolling Commission</h3>
+    <dl>
+      <!-- <dt *ngIf="user?.userType === commonService.clientUserType">Exposure Limit</dt>
+      <dd *ngIf="user?.userType === commonService.clientUserType" id="mainwalletExposureLimit">{{user?.exposureLimit | number: '0.2'}}
+
+        <a *ngIf="user?.parentId === currentUser?.userId" class="favor-set" (click)="openExposureLimitModal()">Edit</a>
+      </dd> -->
+      <ng-template [ngIf]="!isClient">
+        <dt>fancy(%)</dt>
+        <dd>
+          <span *ngIf="user?.rollingCommission?.fancy" id="commission"
+            >{{ user?.rollingCommission?.fancy}}%</span
+          >
+        </dd>
+        <dt>exchange(%)</dt>
+        <dd>
+          <span *ngIf="user?.rollingCommission?.exchange " id="commission"
+            >{{ user?.rollingCommission?.exchange }}%</span
+          >
+        </dd>
+        <dt>casino(%)</dt>
+        <dd>
+          <span *ngIf=" user?.rollingCommission?.casino" id="commission"
+            >{{ user?.rollingCommission?.casino }}%</span
+          >
+        </dd>
+        <dt>bookmaker(%)</dt>
+        <dd>
+          <span *ngIf="user?.rollingCommission?.bookMaker" id="commission"
+            >{{ user?.rollingCommission?.bookMaker }}%</span
+          >
+        </dd>
+      </ng-template>
+    </dl>
+  </div>
+
+  <div class="profile-wrap" style="display: none">
+    <h3>PT</h3>
+    <dl class="casinopt-list-wrap">
+      <dt>PT Setting</dt>
+      <dd>
+        <a
+          href="#"
+          class="favor-set"
+          onclick="PlayerPTAllowedHandler.showDialog()"
+          >Edit</a
+        >
+      </dd>
+
+      <dd class="dl_list">
+        <img class="expand-arrow" src="assets/images/transparent.gif" />
+        <dl class="casinopt-list-head">
+          <dt></dt>
+
+          <dd>SUP</dd>
+
+          <dd>SUP (Actual)</dd>
+
+          <dd>MA (Actual)</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Soccer</dt>
+
+          <dd id="profile_soccer_4_PT_setting">0%</dd>
+
+          <dd id="profile_soccer_4_PT">0%</dd>
+
+          <dd id="profile_soccer_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Tennis</dt>
+
+          <dd id="profile_tennis_4_PT_setting">0%</dd>
+
+          <dd id="profile_tennis_4_PT">0%</dd>
+
+          <dd id="profile_tennis_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Cricket</dt>
+
+          <dd id="profile_cricket_4_PT_setting">0%</dd>
+
+          <dd id="profile_cricket_4_PT">0%</dd>
+
+          <dd id="profile_cricket_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Rugby Union</dt>
+
+          <dd id="profile_rugby_union_4_PT_setting">0%</dd>
+
+          <dd id="profile_rugby_union_4_PT">0%</dd>
+
+          <dd id="profile_rugby_union_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Horse Racing</dt>
+
+          <dd id="profile_horse_racing_4_PT_setting">0%</dd>
+
+          <dd id="profile_horse_racing_4_PT">0%</dd>
+
+          <dd id="profile_horse_racing_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Greyhound Racing</dt>
+
+          <dd id="profile_greyhound_racing_4_PT_setting">0%</dd>
+
+          <dd id="profile_greyhound_racing_4_PT">0%</dd>
+
+          <dd id="profile_greyhound_racing_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>American Football</dt>
+
+          <dd id="profile_american_football_4_PT_setting">0%</dd>
+
+          <dd id="profile_american_football_4_PT">0%</dd>
+
+          <dd id="profile_american_football_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Basketball</dt>
+
+          <dd id="profile_basketball_4_PT_setting">0%</dd>
+
+          <dd id="profile_basketball_4_PT">0%</dd>
+
+          <dd id="profile_basketball_3_PT">0%</dd>
+        </dl>
+
+        <dl class="casinopt-list">
+          <dt>Politics</dt>
+
+          <dd id="profile_politics_4_PT_setting">0%</dd>
+
+          <dd id="profile_politics_4_PT">0%</dd>
+
+          <dd id="profile_politics_3_PT">0%</dd>
+        </dl>
+      </dd>
+
+      <div style="display: none">
+        <dt>Fancy Bet PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Fancy Bet</dt>
+            <dd id="profile_company_fancy_bet_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt>Book Maker PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Book Maker</dt>
+            <dd id="profile_company_book_maker_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt style="width: 200px">SportsBook PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>PT</dt>
+            <dd id="profile_is_allow_sportsbookTennis">ON</dd>
+
+            <dt>Sportsbook</dt>
+            <dd id="profile_company_sportsbook_tennis_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt style="width: 200px">SportsBook - Premium PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Premium PT</dt>
+            <dd id="profile_is_allow_sportsbookPremiumCricket">ON</dd>
+
+            <dt>Premium</dt>
+            <dd id="profile_company_sportsbookPremiumCricket_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+
+      <div style="display: none">
+        <dt>Binary PT Setting</dt>
+        <dd></dd>
+        <dd class="dl_list">
+          <img class="expand-arrow" src="assets/images/transparent.gif" />
+          <dl>
+            <dt>Binary</dt>
+            <dd id="profile_company_binary_PT">0%</dd>
+          </dl>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<app-modal [(open)]="changePassModalOpen">
+  <form [formGroup]="changePassForm" (ngSubmit)="changePass()">
+    <div class="modal-header">
+      <h3>Change Password</h3>
+    </div>
+    <div class="modal-content">
+      <dl class="form_list">
+        <dt>New Password</dt>
+        <dd>
+          <input
+          appInputRestriction="noSpecialChars2"
+            type="password"
+            formControlName="newpassword"
+            placeholder="Enter"
+            aria-autocomplete="list"
+          />
+          <span class="must">＊</span>
+          <div
+            class="errors"
+            *ngIf="
+              changePassForm.get('newpassword').invalid &&
+              (changePassForm.get('newpassword').touched ||
+                changePassForm.get('newpassword').dirty)
+            "
+          >
+            <div *ngIf="changePassForm.get('newpassword').hasError('required')">
+              Password is required
+            </div>
+
+            <div *ngIf="changePassForm.get('newpassword').errors.minlength">
+              Password must be at least 8 characters
+            </div>
+
+            <div
+              class="error-text"
+              *ngIf="
+                changePassForm.get('newpassword').hasError('passwordStrength')
+              "
+            >
+              {{ changePassForm.get("newpassword").errors["passwordStrength"] }}
+            </div>
+          </div>
+          <span id="newPasswordErrorText" class="error-text"></span>
+        </dd>
+        <dt>Confirm Password</dt>
+        <dd>
+          <input
+          appInputRestriction="noSpecialChars2"
+            formControlName="confirm"
+            type="password"
+            placeholder="Enter"
+          />
+          <span class="must">＊</span>
+          <div
+            class="errors"
+            *ngIf="
+              changePassForm.get('confirm').invalid &&
+              (changePassForm.get('confirm').touched ||
+                changePassForm.get('confirm').dirty)
+            "
+          >
+            <div *ngIf="changePassForm.get('confirm').hasError('required')">
+              Confirm password is required
+            </div>
+          </div>
+          <span
+            *ngIf="
+              f?.get('confirm').invalid &&
+              f.get('confirm').hasError('isNotMatching')
+            "
+            class="error-text"
+            >Passwords don't match
+          </span>
+        </dd>
+        <dt>Your Password</dt>
+        <dd>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter"
+          />
+          <span class="must">＊</span>
+          <div
+            class="errors"
+            *ngIf="
+              changePassForm.get('password').invalid &&
+              (changePassForm.get('password').touched ||
+                changePassForm.get('password').dirty)
+            "
+          >
+            <div *ngIf="changePassForm.get('password').hasError('required')">
+              Password is required
+            </div>
+          </div>
+        </dd>
+        <dd>
+          <button id="changePasswordBtn" type="submit" class="btn-send">
+            Change
+          </button>
+        </dd>
+      </dl>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="changeCommisionOpen">
+  <div class="modal-header">
+    <h3>Change Commission</h3>
+  </div>
+  <div class="modal-content">
+    <dl class="form_list">
+      <dt>Commission</dt>
+      <dd>
+        <input
+          type="text"
+          onclick="location.href='#stake'"
+          placeholder="Enter"
+        />%
+        <span class="must">＊</span>
+      </dd>
+      <dt>Password</dt>
+      <dd>
+        <input
+          type="password"
+          onclick="location.href='#stake'"
+          placeholder="Enter"
+        />
+        <span class="must">＊</span>
+      </dd>
+      <dd>
+        <a class="btn-send">Change</a>
+      </dd>
+    </dl>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="changeExposureLimitOpen">
+  <form
+    [formGroup]="changeExposureLimitForm"
+    (ngSubmit)="changeExposureLimit()"
+  >
+    <div class="modal-header">
+      <h3>Change Exposure Limit</h3>
+    </div>
+    <div class="modal-content">
+      <dl class="form_list">
+        <dt>Exposure Limit</dt>
+        <dd>
+          <input
+            type="number"
+            placeholder="Enter"
+            formControlName="exposureLimit"
+            min="0"
+          />
+          <span class="must">＊</span>
+          <small style="display: block; color: #555"
+            >0 - {{ currentUser?.exposureLimit | number: "0.2" }}
+          </small>
+        </dd>
+        <dt>Password</dt>
+        <dd>
+          <input
+            type="password"
+            placeholder="Enter"
+            formControlName="password"
+          />
+          <span class="must">＊</span>
+        </dd>
+        <dd>
+          <button type="submit" class="btn-send">Change</button>
+        </dd>
+      </dl>
+    </div>
+  </form>
+</app-modal>

@@ -1,0 +1,28 @@
+@import "src/assets/scss/tables";
+
+.function-wrap {
+  padding-bottom: 8px;
+  & > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+
+    input {
+      margin: 0;
+    }
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
+}
+
+table {
+  label {
+    margin-right: 4px;
+  }
+  th,
+  td {
+    text-align: center;
+  }
+}

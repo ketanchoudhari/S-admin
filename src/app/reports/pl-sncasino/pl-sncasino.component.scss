@@ -1,0 +1,44 @@
+@import 'src/assets/scss/tables';
+@media (max-width: 750px) {
+    .input-list .time-input {
+        margin-bottom: 10px;
+        }
+        .marleft{
+            margin-left: 24px;
+        }
+    }
+
+    .report-tab-wrap {
+        list-style-type: none;
+        margin-top: 16px;
+        position: relative;
+    }
+    .report-tab-wrap .report-tab.select {
+        background-color: #3b5160;
+        color: #fff;
+    }
+    .report-tab-wrap .report-tab {
+        /* background-color: #fff; */
+        border: 1px solid #3b5160;
+        border-radius: 3px 3px 0 0;
+        /* color: #3b5160; */
+        cursor: pointer;
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 2px;
+        padding: 5px 24px 9px;
+    }
+    .report-tab-wrap .report-tab.select:before {
+        background-color: #3b5160;
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 4px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+    }
+    .input-list .btn-send{
+        width: 100%;
+    }

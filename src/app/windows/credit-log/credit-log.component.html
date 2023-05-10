@@ -1,0 +1,87 @@
+<div class="log-wrap" style="width: 600px">
+  <table class="game-team">
+    <tbody>
+      <tr>
+        <td class="game-name">
+          Credit Reference Logs
+          <span>{{ userName }} </span>
+          <a
+            class="pop-close"
+            onclick="window.open('', '_self', ''); window.close();"
+            ><img
+              class="icon-back"
+              src="assets/images/transparent.gif"
+            />Close</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="over-wrap" style="height: 513px">
+    <table class="table01">
+      <tbody>
+        <tr>
+          <th width="20%" class="align-L">Date/Time</th>
+          <th width="40%">Old Value</th>
+          <th width="40%">New Value</th>
+        </tr>
+      </tbody>
+      <tbody id="content">
+        <tr
+          id="tempTr"
+          *ngFor="
+            let log of logs | paginate: { itemsPerPage: 10, currentPage: p }
+          "
+        >
+          <td class="align-L" id="dateTime">
+            {{ log.dateTime | date: "yyyy-MM-dd\nHH:mm:ss" }}
+          </td>
+          <td id="oldValue">{{ log.oldValue | number: "0.2" }}</td>
+          <td id="newValue">{{ log.amount | number: "0.2" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pages List -->
+
+  <pagination-template #pagination="paginationApi" (pageChange)="p = $event">
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a
+          href="javascript:void(0);"
+          *ngIf="!pagination.isFirstPage()"
+          [class.disable]="pagination.isFirstPage()"
+          (click)="pagination.previous()"
+          >Prev</a
+        >
+      </li>
+      <ng-container *ngFor="let page of pagination.pages">
+        <li id="pageNumber">
+          <a
+            (click)="pagination.setCurrent(page.value)"
+            *ngIf="pagination.getCurrent() != page.value"
+            class="btn"
+            >{{ page.value }}
+          </a>
+          <a
+            *ngIf="pagination.getCurrent() == page.value"
+            class="select"
+            style="pointer-events: none"
+            >{{ page.value }}
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a
+          *ngIf="!pagination.isLastPage()"
+          [class.disable]="pagination.isLastPage()"
+          (click)="pagination.next()"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </pagination-template>
+</div>

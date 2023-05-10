@@ -1,0 +1,20 @@
+@import 'src/assets/scss/tables';
+
+.function-wrap {
+
+  input, select {
+    margin: 0;
+  }
+
+  & > div {
+    display: flex;
+    margin-bottom: 8px;
+  }
+}
+
+.table-container .table01 {
+
+ th, td {
+  text-align: center;
+ }
+}

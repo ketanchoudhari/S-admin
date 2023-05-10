@@ -1,0 +1,1416 @@
+<div class="main_wrap">
+  <div class="marquee-box">
+    <h4>News</h4>
+    <div class="marquee">
+      <div>
+        <span>Test news</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main_wrap">
+  <div class="total_all">
+    <!-- <div class="agent_path">
+      <ul id="agentPath" class="agent_path-L">
+
+        <li id="pathCurrency" class="currency_tag" style="display: none">
+          <a>
+            <span class=""></span>
+            <strong></strong>
+          </a>
+        </li>
+
+        <li id="path5" class="" style="display: none">
+          <a>
+            <span class="lv_1"> SS </span>
+            <strong></strong>
+          </a>
+        </li>
+
+        <li id="path4">
+          <a (click)="openNextLevel(0, 4)">
+            <span class="lv_2"> SUP </span>
+            <strong>demost</strong>
+          </a>
+        </li>
+
+        <li id="path3" class="last_li">
+          <a>
+            <span class="lv_3"> MA </span>
+            <strong>john00001</strong>
+          </a>
+        </li>
+
+        <li id="path0" class="" style="display: none">
+          <a>
+            <span class="lv_4"> PL </span>
+            <strong></strong>
+          </a>
+        </li>
+
+        <ul class="account_pop" id="accountPop" style="display: none">
+          <li id="popTmp" style="display: none">
+            <a href=""></a>
+          </li>
+        </ul>
+      </ul>
+    </div> -->
+
+    <span class="spacer"></span>
+    <button
+      *ngIf="showAddMemberButton"
+      class="add_member"
+      (click)="toggleAddMemberModal()"
+    >
+      <img src="assets/images/transparent.gif" />Add Master Agent
+    </button>
+    <button id="refresh" class="btn_replay">
+      <img src="assets/images/transparent.gif" />
+    </button>
+  </div>
+
+  <div id="totalBox" class="total_box">
+    <dl id="creditLimitDL" class="total_dl" style="display: none">
+      <dt>Credit Limit</dt>
+      <dd id="myCreditLimit">
+        {{ userData.currencyTypeName }} {{ userData.myCreditLimit }}
+      </dd>
+    </dl>
+    <dl id="creditGivenOutDL" class="total_dl" style="display: none">
+      <dt>Total Credit Given Out</dt>
+      <dd id="totalCreditGivenOut">
+        {{ userData.currencyTypeName }} {{ userData.totalCreditGivenOut }}
+      </dd>
+    </dl>
+    <dl id="creditAvailBalDL" class="total_dl" style="display: none">
+      <dt>Credit Avail Bal</dt>
+      <dd id="myCreditAvailBal">
+        {{ userData.currencyTypeName }} {{ userData.myCreditAvailBal }}
+      </dd>
+    </dl>
+    <dl id="totalBalanceDL" class="total_dl" style="display: block">
+      <dt>Total Balance</dt>
+      <dd id="totalBalance">
+        {{ userData.currencyTypeName }} {{ userData.totalBalance }}
+      </dd>
+    </dl>
+    <dl id="totalExposureDL" class="total_dl" style="display: block">
+      <dt>Total Exposure</dt>
+      <dd id="totalExposure">{{ userData.currencyTypeName }} 0.00</dd>
+    </dl>
+    <dl id="myCurrentPLDL" class="total_dl" style="display: none">
+      <dt>Today P/L with Upline</dt>
+      <dd id="myCurrentPL">{{ userData.currencyTypeName }} 0.0</dd>
+    </dl>
+    <dl id="availableBalanceDL" class="total_dl" style="display: block">
+      <dt>Total Avail. bal.</dt>
+      <dd id="totalAvailBal">
+        {{ userData.currencyTypeName }}
+        {{ userData.totalBalance | number: "0.2" }}
+      </dd>
+    </dl>
+    <dl id="masterBalanceDL" class="total_dl" style="display: block">
+      <dt>Balance</dt>
+      <dd id="mastersBalance">
+        {{ userData.currencyTypeName }}
+        {{ userData.mastersAvailBal | number: "0.2" }}
+      </dd>
+    </dl>
+    <dl id="masterAvailableBalanceDL" class="total_dl" style="display: block">
+      <dt>Available Balance</dt>
+      <dd id="mastersAvailBal">
+        {{ userData.currencyTypeName }}
+        {{ userData.mastersAvailBal + userData.totalBalance | number: "0.2" }}
+      </dd>
+    </dl>
+    <dl id="transferablePLWithUplineDL" class="total_dl" style="display: none">
+      <dt>Transferable P/L with Upline</dt>
+      <dd id="transferablePLWithUpline">
+        {{ userData.currencyTypeName }} 0.00
+      </dd>
+    </dl>
+  </div>
+  <div id="widthAll" class="width-all">
+    <!-- Loading Wrap -->
+    <div id="loading" class="loading-wrap" style="display: none">
+      <ul class="loading">
+        <li><img src="assets/images/loading40.gif" /></li>
+        <li>Loading...</li>
+      </ul>
+    </div>
+
+    <!-- Message -->
+    <div id="message" class="message-wrap success">
+      <a class="btn-close">Close</a>
+      <p></p>
+    </div>
+
+    <!-- Report Table -->
+
+    <table id="resultTable" class="table01 margin-table" style="display: table">
+      <tbody>
+        <tr>
+          <th id="accountTh" width="" class="align-L">Account</th>
+          <th id="creditRefTh" width="10%">Credit Ref.</th>
+          <th id="creditLimitTh" width="10%" style="display: none">
+            Credit Limit
+          </th>
+
+          <th id="currentPLTh" width="10%" style="display: none">
+            Current P/L
+          </th>
+          <th id="transferablePLTh" width="10%" style="display: none">
+            Transferable P/L
+          </th>
+          <th id="balanceTh" width="10%">Balance</th>
+          <th id="exposureTh" width="10%">Exposure</th>
+          <th id="availableBalanceTh" width="10%">Avail. bal.</th>
+          <th id="creditPLTh" width="10%" style="display: none">Balance</th>
+          <th id="playerBalanceTh" width="10%">Player Balance</th>
+          <th id="exposureLimitTh" width="10%" style="display: none">
+            Exposure Limit
+          </th>
+
+          <th id="refPLTh" width="10%">Ref. P/L</th>
+          <th id="statusTh" width="10%">Status</th>
+          <th id="actionTh" width="15%">Action</th>
+        </tr>
+        <tr id="dataTemplate" style="display: none">
+          <td id="accountCol" class="align-L">
+            <a id="account" class="ico_account" href="#"></a>
+          </td>
+          <td id="creditRef" class="credit-amount-member">
+            <a
+              id="creditRefBtn"
+              class="favor-set"
+              href="javascript:void(0);"
+            ></a>
+          </td>
+          <td id="creditLimit" style="display: none"></td>
+
+          <td id="currentPL" style="display: none"></td>
+          <td id="transferablePL" style="display: none"></td>
+          <td id="balance"></td>
+          <td id="currentExposure"></td>
+          <td id="available"></td>
+          <td id="creditPL" style="display: none"></td>
+          <td id="playerBalance" style="display: none"></td>
+          <td id="exposureLimit" style="display: none"></td>
+
+          <td id="refPL"></td>
+          <td id="statusCol">
+            <ul id="tipsPopup" class="status-popup" style="display: none"></ul>
+            <span id="status"></span>
+          </td>
+          <td id="actionCol">
+            <ul class="action">
+              <li>
+                <a id="banking" class="bank" href="#bank">Bank</a>
+              </li>
+              <li>
+                <a id="p_l" class="p_l" href="#">Betting Profit &amp; Loss</a>
+              </li>
+              <li>
+                <a id="betting_history" class="betting_history" href="#"
+                  >Betting History</a
+                >
+              </li>
+              <li>
+                <a id="change" class="status" href="#change">Change Status</a>
+              </li>
+              <li>
+                <a id="profile" class="profile" href="#">Profile</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <ng-container *ngFor="let user of userList; index as i; trackBy: trackBy">
+          <tr
+            id="{{ user.userID }}"
+            style="display: table-row"
+          >
+            <!-- <td id="accountCol" class="align-L">
+              <a
+                id="account{{ i }}"
+                *ngIf="user.userLevel !== 0; else playerTemp"
+                class="ico_account"
+                (click)="openNextLevel(user.userID, user.userLevel)"
+                ><span class="{{ user.userCSSName }}">{{ user.userType }}</span
+                >{{ user.userID }}</a
+              >
+              <ng-template #playerTemp>
+                <span class="{{ user.userCSSName }}">{{ user.userType }}</span
+                >{{ user.userID }}
+              </ng-template>
+            </td> -->
+            <td id="creditRef{{ i }}" class="credit-amount-member">
+              <a
+                id="creditRefBtn"
+                class="favor-set"
+                *ngIf="
+                  userData.userLevel - 1 === user.userLevel;
+                  else balanceTemp
+                "
+                (click)="openCreditRefModal(user.userID)"
+                >{{ user.creditRef | number: "0.2" }}</a
+              >
+            </td>
+            <td id="creditLimit{{ i }}" style="display: none">
+              {{ user.creditLimit | number: "0.2" }}
+            </td>
+
+            <td id="currentPL{{ i }}" style="display: none">
+              {{ user.creditPL | number: "0.2" }}
+            </td>
+            <td id="transferablePL{{ i }}" style="display: none">0.0</td>
+            <td id="balance{{ i }}">
+              <a
+                *ngIf="
+                  userData.userLevel - 1 !== user.userLevel;
+                  else balanceTemp
+                "
+                (click)="showBalanceDetail(user)"
+                class="link-open"
+                >{{ user.balance | number: "0.2" }}</a
+              >
+              <ng-template #balanceTemp>
+                {{ user.balance | number: "0.2" }}
+              </ng-template>
+            </td>
+            <td id="currentExposure{{ i }}">0.00</td>
+            <td id="available{{ i }}">
+              {{ user.balance | number: "0.2" }}
+            </td>
+            <td id="creditPL{{ i }}" style="display: none">
+              {{ user.creditPL | number: "0.2" }}
+            </td>
+            <td id="playerBalance{{ i }}" style="display: table-cell">
+              {{ user.playerBalance | number: "0.2" }}
+            </td>
+            <td id="exposureLimit" style="display: none"></td>
+
+            <td id="refPL{{ i }}">
+              {{ user.balance - user.creditRef | number: "0.2" }}
+            </td>
+            <td id="statusCol">
+              <ul
+                id="tipsPopup"
+                class="status-popup"
+                style="display: none"
+              ></ul>
+              <span id="status{{ i }}" class="status-active"
+                ><img src="assets/images/transparent.gif" /> {{ user.status }}
+              </span>
+            </td>
+            <td id="actionCol">
+              <ul class="action">
+                <li>
+                  <!-- <a
+                  id="banking"
+                  class="bank"
+                  href="#bank"
+                  [ngStyle]="{
+                    display: user.userLevel === 0 ? 'block' : 'none'
+                  }"
+                  >Bank</a
+                > -->
+                </li>
+                <li>
+                  <a
+                    id="p_l0"
+                    class="p_l"
+                    [routerLink]="['/memberList', user.userID, 'profitAndLoss']"
+                    [ngStyle]="{
+                      display: user.userLevel === 0 ? 'block' : 'none'
+                    }"
+                    >Betting Profit &amp; Loss</a
+                  >
+                </li>
+                <li>
+                  <a
+                    id="betting_history0"
+                    class="betting_history"
+                    [routerLink]="[
+                      '/memberList',
+                      user.userID,
+                      'bettingHistory'
+                    ]"
+                    [ngStyle]="{
+                      display: user.userLevel === 0 ? 'block' : 'none'
+                    }"
+                    >Betting History</a
+                  >
+                </li>
+                <li>
+                  <a
+                    id="change{{ i }}"
+                    class="status"
+                    [ngStyle]="{
+                      display:
+                        user.userLevel === userData.userLevel - 1
+                          ? 'block'
+                          : 'none'
+                    }"
+                    (click)="openChangeStatusModal()"
+                    >Change Status</a
+                  >
+                </li>
+                <li>
+                  <a
+                    id="profile{{ i }}"
+                    class="profile"
+                    [routerLink]="[
+                      '/memberList',
+                      user.userID,
+                      'accountSummary'
+                    ]"
+                    >Profile</a
+                  >
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr
+            id="tempBalanceTr_{{user.userID}}"
+            *ngIf="user.showBalance"
+            class="expand first expand-balance"
+          >
+            <td colspan="2"></td>
+            <td colspan="7">
+              <img class="expand-arrow" src="assets/images/transparent.gif" />
+              <table>
+                <tbody id="tempVendorContent">
+                  <tr>
+                    <th width="12%" class="align-L">Game</th>
+                    <th width="13%">Balance</th>
+                    <th width="8%">
+                      <a
+                        id="recallAll"
+                        href="#"
+                        class="btn-recall"
+                        onclick="VendorBalanceDetailHandler.recall('prabhu007','1','3',function () { IndexHandler.listMember(); })"
+                        >Recall All</a
+                      >
+                    </th>
+                    <th></th>
+                  </tr>
+                  <tr id="#tempVendorTr_prabhu007">
+                    <td id="vendorTitle_3" class="align-L">BPoker</td>
+                    <td id="vendorBalance_3">0</td>
+                    <td>
+                      <a
+                        id="recall_3"
+                        class="btn-recall"
+                        onclick="VendorBalanceDetailHandler.recall('prabhu007','1','3',function () { IndexHandler.listMember(); })"
+                        >Recall</a
+                      >
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <div class="footer_fixed">
+    <div class="main_wrap">
+      <span class="spacer"></span>
+      <ul class="action">
+        <li class="bank"><p>Bank</p></li>
+        <li class="p_l"><p>Betting Profit &amp; Loss</p></li>
+        <li class="betting_history"><p>Betting History</p></li>
+        <li class="profile"><p>Profile</p></li>
+        <li class="status"><p>Change Status</p></li>
+      </ul>
+    </div>
+  </div> -->
+</div>
+<app-modal [(open)]="addMemberModalOpen">
+  <h3 class="modal-header">Add Master Agent</h3>
+
+  <div class="modal-content">
+    <ul class="half_box add-member-box">
+      <li class="add_account_box">
+        <dl class="border_b">
+          <dt>E-mail</dt>
+          <dd>
+            <input
+              id="email"
+              type="text"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+              maxlength="50"
+            />
+            <span class="must">＊</span>
+          </dd>
+          <dt>Username</dt>
+          <dd>
+            <input
+              id="userName"
+              type="text"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+              maxlength="16"
+            />
+            <span class="must">＊</span>
+            <span
+              id="userNameErrorText"
+              class="error-text"
+              style="display: none"
+            ></span>
+          </dd>
+          <dt>Password</dt>
+          <dd>
+            <input
+              id="userPassword"
+              type="password"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+            />
+            <span class="must">＊</span>
+            <span
+              id="passwordErrorText"
+              class="error-text"
+              style="display: none"
+            ></span>
+          </dd>
+          <dt>Confirm Password</dt>
+          <dd>
+            <input
+              id="repeatPassword"
+              type="password"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+            />
+            <span class="must">＊</span>
+            <span
+              id="repeatPasswordErrorText"
+              class="error-text"
+              style="display: none"
+            ></span>
+          </dd>
+        </dl>
+        <dl class="">
+          <dt>First Name</dt>
+          <dd>
+            <input
+              id="firstName"
+              type="text"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+              maxlength="16"
+            />
+          </dd>
+          <dt>Last Name</dt>
+          <dd>
+            <input
+              id="lastName"
+              type="text"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+              maxlength="16"
+            />
+          </dd>
+          <dt>Phone</dt>
+          <dd>
+            <input
+              id="phone"
+              type="text"
+              onclick="location.href='#stake'"
+              placeholder="Enter"
+              maxlength="16"
+            />
+          </dd>
+
+          <dt>Commission(%)</dt>
+          <dd>
+            <input
+              id="commission"
+              type="text"
+              onclick="location.href='#tax'"
+              placeholder="Enter"
+              value=""
+            />
+            <span class="must">＊</span>
+          </dd>
+        </dl>
+      </li>
+      <li class="pt_allowed_box" style="display: none">
+        <div class="pt_allowed" style="display: none">
+          <dl>
+            <dt class="dt_w50">PT Allowed To Master Agent(%)</dt>
+            <dd>
+              <input
+                id="memberMaxPT"
+                type="text"
+                onclick="location.href='#stake'"
+                placeholder="Enter"
+                value="0"
+              />
+            </dd>
+          </dl>
+        </div>
+        <div
+          class="sports_box"
+          style="height: 350px; overflow: hidden; overflow-y: auto"
+        >
+          <p>
+            My Sports PT Setting
+            <span id="settingNote" class="note"
+              >PT setting % value must be multiplier of 5 :
+            </span>
+          </p>
+
+          <ul class="half_box">
+            <li>
+              <div id="sportsSet" class="sports_set">
+                <dl class="bg_head">
+                  <dt>All Sports Set</dt>
+                  <dd>
+                    <input
+                      id="allowOneMaxPT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#" name="copy_one_up">up</a></li>
+                      <li>
+                        <a class="down" href="#" name="copy_one_down">down</a>
+                      </li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="">
+                  <dt>Soccer</dt>
+
+                  <dd class="">
+                    <input
+                      id="soccer_PT"
+                      type="text"
+                      name="normal"
+                      data-type="1"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Tennis</dt>
+
+                  <dd class="">
+                    <input
+                      id="tennis_PT"
+                      type="text"
+                      name="normal"
+                      data-type="2"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="">
+                  <dt>Cricket</dt>
+
+                  <dd class="">
+                    <input
+                      id="cricket_PT"
+                      type="text"
+                      name="normal"
+                      data-type="4"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Rugby Union</dt>
+
+                  <dd class="">
+                    <input
+                      id="rugby_union_PT"
+                      type="text"
+                      name="normal"
+                      data-type="5"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="">
+                  <dt>Horse Racing</dt>
+
+                  <dd class="">
+                    <input
+                      id="horse_racing_PT"
+                      type="text"
+                      name="normal"
+                      data-type="7"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Greyhound Racing</dt>
+
+                  <dd class="">
+                    <input
+                      id="greyhound_racing_PT"
+                      type="text"
+                      name="normal"
+                      data-type="4339"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="">
+                  <dt>American Football</dt>
+
+                  <dd class="">
+                    <input
+                      id="american_football_PT"
+                      type="text"
+                      name="normal"
+                      data-type="6423"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Basketball</dt>
+
+                  <dd class="">
+                    <input
+                      id="basketball_PT"
+                      type="text"
+                      name="normal"
+                      data-type="7522"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+
+                <dl class="">
+                  <dt>Politics</dt>
+
+                  <dd class="">
+                    <input
+                      id="politics_PT"
+                      type="text"
+                      name="normal"
+                      data-type="2378961"
+                      value="0"
+                    />
+                  </dd>
+                  <div class="tips-popup" style="display: none">
+                    multiplier of 5
+                  </div>
+                </dl>
+              </div>
+              <p>My PT Allowed <strong id="yourPT">0</strong>%</p>
+            </li>
+
+            <li>
+              <div
+                id="fancyBetSet"
+                class="sports_set"
+                style="display: none; height: 150px"
+              >
+                <dl class="bg_head">
+                  <dt>FancyBet Setting</dt>
+                </dl>
+
+                <dl class="">
+                  <dt>Super</dt>
+                  <dd>
+                    <input
+                      id="company_fancy_bet_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="company"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="bg_dark" id="fancyBetSSSPt">
+                  <dt>SSS</dt>
+                  <dd>
+                    <input
+                      id="sss_fancy_bet_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="sss"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="" id="fancyBetDirectLevelPt">
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="shareHolder_fancy_bet_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="shareHolder"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+              <p id="fancyBetTotalPTCol" style="display: none">
+                FancyBet total PT allowed
+                <strong id="fancyBetTotalPT">0</strong>%
+              </p>
+            </li>
+
+            <li>
+              <div
+                id="bookMakerSet"
+                class="sports_set"
+                style="display: none; height: 115px"
+              >
+                <dl class="bg_head">
+                  <dt>BookMaker Setting</dt>
+                </dl>
+
+                <dl class="">
+                  <dt>Super</dt>
+                  <dd>
+                    <input
+                      id="company_book_maker_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="company"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="bg_dark" id="bookMakerDirectLevelPt">
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="shareHolder_book_maker_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="shareHolder"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+              <p id="bookMakerTotalPTCol" style="display: none">
+                BookMaker total PT allowed
+                <strong id="bookMakerTotalPT">0</strong>%
+              </p>
+            </li>
+
+            <li>
+              <div
+                id="sportsbookTennisSet"
+                class="sports_set"
+                style="display: none; height: 115px"
+              >
+                <dl class="bg_head">
+                  <dt>SportsBook</dt>
+                  <dd>
+                    <a
+                      class="toggle_on"
+                      href="#"
+                      id="edit_allow_sportsbookTennis"
+                      >ON</a
+                    >
+                  </dd>
+                </dl>
+
+                <dl class="">
+                  <dt>Super</dt>
+                  <dd>
+                    <input
+                      id="company_sportsbook_tennis_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="company"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="shareHolder_sportsbook_tennis_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="shareHolder"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+              <p style="display: none">
+                Sportsbook total PT allowed
+                <strong id="sportsbookTennisTotalPT">0</strong>%
+              </p>
+            </li>
+
+            <li>
+              <div
+                id="sportsbookPremiumCricketSet"
+                class="sports_set"
+                style="display: none"
+              >
+                <dl class="bg_head">
+                  <dt>SportsBook - Premium</dt>
+                  <dd>
+                    <a
+                      class="toggle_on"
+                      href="#"
+                      id="edit_allow_sportsbookPremiumCricket"
+                      >ON</a
+                    >
+                  </dd>
+                </dl>
+
+                <dl class="">
+                  <dt>Super</dt>
+                  <dd>
+                    <input
+                      id="company_sportsbookPremiumCricket_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="company"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="shareHolder_sportsbookPremiumCricket_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="shareHolder"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+              <p style="display: none">
+                Premium total PT allowed
+                <strong id="sportsbookPremiumCricketTotalPT">0</strong>%
+              </p>
+            </li>
+
+            <li>
+              <div
+                id="financialBinarySet"
+                class="sports_set"
+                style="display: none"
+              >
+                <dl class="bg_head">
+                  <dt>Binary Setting</dt>
+                </dl>
+
+                <dl class="">
+                  <dt>Super</dt>
+                  <dd>
+                    <input
+                      id="company_financialBinary_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="company"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+
+                <dl class="bg_dark">
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="shareHolder_financialBinary_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="shareHolder"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+              <p style="display: none">
+                Binary total PT allowed
+                <strong id="financialBinaryTotalPT">0</strong>%
+              </p>
+            </li>
+
+            <li>
+              <div id="casinoSet" class="sports_set">
+                <dl class="bg_head">
+                  <dt>Casino Setting</dt>
+                  <dd style="display: none">
+                    <a class="toggle_on" href="#" id="new_allow_casino">ON</a>
+                  </dd>
+                </dl>
+
+                <dl class="">
+                  <dt>Live</dt>
+                  <br />
+                  <dt>Super</dt>
+
+                  <dd>
+                    <input
+                      id="live_agent_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="agent"
+                      data-categorytype="live"
+                      value="100"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="live_downline_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="downline"
+                      data-categorytype="live"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+                <p style="display: none">
+                  LIVE total PT allowed
+                  <strong id="casino_live_TotalPT">0</strong>%
+                </p>
+
+                <dl class="bg_dark">
+                  <dt>R&amp;G</dt>
+                  <br />
+                  <dt>Super</dt>
+
+                  <dd>
+                    <input
+                      id="rng_agent_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="agent"
+                      data-categorytype="rng"
+                      value="100"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="rng_downline_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="downline"
+                      data-categorytype="rng"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+                <p style="display: none">
+                  RNG total PT allowed
+                  <strong id="casino_rng_TotalPT">0</strong>%
+                </p>
+
+                <dl class="">
+                  <dt>SLOT</dt>
+                  <br />
+                  <dt>Super</dt>
+
+                  <dd>
+                    <input
+                      id="slot_agent_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="agent"
+                      data-categorytype="slot"
+                      value="100"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="slot_downline_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="downline"
+                      data-categorytype="slot"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+                <p style="display: none">
+                  SLOT total PT allowed
+                  <strong id="casino_slot_TotalPT">0</strong>%
+                </p>
+
+                <dl class="bg_dark">
+                  <dt>Virtual Sports</dt>
+                  <br />
+                  <dt>Super</dt>
+
+                  <dd>
+                    <input
+                      id="virtual_agent_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="agent"
+                      data-categorytype="virtual"
+                      value="100"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+
+                  <dt>Master Agent</dt>
+                  <dd>
+                    <input
+                      id="virtual_downline_casino_PT"
+                      type="text"
+                      onclick="location.href='#stake'"
+                      placeholder="Enter"
+                      data-type="downline"
+                      data-categorytype="virtual"
+                      value="0"
+                    />
+                    <ul class="odd-add">
+                      <li><a class="up" href="#">up</a></li>
+                      <li><a class="down" href="#">down</a></li>
+                    </ul>
+                    <div class="tips-popup" style="display: none">
+                      multiplier of 5
+                    </div>
+                  </dd>
+                </dl>
+                <p style="display: none">
+                  VIRTUAL total PT allowed
+                  <strong id="casino_virtual_TotalPT">0</strong>%
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <a href="#" id="createBtn" class="btn-send">Create</a>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="creditRefModalOpen">
+  <div class="modal-header">
+    <h3>Credit Reference Edit</h3>
+  </div>
+  <div class="modal-content">
+    <div class="wrap-refer_edit">
+      <dl>
+        <dt>Current</dt>
+        <dd>
+          <a class="btn" id="creditReferenceLog" href="javascript: void(0)"
+            >Log</a
+          >
+          <strong id="creditReference">0</strong>
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>New</dt>
+        <dd>
+          <input
+            type="text"
+            id="newCreditReference"
+            onclick="location.href='#stake'"
+            placeholder="Enter"
+          />
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Password</dt>
+        <dd>
+          <input
+            id="changeCreditReferencePassword"
+            type="password"
+            onclick="location.href='#stake'"
+            placeholder="Enter"
+          />
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <ul class="btn-wrap">
+      <li>
+        <a
+          id="changeCreditReferenceBtn"
+          class="btn-send"
+          href="javascript: void(0)"
+          >Submit</a
+        >
+      </li>
+    </ul>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="changeStatusOpen">
+  <div class="modal-header">
+    <h3>Change Status</h3>
+  </div>
+  <div class="modal-content">
+    <div class="status_id">
+      <p id="changeAccount"><span class="lv_3">MA</span>john00001</p>
+      <p class="status-active" id="originalStatus">
+        <img src="assets/images/transparent.gif" />Active
+      </p>
+    </div>
+    <div class="white-wrap">
+      <ul id="statusBtn" class="status_but">
+        <li>
+          <a
+            id="activeBtn"
+            class="but_active disable"
+            href="#active"
+            data-status="active"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            Active
+          </a>
+        </li>
+        <li>
+          <a
+            id="suspendBtn"
+            class="but_suspend"
+            href="#suspend"
+            data-status="suspend"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            Suspend
+          </a>
+        </li>
+        <li>
+          <a
+            id="lockedBtn"
+            class="but_locked"
+            href="#locked"
+            data-status="locked"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            Locked
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_box inline-form">
+        <div class="form_list">
+          <label>Password: </label>
+          <input
+            id="changeStatusPassword"
+            type="password"
+            placeholder="Enter"
+          />
+        </div>
+        <div class="btn_box">
+          <a id="changeStatusBtn" class="btn-send" href="javascript: void(0)"
+            >Change
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal>

@@ -1,0 +1,140 @@
+
+<div class="box" style="align-items: baseline;">
+    <h3>Casino Betting History</h3>
+    <div class="push" >
+        <a id="getPL" style="vertical-align: baseline;" (click)="CasinobetHistory()" class="btn-send">Show Default</a>
+    </div>
+  </div>
+
+  <div class="function-wrap">
+    <ul class="input-list">
+      <div id="statusCondition" style="display: none">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select name="betStatus" id="betStatus"></select>
+        </li>
+      </div>
+  
+      <li><label>Period</label></li>
+      <li class="blockdis">
+        <div class="webhide ">
+        <input id="startDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" />
+          </div>
+        to
+        <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+      </li>
+    </ul>
+  
+    <ul class="input-list">
+      <li>
+        <a id="today" (click)="getReportDate('today')" class="btn">Just For Today</a>
+      </li>
+      <li>
+        <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">From Yesterday</a>
+      </li>
+      <li style="display: none">
+        <a id="last7days" href="#" class="btn">Last 7 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last30days" href="#" class="btn">Last 30 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last2months" href="#" class="btn">Last 2 Months</a>
+      </li>
+      <li style="display: none">
+        <a id="last3months" href="#" class="btn">Last 3 Months</a>
+      </li>
+      <li>
+        <a id="getPL" (click)="CasinobetHistory()" class="btn-send">Get P &amp; L</a>
+      </li>
+    </ul>
+  
+    <div>
+      <span>
+        <label>Last:</label>
+        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+          <option value="100">100 Txn</option>
+          <option value="50">50 Txn</option>
+          <option value="25">25 Txn</option>
+          <option value="10" selected="">10 Txn</option>
+          <option value=casinobettingHistory.length>Full</option>
+        </select>
+      </span>
+      <div class="download-reports">
+        <button [appExportData]="'xls'" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'pdf'" [orientation]="'landscape'" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'csv'" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="report">
+    <div class="table-responsive data-table" style="overflow: auto;white-space: nowrap">
+    <table id="table_DL" class="table-s" style="display: table">
+      <tbody>
+        <tr>
+          <th width="10%" class="align-L sort_asc"  [appSort]="casinobettingHistory" data-order="asc" data-name="betId">Bet ID</th>
+          <th width="8%" class="align-L sort_asc" [appSort]="casinobettingHistory" data-order="asc" data-name="eventName">Event</th>
+          <th width="8%" class="align-L sort_asc" [appSort]="casinobettingHistory" data-order="asc" data-name="betTime">Bet_Placed</th>
+          <th width="8%" class="align-L sort_asc" [appSort]="casinobettingHistory" data-order="asc" data-name="settledDate">Bet_settled</th>
+          <th width="8%" class="sort_asc" [appSort]="casinobettingHistory" data-order="asc" data-name="stake">Stake</th>
+          <th width="10%" class="sort_asc" [appSort]="casinobettingHistory" data-order="asc" data-name="PL">Profit/Loss</th>
+        </tr>
+        <ng-container *ngFor="let bet of casinobettingHistory | paginate: { itemsPerPage: n, currentPage: p };">
+          <tr style="display: table-row">
+            <td class="align-L"> {{ bet.betId }}</td>
+            <td class="align-L"> {{ bet.eventName }}</td>
+              <td class="align-L"> {{ bet.betTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td class="align-L"> {{ bet.settledDate | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+              <td >{{ bet.stake | number: '0.2' }}</td>
+                <td   [ngClass]="{'red':bet.PL<0,'green':bet.PL>0}">{{ bet.PL| number: '0.2' }}</td>
+
+            
+            </tr>
+            </ng-container>
+
+      </tbody>
+    </table>
+    <pagination-template *ngIf="casinobettingHistory && casinobettingHistory.length > n" #pagination="paginationApi"
+      (pageChange)="p = $event">
+      <ul id="pageNumberContent" class="pages">
+        <li id="prev">
+          <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+          <ng-template #prevTemp>
+            <a (click)="pagination.previous()">Prev</a>
+          </ng-template>
+        </li>
+        <ng-container *ngFor="let page of pagination.pages">
+          <li id="pageNumber">
+            <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+              page.value }}
+            </a>
+            <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value }}
+            </a>
+          </li>
+        </ng-container>
+    
+        <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+        <li id="next">
+          <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+          <ng-template #nextTemp>
+            <a (click)="pagination.next()">Next</a>
+          </ng-template>
+        </li>
+      </ul>
+    </pagination-template>
+    </div>
+  
+  
+  

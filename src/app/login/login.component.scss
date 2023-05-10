@@ -1,0 +1,237 @@
+@import "~src/vars";
+// @import url(../../assets/scss/);
+
+
+
+
+
+
+
+
+
+.login-wrap,
+.maintain-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: absolute;
+  top: 15%;
+  left: calc(50% - 540px / 2);
+  width: 540px;
+  height: 408px;
+  background-color: var(--secondary);
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  color: var(--primary);
+}
+
+
+.kv {
+  width: 100%;
+  height: 100%;
+  // background: #ffb80c url(assets/images/bg-login_wrap.png) no-repeat;
+  border-radius: 8px 0 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  // background-color: #ddd;
+  padding: 0 30px;
+  background-image: linear-gradient(5deg, var(--primary) 30%, transparent 145%);
+
+  img {
+    background-size: contain;
+    background-position: 0;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.skyInrPlay .kv {
+  width: 100%;
+  padding: 0 12px;
+  background-image: linear-gradient(5deg, var(--primary) 38%, transparent 155%);
+}
+
+.login-panel {
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  color: #fff;
+  margin: 0 20px;
+  position: relative;
+  top: 25%;
+
+  .logo {
+    display: none;
+  }
+
+  dt {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 15px;
+  }
+
+  dd {
+    position: relative;
+    width: 220px;
+  }
+
+  input {
+    width: 100%;
+    height: 33px;
+    font-size: 14px;
+    line-height: 21px;
+    border: 1px solid #aaa;
+    box-shadow: inset 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    margin-bottom: 7px;
+  }
+
+  .btn-send {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    font-size: 15px;
+    margin: 15px 0 0;
+  }
+
+  .header {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 15px !important;
+  }
+}
+.login-panel i{
+  color: #000;
+}
+
+.error {
+  color: var(--error);
+  font-size: 13px;
+  line-height: 16px;
+  margin-top: 12px;
+}
+
+.captcha-group {
+  position: relative;
+
+    img {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      height: 20px;
+      transform: translateY(-50%);
+  }
+}
+
+.password-group {
+  position: relative;
+
+  i {
+    position: absolute;
+    right: 5px;
+    top: 49%;
+    transform: translateY(-70%);
+  }
+}
+
+
+@media only screen and (max-width: 540px){
+  .lcExch :host {
+    .login-wrap {
+      display: flex;
+      flex-flow: column;
+      width: 94%;
+      left: 3%;
+
+      .kv {
+        background: none;
+        height: auto;
+        img {
+          height: 68px;
+          width: 150px;
+        }
+      }
+
+      .login-panel {
+        top: 10%;
+      }
+    }
+  }
+}
+
+
+.apk-container {
+  border: 1px solid #eee;
+    border-radius: 3px;
+    height: 33px;
+    width: 114px;
+    margin-left: 45px;
+    margin-top: 10px;
+}
+
+.apk-container img {
+  height: 100%;
+  width: 100%;
+}
+@media (max-width: 750px) {
+  .login-wrap  {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: absolute!important;
+    top: 21%!important;
+    left: 0px!important;
+    width: auto!important;
+    height: auto!important;
+    background-color: var(--secondary);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgb(0 0 0 / 50%)!important;
+    color: var(--primary)!important;
+    margin: 10px !important;
+}
+
+.login-panel {
+  display: flex!important;
+  flex-flow: column;
+  overflow: hidden;
+  color: #fff;
+  margin: 0 0!important;
+  position: relative;
+  top: 0!important;
+  margin-right: 10px!important;
+}
+
+input {
+  margin-left: 10px !important;
+}
+
+.btn-send {
+  margin: 15px 10px 0 !important;
+}
+
+.apk-container {
+  margin-left: 30px !important;
+}
+
+.header {
+  font-size: 15px;
+text-align: center;
+margin-top: 15px !important;
+}
+
+}
+.loading-wrap {
+  /* display: none; */
+  // top: 20%;
+  height: 90px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px #00000080;
+  padding-top: 25px;
+  z-index: 99;
+  position: absolute;
+  left: 50%;
+  width: 190px;
+  margin-left: -95px;
+}

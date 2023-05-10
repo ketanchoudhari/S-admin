@@ -1,0 +1,82 @@
+<div class="main_wrap">
+    <h2>Pending Fancy   </h2>
+    <div class="function-wrap">
+      <div>
+        <!-- <button class="btn" (click)="deleteSelectedComments()">Delete</button> -->
+        <span class="spacer"></span>
+        <a (click)="openAddNewModal()" class="btn-send">Add Fancy</a>
+        <a (click)="getPendingfancy()" class="btn-send">Refresh</a>
+      </div>
+  
+      <div>
+        <span class="spacer"></span>
+        <p class="vertical-align: middle">Total Records: {{fancies.length}}</p>
+      </div>
+    </div>
+    <div class="table-container">
+      <table class="table01">
+        <thead>
+          <tr class="ng-table-sort-header">
+            <th width="3%">Sr. no</th>
+            <th width="8%">gameId</th>
+            <th width="8%">eventId</th>
+            <th width="8%">marketName</th>
+            <th width="8%">eventName</th>
+            <th width="8%">Action</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let pf of fancies; let i = index">
+            <td>{{i+1}}</td>
+  
+            <td title=" 'Edit' ">
+              {{pf.gameId}}
+            </td>
+  
+            <td title=" 'pf' ">
+                {{pf.eventId}}
+            </td>
+  
+            <td title="'Show Text'">{{ pf.marketName }}</td>
+            <td title="'Show Text'">{{ pf.eventName }}</td>
+  
+            <td width="8%">
+                        <a
+                        class="btn-send"
+                        title="Update"
+                        (click)="updateFancyStatus(pf.gameId)"
+                        >Update</a
+                    >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <app-modal [(open)]="isAddNewModalOpen">
+  <div class="modal-header">
+    <h3>Add New Fancy</h3>
+  </div>
+  <div class="modal-content">
+    <div class="ticker-details">
+      <div class="commentary-detail">
+        <div class="input-group">
+          <input type="text" placeholder="Enter EventId" [(ngModel)]="newFancy.eventId">
+        </div>
+        <div class="input-group">
+            <input type="text"  placeholder="Enter Fancy Market Name" [(ngModel)]="newFancy.marketName">
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Enter Fancy Diamond Sid" [(ngModel)]="newFancy.sid">
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button class="btn-send" (click)="AddFancy()">Add New</button>
+    </div>
+  </div>
+</app-modal>

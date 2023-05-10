@@ -1,0 +1,179 @@
+<div class="full-wrap">
+ <h2>Banking logs</h2>
+ <div class="total_all">
+  <span>
+    <label>Last:</label>
+    <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+      <option value="100">100 Txn</option>
+      <option value="50">50 Txn</option>
+      <option value="25">25 Txn</option>
+      <option value="10" selected="">10 Txn</option>
+      <option value="{{listCount}}">Full {{listCount}}</option>
+    </select>
+    <a id="getPL" (click)="banklog()" class="btn-send">Show Default</a>
+  </span>
+  <div class="download-reports">
+    <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+    <button (click)="exportPdf()" class="pdf btn" title="Export Pdf">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+    <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+  </div>
+ </div>
+  <!-- Report Table -->
+  <div class="over-wrap" style="max-height: calc(100% - 108px)">
+    <!-- <div class="function-wrap clearfix">
+      <dl class="banking-head float-L">
+        <dt>Your Balance</dt>
+        <dd id="yourBalance"><span>PTH</span>{{ currentUser.balance }}</dd>
+      </dl>
+      <ul class="input-list float-R" style="display: none">
+        <li><label>Sort by</label></li>
+        <li>
+          <select id="sort">
+            <option value="userId">UID</option>
+            <option value="site">Site</option>
+            <option value="currencyType">Currency</option>
+          </select>
+        </li>
+      </ul>
+    </div> -->
+    <div class="table-responsive data-table">
+      <table id="table_transfer" class="table01 tab-transfer tab-banking">
+        <tbody>
+          <tr>
+            <th width="12%" class="align-L sort_asc"  [appSort]="usersLog" data-order="asc" data-name="dateTime">Date/Time</th>
+            <th width="13%"  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="amount">Deposit by Upline</th>
+            <th width="13%" class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="amount">Deposit to Downline</th>
+            <th width="13%"  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="amount">Withdraw by Upline</th>
+            <th width="13%"  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="amount">Withdraw from Downline</th>
+            <th width="13%"  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="balance">Balance</th>
+            <th width="13%"  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="description">Remark</th>
+            <th width=""  class="sort_asc" [appSort]="usersLog" data-order="asc" data-name="withUname">From/To</th>
+          </tr>
+        </tbody>
+        <tbody id="content">
+          <tr 
+            [ngClass]="arraySettlement(user)?'settlement-tr':''"
+            id="{{ user.userName }}" 
+              *ngFor="let user of usersLog | paginate: { itemsPerPage: n, currentPage: p,totalItems:listCount }; let i = index"
+                >
+            <ng-container>
+              <td class="td-uid">
+                {{ user.dateTime | date: 'yyyy-MM-dd HH:mm:ss':'+530' }}
+              </td>
+              <td id="siteCol">{{ user.type == transactionType.DEPOSIT_UPLINE ? (user.amount | indianCurrency) : "-" }}</td>
+              <td id="siteCol">{{ user.type == transactionType.DEPOSIT_DOWNLINE ? (user.amount | indianCurrency) : "-"}}</td>
+              <td id="currencyTypeCol" style="color: red">
+                {{ user.type == transactionType.WITHDRAW_UPLINE ? (user.amount | indianCurrency) : "-" }}
+              </td>
+              <td id="currencyTypeCol" style="color: red">
+                {{ user.type == transactionType.WITHDRAW_DOWNLINE ? (user.amount | indianCurrency) : "-" }}
+              </td>
+              <td id="balance">{{ user.balance | indianCurrency }}</td>
+              <td id="availableBalance">{{ user.description }}</td>
+              <td>
+                <span id="from">{{ user.withUname }}</span>
+                <img class="fromto" src="assets/images/transparent.gif" />
+                <span id="to">{{ user.userName }}</span>
+              </td>
+            </ng-container>
+          </tr>
+          <tr class="total">
+            <td class="align-L">Total</td>
+            <td id="_totalDepositbyUpline">
+              <span *ngIf="totalRow?.totalDepositUpline < 0; else plusupLinePLTotal" class="red">
+                ({{ totalRow?.totalDepositUpline | indianCurrency }})
+              </span>
+              <ng-template #plusupLinePLTotal>
+                <span>
+                  {{ totalRow?.totalDepositUpline | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalDepositbyDownline">
+              <span *ngIf="totalRow?.totalDepositDownline < 0; else plusdownLinePLTotal" class="red">
+                ({{ totalRow?.totalDepositDownline | indianCurrency }})
+              </span>
+              <ng-template #plusdownLinePLTotal>
+                <span>
+                  {{ totalRow?.totalDepositDownline | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalWithdrawUpline">
+              <span *ngIf="totalRow?.totalWithdrawUpline < 0; else pluswithdrawUpLinePLTotal" class="red">
+                ({{ totalRow?.totalWithdrawUpline | indianCurrency }})
+              </span>
+              <ng-template #pluswithdrawUpLinePLTotal>
+                <span>
+                  {{ totalRow?.totalWithdrawUpline | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalWithdrawDownline">
+              <span *ngIf="totalRow?.totalWithdrawDownline < 0; else pluswithdrawDownLinePLTotal" class="red">
+                ({{ totalRow?.totalWithdrawDownline | indianCurrency }})
+              </span>
+              <ng-template #pluswithdrawDownLinePLTotal>
+                <span>
+                  {{ totalRow?.totalWithdrawDownline | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td id="_totalBalance">
+              <span *ngIf="totalRow?.totalBalance < 0; else plusBalanceTotal" class="red">
+                ({{ totalRow?.totalBalance | indianCurrency }})
+              </span>
+              <ng-template #plusBalanceTotal>
+                <span>
+                  {{ totalRow?.totalBalance | indianCurrency }}
+                </span>
+              </ng-template>
+            </td>
+            <td ></td>
+            <td ></td>
+          </tr>
+          <tr *ngIf="usersLog?.length == 0">
+            <td class="align-C" colspan="6">
+              No Data Found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <pagination-template *ngIf="usersLog && listCount > n" #pagination="paginationApi" (pageChange)="pageChanged($event)">
+        <ul id="pageNumberContent" class="pages">
+          <li id="prev">
+            <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+            <ng-template #prevTemp>
+              <a (click)="pagination.previous()">Prev</a>
+            </ng-template>
+          </li>
+          <ng-container *ngFor="let page of pagination.pages">
+            <li id="pageNumber">
+              <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+                page.value }}
+              </a>
+              <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value
+                }}
+              </a>
+            </li>
+          </ng-container>
+  
+          <li id="pageNumber"><a href="javascript:void(0);">2</a></li>
+          <li id="next">
+            <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+            <ng-template #nextTemp>
+              <a (click)="pagination.next()">Next</a>
+            </ng-template>
+          </li>
+        </ul>
+      </pagination-template>
+    </div>
+  </div>

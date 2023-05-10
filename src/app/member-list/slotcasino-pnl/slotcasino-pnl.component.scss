@@ -1,0 +1,40 @@
+@import "src/assets/scss/tables";
+@import "src/assets/scss/pop_box";
+
+@media (max-width: 750px) {
+  #eventRadioBtnList {
+    overflow: auto;
+  }
+  .total_all {
+    overflow: auto;
+  }
+  .input-list li {
+    display: block;
+  }
+  .input-list .time-input {
+    margin-bottom: 10px;
+  }
+}
+
+
+.delete {
+  background: url("/assets/images/sprite/main-s1aea395e8c.png") no-repeat -388px -1140px;
+  height: 20px;
+  margin-top: 2px;
+} 
+
+.betwiseStatus{
+  background-color: #cd5c5c3b;
+}
+
+.lvclass{
+  color:transparent ;background-color: transparent;
+}
+.sprtcls{
+ margin-right: 17px;
+}
+
+
+.input-list .btn-send{
+  width: 100%;
+}

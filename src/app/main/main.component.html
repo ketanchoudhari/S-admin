@@ -1,0 +1,121 @@
+<app-header></app-header>
+
+<div  appTheme class="over-wrap loading-overlay" style="display: none" [style.display]="loading ? 'flex' : 'none'">
+  <div id="loading" class="loading-wrap" style="display: block;">
+    <ul class="loading">
+      <li *ngIf="!isPremiumSite"><img class="loaderclass" src="assets/images/loading40.gif" /></li>
+      <li *ngIf="isPremiumSite && siteName != 'lc247' && siteName != 'luck247'"><img class="loaderclass" src="assets/images/loading40.gif" />
+      </li>
+      <li *ngIf="isPremiumSite && siteName == 'lc247'"><img class="loaderclass" src="assets/images/lc247.gif" /></li>
+      <li *ngIf="isPremiumSite && siteName == 'luck247'"><img class="loaderclass" src="assets/images/luck247.gif" /></li>
+      <li>Loading...
+      </li>
+      <br>
+      <li><span id="progress"></span></li>
+    </ul>
+  </div>
+</div>
+<div class="content-wrapper">
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="changepassmodal">
+  <div id="createModal" class="pop_bg" style="display: block;">
+    <div class="pop_box pop_refer">
+      <form [formGroup]="changePassForm" (ngSubmit)="changePass()">
+        <div class="modal-header">
+          <h3>Change Password</h3>
+          <marquee direction="left" style="font-family: Rajdhani, sans-serif; color: red" scrolldelay="100"
+            behavior="loop">
+            <sup>*</sup>Password must be at least 8 letter password, with at least 1 Symbol, Number, Upper and Lower
+            case letters.
+          </marquee>
+        </div>
+        <div class="modal-content">
+          <dl class="form_list">
+            <dt>New Password</dt>
+            <dd class="passwordErrorClass">
+              <input [type]="visiblePassword ? 'text' : 'password'" formControlName="newpassword" placeholder="Enter"
+                aria-autocomplete="list" />
+              <i class="fa fa-eye fa-2x" *ngIf="visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+
+              <i class="fa fa-eye-slash fa-2x" *ngIf="!visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+              <span class="must">＊</span>
+              <div class="errors" *ngIf="
+              changePassForm.get('newpassword').invalid &&
+              (changePassForm.get('newpassword').touched ||
+                changePassForm.get('newpassword').dirty)
+            ">
+                <div class="error-text" *ngIf="changePassForm.get('newpassword').hasError('required')">
+                  Password is required
+                </div>
+
+                <div class="error-text" *ngIf="
+                changePassForm.get('newpassword').hasError('passwordStrength')
+              ">
+                  {{ changePassForm.get("newpassword").errors["passwordStrength"] }}
+                </div>
+              </div>
+              <span id="newPasswordErrorText" class="error-text"></span>
+            </dd>
+            <dt>Confirm Password</dt>
+            <dd class="passwordErrorClass">
+              <input formControlName="confirm" [type]="visiblePassword ? 'text' : 'password'" placeholder="Enter" />
+              <i class="fa fa-eye fa-2x" *ngIf="visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+
+              <i class="fa fa-eye-slash fa-2x" *ngIf="!visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+              <span class="must">＊</span>
+              <div class="errors" *ngIf="
+              changePassForm.get('confirm').invalid &&
+              (changePassForm.get('confirm').touched ||
+                changePassForm.get('confirm').dirty)
+            ">
+                <div class="error-text" *ngIf="changePassForm.get('confirm').hasError('required')">
+                  Password is required
+                </div>
+
+                <div class="error-text" *ngIf="
+                changePassForm.get('confirm').hasError('passwordStrength')
+              ">
+                  {{ changePassForm.get("confirm").errors["passwordStrength"] }}
+                </div>
+                <div class="error-text" *ngIf="
+            changePassForm?.get('confirm').hasError('mustMatch')
+                  ">
+                  {{ changePassForm?.get("confirm").errors["mustMatch"] }}
+                </div>
+              </div>
+            </dd>
+            <dt>Your Password</dt>
+            <dd class="passwordErrorClass">
+              <input [type]="visiblePassword ? 'text' : 'password'" formControlName="password" placeholder="Enter" />
+              <i class="fa fa-eye fa-2x" *ngIf="visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+
+              <i class="fa fa-eye-slash fa-2x" *ngIf="!visiblePassword" aria-hidden="true" style="color: #000"
+                (click)="showPassword()"></i>
+              <span class="must">＊</span>
+              <div class="errors" *ngIf="
+              changePassForm.get('password').invalid &&
+              (changePassForm.get('password').touched ||
+                changePassForm.get('password').dirty)
+            ">
+                <div class="error-text" *ngIf="changePassForm.get('password').hasError('required')">
+                  Password is required
+                </div>
+              </div>
+            </dd>
+            <dd>
+              <button id="changePasswordBtn" type="submit" class="btn-send">
+                Change
+              </button>
+            </dd>
+          </dl>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

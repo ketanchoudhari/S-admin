@@ -1,0 +1,193 @@
+<div class="main_wrap">
+  <div class="agent_path">
+    <ul id="agentPath" class="agent_path-L">
+      <li class="last_li"><a [routerLink]="['/users',currentUser?.userType+1]"><span class="{{(isPremiumSite)?'premium':''}} lv_{{user?.userType}}"></span><strong>{{user?.userName}}</strong></a>
+      </li>
+      <ul class="account_pop" id="accountPop">
+        <li id="popTmp" style="display: none;"><a></a></li>
+      </ul>
+    </ul>
+  </div>
+  <div class="col-left">
+    <!-- Sub Menu and Path -->
+    <div class="sub_path">
+      <!-- Sub Menu -->
+      <ul class="menu-list">
+        <li class="class">{{Update?.Position}}</li>
+        <li>
+          <a
+            id="accountSummary"
+            [routerLink]="['accountSummary']"
+            routerLinkActive="select"
+            >{{Update?.AccountSummary}}</a
+          >
+        </li>
+
+        <li class="class">{{Update?.Performance}}</li>
+        <li *ngIf="isClient">
+          <a
+            [routerLink]="['claccountstatement']"
+            routerLinkActive="select"
+            >{{Update?.AccountStatement}}</a
+          >
+        </li>
+        <li *ngIf="isClient">
+          <a
+            id="bettingHistory"
+            [routerLink]="['bettingHistory']"
+            routerLinkActive="select"
+            >{{Update?.BettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="isClient">
+          <a
+            id="profitLoss"
+            [routerLink]="['profitAndLoss']"
+            routerLinkActive="select"
+            >{{Update?.BettingProfitLoss}}</a
+          >
+        </li>
+        <li *ngIf="isClient">
+          <a
+            id="casino-bethistory"
+            [routerLink]="['casino-bethistory']"
+            routerLinkActive="select"
+            >{{Update?.CasinoBettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="internationalCasino && !isClient">
+          <a
+            id="casino-pnl"
+            [routerLink]="['casino-pnl']"
+            routerLinkActive="select"
+            >{{Update?.CasinoPnl}}</a
+          >
+        </li>
+        <li *ngIf="isClient">
+          <a
+            id="casino-profitloss"
+            [routerLink]="['casino-profitloss']"
+            routerLinkActive="select"
+            >{{Update?.CasinoProfitLoss}} </a
+          >
+        </li>
+        <li *ngIf="isAWCcasino && isClient">
+          <a
+            id="awccasino-bethistory"
+            [routerLink]="['awccasino-bethistory']"
+            routerLinkActive="select"
+            >{{Update?.awcCasinoBettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="isAWCcasino && !isClient">
+          <a
+            id="awccasino-pnl"
+            [routerLink]="['awccasino-pnl']"
+            routerLinkActive="select"
+            >{{Update?.awcCasinoPnl}}</a
+          >
+        </li>
+        <li *ngIf="isAWCcasino && isClient">
+          <a
+            id="awccasino-profitloss"
+            [routerLink]="['awccasino-profitloss']"
+            routerLinkActive="select"
+            >{{Update?.awcCasinoProfitLoss}} </a
+          >
+        </li>
+        <li *ngIf="isSupernova && isClient">
+          <a
+            id="sncasino-bethistory"
+            [routerLink]="['sncasino-bethistory']"
+            routerLinkActive="select"
+            >{{Update?.SNCasinoBettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="isSupernova && !isClient">
+          <a
+            id="sncasino-pnl"
+            [routerLink]="['sncasino-pnl']"
+            routerLinkActive="select"
+            >{{Update?.SNCasinoPnl}}</a
+          >
+        </li>
+        <li *ngIf="isSupernova && isClient">
+          <a
+            id="sncasino-profitloss"
+            [routerLink]="['sncasino-profitloss']"
+            routerLinkActive="select"
+            >{{Update?.SNCasinoProfitLoss}} </a
+          >
+        </li>
+        <li *ngIf="isSlot && isClient">
+          <a
+            id="slotcasino-bethistory"
+            [routerLink]="['slotcasino-bethistory']"
+            routerLinkActive="select"
+            >{{Update?.SlotCasinoBettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="isSlot && !isClient">
+          <a
+            id="slotcasino-pnl"
+            [routerLink]="['slotcasino-pnl']"
+            routerLinkActive="select"
+            >{{Update?.SlotCasinoPnl}}</a
+          >
+        </li>
+        <li *ngIf="isSlot && isClient">
+          <a
+            id="slotcasino-profitloss"
+            [routerLink]="['slotcasino-profitloss']"
+            routerLinkActive="select"
+            >{{Update?.SlotCasinoProfitLoss}} </a
+          >
+        </li>
+
+        <li *ngIf="isbetgame && isClient">
+          <a
+            id="betgames-bethistory"
+            [routerLink]="['betgames-bethistory']"
+            routerLinkActive="select"
+            >{{Update?.BetgamesBettingHistory}}</a
+          >
+        </li>
+        <li *ngIf="isbetgame && !isClient">
+          <a
+            id="betgames-pnl"
+            [routerLink]="['betgames-pnl']"
+            routerLinkActive="select"
+            >{{Update?.BetgamesPnl}}</a
+          >
+        </li>
+        <li *ngIf="isbetgame && isClient">
+          <a
+            id="betgames-profitloss"
+            [routerLink]="['betgames-profitloss']"
+            routerLinkActive="select"
+            >{{Update?.BetgamesProfitLoss}} </a
+          >
+        </li>
+        <li>
+          <a
+            id="transactionHistory"
+            [routerLink]="['transactionCashHistory']"
+            routerLinkActive="select"
+            >{{Update?.TransactionHistory}}
+          </a>
+        </li>
+        <li>
+          <a
+            id="activityLog"
+            [routerLink]="['loginHistory']"
+            routerLinkActive="select"
+            >{{Update?.ActivityLog}}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="report" class="col-center report">
+    <router-outlet></router-outlet>
+  </div>
+</div>

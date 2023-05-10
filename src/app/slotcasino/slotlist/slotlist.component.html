@@ -1,0 +1,81 @@
+<div class="main_wrap">
+  <ul class="report-tab-wrap" style="display: block">
+    <li class="report-tab select" id="reportType_sportsBook" [class.select]="selectedTabIndex === 0"
+      (click)="selectTab(0)">
+      {{Update?.SlotList}}
+    </li>
+  </ul>
+  <div class="function-wrap">
+    <ul class="input-list">
+      <li
+        *ngIf="currentUser?.userType === commonService?.vrnlUserType || currentUser?.userType === commonService?.whitelabelUserType">
+        <label>User List:</label>
+        <ng-select name="sortCondition" id="sortCondition" (change)="onChange(selectedUser)" [(ngModel)]="selectedUser">
+          <ng-option value="" selected="selected">{{Update?.SelectUser}}</ng-option>
+          <ng-option [value]="users.userId" *ngFor="let users of usersList">
+            {{ users.userName }}
+          </ng-option>
+        </ng-select>
+        <ng-select name="sortCondition1" id="sortCondition1" (change)="onChangecat(selectedcat)" [(ngModel)]="selectedcat"  multiple="true">
+          <ng-option value="Select Category" selected="selected">Select Category</ng-option>
+          <ng-option [value]="teenpattidata.category" *ngFor="let teenpattidata of productlist">
+            {{ teenpattidata.category }}
+          </ng-option>
+        </ng-select>
+      </li>
+      <li class="spacer">&nbsp;&nbsp;</li>
+      <li class="import-button">
+        <button class="btn-send" (click)="ActivateCasinoCategories()">{{Update?.Import}}</button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="main_wrap">
+  <table *ngIf="selectedTabIndex === 0" id="table_DL" class="table01 table-pt">
+    <thead>
+      <tr class="ng-table-sort-header">
+        <th width="3%">
+          <div ng-if="template" ng-include="template">
+            <input type="checkbox" id="select_all" (click)="toggleSelectAll($event.target.checked)" />
+          </div>
+        </th>
+        <th>Category</th>
+        <th>{{Update?.CasinoCategories}}</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="currentUser.userType === commonService?.vrnlUserType">
+      <ng-container *ngFor="let teenpattidata of productlist">
+        <tr *ngFor="let teenpatti of teenpattidata.games">
+          <td>
+            <input name="subscribe" id='{{teenpattidata.category}}' type="checkbox"
+              [(ngModel)]="teenpattiSelectMap[teenpattidata.category]" />
+          </td>
+          <td>
+            {{ teenpattidata.category}}
+          </td>
+          <td>
+            {{ teenpatti.name}}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <tbody *ngIf="currentUser.userType === whitelabelUserType">
+      <ng-container *ngFor="let teenpattidata of productlist">
+        <tr *ngFor="let teenpatti of teenpattidata.games">
+          <td>
+            <input name="subscribe" id='{{teenpattidata.category}}' type="checkbox"
+              [(ngModel)]="teenpattiSelectMap[teenpattidata.category]" />
+          </td>
+          <td>
+            {{ teenpattidata.category}}
+          </td>
+          <td>
+            {{ teenpatti.name}}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+
+  </table>
+</div>

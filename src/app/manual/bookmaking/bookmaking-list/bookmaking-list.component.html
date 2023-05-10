@@ -1,0 +1,129 @@
+<div class="main_wrap">
+  <h2>BookMaking</h2>
+  <div class="function-wrap">
+    <div>
+      <select name="status" id="status">
+        <option value="0">Select Status</option>
+        <option value="1">Open</option>
+        <option value="2">Inactive</option>
+        <option value="3">Suspended</option>
+        <option value="4">Closed</option>
+      </select>
+
+      <span class="spacer"></span>
+      <a target="_blank" routerLink="new" class="btn-send" >Add New</a>
+    </div>
+
+    <div>
+      <button class="btn">Set Close</button>
+      <span class="spacer"></span>
+      <p class="vertical-align: middle"> Total Records: 4 </p>
+    </div>
+  </div>
+  <div class="total_all">
+    <div class="spacer"></div>
+    <div class="download-reports">
+      <button class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table01">
+      <thead>
+        <tr class="ng-table-sort-header">
+          <th width="3%">
+            <div ng-if="template" ng-include="template">
+              <input
+                type="checkbox"
+                id="select_all"
+                name="filter-checkbox"
+                value=""
+              />
+            </div>
+          </th>
+          <th width="3%">Edit</th>
+          <th>EventName</th>
+          <th>Book Header</th>
+          <th>Status</th>
+          <th>Rates</th>
+          <th>IsActive</th>
+          <th>IsAllowBet</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let l of [1, 1, 1, 1]">
+          <td>
+            <input
+              type="checkbox"
+              value="1"
+              data-ng-class="checkAll"
+              aria-label="checkbox"
+              class="ng-pristine ng-untouched ng-valid ng-empty"
+            />
+          </td>
+
+          <td title=" 'Edit' ">
+            <a routerLink="edit" target="_blank">
+              <i class="fa fa-pencil-square-o fa-2x"></i>
+            </a>
+          </td>
+
+          <td
+            title=" 'EventName' "
+            data-sortable=" 'eventName' "
+            data-title-text="EventName"
+          >
+            Balkh Legends v Kabul Zwanan
+          </td>
+
+          <td
+            title=" 'Book Header' "
+            data-sortable=" 'headerName' "
+            data-title-text="Book Header"
+          >
+            BOOK MAKING
+          </td>
+
+          <td
+            title=" 'Status' "
+            data-sortable=" 'status' "
+            data-title-text="Status"
+          >
+            INACTIVE
+          </td>
+
+          <td title=" 'Rates' " class="cursor-pointer" data-title-text="Rates">
+            <a
+              data-ng-show="isManual== 'manual'"
+              routerLink="bookrate"
+              target="_blank"
+              class="ng-scope ng-hide"
+            >
+              <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
+            </a>
+          </td>
+
+          <td title=" 'IsActive' " data-title-text="IsActive">
+            <a *ngIf="true">
+              <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+            </a>
+          </td>
+
+          <td title=" 'IsAllowBet' " data-title-text="IsAllowBet">
+            <a *ngIf="true">
+              <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+
+<div id="overWrap" class="over-wrap" style="height: calc(100% - 26px)">
+    <h4 class="sport-list-title">Our Live Casinos</h4>
+
+    <div class="gamehall-wrap-simple">
+
+        <a class="entrance-half"  [routerLink]="['tp',casino.tableId,casino.tableName,casino.gtype]"
+        *ngFor="let casino of dropdownMenu"
+            style="cursor: pointer">
+            <dl class="entrance-title">
+                <dt>{{casino.tableName}}</dt>
+                <dd>Play Now</dd>
+            </dl>
+            <img class="tp_image" src="assets/images/casino_new/{{casino.tableName}}.jpg" alt="{{casino.tableName}}" draggable="false">
+        </a>
+    </div>
+</div>
+

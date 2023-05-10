@@ -1,0 +1,5 @@
+<ul class="main_wrap tv-page">
+    <li *ngFor="let event of eventsLists; let i = index" class="event-item">
+        {{i+1}}. <a (click)="openTvWindow(event.eventId)">{{event.eventName}} </a>
+    </li>
+</ul>

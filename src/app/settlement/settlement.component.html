@@ -1,0 +1,321 @@
+<div class="main_wrap">
+  <div class="over-wrap">
+    <div class="function-wrap">
+      <ul class="input-list">
+        <li class="displayblock1">
+          <label for="selectDate"> Date of the Events </label>
+          <input
+            id="selectDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            readonly="true"
+            [(ngModel)]="matchDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <br class="hideweb">
+          <label for="selectSport"> Select Sport: </label>
+          <ng-select
+            id="selectSport"
+            (change)="selectSport($event)"
+            [(ngModel)]="selectedSport"
+          >
+            <ng-option value="0" selected=""> Select Event </ng-option>
+            <ng-option *ngFor="let sport of sportsEventIds" [value]="sport">
+              {{ sport.name }}
+            </ng-option>
+          </ng-select>
+        </li>
+        <li>
+          <button class="getPL btn-send" (click)="getGames()">
+            Get History
+          </button>
+        </li>
+      </ul>
+
+      <ul *ngIf="marketList && marketList.length" class="input-list">
+        <li>
+          <label for="selectMarket"> Select Market: </label>
+          <ng-select
+            id="selectMarket"
+            (change)="selectMarket($event)"
+            [(ngModel)]="selectedMarket"
+          >
+            <ng-option value="0" selected=""> Select Market </ng-option>
+            <ng-option *ngFor="let market of marketList" [value]="market">
+              {{ market.eventName }} > {{ market.marketName }}
+            </ng-option>
+          </ng-select>
+        </li>
+        <li>
+          <button id="getPL" (click)="settleMarket()" class="btn-send" style="margin-right: 8px;">
+            Settle Market
+          </button>
+          <button id="getPL" (click)="confirmVoid()" class="btn-send">
+            Void Market Bets
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel
+          [id]="event.eventId"
+          *ngFor="let event of virtualGames; trackBy: trackByEventId"
+        >
+          <ng-template ngbPanelHeader>
+            <div class="panel-header">
+              <button ngbPanelToggle>
+              <h4 class="event-name">{{ event.eventName }}</h4>
+              <div>
+                {{ event.startTime | date: "dd-MM-yyyy HH:mm:ss" }}
+              </div>
+
+              </button>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="bookmaker">
+              <span>{{ event.bookMakerMarket.marketName }}</span>
+              <span class="spacer"></span>
+              <select #bookResult name="bookResult">
+                <option value="0">Selection</option>
+                <option
+                  [value]="selection.selectionId"
+                  *ngFor="
+                    let selection of event.bookMakerMarket.selections;
+                    trackByMarketId
+                  "
+                >
+                  {{ selection.selectionName }}
+                </option>
+              </select>
+              <button
+                class="btn"
+                (click)="
+                  settleBook(event.bookMakerMarket.marketId, bookResult.value)
+                "
+              >
+                Settle Book
+              </button>
+            </div>
+            <div class="fancy" *ngFor="let fancy of event.fancyMarkets">
+              <span>{{ fancy.marketName }}</span>
+              <span class="spacer"></span>
+              <input
+                type="text"
+                name="fancyResult"
+                #fancyResult
+                placeholder="runs"
+              />
+              <button
+                class="btn"
+                (click)="settleFancy(fancy.marketId, fancyResult.value)"
+              >
+                Settle Fancy
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+        <h4 *ngIf="bmMarkets?.length">
+          TNPL
+        </h4>
+        <ngb-panel
+          [id]="event.gameId"
+          *ngFor="let event of bmMarkets; trackBy: trackByGameId"
+        >
+          <ng-template ngbPanelHeader>
+            <div class="panel-header">
+              <button ngbPanelToggle class="btn">
+              <h4 class="event-name">{{ event.eventName }}</h4>
+              <div>
+                {{ get24HrsDate(event.startTime) | date: "dd-MM-yyyy HH:mm:ss" }}
+              </div>
+
+              </button>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="bookmaker">
+              <span>{{ event.marketName }}</span>
+              <span class="spacer"></span>
+              <select #TnplBmResult name="bookResult">
+                <option value="0">Selection</option>
+                <option
+                 
+                  *ngFor="
+                    let selection of event.selections;
+                    let $index = index;
+                    trackByMarketId
+                  "
+                  [value]="selection.selId">
+                  {{ selection.name }}
+                </option>
+                <option value="-1">
+                  The Draw
+                </option>
+              </select>
+              <button
+                class="btn"
+                (click)="
+                settleTNPLBm(event.marketId, TnplBmResult.value)
+                "
+              >
+                Settle Book
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+
+    <div>
+      <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel
+          [id]="event.eventId"
+          *ngFor="let event of Kabaddigames; trackBy: trackByEventId"
+        >
+          <ng-template ngbPanelHeader>
+            <div class="panel-header">
+              <button ngbPanelToggle>
+              <h4 class="event-name">{{ event.eventName }}</h4>
+              <div>
+                {{ event.startTime | date: "dd-MM-yyyy HH:mm:ss" }}
+              </div>
+
+              </button>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="bookmaker">
+              <span>{{ event.bookMakerMarket.marketName }}</span>
+              <span class="spacer"></span>
+              <select #bookResult name="bookResult">
+                <option value="0">Selection</option>
+                <option
+                  [value]="selection.selectionId"
+                  *ngFor="
+                    let selection of event.bookMakerMarket.selections;
+                    trackByMarketId
+                  "
+                >
+                  {{ selection.selectionName }}
+                </option>
+              </select>
+              <button
+                class="btn"
+                (click)="
+                  settlekabaddi(event.bookMakerMarket.marketId, bookResult.value)
+                "
+              >
+                Settle Book
+              </button>
+            </div>
+            <div class="fancy" *ngFor="let fancy of event.fancyMarkets">
+              <span>{{ fancy.marketName }}</span>
+              <span class="spacer"></span>
+              <input
+                type="text"
+                name="fancyResult"
+                #fancyResult
+                placeholder="runs"
+              />
+              <button
+                class="btn"
+                (click)="settleFancy(fancy.marketId, fancyResult.value)"
+              >
+                Settle Fancy
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+        <h4 *ngIf="bmMarkets?.length">
+          TNPL
+        </h4>
+        <ngb-panel
+          [id]="event.gameId"
+          *ngFor="let event of bmMarkets; trackBy: trackByGameId"
+        >
+          <ng-template ngbPanelHeader>
+            <div class="panel-header">
+              <button ngbPanelToggle class="btn">
+              <h4 class="event-name">{{ event.eventName }}</h4>
+              <div>
+                {{ get24HrsDate(event.startTime) | date: "dd-MM-yyyy HH:mm:ss" }}
+              </div>
+
+              </button>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="bookmaker">
+              <span>{{ event.marketName }}</span>
+              <span class="spacer"></span>
+              <select #TnplBmResult name="bookResult">
+                <option value="0">Selection</option>
+                <option
+                
+                  *ngFor="
+                  let selection of event.selections;
+                    let $index = index;
+                    trackByMarketId
+                  "
+                  [value]="selection.selId">
+                  {{ selection.name }}
+                </option>
+                <option value="-1">
+                  The Draw
+                </option>
+              </select>
+              <button
+                class="btn"
+                (click)="
+                settle(event.marketId, TnplBmResult.value)
+                "
+              >
+                Settle Book
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div>
+</div>
+
+
+<app-modal [(open)]="isConfirmVoidOpen">
+  <div class="modal-header">
+    <h3>Void Market Bets</h3>
+  </div>
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th width="15%">MarketId</th>
+          <th>Market</th>
+        </tr>
+        <tr>
+          <td>{{selectedMarket?.marketId}} </td>
+          <td>{{selectedMarket?.eventName}} > {{selectedMarket?.marketName}} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="btn-wrap">
+    <li>
+      <button class="btn" (click)="closeVoidModal()">Cancel</button>
+    </li>
+    <li>
+      <button id="changeCreditReferenceBtn" class="btn-send" type="submit" (click)="voidMarket()">
+        Void
+      </button>
+    </li>
+  </ul>
+</app-modal>

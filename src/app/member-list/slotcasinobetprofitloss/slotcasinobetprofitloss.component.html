@@ -1,0 +1,230 @@
+
+<div class="box" style="align-items: baseline;">
+    <h3>Casino Profit & Loss</h3>
+    <div class="push" >
+        <a id="getPL" style="vertical-align: baseline;" (click)="CasinoprofitLoss()" class="btn-send">Show Default</a>
+    </div>
+  </div>
+
+  <div class="function-wrap">
+    <ul class="input-list">
+      <div id="statusCondition" style="display: none">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select name="betStatus" id="betStatus"></select>
+        </li>
+      </div>
+  
+      <li><label>Period</label></li>
+      <li class="blockdis">
+        <div class="webhide ">
+        <input id="startDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" />
+          </div>
+        to
+        <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+      </li>
+    </ul>
+  
+    <ul class="input-list">
+      <li>
+        <a id="today" (click)="getReportDate('today')" class="btn">Just For Today</a>
+      </li>
+      <li>
+        <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">From Yesterday</a>
+      </li>
+      <li style="display: none">
+        <a id="last7days" href="#" class="btn">Last 7 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last30days" href="#" class="btn">Last 30 days</a>
+      </li>
+      <li style="display: none">
+        <a id="last2months" href="#" class="btn">Last 2 Months</a>
+      </li>
+      <li style="display: none">
+        <a id="last3months" href="#" class="btn">Last 3 Months</a>
+      </li>
+      <li>
+        <a id="getPL" (click)="CasinoprofitLoss()" class="btn-send">Get P &amp; L</a>
+      </li>
+    </ul>
+  
+    <div>
+      <span>
+        <label>Last:</label>
+        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+          <option value="100">100 Txn</option>
+          <option value="50">50 Txn</option>
+          <option value="25">25 Txn</option>
+          <option value="10" selected="">10 Txn</option>
+          <option value=profitLoss.length>Full</option>
+        </select>
+      </span>
+      <div class="download-reports">
+        <button [appExportData]="'xls'" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'pdf'" [orientation]="'landscape'" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'csv'" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="report" data-report="profitAndLossReport">
+    <ul id="spotsUl" class="total-show">
+      <li id="totalPL">Total P/L:
+        <span *ngIf="this.totalPL > 0; else lossTemp" class="green">{{this.totalPL | indianCurrency}}</span>
+        <ng-template #lossTemp>
+          <span class="red">({{this.totalPL | indianCurrency}})</span>
+        </ng-template>
+      </li>
+      <li class="spacer"></li>
+
+      <!-- <li id="sumOfQuery" class="sports-switch">
+        PTH <span class="red">(7.28)</span>
+      </li> -->
+    </ul>
+    <ul id="binaryPL" class="total-show" style="display: none">
+      <li id="binaryTotalPL"></li>
+    </ul>
+    <div class="table-responsive data-table" style="overflow: auto;white-space: nowrap">
+    <table id="table_DL" class="table01 table-pnl" style="display: table">
+      <tbody>
+        <tr>
+          <th width="" class="align-L sort_asc" [appSort]="profitLoss" data-order="asc" data-name="sportName">Market</th>
+          <th width="15%" class="sort_asc" [appSort]="profitLoss" data-order="asc" data-name="settledDate">Settled date</th>
+          <th width="18%" class="sort_asc" [appSort]="profitLoss" data-order="asc" data-name="netPL">Profit/Loss</th>
+        </tr>
+  
+        <ng-container *ngFor="let pnl of profitLoss | paginate: {itemsPerPage: n, currentPage: p}; let i = index">
+          <tr style="display: table-row">
+            <td id="title" class="align-L">
+              {{pnl.sportName | uppercase}}<img class="fromto"
+                src="assets/images/transparent.gif" /><strong>{{pnl.eventName}}</strong>
+            </td>
+            <!-- <td id="startTime">{{pnl.startTime | date: 'yyyy-MM-dd HH:mm:ss':'+530'}}</td>
+            <td id="settledDate">{{pnl.settledDate | date: 'yyyy-MM-dd HH:mm:ss':'+530'}}</td> -->
+            <td id="settledDate">{{pnl.settledDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>
+              <a class="expand-close" (click)="toggleExpand($event, 'sub_' + i)">
+                <span *ngIf="pnl.netPL > 0; else lossTempPL" class="green">
+                  {{pnl.netPL | indianCurrency}}
+                </span>
+                <ng-template #lossTempPL>
+                  <span class="red">{{pnl.netPL | indianCurrency}}</span>
+                </ng-template>
+              </a>
+            </td>
+          </tr>
+          <tr id="sub_{{i}}" class="expand" style="display: none">
+            <td colspan="4">
+              <img class="expand-arrow-R" src="assets/images/transparent.gif" />
+  
+              <table class="table-commission">
+                <tbody>
+                  <tr>
+                    <th width="12%">Bet ID</th>
+
+                    <th width="13%">Stake</th>
+                    <th width="20%">Bet_Placed</th>
+                    <th width="23%">Profit/Loss</th>
+                  </tr>
+                  <tr class="even" *ngFor="let bet of pnl.bets">
+                    <td id="betID">{{bet.betId}}</td>
+                    <td id="txStake">{{bet.stake | indianCurrency}}</td>
+                    <td id="placed">{{bet.betTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td id="txLiability" [ngClass]="bet.pl > 0? 'profit-text': 'loss-text'">{{bet.pl | indianCurrency}}
+                    </td>
+                  </tr>
+                  <tr class="sum-pl">
+                    <td colspan="7">
+                      <dl>
+                        <dt>Total Stakes</dt>
+                        <dd id="totalStakes">{{pnl.totalStakes | indianCurrency}}</dd>
+  
+                        <dt id="backSubTotalTitle">Back subtotal</dt>
+                        <dd id="backSubTotal" [ngClass]="pnl.backTotal > 0? 'profit-text': 'loss-text'">{{pnl.backTotal |
+                          indianCurrency}}</dd>
+  
+                        <dt id="laySubTotalTitle">Lay subtotal</dt>
+                        <dd id="laySubTotal" [ngClass]="pnl.layTotal > 0? 'profit-text': 'loss-text'">{{pnl.layTotal |
+                          indianCurrency}}</dd>
+  
+                        <dt>Market subtotal</dt>
+                        <dd id="marketTotal" [ngClass]="pnl.mktTotal > 0? 'profit-text': 'loss-text'">{{pnl.mktTotal |
+                          indianCurrency}}</dd>
+  
+                        <dt id="commissionTitle" style="display: block">
+                          Commission
+                        </dt>
+                        <dd id="commission" style="display: block">
+                          <span [ngClass]="pnl.commission > 0? 'profit-text': 'loss-text'">{{pnl.commission |
+                            indianCurrency}}</span>
+                        </dd>
+  
+                        <dt class="net_total">Net Market Total</dt>
+                        <dd id="netTotal" class="net_total" [ngClass]="pnl.netPL > 0? 'profit-text': 'loss-text'">
+                          {{pnl.netPL | indianCurrency}}</dd>
+                      </dl>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    </div>
+    <p class="table-other">Profit and Loss is shown net of commission.</p>
+  </div>
+  <ng-template>
+    <div id="noReportMessage">
+      <p>
+        Betting Profit &amp; Loss enables you to review the bets you have placed.
+        <br />Specify the time period during which your bets were placed, the type
+        of markets on which the bets were placed, and the sport.
+      </p>
+      <p>Betting Profit &amp; Loss is available online for the past 2 months.</p>
+    </div>
+  </ng-template>
+  
+  
+  <pagination-template *ngIf="profitLoss?.length > n" #pagination="paginationApi" (pageChange)="p = $event">
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+        <ng-template #prevTemp>
+          <a (click)="pagination.previous()">Prev</a>
+        </ng-template>
+      </li>
+      <ng-container *ngFor="let page of pagination.pages">
+        <li id="pageNumber">
+          <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+            page.value }}
+          </a>
+          <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value }}
+          </a>
+        </li>
+      </ng-container>
+  
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+        <ng-template #nextTemp>
+          <a (click)="pagination.next()">Next</a>
+        </ng-template>
+      </li>
+    </ul>
+  </pagination-template>
+  
+  

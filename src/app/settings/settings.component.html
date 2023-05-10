@@ -1,0 +1,742 @@
+<div class="full-wrap">
+  <form [formGroup]="settingForm" (ngSubmit)="submit()">
+    <div class="main_wrap">
+      <h2>{{Update?.Settings}}</h2>
+      <div class="function-wrap">
+        <ul class="input-list diaplayflex">
+          <li>
+            <input
+              autocomplete="off"
+              type="radio"
+              name="typeWise"
+              value="default"
+              id="typeWiseDefault"
+              (change)="setTypeWise($event.target.value)"
+              formControlName="typeWise"
+            />
+            <label for="typeWiseDefault">{{Update?.Default}}</label>
+            <input
+              autocomplete="off"
+              type="radio"
+              name="typeWise"
+              value="sport"
+              id="sport"
+              (change)="setTypeWise($event.target.value)"
+              formControlName="typeWise"
+            />
+            <label for="sport">{{Update?.SportWise}}</label>
+            <input
+              autocomplete="off"
+              type="radio"
+              name="typeWise"
+              value="competition"
+              id="competition"
+              (change)="setTypeWise($event.target.value)"
+              formControlName="typeWise"
+            />
+            <label for="competition">{{Update?.CompetitionWise}}</label>
+            <input
+              autocomplete="off"
+              type="radio"
+              name="typeWise"
+              value="event"
+              id="event"
+              (change)="setTypeWise($event.target.value)"
+              formControlName="typeWise"
+            />
+            <label for="event">{{Update?.EventWise}}</label>
+            <input
+              autocomplete="off"
+              type="radio"
+              name="typeWise"
+              value="market"
+              id="market"
+              (change)="setTypeWise($event.target.value)"
+              formControlName="typeWise"
+            />
+            <label for="market">{{Update?.MarketWise}}</label>
+          </li>
+        </ul>
+        <ul class="input-list diaplayflex">
+          <li>
+            <input
+              autocomplete="off"
+              type="radio"
+              value="0"
+              name="usersWise"
+              id="usersWise"
+              checked="true"
+              (change)="setUsersWise($event)"
+            />
+            <label for="usersWise">{{Update?.Default}}</label>
+            <ng-container *ngFor="let level of hierarchyList">
+              <input
+              #userWise
+                autocomplete="off"
+                type="radio"
+                name="usersWise"
+                value="{{ level.name }}"
+                id="{{ level.name }}"
+                (change)="setUsersWise($event, level.name + 'Select')"
+              />
+              <label for="{{ level.name}}">{{ level.name | titlecase }} Wise</label>
+            </ng-container>
+          </li>
+        </ul>
+        <ul class="input-list">
+          <li>
+            <ng-select
+              autocomplete="off"
+              name="value"
+              formControlName="value"
+              (change)="selectSport($event, 'teenpatti')"
+              *ngIf="settingForm.value.typeWise === 'sport'"
+            >
+              <ng-option value="0">Select Sport</ng-option>
+              <ng-option *ngFor="let sport of sportsEventIds" [value]="sport.id">{{sport.name | titlecase}} </ng-option>
+              <ng-option *ngFor="let table of casinoTablesList" [value]="table.tableName">{{table.tableName}} </ng-option>
+            </ng-select>
+
+            <!-- <div class="btn_box" style="padding:5px;" *ngIf="settingForm.value.typeWise === 'sport' && settingForm.value.userId === '0'">
+              <button type="button" class="add_member" (click)="sportwisedefault()">Set Sportwise Default</button>
+            </div> -->
+            <ng-select
+              autocomplete="off"
+              name="value"
+              formControlName="value"
+              (change)="selectCompetition($event,'teenpatti')"
+              *ngIf="settingForm.value.typeWise === 'competition'"
+            >
+              <ng-option value="0">Select Competition</ng-option>
+              <ng-option *ngFor="let comp of competitionList" [value]="comp.competitionId"> {{ comp.sportsName | titlecase }} > {{ comp.competitionName }}</ng-option>
+            </ng-select>
+            <ng-select
+              id="selectEvent"
+              class="ng-select"
+              [multiple]="false"
+              placeholder="Select Event"
+              formControlName="value"
+              (change)="selectEvent($event)"
+              *ngIf="settingForm.value.typeWise === 'event'"
+            >
+              <ng-option value="0">{{Update?.SelectEvent}}</ng-option>
+              <ng-option
+                *ngFor="let event of eventsList"
+                [value]="event.eventId.toString()"
+                >{{ event.sportsName | titlecase }} > {{ event.eventName }}
+              </ng-option>
+            </ng-select>
+
+            <ng-select
+              class="ng-select"
+              autocomplete="off"
+              name="value"
+              formControlName="value"
+              (change)="selectMarket($event)"
+              *ngIf="settingForm.value.typeWise === 'market'"
+            >
+              <ng-option value="0">{{Update?.SelectMarket}}</ng-option>
+              <ng-option
+                *ngFor="let market of marketList"
+                [value]="market.gameId.toString()"
+                >{{ market.sportsName | titlecase }} > {{ market.eventName }} > {{ market.marketName }}
+              </ng-option>
+              <ng-option
+                *ngFor="let market of casinoMarketsList"
+                [value]="market.gameId.toString()"
+                >{{ market.tableName }} > {{ market.marketName }}
+              </ng-option>
+            </ng-select>
+
+            <ng-container *ngFor="let level of hierarchyList">
+              <ng-select
+                autocomplete="off"
+                name="userId"
+                formControlName="userId"
+                class="user-wise"
+                id="{{ level?.name }}SelectInput"
+                style="display: none"
+                (change)="selectUser($event)"
+              >
+                <ng-option value="0"
+                  >Select {{ level.name | titlecase }}</ng-option
+                >
+                <ng-option
+                  [value]="u.userId.toString()"
+                  *ngFor="let u of usersListMap[level.id]"
+                >
+                  {{ u.userName }}
+                </ng-option>
+              </ng-select>
+            </ng-container>
+          </li>
+        </ul>
+      </div>
+      <div class="container settings-container">
+        <div *ngIf="showLimitSettings" formGroupName="limitSetting">
+          <h2>{{Update?.LimitSetting}}</h2>
+          <div class="grid">
+            <div formGroupName="exposureLimit" class="input-group">
+              <label for="exposure-limit">Exposure Limit: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                name="value"
+                formControlName="value"
+                placeholder="Enter exposure limit"
+                (input)="limitSetting.get('exposureLimit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited"/>
+            </div>
+            <div formGroupName="bookmakingCommission" class="input-group">
+              <label for="">{{Update?.Bookmakingcommission}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bookmaking commission"
+                (input)="limitSetting.get('bookmakingCommission').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <!--
+            <div class="input-group">
+              <label for="">PNL(%): </label>
+              <input
+              autocomplete="off" type="number" placeholder="Enter PNL" />
+            </div> -->
+
+            <div formGroupName="matchOddsCommission" class="input-group">
+              <label for="">{{Update?.ExchangeCommission}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Match Odds Commission"
+                (input)="limitSetting.get('matchOddsCommission').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="betDelay" class="input-group">
+              <label for="">{{Update?.BetDelay}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bet Delay"
+                (input)="limitSetting.get('betDelay').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="noMinutesBeforeInplay" class="input-group">
+              <label for="">{{Update?.NoofMinutesBeforeInplay}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter No. of Minutes Before Inplay"
+                (input)="limitSetting.get('noMinutesBeforeInplay').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+
+            <!-- <div class="input-group">
+              <label for="">Fancy commission: </label>
+              <input
+              autocomplete="off"
+                type="number"
+                formControlName="fancyCommission"
+                placeholder="Enter fancy Commission"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+            </div> -->
+
+            <!-- <div class="input-group">
+              <label for="">Exchange Rate: </label>
+              <input
+              autocomplete="off" type="number" placeholder="Enter Exchange Rate" />
+            </div> -->
+          </div>
+        </div>
+        <div *ngIf="showMarketSettings" formGroupName="marketSetting">
+          <h2>{{Update?.MarketSetting}}</h2>
+          <div class="grid">
+            <div formGroupName="betMinRate" class="input-group">
+              <label for="">{{Update?.BetMinRate}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bet Min Rate"
+                (input)="marketSetting.get('betMinRate').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <!-- <div class="input-group">
+              <label for="">Commssion(%): </label>
+              <input
+              autocomplete="off"
+                type="number"
+                formControlName="commission"
+                placeholder="Enter Bet Min Rate"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+            </div> -->
+
+            <div formGroupName="betMaxRate" class="input-group">
+              <label for="">{{Update?.BetMaxRate}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bet Max Rate"
+                (input)="marketSetting.get('betMaxRate').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <!-- <div formGroupName="volMultiplier" class="input-group">
+              <label for="">Volume Multiplier: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Volume Multiplier"
+                numberOnly
+                [allowNull]='false'
+                [allowDecimals]="false"
+                (input)="marketSetting.get('volMultiplier').get('inherited').setValue(false)"
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div> -->
+
+            <div formGroupName="minStake" class="input-group">
+              <label for="">{{Update?.MinStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Min Stake"
+                (input)="marketSetting.get('minStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="maxStake" class="input-group">
+              <label for="">{{Update?.MaxStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Stake"
+                (input)="marketSetting.get('maxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="maxProfit" class="input-group">
+              <label for="">{{Update?.MaxProfit}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Profit"
+                (input)="marketSetting.get('maxProfit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="maxLoss" class="input-group">
+              <label for="">{{Update?.MaxLoss}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Loss"
+                (input)="marketSetting.get('maxLoss').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <!-- <div class="input-group">
+              <label for="" style="display: flex">
+                <input
+                autocomplete="off" type="checkbox"  /> Is Unmatched Allowed
+              </label>
+              <label for="">
+                <input
+                autocomplete="off" type="checkbox"  /> Is Check Volume
+              </label>
+            </div> -->
+            <!-- <div formGroupName="marketBeforeInplayLimit" class="input-group">
+              <label for="">Market Before Inplay Limit: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Market Before Inplay Limit"
+                (input)="marketSetting.get('marketBeforeInplayLimit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div> -->
+            <!-- <label for="">
+              <input
+              autocomplete="off" type="checkbox"  /> Is Market Wise
+            </label> -->
+          </div>
+        </div>
+        <div *ngIf="showPremiumSettings" formGroupName="premiumSetting">
+          <h2>Premium Settings</h2>
+          <div class="grid">
+            <div formGroupName="betDelay" class="input-group">
+              <label for="">{{Update?.BetDelay1}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bet Delay"
+                (input)="premiumSetting.get('betDelay').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="minStake" class="input-group">
+              <label for="">{{Update?.MinStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Min Stake"
+                (input)="premiumSetting.get('minStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="maxStake" class="input-group">
+              <label for="">{{Update?.MaxStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Stake"
+                (input)="premiumSetting.get('maxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="maxProfit" class="input-group">
+              <label for="">{{Update?.MaxProfit}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Profit"
+                (input)="premiumSetting.get('maxProfit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+
+          </div>
+        </div>
+        <div *ngIf="showSessionSettings" formGroupName="sessionSetting">
+          <h2>{{Update?.SessionSetting}}</h2>
+          <div class="grid">
+            <div formGroupName="minStake" class="input-group">
+              <label for="">{{Update?.MinStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Min Stake"
+                (input)="sessionSetting.get('minStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+
+            <div formGroupName="maxStake" class="input-group">
+              <label for="">{{Update?.MaxStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Stake"
+                (input)="sessionSetting.get('maxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="maxLoss" class="input-group">
+              <label for="">{{Update?.MaxLoss}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Loss"
+                (input)="sessionSetting.get('maxLoss').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="maxProfit" class="input-group">
+              <label for="">{{Update?.MaxProfit}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Profit"
+                (input)="sessionSetting.get('maxProfit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="perRateMaxStake" class="input-group">
+              <label for="">{{Update?.PerRateMaxStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Per Rate Max Stake"
+                (input)="sessionSetting.get('perRateMaxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="commission" class="input-group">
+              <label for="">{{Update?.Commission}}(%): </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Commission"
+                (input)="sessionSetting.get('commission').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <!-- <div formGroupName="fancyBonus" class="input-group">
+              <label for="">Fancy Bonus: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Fancy Bonus"
+                (input)="sessionSetting.get('fancyBonus').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div> -->
+            <div formGroupName="betDelay" class="input-group">
+              <label for="">{{Update?.BetDelay1}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter betDelay"
+                (input)="sessionSetting.get('betDelay').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showBookSettings" class="container settings-container">
+        <div formGroupName="bookSettings">
+          <h2>{{Update?.BookmakingSetting}}</h2>
+          <div class="grid-bookmaking">
+            <div formGroupName="betDelay" class="input-group">
+              <label for="">{{Update?.BetDelay1}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Bet Delay"
+                (input)="bookSetting.get('betDelay').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <!-- <div class="input-group">
+              <label for="">Commssion(%): </label>
+              <input
+              autocomplete="off"
+                type="number"
+                formControlName="commission"
+                placeholder="Enter Bet Min Rate"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+            </div> -->
+
+            <div formGroupName="minStake" class="input-group">
+              <label for="">{{Update?.MinStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Min Stake"
+                (input)="bookSetting.get('minStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="maxStake" class="input-group">
+              <label for="">{{Update?.MaxStake}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Stake"
+                (input)="bookSetting.get('maxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <div formGroupName="maxProfit" class="input-group">
+              <label for="">{{Update?.MaxProfit}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Profit"
+                (input)="bookSetting.get('maxProfit').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="maxLoss" class="input-group">
+              <label for="">{{Update?.MaxLoss}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Loss"
+                (input)="bookSetting.get('maxLoss').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+            <div formGroupName="perRateMaxStake" class="input-group">
+              <label for="">{{Update?.MaxStakePerRate}}: </label>
+              <input
+                autocomplete="off"
+                type="number"
+                formControlName="value"
+                placeholder="Enter Max Stake Per Rate"
+                (input)="bookSetting.get('perRateMaxStake').get('inherited').setValue(false)"
+                numberOnly
+                [allowNull]='false'
+                tabindex=""
+              />
+              <input type="checkbox" tabindex="-1" formControlName="inherited" />
+            </div>
+
+            <!-- <div class="input-group">
+              <label for="" style="display: flex">
+                <input
+                autocomplete="off" type="checkbox"  /> Is Unmatched Allowed
+              </label>
+              <label for="">
+                <input
+                autocomplete="off" type="checkbox"  /> Is Check Volume
+              </label>
+            </div> -->
+            <!-- <label for="">
+              <input
+              autocomplete="off" type="checkbox"  /> Is Market Wise
+            </label> -->
+          </div>
+        </div>
+      </div>
+      <div class="btn_box">
+        <button type="submit" class="btn-send">{{Update?.Save}}</button>
+        <button type="button" (click)="back()" class="btn">{{Update?.Cancel}}</button>
+      </div>
+    </div>
+  </form>
+</div>

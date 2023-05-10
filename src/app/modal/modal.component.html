@@ -1,0 +1,7 @@
+<div id="createModal" class="pop_bg" [style.display]="open? 'block': 'none'" style="height: 100%;width: 100%;">
+  <div class="pop_box pop_refer" [ngStyle]="{'height': height, 'width': width}">
+    <a class="close_pop" href="#" (click)="open = false" *ngIf="closeShow"
+      >close_pop</a
+    >
+    <ng-content></ng-content>
+</div>

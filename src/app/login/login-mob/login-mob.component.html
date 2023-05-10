@@ -1,0 +1,289 @@
+<div appTheme class="over-wrap loading-overlay" style="display: none" [style.display]="loading ? 'flex' : 'none'">
+  <div id="loading" class="loading-wrap" style="display: block;">
+    <ul class="loading">
+      <li *ngIf="!isPremiumSite"><img class="loaderclass" src="assets/images/loading40.gif" /></li>
+      <li *ngIf="isPremiumSite && siteName != 'lc247' && siteName != 'luck247'"><img class="loaderclass" src="assets/images/loading40.gif" />
+      </li>
+      <li *ngIf="isPremiumSite && siteName == 'lc247'"><img class="loaderclass" src="assets/images/lc247.gif" /></li>
+      <li *ngIf="isPremiumSite && siteName == 'luck247'"><img class="loaderclass" src="assets/images/luck247.gif" /></li>
+      <li style="padding: 10px">Loading...
+      </li>
+      <br>
+      <li><span id="progress"></span></li>
+    </ul>
+  </div>
+</div>
+<div class="mobile-view">
+  <div appTheme  class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" data-url="/login/agent/login.jsp" tabindex="0"
+      class="ui-page ui-page-theme-a ui-page-active backhround" style="">
+      <!-- <div class="urgent-notice" id="urgentNotice" style="display: none">
+      <header class="announce-header">
+        <h1>Urgent Notice</h1>
+      </header>
+      <div class="notice-content">
+        <p>
+          Please take note it has come to our attention that there has been
+          other sites using the Skyexchange brand.
+        </p>
+        <p>
+          <span class="hilight">Skyexchange.com</span> is the only official
+          site powered by Betfair. No other domain with the skyexchange brand
+          belongs to us.
+        </p>
+        <p class="red">
+          <strong
+            >We are not liable for any transactions done on other
+            site.</strong
+          >
+        </p>
+        <div class="notice-img">
+          <img
+            src="/images/mobile/announcement/urgent-notice-1.png"
+            alt=""
+            class="img-fake"
+          />
+          <img src="/images/mobile/announcement/urgent-notice-2.png" alt="" />
+          <img
+            src="/images/mobile/announcement/urgent-notice-1.png"
+            alt=""
+            class="img-fake"
+          />
+          <img src="/images/mobile/announcement/urgent-notice-3.png" alt="" />
+        </div>
+      </div>
+      <footer class="announce-footer">
+        <a
+          href="javascript:MobileLoginHandler.hideUrgentNotice();"
+          class="btn-send ui-link"
+          >OK</a
+        >
+      </footer>
+    </div> -->
+
+      <header class="login-head">
+        <h1>SKYEXCHANGE</h1>
+      </header>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <dl class="form-login">
+          <dd id="loginNameErrorClass">
+            <input formControlName="userName" autocomplete="on" id="loginName" type="text" placeholder="Username"
+              appInputRestriction="noSpecialChars" required />
+          </dd>
+          <dd id="passwordErrorClass">
+            <input formControlName="password" id="password" autocomplete="on"
+              [type]="visiblePassword ? 'text' : 'password'" placeholder="Password" required />
+            <i class="fa fa-eye fa-2x" *ngIf="!visiblePassword && !isPremiumSite" aria-hidden="true" style="color: #000;
+            top: 15px;
+            right: 15px;
+            position: absolute;" (click)="showPassword()"></i>
+
+            <i class="fa fa-eye-slash fa-2x" *ngIf="visiblePassword && !isPremiumSite" aria-hidden="true" style="color: #000;
+            top: 15px;
+            right: 15px;
+            position: absolute;" (click)="showPassword()"></i>
+            <!-- fa fa-eye-slash -->
+          </dd>
+          <dd id="validCodeErrorClass" *ngIf="showCaptcha">
+            <input formControlName="captcha" id="captha" autocomplete="on" type="number" placeholder="Validation Code"
+              required />
+            <img *ngIf="captchaImg" [src]="captchaImg" alt="" (click)="getCaptcha()" />
+          </dd>
+          <dd>
+            <input id="valid" name="valid" type="hidden" data-role="none"
+              value="ffc14e4b-fc0b-4ad8-9449-be2ff4d59a78" />
+          </dd>
+          <dd>
+            <!-- <a
+              _ngcontent-pjf-c45=""
+              id="loginBtn"
+              class="btn-send ui-link"
+              (click)="login()"
+            > -->
+            <!-- <button
+                style="border: none; width: -webkit-fill-available"
+                class="btn-send ui-link"
+                type="submit"
+              >
+                Login
+              </button> -->
+            <!-- </a> -->
+
+            <button style="width: 100%" class="btn-send ui-link" type="submit">
+              Login
+            </button>
+
+            <!-- <button
+            class="btn-send ui-link"
+            id="loginBtn"
+            type="submit"
+          ></button> -->
+          </dd>
+          <dd id="errorMsg" class="state" *ngIf="loginForm.invalid || serverError">
+            {{ errorMsg }}
+          </dd>
+        </dl>
+      </form>
+
+      <div class="support-wrap extend-support" *ngIf="siteName=='lc247'">
+        <div class="extend-btn">
+
+          <img src="assets/images/transparent.gif" title="customer" class="support-customer">
+          <a href="https://api.whatsapp.com/send?phone=0000000000" target="_blank">Customer support1</a>
+
+
+          <a href="https://api.whatsapp.com/send?phone=0000000000" target="_blank" class="split-line">support2</a>
+
+        </div>
+        <div class="extend-btn">
+
+          <img src="assets/images/transparent.gif" title="WhatsApp" class="support-whatsapp">
+          <a href="https://wa.me/+919907194219" target="_blank">+919907194219</a>
+
+
+          <a href="https://wa.me/+12392663877" target="_blank" class="split-line">+12392663877</a>
+
+        </div>
+        <div class="extend-btn">
+
+
+          <img src="assets/images/transparent.gif" title="WhatsApp" class="support-whatsapp">
+          <a href="https://t.me/Lc247telegram" target="_blank">Lc247telegram</a>
+
+
+          <a href="https://t.me/Lc247telegram2" target="_blank" class="split-line">Lc247telegram2</a>
+
+        </div>
+        <div class="support-social">
+          <div class="social-btn">
+
+            <img src="assets/images/transparent.gif" title="Skype" class="support-skype">
+            <a href="skype:lc247official?chat" target="_blank">Skype</a>
+
+          </div>
+          <div class="social-btn">
+
+            <img src="assets/images/transparent.gif" title="Email" class="support-mail">
+            <a href="mailto:info@lc247.xyz" target="_blank">Email</a>
+
+          </div>
+          <div class="social-btn">
+
+            <img src="assets/images/transparent.gif" title="Instagram" class="support-ig">
+            <a href="https://www.instagram.com/lc247_xyz?igshid=YmMyMTA2M2Y=" target="_blank"
+              class="ui-link">Instagram</a>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="socialmediasection" id="supportWrap" class="support-wrap">
+        <div class="support-service">
+          <a id="support_whatsapp" class="support-whatsapp ui-link" (click)="changeContact(1)"
+            [ngClass]="{ open: changeMedia === 1 }"><img src="../../assets/images/transparent.gif"
+              title="WhatsApp" /></a>
+
+          <a id="support_email" class="support-mail ui-link" (click)="changeContact(2)"
+            [ngClass]="{ open: changeMedia === 2 }"><img src="../../assets/images/transparent.gif" title="Email" /></a>
+
+          <a id="support_telegram" class="support-telegram ui-link" (click)="changeContact(3)"
+            [ngClass]="{ open: changeMedia === 3 }"><img src="../../assets/images/transparent.gif"
+              title="Telegram" /></a>
+
+          <a id="support_skype" class="support-skype ui-link" [ngClass]="{ open: changeMedia === 4 }"><img
+              src="../../assets/images/transparent.gif" title="Skype" (click)="changeContact(4)" /></a>
+
+          <a id="support_instagram" class="support-ig ui-link" (click)="changeContact(5)"
+            [ngClass]="{ open: changeMedia === 5 }"><img src="../../assets/images/transparent.gif"
+              title="Instagram" /></a>
+
+          <!-- .support-facebook img{ -->
+          <!-- <a
+            id="support-facebook"
+            class="support-facebook"
+            (click)="changeContact(6)"
+            [ngClass]="{ open: changeMedia === 6 }"
+            ><img src="../../assets/images/transparent.gif" title="Instagram"
+          /></a> -->
+
+          <a id="support-facebook" class="support-fb" (click)="changeContact(6)"
+            [ngClass]="{ open: changeMedia === 6 }"><img src="../../assets/images/transparent.gif"
+              title="facebook" /></a>
+
+          <a id="support-web" class="ouragent" (click)="changeContact(7)" [ngClass]="{ open: changeMedia === 7 }"><img
+              src="../../assets/images/transparent.gif" title="website" /></a>
+
+          <!-- <i class="fa fa-facebook-square" aria-hidden="true">
+
+          </i> -->
+        </div>
+        <div class="support-info">
+          <div id="supportDetail_whatsapp" *ngIf="changeMedia === 1" class="support-detail">
+            <a href="https://wa.me/{{ whatsapp }}" class="ui-link"><span>{{ whatsapp
+                }}</span></a>
+            <a href="https://wa.me/{{ whatsapp1 }}" class="ui-link"><span>{{ whatsapp1 }}</span></a>
+            <!-- <a *ngIf="siteName === 'lc247'" href="https://wa.me/message/55E5GRJJSBHKB1" class="ui-link"><span>{{
+                whatsapp }}</span></a> -->
+          </div>
+
+          <div id="supportDetail_email" *ngIf="changeMedia === 2" class="support-detail">
+            <a href="mailto:{{ mail }}" class="ui-link"><span>{{ mail }}</span></a>
+          </div>
+          <div id="supportDetail_email" *ngIf="changeMedia === 2 && siteName == 'skyxchange'" class="support-detail">
+            <a href="mailto:skyxchange111@gmail.com" class="ui-link"><span>skyxchange111@gmail.com</span></a>
+          </div>
+
+          <div id="supportDetail_telegram" *ngIf="changeMedia === 3" class="support-detail">
+            <a href="https://telegram.me/{{ telegram }}" class="ui-link"><span>{{ telegram }}</span></a>
+            <a *ngIf="siteName=='lc247' || siteName=='lc247co' || this.siteName == 'sports365' || siteName=='runx'   || siteName=='rajbet' || siteName=='baajighor365' || environment.siteName == 'xpgexch'|| environment.siteName == 'xpgexchio' || siteName=='runexchpro' || siteName=='runexchco'"   href="https://telegram.me/{{ telegram1 }}" class="ui-link"><span>{{ telegram1
+                }}</span></a>
+
+            <!-- <a
+            href="https://telegram.me/skyexchangecustomersupport"
+            class="ui-link"
+            ><span>www.t.me/skyexchangecustomersupport</span></a
+          > -->
+          </div>
+
+          <div id="supportDetail_skype" *ngIf="changeMedia === 4" class="support-detail">
+            <a href="skype:{{ skype }}" class="ui-link"><span>{{ skype }}</span></a>
+          </div>
+
+          <div id="supportDetail_instagram" *ngIf="changeMedia === 5" class="support-detail">
+            <a *ngIf="siteName != 'skyxchange'" href="https://www.instagram.com/{{ insta }}" class="ui-link"><span>{{
+                insta }}</span></a>
+            <a *ngIf="siteName == 'skyxchange'" href="https://instagram.com/skyxchange111?igshid=YmMyMTA2M2Y="
+              target="_blank" class="ui-link"><span>officialskyxchange</span></a>
+          </div>
+          <div *ngIf="changeMedia === 6" class="support-detail">
+            <ng-container *ngIf="siteName === 'runbet'">
+              <a href="https://www.facebook.com/groups/382885895961135/?ref=share">mx365fbgroup</a>
+            </ng-container>
+          </div>
+          <div *ngIf="changeMedia === 6" class="support-detail">
+            <ng-container *ngIf="siteName === 'sports365'">
+              <a href="https://www.facebook.com/groups/333177807829115/?ref=share">sports365fbgroup</a>
+            </ng-container>
+          </div>
+
+          <div *ngIf="changeMedia === 7" class="support-detail">
+            <ng-container *ngIf="siteName === 'runbet'">
+              <a href="http://www.ouragent.vip/">ouragent.vip/</a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="siteName == 'bdbuzz365'" class="row" style="text-align:center;margin-top: 25px;">
+        <hr>
+        <h1 style="color: #fff;
+        padding: 10px;
+        font-style: italic;
+        font-size: 75px;
+        line-height: 1.3;
+        font-weight: 600;">AGENT LOGIN</h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>

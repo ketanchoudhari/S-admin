@@ -1,0 +1,374 @@
+<div class="full-wrap">
+  
+  <div class="function-wrap">
+    <ul class="input-list flowroot">
+      <div id="statusCondition" style="display: none">
+        <li><label>Bet Status:</label></li>
+        <li>
+          <select name="betStatus" id="betStatus"></select>
+        </li>
+      </div>
+
+      <li></li>
+
+      <li><label>Period</label></li>
+      <li class="contentclass">
+        <input id="startDate" class="cal-input marleft" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" [disabled]="toTimeinput" />
+        to
+        <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+          [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+        <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+          [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" [disabled]="toTimeinput" />
+      </li>
+      <li style="display: none">(TimeZone:IST)</li>
+
+    </ul>
+    <ul  class="input-list flowroot"  style="justify-content: space-between;">
+      <ul  class="input-list flowroot" >
+        <li>
+          <ng-select (change)="selectTransactionType($event)" [(ngModel)]="selectedType">
+            <ng-option value="" > Select Type </ng-option>
+            <ng-option *ngFor="let type of transactionType;" [value]="type.id">
+              {{ type.name }}
+            </ng-option>
+          </ng-select>
+        </li>
+        <li>
+          <ng-select (change)="selectTransactionStatus($event)" [(ngModel)]="selectedStatus">
+            <ng-option value="" > Select Status </ng-option>
+            <ng-option *ngFor="let type of transactionStatus;" [value]="type.id">
+              {{ type.name }}
+            </ng-option>
+          </ng-select>
+        </li>
+        <li>
+          <a id="getPL" class="btn-send" (click)="getallTrnRequest(false,selectedType==''?0:selectedType,selectedStatus==''?0:selectedStatus)">Get Request</a>
+        </li>
+      </ul>
+      <!-- <li class="banking-head">
+        <dt>Total Deposit </dt>
+        <dd style="font-size: 12px;" class="profit-text"><span> INR</span> {{pnl.totalDeposit}}</dd>
+        <dt>Total Withdrawal </dt>
+        <dd style="font-size: 12px;" class="loss-text"><span> INR</span>{{pnl.totalWithdrawal}} </dd>
+        <dt>PNL </dt>
+        <dd style="font-size: 12px;" class="loss-text"><span> INR</span> {{pnl.pnl}} </dd>
+      </li> -->
+    </ul>
+  </div>
+   
+    <input 
+    class="search-input"
+    style="margin-top:12px;"
+    type="text"
+    name="searchUserId" id="searchUserId" placeholder="Search"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="filterByTerm($event)"
+  />
+
+      <!-- Report Table -->
+      <div class="over-wrap" style="max-height: calc(100% - 108px)">
+        <!-- <div class="function-wrap clearfix"> -->
+  
+        <!-- </div> -->
+        <div class="table-responsive data-table" >
+        <table id="table_transfer" class="table01 tab-transfer tab-banking">
+          <tbody>
+            <tr>
+              <th id="userIdTH" width="20%" class="align-L" data-name="userName">UID</th>
+              <th width="10%" class="align-C border-l tblth">Reference No</th>
+              <th width="10%" class="align-C border-l">Date</th>
+              <th width="15%" class="align-C border-l">Paid To</th>
+              <th width="6%" data-name="availableBalance" class="align-C border-l tblth">Amount</th>
+              <th width="6%" class="align-C border-l tblth">Type</th>
+              <th width="8%" class="align-C border-l">Status</th>
+              <!-- <th width="10%" class="align-C border-l">Deposit / Withdraw</th> -->
+              <th width="20%" class="align-C border-l">Remark</th>
+              <th width="5%" class="align-C border-l">SS</th>
+              <th width="10%" class="align-C border-l">Accept</th>
+              <th width="10%" class="align-C border-l">Reject</th>
+              <th width="3%" class="align-C border-l">Attach</th>
+              <!-- <th width="8%" class="align-C border-l">Auto Pay</th> -->
+            </tr>
+          </tbody>
+          <tbody id="content">
+            <tr style="white-space: nowrap;"
+              id="{{ user.reciever }}"
+              *ngFor="
+                let user of usersData
+                  | paginate: { itemsPerPage: itemsPerPage, currentPage: p };
+                let i = index;
+                trackBy: trackById
+              "
+            >
+              <ng-container
+                *ngIf="usersData && usersData.length"
+              >
+                <td class="td-uid">
+                  <span class="order">{{ itemsPerPage * (p - 1) + i + 1 }} .</span
+                  ><span class="{{(isPremiumSite)?'premium':''}} lv_{{ 8 }}"></span>
+                  {{ user.reciever }}
+                </td>
+                <td class="border-l align-C">
+                  {{ user.isAuto==1 && user.source!=1?user.trn_no:user.ref_no }}
+                </td>
+                <td class="border-l align-C" style="white-space: nowrap;">
+                  {{ user.trn_date | date: "yyyy-MM-dd HH:mm:ss" :
+                  timeFormat }}
+                </td>
+                <td class="border-l align-C" [ngClass]="user.trn_type=='2'?'paidto':'paidtoDisable'" (click)="user.trn_type=='2'?setBankUpi(user):null">
+                  {{ user.paid_to }} ({{user.payment_method}})  <i class="fa fa-arrow-right"></i>
+                </td>
+                <td class="border-l align-C">
+                  {{ user.coins }}
+                </td>
+                <td class="border-l align-C">
+                  {{user.trn_type=="1"?'Deposit':'Withdraw'}}
+
+                </td>
+                <td class="border-l align-C" [ngClass]="user.status=='1'?'profit-text':user.status=='2'?'loss-text':''">
+                  {{ user.isAuto==1 && user.source!=1?user.status=="1"?'Successful':'Failed':user.status=="0"?'Pending':user.status=="1"?'Approved':'Rejected'}}
+
+                </td>
+                <td class="border-l DW-amount">
+                  <input
+                    id="remark"
+                    type="text"
+                    placeholder="Remark"
+                    [disabled]="user.status==0?false:true"
+                    [ngClass]="user.status==0?'':'cursor'"
+                    [(ngModel)]="user.remark"
+                  />
+                </td>
+                <td  class="full-amount border-l">
+                  <a style="width: 55px;" [ngClass]="user.img=='' || user.img==null?'disbtn btn':'btn'" (click)="user.img=='' || user.img==null?'':showSS(user.img)">SS</a></td>
+                <td  class="full-amount border-l">
+                    <a  [ngClass]="user.status==0?'btn':'disbtn btn'" style="width: 55px;" [disabled]="user.addImg" (click)="user.status==0?openChangeStatusModal(user,0):''">Accept</a>
+                  </td>
+                <td  class="full-amount border-l">
+                    <a  [ngClass]="user.status==0?'btn':'disbtn btn'" style="width: 55px;" (click)="user.status==0?openConfirmation(user):''">Reject</a>
+                  </td>
+                  <td  class="full-amount border-l">
+                    <a style="width: 30px;" [ngClass]="user.trn_type==2 && user.status==1?'btn':'disbtn btn'" (click)="openAttachSSModal(user)">+</a>
+                  </td>
+                  <!-- <td *ngIf="user.trn_type=='2'" class="full-amount border-l">
+                    <a  [ngClass]="user.status==0 && user.BankDetails?.length>0?'btn':'btn disbtn'" style="width: 55px;" (click)="user.status==0 && user.BankDetails?.length>0?openChangeStatusModal(user,1):''">Pay</a>
+                  </td>
+                  <td *ngIf="user.trn_type!='2'" class="align-C border-l">
+                    {{'-'}}
+                  </td> -->
+                 
+              </ng-container>
+            </tr>
+           
+          </tbody>
+        </table>
+        </div>
+      </div>
+  
+      <!-- <div class="submit-wrap" id="settlementBar">
+        <ul>
+          <li>
+            <a id="clearAllBtn" (click)="cancelAll()" class="btn">Clear All</a>
+          </li>
+          <li class="submit-payment">
+            <input
+              formControlName="password"
+              id="paymentPassword"
+              type="password"
+              placeholder="Password"
+            />
+            <button id="submit" class="btn-send" [disabled]="submitted">
+              Submit <span id="submitCount">{{ validRow }} </span> Payment
+            </button>
+          </li>
+        </ul>
+      </div> -->
+
+  </div>
+  
+  <pagination-template
+    #pagination="paginationApi"
+    *ngIf="usersData && usersData?.length > 10"
+    (pageChange)="p = $event"
+  >
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+          >Prev</a
+        >
+        <ng-template #prevTemp>
+          <a (click)="pagination.previous()">Prev</a>
+        </ng-template>
+      </li>
+      <ng-container *ngFor="let page of pagination.pages">
+        <li id="pageNumber">
+          <a
+            (click)="pagination.setCurrent(page.value)"
+            *ngIf="pagination.getCurrent() != page.value"
+            class="btn"
+            >{{ page.value }}
+          </a>
+          <a
+            *ngIf="pagination.getCurrent() == page.value"
+            class="select"
+            style="pointer-events: none"
+            >{{ page.value }}
+          </a>
+        </li>
+      </ng-container>
+  
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+        <ng-template #nextTemp>
+          <a (click)="pagination.next()">Next</a>
+        </ng-template>
+      </li>
+    </ul>
+  </pagination-template>
+
+  <!-- <div id="bigSS" class="overlay" ng-repeat="image in property.images">
+    <div style="text-align: center;">
+      
+      <a id="close" style="cursor: pointer" class="close" (click)="closeSS()" style="right: 20px"></a>
+      <img src={{imgURL}} alt="" title="">
+    </div>
+</div> -->
+
+<div>
+  <div id="bigSS" class="pop_bg" >
+    <div class="pop_box">
+      <a class="close_pop" (click)="closeSS()">close_pop</a>
+      <img src={{imgURL}} class="ssimg">
+    </div>
+  </div>
+</div>
+
+<app-modal [(open)]="passwordOpen" (openChange)="resetPasswordModal()" style="width: 330px;">
+  <div class="modal-header">
+    <h3>Password</h3>
+  </div>
+  <form [formGroup]="passwordForm" (ngSubmit)="auto==0?transfer():processAutoPayment()">
+    <div class="modal-content">
+      <dl class="form_list">
+        <dt >Password : </dt>
+        <dd>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter Password"
+          />
+        </dd>
+      </dl>
+      <ul class="btn-wrap">
+        <li>
+          <button  class="btn-send" type="submit">
+            Submit
+          </button>
+        </li>
+      </ul>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="attachSSOpen" (openChange)="resetPasswordModal()" style="width: 330px;">
+  <div class="modal-header">
+    <h3>Attach Screen Shot</h3>
+  </div>
+  <form (ngSubmit)="attachSS()">
+    <div class="modal-content">
+      <dl class="form_list">
+        <dt *ngIf="selectedUser?.trn_type == 2">Choose File :</dt>
+        <dd *ngIf="selectedUser?.trn_type == 2">
+          <input
+            type="file"
+            placeholder="Choose File"
+            (change)="saveImage($event.target.files)"
+          />
+        </dd>
+      </dl>
+      <ul class="btn-wrap">
+        <li>
+          <button  class="btn-send" type="submit">
+            Submit
+          </button>
+        </li>
+      </ul>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="confirmationOpen"  style="width: 330px;">
+  <div class="modal-header">
+    <h3>Confirmation</h3>
+  </div>
+  <div class="modal-content" style="padding: 12px;
+    display: inline-grid;
+    width: 100%;">
+      <dl class="form_list">
+        <dt style="white-space:nowrap;">{{'Are you sure you want to Reject this Request.'}}</dt>
+      </dl>
+      <dl class="btn-wrap" style="text-align: right; display:block;">
+        <dt>
+          <button  class="btn-send" style="width: 100px;" (click)="confirmationOpen=false">
+            No
+          </button>
+          <button  class="btn-send" style="width: 100px;" (click)="processRejectRequest()">
+            Yes
+          </button>
+        </dt>
+      </dl>
+    </div>
+</app-modal>
+
+<app-modal [(open)]="bankDetailsOpen" style="width: 330px;">
+  <div class="modal-header">
+    <h3>Bank Detail</h3>
+  </div>
+  <div class="modal-content" style="padding: 12px;
+    display: inline-grid;
+    width: 100%;">
+      <dl class="form_list">
+        <dt >Account Holder Name: </dt>
+        <dt class="bankupidetails"> {{selectedBankUPIData?.account_holder}}</dt>
+      </dl>
+      <dl class="form_list">
+        <dt >Account Number: </dt>
+        <dt class="bankupidetails">{{selectedBankUPIData?.account_number}}</dt>
+      </dl>
+      <dl class="form_list">
+        <dt >Bank Name: </dt>
+        <dt class="bankupidetails">{{selectedBankUPIData?.bank_name}}</dt>
+      </dl>
+      <dl class="form_list">
+        <dt >IFSC Code: </dt>
+        <dt class="bankupidetails">{{selectedBankUPIData?.ifsc_code}}</dt>
+      </dl>
+    </div>
+</app-modal>
+
+<app-modal [(open)]="upiDetailsOpen" style="width: 330px;">
+  <div class="modal-header">
+    <h3>Bank Detail</h3>
+  </div>
+  <div class="modal-content" style="padding: 12px;
+    display: inline-grid;
+    width: 100%;">
+      <dl class="form_list">
+        <dt >Upi Holder Name: </dt>
+        <dt class="bankupidetails"> {{selectedBankUPIData?.name}}</dt>
+      </dl>
+      <dl class="form_list">
+        <dt >Upi Provider: </dt>
+        <dt class="bankupidetails">{{selectedBankUPIData?.type}}</dt>
+      </dl>
+      <dl class="form_list">
+        <dt >Upi: </dt>
+        <dt class="bankupidetails">{{selectedBankUPIData?.value}}</dt>
+      </dl>
+    </div>
+</app-modal>
+  

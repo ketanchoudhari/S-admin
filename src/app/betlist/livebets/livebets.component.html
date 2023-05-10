@@ -1,0 +1,196 @@
+<div class="full-wrap" style="height: calc(100% - 105px)">
+  <div class="over-wrap">
+      <div class="total_all">
+          <h2>Live Bets</h2>
+          <div class="spacer"></div>
+          <span class="total-users"> Total Bets: <strong>{{ livebetlist?.length }}</strong> </span>&nbsp;
+          <span class="total-users"> Page Total PL: <strong
+            [ngClass]="totalRow?.Totalpnl  < 0 ? 'loss-text' : 'profit-text'">{{ totalRow?.Totalpnl | indianCurrency}}
+          </strong></span>
+      </div>
+      <div class="function-wrap">
+          <ul class="input-list contentclass">
+
+      
+              <li><label>Period:</label></li>
+              <li>
+                <input class="cal-input" type="text" placeholder="YYYY-MM-DD" readonly="true" [(ngModel)]="fromDate"
+                  [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+                <input id="startTime" class="time-input" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+                  [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" placeholder="09:00" maxlength="5" />
+                to
+                <br>
+                <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" readonly="true"
+                  [(ngModel)]="toDate" [dpDayPicker]="dateConfig" [theme]="'dp-material'" autocomplete="off" />
+                <input id="endTime" class="time-input" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+                  [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+              </li>
+             
+       
+           <li><input appInputRestriction="noSpecialChars3" type="text" [(ngModel)]="searchbetId" (ngModelChange)="filterBybetId($event)" name="" id="" placeholder="Search betId"></li>
+           <li><input appInputRestriction="noSpecialChars3" type="text" [(ngModel)]="searcheventtId" (ngModelChange)="filterBybetId($event)" name="" id="" placeholder="Search eventId"></li>
+           <li><input  type="text" [(ngModel)]="searchmarkettId" (ngModelChange)="filterBybetId($event)" name="" id="" placeholder="Search markettId"></li>
+
+           <li>
+              <p-dropdown
+              [options]="usersList"
+              optionLabel="userName" 
+              [(ngModel)]="searchUsername"
+              placeholder="Select User"
+              [virtualScroll]="true"
+              [showClear]="true"
+              [itemSize]="25"
+              [filter]="true">
+            </p-dropdown>
+            </li>
+         
+              <!-- <li>
+                <label>Last:</label>
+                <select name="limit" id="limit" [(ngModel)]="selectPagelimit" (change)="selectNoRows($event)">
+                  <option value="10">10 Txn</option>
+                  <option value="25">25 Txn</option>
+                  <option value="50">50 Txn</option>
+                  <option value="100">100 Txn</option>
+      
+                  <option value="{{betlistCount}}">Full - {{betlistCount}}</option>
+                </select>
+              </li> -->
+            </ul>
+            <ul class="input-list contentclass">
+              <li>
+                <label>Last:</label>
+                <select name="limit" id="limit" [(ngModel)]="selectPagelimit" (change)="selectNoRows($event)">
+                  <option value="10">10 Txn</option>
+                  <option value="25">25 Txn</option>
+                  <option value="50">50 Txn</option>
+                  <option value="100">100 Txn</option>
+      
+                  <option value="{{livebetlist?.length}}">Full - {{livebetlist?.length}}</option>
+                </select>
+              </li>
+              <li><a id="getPL" (click)="Livebets()" class="btn-send">Show Default</a></li>
+              <li>
+                <a id="getPL" (click)="Livebets()" class="btn-send">Get History</a>
+              </li>
+            </ul>
+          </div>
+      <div class="table-responsive data-table">
+          <!-- Report Table -->
+          <div id="report">
+            <table id="table_DL" class="table-s" style="display: table">
+              <tbody>
+                <tr>
+                  <th width="10%" class="align-L sort_asc" [appSort]="livebetlist" data-order="asc" data-name="consolidateId">
+                    Username
+                  </th>
+                  <th width="10%" class="align-L sort_asc" [appSort]="livebetlist" data-order="asc" data-name="consolidateId">Bet
+                    ID
+                  </th>
+                  <th id="betTime" width="10%" class="align-L sort_asc" [appSort]="livebetlist" data-order="asc"
+                    data-name="betTime">Bet taken </th>
+
+                  <th width="20%" class="align-L sort_asc" [appSort]="livebetlist" data-order="asc" data-name="eventName">Event
+                  </th>
+                  <th width="7%" class="align-L sort_asc" [appSort]="livebetlist" data-order="asc" data-name="selName">Market
+                  </th>
+    
+                  <th width="4%" class="align-C sort_asc" [appSort]="livebetlist" data-order="asc" data-name="betType">Type
+                  </th>
+                  <th width="7%" class="sort_asc" [appSort]="livebetlist" data-order="asc" data-name="odds">Odds req. </th>
+                  <th width="5%" class="sort_asc" [appSort]="livebetlist" data-order="asc" data-name="stake">Stake </th>
+    
+                  <th width="5%" class="sort_asc" name="profitOrLossTh" [appSort]="livebetlist" data-order="asc" data-name="PL">
+                    Profit/loss</th>
+
+                  
+                </tr>
+    
+                <tr *ngFor=" let bet of livebetlist | paginate: { itemsPerPage: n, currentPage: p };
+                trackBy: trackById ">
+                  <td class="align-L">
+                    <span id="betID">{{
+                      bet.userName
+                      }}</span>
+                  </td>
+
+                  <td class="align-L">
+                    <a id="betID" href="javascript: void(0);">{{
+                      bet.betId
+                      }}</a>
+                  </td>
+                  <td class="align-L">
+                    <span id="betPlaced" class="small-date">{{
+                      bet.betTime | date: "yyyy-MM-dd HH:mm:ss" :
+                      timeFormat
+                      }}</span>
+                  </td>
+
+
+                  <td id="matchTitle" class="align-L" >
+                    {{ bet.sportName | titlecase }}
+                    <img class="fromto" src="assets/images/transparent.gif" />
+                    {{ bet.eventName }}
+                    <img class="fromto" src="assets/images/transparent.gif" />
+                    {{
+                    bet.betType === "yes" || bet.betType === "no"
+                    ? "Fancy Bet"
+                    : bet.marketName
+                    }}
+                  </td>
+                  <td id="matchSelection" class="align-L">{{ bet.selName }}</td>
+    
+                  <td class="align-C">
+                    <span id="matchType" class="{{ bet.betType.toLowerCase() }}">{{
+                      bet.betType | titlecase
+                      }}</span>
+                  </td>
+                  <td id="matchOddsReq">{{ bet.odds }}</td>
+                  <td id="matchStake" style="white-space: nowrap;">{{ bet.stake | indianCurrency }} <strong *ngIf="siteName != 'betswiz'">({{ bet.currencyCode }})</strong></td>
+    
+                  <td>
+                    <span id="pol" class="small-date" [ngClass]="bet.PL < 0 ? 'loss-text' : 'profit-text'">{{ bet.PL |
+                      indianCurrency }}</span>
+                  </td>
+                  
+               
+
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+    
+        <pagination-template *ngIf="livebetlist && livebetlist.length > n" #pagination="paginationApi"
+            (pageChange)="pageChanged($event)">
+            <ul id="pageNumberContent" class="pages">
+              <li id="prev">
+                <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+                <ng-template #prevTemp>
+                  <a (click)="pagination.previous()">Prev</a>
+                </ng-template>
+              </li>
+              <ng-container *ngFor="let page of pagination.pages">
+                <li id="pageNumber">
+                  <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value"
+                    class="btn">{{ page.value }}
+                  </a>
+                  <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value
+                    }}
+                  </a>
+                </li>
+              </ng-container>
+    
+              <li id="next">
+                <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+                <ng-template #nextTemp>
+                  <a (click)="pagination.next()">Next</a>
+                </ng-template>
+              </li>
+            </ul>
+          </pagination-template> 
+        </div>
+ 
+  </div>
+
+</div>

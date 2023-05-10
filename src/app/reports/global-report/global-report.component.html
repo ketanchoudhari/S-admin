@@ -1,0 +1,378 @@
+<div class="main_wrap">
+    <div class="box">
+      <h2>Profit/Loss Report by All Casino</h2>
+      <h2 class="push"><a id="default" class="btn-send"
+          (click)="tabIndex==0?casinoPlReportByDownLine():null">{{Update?.ShowDefault}}</a>
+      </h2>
+    </div>
+    <!-- function -->
+    <ul class="report-tab-wrap">
+      <li class="report-tab" [ngClass]="tabIndex==0?'select':'null'" id="reportType_exchange" data-reporttabtype="0"
+        (click)="tabChangeFunction(0)"><a>All</a>
+      </li>
+    </ul>
+    <div class="function-wrap">
+      <ul class="input-list flowroot">
+        <div id="statusCondition" style="display: none">
+          <li><label>Bet Status:</label></li>
+          <li>
+            <select name="betStatus" id="betStatus"></select>
+          </li>
+        </div>
+  
+        <li></li>
+  
+        <li><label>{{Update?.Period}}</label></li>
+        <li class="contentclass">
+          <input id="startDate" class="cal-input marleft" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" [disabled]="toTimeinput" />
+          to
+          <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" [disabled]="toTimeinput" />
+        </li>
+        <li style="display: none">({{Update?.TimeZone}}:IST)</li>
+        <li>
+          <label>User List:</label>
+          <ng-select name="sortCondition" id="sortCondition" [(ngModel)]="selectedUser">
+            <ng-option value="" selected="selected">Select User</ng-option>
+            <ng-option value="{{ users.userId }}" *ngFor="let users of usersList">
+              {{ users.userName }}
+            </ng-option>
+          </ng-select>
+        </li>
+      </ul>
+      <ul class="input-list flowroot">
+        <li>
+          <a id="today" (click)="getReportDate('today')" class="btn">{{Update?.Justfortoday}}</a>
+        </li>
+        <li>
+          <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">{{Update?.Fromyesterday}}</a>
+        </li>
+        <li style="display: none">
+          <a id="last7days" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" class="btn">Last 3 Months</a>
+        </li>
+        <li>
+          <a id="getPL" (click)="tabIndex==0?casinoPlReportByDownLine():null" class="btn-send">
+           {{Update?.GetPL}}</a>
+        </li>
+        <!-- <li>
+            <a id="getPL" class="btn-send">Expand All</a>
+          </li> -->
+        <!-- <li>
+            <a id="getPL" class="btn-send" (click)="getgreenred(0)">Get Green</a>
+          </li>
+          <li>
+            <a id="getPL" class="btn-send" (click)="getgreenred(1)">Get Red</a>
+          </li> -->
+        <!-- <ng-container *ngIf="tabIndex==0">
+            <li style="font-weight: bold;">
+              Upline PL: <span [ngClass]="{'profit-text': totalUplinePL > 0, 'loss-text': totalUplinePL < 0}">
+                {{totalUplinePL | indianCurrency}} </span>
+            </li>
+            <li style="font-weight: bold;">
+              Own PL: <span [ngClass]="{'profit-text': totalOwnPl > 0, 'loss-text': totalOwnPl < 0}">
+                {{totalOwnPl | indianCurrency}} </span>
+            </li>
+            <li style="font-weight: bold;">
+              Downline PL: <span [ngClass]="{'profit-text': totalDownlinePl > 0, 'loss-text': totalDownlinePl < 0}">
+                {{totalDownlinePl | indianCurrency}} </span>
+            </li>
+            <li style="font-weight: bold;">
+              Comm: <span [ngClass]="{'profit-text': totalComm > 0, 'loss-text': totalComm < 0}">
+                {{totalComm | indianCurrency}} </span>
+            </li>
+            <li class="spacer"></li>
+            <li style="color: red; margin: 0;">
+              <strong>G</strong>: Gross, <strong>N</strong>: Nett
+            </li>
+          </ng-container> -->
+      </ul>
+    </div>
+    <!-- No Report Message -->
+    <div id="noReportMessage"></div>
+    <!-- function end-->
+  
+    <div class="total_all" id="userTreeDiv">
+      <span>
+        <label>{{Update?.Last}}:</label>
+        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+          <option value="100">100 Txn</option>
+          <option value="50">50 Txn</option>
+          <option value="25" selected="">25 Txn</option>
+          <option value="10">10 Txn</option>
+          <option value=downline.length>Full</option>
+        </select>
+      </span>
+      <ul style="display: none">
+        <li id="tempTree" class="">
+          <a><span class="lv_1"></span></a>
+        </li>
+        <li id="tempCurrencyTree" class="currency_tag"><strong></strong></li>
+      </ul>
+  
+      <div id="treePath" class="agent_path">
+        <!-- <ul class="agent_path-L" id="userTree">
+            <li id="tempTree" class="last_li">
+              <a><span class="lv_2"></span>demost</a>
+            </li>
+          </ul> -->
+      </div>
+      <div id="expandAllDiv" style="display: none">
+        <a id="showDetail" class="btn_expand">Expand All</a>
+      </div>
+  
+      <span class="spacer"></span>
+      <span class="total-users">{{Update?.TotalRecords}}: {{ downlineList?.length }} </span>
+  
+      <div class="download-reports">
+        <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button (click)="exportPdf()" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+  
+    <div id="reportDiv" *ngIf="tabIndex==0" class="over-wrap" style="max-height: calc(100% - 32px - 93px - 55px)">
+      <div class="table-responsive data-table">
+        <table id="table_DL" class="table01 table-pt">
+          <tbody>
+            <tr id="table_DL">
+              <th id="header_userName" width="15%" class="align-L sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="userName">Provider</th>
+              <!-- <th width="13%" class="sort_asc" [appSort]="downlineList" data-order="asc" data-name="stake">Stake</th> -->
+              <th width="20%" class="sort_asc" [appSort]="downlineList" data-order="asc" data-name="playerPL">{{Update?.PlayerPL}}
+              </th>
+              <th id="header_profitLoss_downLine" width="13%" class="sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="downLinePL">
+                {{Update?.DownlinePL}}
+              </th>
+              <th id="header_tax_agent_2" width="10%" class="sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="commision">Total stake.</th>
+              <th width="15%" class="sort_asc" [appSort]="downlineList" data-order="asc" data-name="upLinePL">{{Update?.UplinePL}}
+              </th>
+              <th width="13%" class="sort_asc" [appSort]="downlineList" data-order="asc" data-name="ownPL"
+                *ngIf="!isPremiumSite">{{Update?.OwnPL}}</th>
+            </tr>
+          </tbody>
+          <tbody id="content">
+            <ng-template #downlineTemplate let-downline let-level="level">
+              <ng-container *ngFor="
+                  let pl of downlineList
+                ">
+                <tr id="table_DL">
+                  <td class="align-L">
+                      <span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ pl.userType }}"></span>{{ pl.provider }}
+                  </td>
+                  <!-- <td id="_stake">
+                      <span *ngIf="pl.stake < 0; else plusStake" class="loss-text">({{ pl.stake | indianCurrency }})</span>
+                      <ng-template #plusStake>
+                        <span>{{ pl.stake | indianCurrency }}</span>
+                      </ng-template>
+                    </td> -->
+                  <td id="_profitLoss">
+                    <div *ngIf="!isPremiumSite">
+                      <span *ngIf="pl.playerPL < 0; else plusPlayerPL" class="loss-text"> (G: {{pl.playerGrossPL |
+                        indianCurrency }}) (N: {{ pl.playerPL | indianCurrency }})
+                      </span>
+                      <ng-template #plusPlayerPL>
+                        <span [class.profit-text]="pl.playerPL > 0">(G: {{pl.playerGrossPL | indianCurrency }}) (N: {{
+                          pl.playerPL | indianCurrency }})
+                        </span>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="isPremiumSite">
+                      <span *ngIf="pl.playerPL < 0; else plusPlayerPL" class="loss-text"> ({{ pl.playerPL | indianCurrency
+                        }})
+                      </span>
+                      <ng-template #plusPlayerPL>
+                        <span>{{ pl.playerPL | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="!isPremiumSite">
+                      <span *ngIf="pl.downlinePL < 0; else plusDownPLTemp" class="loss-text">({{ pl.downlinePL |
+                        indianCurrency }})</span>
+                      <ng-template #plusDownPLTemp>
+                        <span [class.profit-text]="pl.downlinePL > 0">{{
+                          pl.downlinePL | indianCurrency
+                          }}</span>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="isPremiumSite">
+                      <span *ngIf="pl.downlinePL < 0; else plusDownPLTemp" class="loss-text">({{ pl.downlinePL |
+                        indianCurrency }})</span>
+                      <ng-template #plusDownPLTemp>
+                        <span>{{
+                          pl.downlinePL | indianCurrency
+                          }}</span>
+                      </ng-template>
+                    </div>
+                  </td>
+                  <td id="_tax2">
+                    <div *ngIf="!isPremiumSite">
+                      <span *ngIf="pl.stake < 0; else plusCommisionTemp" class="loss-text">
+                        ({{ pl.stake | indianCurrency }})
+                      </span>
+                      <ng-template #plusCommisionTemp>
+                        <span [class.profit-text]="pl.commision > 0">
+                          {{ pl.stake | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="isPremiumSite">
+                      <span *ngIf="pl.stake < 0; else plusCommisionTemp" class="loss-text">
+                        ({{ pl.stake | indianCurrency }})
+                      </span>
+                      <ng-template #plusCommisionTemp>
+                        <span>
+                          {{ pl.stake | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                  </td>
+                  <td id="_profitLossUpLine">
+                    <div *ngIf="!isPremiumSite">
+                      <span *ngIf="pl.uplinePL < 0; else plusUplineTemp" class="loss-text">
+                        ({{ pl.uplinePL | indianCurrency }})
+                      </span>
+                      <ng-template #plusUplineTemp>
+                        <span [class.profit-text]="pl.uplinePL > 0">
+                          {{ pl.uplinePL | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="isPremiumSite">
+                      <span *ngIf="pl.uplinePL < 0; else plusUplineTemp" class="loss-text">
+                        ({{ pl.uplinePL | indianCurrency }})
+                      </span>
+                      <ng-template #plusUplineTemp>
+                        <span>
+                          {{ pl.uplinePL | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                  </td>
+                  <td id="ownPL" *ngIf="!isPremiumSite">
+                    <div *ngIf="isPremiumSite">
+                      <span *ngIf="pl.ownPL < 0; else plusOwnPLTemp" class="loss-text">
+                        ({{ pl.ownPL | indianCurrency }})
+                      </span>
+                      <ng-template #plusOwnPLTemp>
+                        <span [class.profit-text]="pl.ownPL > 0">
+                          {{ pl.ownPL | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="!isPremiumSite">
+                      <span *ngIf="pl.ownPL < 0; else plusOwnPLTemp" class="loss-text">
+                        ({{ pl.ownPL | indianCurrency }})
+                      </span>
+                      <ng-template #plusOwnPLTemp>
+                        <span [class.profit-text]="pl.ownPL > 0">
+                          {{ pl.ownPL | indianCurrency }}
+                        </span>
+                      </ng-template>
+                    </div>
+                  </td>
+                </tr>
+                <ng-template [ngIf]="pl.showDownline">
+                  <ng-container *ngTemplateOutlet="
+                      downlineTemplate;
+                      context: { $implicit: pl.downLine, level: level + 1 }">
+                  </ng-container>
+                </ng-template>
+  
+              </ng-container>
+            </ng-template>
+            <ng-container *ngTemplateOutlet="downlineTemplate; context: { $implicit: downlineList, level: 1 }">
+            </ng-container>
+            <tr class="total">
+              <td class="align-L">Total</td>
+  
+              <td>
+                <div *ngIf="!isPremiumSite">
+                  <span *ngIf="totalplayerPL < 0; else plusPlayerPL" class="loss-text"> (G: {{totalplayerGrossPL |
+                    indianCurrency }}) (N: {{ totalplayerPL | indianCurrency }})
+                  </span>
+                  <ng-template #plusPlayerPL>
+                    <span [class.profit-text]="totalplayerPL > 0">(G: {{totalplayerGrossPL | indianCurrency }}) (N: {{
+                      totalplayerPL | indianCurrency }})
+                    </span>
+                  </ng-template>
+                </div>
+                <div *ngIf="isPremiumSite">
+                  <span *ngIf="totalplayerPL < 0; else plusPlayerPL" class="loss-text"> ({{ totalplayerPL | indianCurrency
+                    }})
+                  </span>
+                  <ng-template #plusPlayerPL>
+                    <span>{{ totalplayerPL | indianCurrency }}
+                    </span>
+                  </ng-template>
+                </div>
+              </td>
+              <td id="_totalDownlinePl">
+                <span *ngIf="totalDownlinePl < 0; else plustotalDownlinePl" class="red">
+                  ({{ totalDownlinePl | indianCurrency }})
+                </span>
+                <ng-template #plustotalDownlinePl>
+                  <span>
+                    {{ totalDownlinePl | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+              <td id="_totalComm">
+                <span *ngIf="totalStake < 0; else plustotalComm" class="red">
+                  ({{ totalStake | indianCurrency }})
+                </span>
+                <ng-template #plustotalComm>
+                  <span>
+                    {{ totalStake | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+              <td id="_totalUplinePL">
+                <span *ngIf="totalUplinePL < 0; else plusUplinePL" class="red">
+                  ({{ totalUplinePL | indianCurrency }})
+                </span>
+                <ng-template #plusUplinePL>
+                  <span>
+                    {{ totalUplinePL | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+              <td id="_totalOwnPl" *ngIf="!isPremiumSite">
+                <span *ngIf="totalOwnPl < 0; else totalOwnPlplus" class="red">
+                  ({{ totalOwnPl | indianCurrency }})
+                </span>
+                <ng-template #totalOwnPlplus>
+                  <span>
+                    {{ totalOwnPl | indianCurrency }}
+                  </span>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

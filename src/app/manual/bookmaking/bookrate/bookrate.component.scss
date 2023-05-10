@@ -1,0 +1,83 @@
+@import "src/assets/scss/tables";
+
+.input-list {
+  margin: 0;
+
+  li {
+    margin: 0 12px 0 0;
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  .input-group {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &:first-child {
+      justify-content: flex-start;
+    }
+
+    &:nth-child(2) {
+      input {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 16px;
+  margin: 16px 4px;
+}
+
+.rate-wrapper {
+  display: flex;
+  justify-content: flex-start;
+
+  & > *:not(:last-child) {
+    margin-right: 2px;
+  }
+
+  &:nth-child(10) {
+    justify-content: flex-end;
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 32px;
+    background-color: #ddd;
+    border-radius: 5px;
+    box-shadow: inset 0 0 2px 1px rgba($color: #000000, $alpha: 0.2);
+  }
+
+  input {
+    margin: 0;
+    max-width: 40px;
+  }
+}
+
+.table-container .table01 {
+  th,
+  td {
+    text-align: center;
+  }
+}
+
+.BACK {
+  background-color: #a6d8ff;
+}
+
+.LAY {
+  background-color: #f694aa;
+}

@@ -1,0 +1,178 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <h2>Void Bets</h2>
+  </div>
+  <div class="main_wrap">
+    <div class="function-wrap">
+      <ul class="input-list">
+        <li>
+          <label for="perio">Period</label>
+        </li>
+        <li>
+          <input
+            id="startDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <input
+            id="startTime"
+            disabled=""
+            class="time-input disable"
+            type="text"
+            placeholder="09:00"
+            maxlength="5"
+          />
+          to
+          <input
+            id="endDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <input
+            id="endTime"
+            disabled=""
+            class="time-input disable"
+            type="text"
+            placeholder="08:59"
+            maxlength="5"
+          />
+        </li>
+      </ul>
+      <ul class="input-list">
+        <li><a id="today" href="#" class="btn">Just For Today</a></li>
+        <li style="display: none">
+          <a id="yesterday" href="#" class="btn">From Yesterday</a>
+        </li>
+        <li style="display: none">
+          <a id="last7days" href="#" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" href="#" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" href="#" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" href="#" class="btn">Last 3 Months</a>
+        </li>
+        <li><a id="getPL" href="#" class="btn-send">Get P &amp; L</a></li>
+      </ul>
+    </div>
+    <div class="total_all">
+      <div class="spacer"></div>
+      <div class="download-reports">
+        <button class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+    <div class="table-container">
+      <table class="table01" style="text-align: center">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Master Distributor</th>
+            <th>Distributor</th>
+            <th>ClientName</th>
+            <th>RunnerName</th>
+            <th>BackLay</th>
+            <th>Odds</th>
+            <th>Score</th>
+            <th>Stake</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="ng-scope" *ngFor="let l of [1, 1, 1, 1]">
+            <td title="'Id'">108708</td>
+
+            <td title="'MasterDistributor'">sidheshwar[SIDSWR103]</td>
+
+            <td title="'Distributor'">Guddu[DHAKA002]</td>
+
+            <td title="'Clientname'">Police[Pappu11]</td>
+
+            <td title="'RunnerName'">Prajnesh Gunneswaran</td>
+
+            <td title="'BackLay'">BACK</td>
+
+            <td title="'Odds'">1.27</td>
+
+            <td title="'Score'">0</td>
+
+            <td title="'Stake'">500</td>
+
+            <td title="'Source'">
+              <a
+                data-toggle="tooltip"
+                data-placement="left"
+                style="font-weight: bolder"
+                class="ng-scope"
+                ><i class="fa fa-mobile fa-2x" aria-hidden="true"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<pagination-template #pagination="paginationApi">
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a
+        href="javascript:void(0);"
+        class="disable"
+        (click)="pagination.previous()"
+        >Prev</a
+      >
+    </li>
+    <li id="pageNumber">
+      <ng-template *ngFor="let page of pagination.pages">
+        <!-- <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+        <!-- <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+      </ng-template>
+
+      <a class="select" style="pointer-events: none">1 </a>
+    </li>
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a
+        href="javascript:void(0);"
+        [class.disabled]="pagination.isLastPage()"
+        (click)="pagination.next()"
+        >Next</a
+      >
+    </li>
+  </ul>
+</pagination-template>

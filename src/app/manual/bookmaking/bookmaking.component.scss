@@ -1,0 +1,40 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.row {
+  display: grid;
+  align-items: center;
+  margin: 8px 0;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+
+  & > * {
+    margin-right: 8px;
+  }
+}
+select {
+  width: unset;
+}
+.input-group {
+  margin-right: 12px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    margin-right: 8px;
+  }
+}

@@ -1,0 +1,67 @@
+h2 {
+  margin-bottom: 8px;
+}
+
+.settings-container {
+  display: flex;
+  margin-bottom: 12px;
+
+  & > div {
+    flex: 1;
+    padding: 8px 16px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+    &:not(:last-child) {
+      margin-right: 16px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  }
+}
+@media (max-width: 750px) {
+  .settings-container {
+    display: contents;
+    margin-bottom: 12px;
+    }
+    .grid-bookmaking{
+      display: block !important;
+    }
+  .input-group{
+    display: block !important;
+  }
+}
+
+.input-group input {
+  margin-top: 4px;
+  width: 85%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+}
+
+.input-list select {
+  margin: 0 4px;
+}
+
+input:disabled {
+  background-color: #d4d4d4;
+}
+
+.ng-select {
+  width: 170px;
+}
+
+::ng-deep .ng-dropdown-panel {
+  width: unset !important;
+}
+
+.grid-bookmaking {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px 16px;
+}

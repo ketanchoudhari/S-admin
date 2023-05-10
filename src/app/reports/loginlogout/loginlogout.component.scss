@@ -1,0 +1,85 @@
+@import "src/assets/scss/tables";
+
+.input-list {
+  input {
+    margin: 0 2px 0 4px;
+  }
+}
+
+.report-tab-wrap {
+  position: relative;
+  margin-top: 16px;
+  list-style-type: none;
+
+  .report-tab {
+    display: inline-block;
+    padding: 5px 24px 9px;
+    margin-right: 2px;
+    background-color: #ffffff;
+    border: 1px solid #3b5160;
+    border-radius: 3px 3px 0 0;
+    color: #3b5160;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.select {
+      background-color: #3b5160;
+      color: #ffffff;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #3b5160;
+      }
+    }
+  }
+}
+
+.table01.unsuccessful {
+  td {
+    padding: 4px;
+  }
+
+  .btn {
+    margin-right: 4px;
+  }
+}
+
+.login {
+  color: rgb(0, 177, 74);
+}
+
+.failed {
+  color: rgb(219, 58, 58);
+}
+
+.logout {
+  color: rgb(233, 132, 0);
+}
+
+@media (max-width:650px) {
+  .filterdivweb{
+display: none;
+  }
+  .filterdivmob{
+    display:block;
+  }
+}
+@media (min-width:650px) {
+    .filterdivweb{
+      display:block;
+  }
+  .filterdivmob{
+    display: none;
+
+  }
+}
+.input-list .btn-send{
+  width: 100%;
+}

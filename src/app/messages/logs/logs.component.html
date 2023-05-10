@@ -1,0 +1,144 @@
+<div class="main_wrap">
+  <h2>Commentary</h2>
+  <div class="function-wrap">
+    <div>
+      <button class="btn">Block</button>
+      <span class="spacer"></span>
+      <p class="vertical-align: middle">Total Records: 4</p>
+    </div>
+  </div>
+  <div class="total_all">
+    <div class="spacer"></div>
+    <div class="download-reports">
+      <button class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive data-table" >
+
+  <div class="table-container">
+    <table id="testttt" class="table01">
+      <thead>
+        <tr>
+          <th width="3%">
+            <!-- ngIf: !template -->
+            <!-- ngIf: template --><!-- ngInclude: template -->
+            <div>
+              <input
+                type="checkbox"
+                data-ng-model="checkboxes.checked"
+                id="select_all"
+                name="filter-checkbox"
+                value=""
+                class="ng-pristine ng-untouched ng-valid ng-scope ng-empty"
+              />
+            </div>
+          </th>
+          <th>User Id</th>
+          <th>User Name</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Activity Time</th>
+          <th>IP Address</th>
+          <th>VPN/PROXY iP</th>
+          <th width="8%" class="align-C">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let l of [1, 1,1,1]">
+          <td>
+            <input
+              type="checkbox"
+              value="1"
+            />
+          </td>
+          <td
+            title="'User Id'"
+          >
+            108708
+          </td>
+          <td
+            title="'User Name'"
+          >
+            demodl
+          </td>
+          <td
+            title="'Description'"
+          >
+            njym
+          </td>
+          <td
+            title="'Date'"
+          >
+            2018-12-10
+          </td>
+          <td
+            title="'Activity Time'"
+          >
+            21:10:19:10
+          </td>
+          <td
+            title="'IP Address'"
+          >
+            103.216.212.23
+          </td>
+          <td
+            title="'VPN/PROXY iP'"
+          >
+            103.216.212.23
+          </td>
+          <td
+            title="'Action'"
+            class="align-C"
+          >
+          <a >
+            <i class="fa fa-times-circle fa-2x" style="color: red;"></i>
+          </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-template #pagination="paginationApi">
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a class="disable" (click)="pagination.previous()">Prev</a>
+      </li>
+      <li id="pageNumber">
+        <ng-template *ngFor="let page of pagination.pages">
+          <!-- <a
+            (click)="pagination.setCurrent(page.value)"
+            *ngIf="pagination.getCurrent() != page.value"
+            style="pointer-events: none"
+            >{{ page.value }}
+          </a> -->
+          <!-- <a
+            *ngIf="pagination.getCurrent() == page.value"
+            class="select"
+            style="pointer-events: none"
+            >{{ page.value }}
+          </a> -->
+        </ng-template>
+  
+        <a class="select" style="pointer-events: none">1 </a>
+      </li>
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a [class.disabled]="pagination.isLastPage()" (click)="pagination.next()"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </pagination-template>
+  </div>
+</div>
+
+

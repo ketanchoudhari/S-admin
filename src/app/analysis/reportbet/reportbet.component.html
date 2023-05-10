@@ -1,0 +1,934 @@
+<div class="full-wrap">
+   <div class="container">
+      <div class="market-name">
+         <h2 *ngIf="analysisData">
+            {{
+            analysisData?.exchangeBooks &&
+            analysisData?.exchangeBooks[0]?.sportName | titlecase
+            }}
+            -
+            {{
+            analysisData?.exchangeBooks &&
+            analysisData?.exchangeBooks[0]?.eventName
+            }}
+            -
+            {{
+            analysisData?.exchangeBooks &&
+            analysisData?.exchangeBooks[0]?.marketName
+            }}
+         </h2>
+      </div>
+      <div class="middle-pane">
+         <div class="left-col">
+            <table id="gameTeam" class="game-team bets" data-ng-if="!fullScore"
+               *ngIf="sportId == 1 || sportId == 4 || sportId == 2">
+               <tbody>
+                  <tr id="twoTeam" data-ng-if="bfId != '1.179157300'" class="ng-scope">
+                     <td id="gameVisit" class="game-visit ng-binding">
+                        {{
+                        analysisData?.exchangeBooks &&
+                        analysisData?.exchangeBooks[0]?.eventName.split("v")[0]
+                        }}
+                        <span></span>
+                     </td>
+                     <td id="gameVs" class="game-vs">
+                        <div class="ng-binding">Match Odds<span>v</span></div>
+                     </td>
+                     <td id="gameHome" class="game-home ng-binding">
+                        {{
+                        analysisData?.exchangeBooks &&
+                        analysisData?.exchangeBooks[0]?.eventName.split("v")[1]
+                        }}<span></span>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <div id="gameHead" class="game-head" *ngIf="(sportId == 1 || sportId == 4 || sportId == 2) && scoreTv">
+               <div class="soccer1" *ngIf="sportId == 1 && sportradarsoccer_urll">
+                  <iframe allowfullscreen="true" [src]="sportradarsoccer_urll"
+                     style="border: none; width: 100%; height: 180px"></iframe>
+               </div>
+               <div class="tennis" *ngIf="sportId == 2 && sportradartennis_urll">
+                  <iframe allowfullscreen="true" [src]="sportradartennis_urll"
+                     style="border: none; width: 100%; height: 180px"></iframe>
+               </div>
+               <div class="cricket" *ngIf="sportId == 4 && sportradarcricket_urll">
+                  <iframe allowfullscreen="true" [src]="sportradarcricket_urll"
+                     style="border: none; width: 100%; height: 180px"></iframe>
+               </div>
+            </div>
+            <button (click)="displayScore()"
+               *ngIf="(sportId == 1 || sportId == 4 || sportId == 2) && (siteName != 'nayaludis' && siteName != 'velkiex' && siteName != 'wicket9' && siteName != 'baji365vip')"
+               style="background: #34bd4a; cursor: pointer">
+               <h3 style="display: inline-block">LIVE TV</h3>
+               <img _ngcontent-jho-c22="" src="assets/images/retro-tv.png" alt="" style="vertical-align: sub" />
+            </button>
+            <div *ngIf="(sportId === 1 || sportId === 2 || sportId == 4) && !scoreTv">
+               <div class="video-container">
+                  <iframe allowfullscreen="true" [src]="tvUrl" style="border: 0px; width: 100%; height: 320px">
+                  </iframe>
+               </div>
+            </div>
+            <div class="table-container" *ngFor="let eb of analysisData?.exchangeBooks ;let $index = index;trackBy: trackByFn">
+               <table class="table01 table-pt match-odds bets" style="text-align: center; font-size: 12px">
+                  <thead>
+                     <tr>
+                        <th width="30%" class="bettitle runnertitle">
+                           <div class="align-L">
+                              <span class="marketname">{{ eb.marketName
+                                 }}<span id="spanmarketallow3702" class="allowbet"></span></span>
+                           </div>
+                           <div></div>
+                        </th>
+                        <th class="odd hidemob"></th>
+                        <th class="odd hidemob"></th>
+                        <th class="backheader back odd">Back</th>
+                        <th class="layheader lay1 odd">Lay</th>
+                        <th class="odd hidemob"></th>
+                        <th class="odd hidemob"></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr id="{{ runner.selName }}" *ngFor="let runner of eb.selections;let $index = index;trackBy: trackByFn">
+                        <td class="align-L">
+                           <b>{{ runner.selName }}</b>
+                           <br />
+                           <b>
+                              <span id="runnerpnl0" [ngClass]="
+                             runner.totalPL > 0 ? 'profit-text' : 'loss-text'
+                             ">{{ runner.totalPL | indianCurrency }}</span></b>
+                        </td>
+                        <td class="back3 back-3 d-head hidemob"
+                        id="back_3_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="rateback3">{{ runner.backOdd3 }}</b> <br /><span class="backSize3"
+                              style="font-size: 10px">
+                           </span>
+                        </td>
+                        <td class="back2 back-2 d-head hidemob" id="back_2_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="rateback2">{{ runner.backOdd2 }}</b> <br /><span class="backSize2"
+                              style="font-size: 10px"></span>
+                        </td>
+                        <td class="back1 back-1" id="back_1_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="rateback1">{{ runner.backOdd1 | number: "0.2" }}</b>
+                           <br /><span class="backSize1" style="font-size: 10px"></span>
+                        </td>
+                        <td class="lay1 lay-1" id="lay_1_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="ratelay1">{{ runner.layOdd1 | number: "0.2" }}</b>
+                           <br /><span class="laySize1" style="font-size: 10px"></span>
+                        </td>
+                        <td class="lay2 lay-2 d-head hidemob" id="lay_2_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="ratelay2">{{ runner.layOdd2 }}</b> <br /><span class="laySize2"
+                              style="font-size: 10px"></span>
+                        </td>
+                        <td class="lay3 lay-3 d-head hidemob" id="lay_3_{{removeSpacefilter(eb.marketId)}}_{{runner.selectionId}}">
+                           <b class="ratelay3">{{ runner.layOdd3 }}</b> <br /><span class="laySize3"
+                              style="font-size: 10px"></span>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="table-container" *ngIf="
+              analysisData &&
+              analysisData?.fancyBook &&
+              analysisData?.fancyBook.length
+              " style="height: 350px">
+               <table class="table01 table-pt fancy" style="font-size: 12px; text-align: center">
+                  <thead>
+                     <tr>
+                        <th width="50%" class="layheader">No [K]</th>
+                        <th class="backheader">Yes [L]</th>
+                     </tr>
+                  </thead>
+                  <tbody *ngFor="let fb of analysisData?.fancyBook; trackBy: trackByFn">
+                     <tr>
+                        <td colspan="2" style="background: #000; color: #fff; font-weight: bolder">
+                           {{ fb.marketName }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="sessionbetbox lay1">
+                           <a>
+                              <div class="text-right price">{{ fb.noRun }}</div>
+                              <span class="sessionpoint" style="display: block">[&nbsp;<span style="display: inline">{{
+                                    fb.noOdd }}</span>&nbsp;]
+                              </span>
+                           </a>
+                        </td>
+                        <td class="sessionbetbox back1">
+                           <a>
+                              <div class="text-right price">{{ fb.yesRun }}</div>
+                              <span class="sessionpoint" style="display: block">[&nbsp;<span style="display: inline">{{
+                                    fb.yesOdd
+                                    }}</span>&nbsp;]
+                              </span>
+                           </a>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <div class="liabilitybox">
+                              <div>
+                                 <span class="sessionlibility" style="color: #ff0000">Liability :
+                                    <b id="fancy_book_13875028" style="color: red">{{ fb.liability | indianCurrency }}
+                                    </b></span>
+                              </div>
+                              <div>
+                                 <button class="btn" (click)="openBookModal(fb.totalPL)">
+                                    Book
+                                 </button>
+                              </div>
+                           </div>
+                        </td>
+                        <td>
+                           <div>
+                              <div class="no-padding">
+                                 <span>Min / Max:</span>
+                                 <span class="label label-warning cursor-pointer">{{ fb.min | number: "0.2" }}<b>-</b>{{
+                                    fb.max | number: "0.2" }}</span>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div class="right-col">
+            <div class="tabs table-responsive" *ngIf="sportId">
+               <input type="radio" id="tab1" name="tab-control" checked>
+               <input type="radio" id="tab2" name="tab-control">
+               <input type="radio" id="tab3" name="tab-control">
+               <ul>
+                  <li title="Features"><label for="tab1" role="button"><span>Book</span></label></li>
+                  <li title="Delivery Contents"><label for="tab2" role="button"><span>matchBets({{
+                           liveBetsList?.length
+                           }})</span></label>
+                  </li>
+                  <li title="Shipping"><label for="tab3" role="button"><span> FancyBets({{
+                           liveFancyBetsList?.length
+                           }})
+                        </span></label>
+                  </li>
+               </ul>
+               <div class="slider">
+                  <div class="indicator"></div>
+               </div>
+               <div class="content">
+                  <section>
+                     <div class="table-container" style="overflow-y: auto"
+                        *ngFor="let eb of analysisData?.exchangeBooks; trackBy: trackByFn">
+                        <table class="table01 table-pt" style="font-size: 12px" *ngIf="eb.users">
+                           <thead>
+                              <tr>
+                                 <th style="text-align: left;min-width: 100px;">{{ eb.marketName }}</th>
+                                 <th *ngFor="
+                                   let selection of eb.users[0]?.selections;
+                                   trackBy: trackByFn
+                                   ">
+                                    {{ selection.selName }}
+                                 </th>
+                              </tr>
+                              <ng-container *ngFor="
+                                let user of eb.users;
+                                let i = index;
+                                trackBy: trackByFn
+                                ">
+                                 <tr class="sub-row">
+                                    <td width="30%" class="align-L">
+                                       <a *ngIf="user.users.length" class="expand-close" (click)="
+                                      toggleExpand(
+                                      $event,
+                                      'sub_' + user.userName + '_' + eb.marketName
+                                      )
+                                      "></a>[{{ user.userName }}]
+                                    </td>
+                                    <td *ngFor="
+                                      let selection of user.selections;
+                                      trackBy: trackByFn
+                                      ">
+                                       <span [ngClass]="{
+                                         'profit-text-dark': selection.totalPL >= 0,
+                                         'loss-text-dark': selection.totalPL < 0
+                                         }">
+                                          {{ selection.totalPL | indianCurrency }}
+                                       </span>
+                                    </td>
+                                 </tr>
+                                 <tr class="sub-row" id="sub_{{ user.userName }}_{{ eb.marketName }}"
+                                    style="display: none">
+                                    <td [attr.colspan]="user.selections.length + 1">
+                                       <table width="100%">
+                                          <ng-container *ngFor="
+                                            let user1 of user.users;
+                                            let i = index;
+                                            trackBy: trackByFn
+                                            ">
+                                             <tr class="sub-row">
+                                                <td width="30%" class="align-L">
+                                                   <a id="_bySport" *ngIf="user1.users.length" class="expand-close"
+                                                      (click)="
+                                                  toggleExpand(
+                                                  $event,
+                                                  'sub_' +
+                                                  user1.userName +
+                                                  '_' +
+                                                  eb.marketName,
+                                                  user1.users.length
+                                                  )
+                                                  "></a>[{{ user1.userName }}]
+                                                </td>
+                                                <td *ngFor="let selection of user1.selections">
+                                                   <span [ngClass]="{
+                                                     'profit-text-dark': selection.totalPL >= 0,
+                                                     'loss-text-dark': selection.totalPL < 0
+                                                     }">
+                                                      {{ selection.totalPL | indianCurrency }}
+                                                   </span>
+                                                </td>
+                                             </tr>
+                                             <tr class="sub-row" id="sub_{{ user1.userName }}_{{ eb.marketName }}" style="display: none">
+                                                <td [attr.colspan]="
+                                                  bookData[0]?.selections.length + 1
+                                                  ">
+                                                   <table width="100%">
+                                                      <ng-container *ngFor="
+                                                        let user2 of user1.users;
+                                                        let i = index;
+                                                        trackBy: trackByFn
+                                                        ">
+                                                         <tr class="sub-row">
+                                                            <td width="30%" class="align-L">
+                                                               <a id="_bySport" *ngIf="user2.users.length"
+                                                                  class="expand-close" (click)="
+                                                              toggleExpand(
+                                                              $event,
+                                                              'sub_' +
+                                                              user2.userName +
+                                                              '_' +
+                                                              eb.marketName,
+                                                              user2.users.length
+                                                              )
+                                                              "></a>[{{ user2.userName }}]
+                                                            </td>
+                                                            <td *ngFor="let selection of user2.selections">
+                                                               <span [ngClass]="{
+                                                                 'profit-text-dark':
+                                                                 selection.totalPL >= 0,
+                                                                 'loss-text-dark':
+                                                                 selection.totalPL < 0
+                                                                 }">
+                                                                  {{ selection.totalPL | indianCurrency }}
+                                                               </span>
+                                                            </td>
+                                                         </tr>
+                                                         <tr class="sub-row" id="sub_{{ user2.userName }}_{{
+                                                           eb.marketName
+                                                           }}" style="display: none">
+                                                            <td [attr.colspan]="
+                                                              bookData[0]?.selections.length + 1
+                                                              ">
+                                                               <table class="sub-row" *ngIf="user2.users.length"
+                                                                  width="100%">
+                                                                  <ng-container *ngFor="
+                                                                    let user3 of user2.users;
+                                                                    let i = index;
+                                                                    trackBy: trackByFn
+                                                                    ">
+                                                                     <tr class="sub-row">
+                                                                        <td width="30%" class="align-L">
+                                                                           <a id="_bySport" *ngIf="user3.users.length"
+                                                                              class="expand-close" (click)="
+                                                                          toggleExpand(
+                                                                          $event,
+                                                                          'sub_' +
+                                                                          user3.userName +
+                                                                          '_' +
+                                                                          eb.marketName,
+                                                                          user3.users.length
+                                                                          )
+                                                                          "></a>[{{ user3.userName }}]
+                                                                        </td>
+                                                                        <td *ngFor="
+                                                                          let selection of user3.selections
+                                                                          ">
+                                                                           <span [ngClass]="{
+                                                                             'profit-text-dark':
+                                                                             selection.totalPL >= 0,
+                                                                             'loss-text-dark':
+                                                                             selection.totalPL < 0
+                                                                             }">
+                                                                              {{
+                                                                              selection.totalPL
+                                                                              | indianCurrency
+                                                                              }}
+                                                                           </span>
+                                                                        </td>
+                                                                     </tr>
+                                                                     <tr class="sub-row" id="sub_{{ user3.userName }}_{{
+                                                                       eb.marketName
+                                                                       }}" style="display: none">
+                                                                        <td [attr.colspan]="
+                                                                          bookData[0]?.selections.length +
+                                                                          1
+                                                                          ">
+                                                                           <table *ngIf="user3.users.length"
+                                                                              width="100%">
+                                                                              <ng-container *ngFor="
+                                                                                let user4 of user3.users;
+                                                                                let i = index;
+                                                                                trackBy: trackByFn
+                                                                                ">
+                                                                                 <tr class="sub-row">
+                                                                                    <td width="30%" class="align-L">
+                                                                                       <a id="_bySport" *ngIf="
+                                                                                      user4.users.length
+                                                                                      " class="expand-close" (click)="
+                                                                                      toggleExpand(
+                                                                                      $event,
+                                                                                      'sub_' +
+                                                                                      user4.userName +
+                                                                                      '_' +
+                                                                                      eb.marketName,
+                                                                                      user4.users.length
+                                                                                      )
+                                                                                      "></a>[{{ user4.userName }}]
+                                                                                    </td>
+                                                                                    <td *ngFor="
+                                                                                      let selection of user4.selections
+                                                                                      ">
+                                                                                       <span [ngClass]="{
+                                                                                         'profit-text-dark':
+                                                                                         selection.totalPL >=
+                                                                                         0,
+                                                                                         'loss-text-dark':
+                                                                                         selection.totalPL <
+                                                                                         0
+                                                                                         }">
+                                                                                          {{
+                                                                                          selection.totalPL
+                                                                                          | number: "0.2"
+                                                                                          }}
+                                                                                       </span>
+                                                                                    </td>
+                                                                                 </tr>
+                                                                                 <tr class="sub-row" id="sub_{{
+                                                                                   user4.userName
+                                                                                   }}_{{ eb.marketName }}" style="display: none">
+                                                                                    <td [attr.colspan]="
+                                                                                      bookData[0]?.selections
+                                                                                      .length + 1
+                                                                                      ">
+                                                                                       <table class="sub-row" *ngIf="
+                                                                                         user4.users.length
+                                                                                         " width="100%">
+                                                                                          <ng-container *ngFor="
+                                                                                            let user5 of user4.users;
+                                                                                            let i = index;
+                                                                                            trackBy: trackByFn
+                                                                                            ">
+                                                                                             <tr class="sub-row">
+                                                                                                <td width="30%"
+                                                                                                   class="align-L">
+                                                                                                   <a id="_bySport"
+                                                                                                      *ngIf="
+                                                                                                  user5.users
+                                                                                                  .length
+                                                                                                  " class="
+                                                                                                  expand-close
+                                                                                                  " (click)="
+                                                                                                  toggleExpand(
+                                                                                                  $event,
+                                                                                                  'sub_' +
+                                                                                                  user5.userName +
+                                                                                                  '_' +
+                                                                                                  eb.marketName,
+                                                                                                  user5.users
+                                                                                                  .length
+                                                                                                  )
+                                                                                                  "></a>[{{
+                                                                                                   user5.userName
+                                                                                                   }}]
+                                                                                                </td>
+                                                                                                <td *ngFor="
+                                                                                                  let selection of user5.selections
+                                                                                                  ">
+                                                                                                   <span [ngClass]="{
+                                                                                                     'profit-text-dark':
+                                                                                                     selection.totalPL >=
+                                                                                                     0,
+                                                                                                     'loss-text-dark':
+                                                                                                     selection.totalPL <
+                                                                                                     0
+                                                                                                     }">
+                                                                                                      {{
+                                                                                                      selection.totalPL
+                                                                                                      | number
+                                                                                                      : "0.2"
+                                                                                                      }}
+                                                                                                   </span>
+                                                                                                </td>
+                                                                                             </tr>
+                                                                                          </ng-container>
+                                                                                       </table>
+                                                                                    </td>
+                                                                                 </tr>
+                                                                              </ng-container>
+                                                                           </table>
+                                                                        </td>
+                                                                     </tr>
+                                                                  </ng-container>
+                                                               </table>
+                                                            </td>
+                                                         </tr>
+                                                      </ng-container>
+                                                   </table>
+                                                </td>
+                                             </tr>
+                                          </ng-container>
+                                       </table>
+                                    </td>
+                                 </tr>
+                              </ng-container>
+                           </thead>
+                        </table>
+                     </div>
+                  </section>
+                  <section>
+                     <div style="text-align:right" *ngIf="sportId">
+                        <label>Last:</label>
+                        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+                           <option value="5000">5000 Txn</option>
+                           <option value="1000">1000 Txn</option>
+                           <option value="500">500 Txn</option>
+                           <option value="100" selected="">100 Txn</option>
+                           <option value="{{liveBetsList?.length}}">All {{liveBetsList?.length}}</option>
+                        </select>
+                     </div>
+                     <div class="" *ngIf="sportId" class="table-container2">
+                        <table id="matchTable" class="table-s" style="display: table">
+                           <tbody>
+                              <tr>
+                                 <th width="5%" class="align-L">PL ID</th>
+                                 <th width="6%" class="align-L">Bet ID</th>
+                                 <th id="betTime" width="6%" class="align-L">Bet_Placed</th>
+                                 <th width="7%" class="align-L">IP Address</th>
+                                 <th width="7%" class="align-L">Market</th>
+                                 <th width="7%" class="align-L">Runner</th>
+                                 <th width="4%" class="align-C">Type</th>
+                                 <th width="4%">Odds</th>
+                                 <th width="5%">Stake</th>
+                                 <th width="5%" class="align-L">Pot Liability</th>
+                                 <th width="5%" name="profitOrLossTh" class="align-L">
+                                    Pot Profit
+                                 </th>
+                                 <th *ngIf="showActions">Action</th>
+                                 <ng-container *ngFor="
+                                   let x of counter(
+                                   commonService?.agentUserType - currentUser?.userType
+                                   );
+                                   let $index = index;
+                                   trackBy: trackByIndex
+                                   ">
+                                    <th width="5%" class="align-L">
+                                       {{ heirarchyMap[currentUser?.userType + $index + 1] }}
+                                    </th>
+                                 </ng-container>
+                              </tr>
+                              <tr id="matchRowTemplate" *ngFor="
+                                let bet of liveBetsList
+                                | paginate: { id: 'matchOdds', itemsPerPage: 10, currentPage: p };
+                                trackBy: trackByFn
+                              ">
+                                 <td id="playerId" class="align-L">{{ bet.userName }}</td>
+                                 <td class="align-L">
+                                    <a id="betID">{{ bet.consolidateId }} </a>
+                                 </td>
+                                 <td class="align-L">
+                                    <span id="betPlaced" class="small-date">{{ bet.betTime | date: "yyyy-MM-dd
+                                       HH:mm:ss":"+530" }}
+                                    </span>
+                                 </td>
+                                 <td id="ip" class="align-L">{{ bet.ipAddress }}</td>
+                                 <td id="matchTitle" class="align-L">
+                                    {{
+                                    bet.betType === "yes" || bet.betType === "no"
+                                    ? "Fancy Bet"
+                                    : bet.marketName
+                                    }}
+                                 </td>
+                                 <td id="matchSelection" class="align-L">{{ bet.selName }}</td>
+                                 <td class="align-C">
+                                    <span id="matchType" class="{{ bet.betType.toLowerCase() }}">{{ bet.betType |
+                                       titlecase }}
+                                    </span>
+                                 </td>
+                                 <td id="matchOddsReq">{{ bet.odds.replace(":", "/") }}</td>
+                                 <td id="matchStake">{{ bet.stake | number: "0.2" }}</td>
+                                 <td id="liability" class="loss-text-dark">
+                                    {{ bet.potLiab | number: "0.2" }}
+                                 </td>
+                                 <td class="profit-text-dark">
+                                    {{ bet.potProf | number: "0.2" }}
+                                    <span id="pol" class="small-date"></span>
+                                 </td>
+                                 <td width="5%" *ngIf="showActionsvoid">
+                                    <button class="btn" title="Void Bet" (click)="confirmCancelVoidBet(bet, 1)">
+                                       V
+                                    </button>
+                                    <!-- <button class="btn" title="Cancel Bet" (click)="confirmCancelVoidBet(bet, 2)">
+                                       C
+                                    </button> -->
+                                 </td>
+                                 <ng-container *ngFor="
+                                   let x of counter(
+                                   commonService?.agentUserType - currentUser?.userType
+                                   );
+                                   let $index = index;
+                                   trackBy: trackByIndex
+                                   ">
+                                    <td id="agentUserId2" class="align-L">
+                                       {{ bet.parentName[currentUser?.userType + $index + 1] }}
+                                    </td>
+                                 </ng-container>
+                              </tr>
+                           </tbody>
+                           <tfoot *ngIf="!liveBetsList || liveBetsList?.length==0">
+                              <tr>
+                                 <td colspan="5">
+                                    <p class="no-data">You have no bets in this time period.</p>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                        </table>
+                        <ng-container *ngIf="sportId">
+                           <pagination-template pagination-controls *ngIf="liveBetsList?.length > 10"
+                              #p1="paginationApi" (pageChange)="p = $event" id="matchOdds">
+                              <ul id="pageNumberContent" class="pages" style="display: flex; justify-content: center">
+                                 <li id="prev">
+                                    <a *ngIf="p1.isFirstPage(); else prevTemp" class="disable">Prev</a>
+                                    <ng-template #prevTemp>
+                                       <a (click)="p1.previous()">Prev</a>
+                                    </ng-template>
+                                 </li>
+                                 <ng-container *ngFor="let page of p1.pages;trackBy:trackByIndex">
+                                    <li id="pageNumber">
+                                       <a (click)="p1.setCurrent(page.value)" *ngIf="p1.getCurrent() != page.value"
+                                          class="btn">{{ page.value }}
+                                       </a>
+                                       <a *ngIf="p1.getCurrent() == page.value" class="select"
+                                          style="pointer-events: none">{{ page.value }}
+                                       </a>
+                                    </li>
+                                 </ng-container>
+                                 <li id="next">
+                                    <a *ngIf="p1.isLastPage(); else nextTemp" class="disable">Next</a>
+                                    <ng-template #nextTemp>
+                                       <a (click)="p1.next()">Next</a>
+                                    </ng-template>
+                                 </li>
+                              </ul>
+                           </pagination-template>
+                        </ng-container>
+                     </div>
+                  </section>
+                  <section>
+                     <div style="text-align:right" *ngIf="sportId">
+                        <label>Last:</label>
+                        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+                           <option value="5000">5000 Txn</option>
+                           <option value="1000">1000 Txn</option>
+                           <option value="500">500 Txn</option>
+                           <option value="100" selected="">100 Txn</option>
+                           <option value="{{liveFancyBetsList.length}}">All {{liveFancyBetsList.length}}</option>
+                        </select>
+                     </div>
+                     <div class="table-container2">
+                        <table id="matchTable" class="table-s" style="display: table">
+                           <tbody *ngIf="liveFancyBetsList && liveFancyBetsList.length">
+                              <tr>
+                                 <th width="5%" class="align-L">PL ID</th>
+                                 <th width="6%" class="align-L">Bet ID</th>
+                                 <th id="betTime" width="6%" class="align-L">Bet_Placed</th>
+                                 <th width="7%" class="align-L">IP Address</th>
+                                 <th width="7%" class="align-L">Market</th>
+                                 <th width="7%" class="align-L">Runner</th>
+                                 <th width="4%" class="align-C">Type</th>
+                                 <th width="4%">Odds</th>
+                                 <th width="5%">Stake</th>
+                                 <th width="5%" class="align-L">Liability</th>
+                                 <th width="5%" name="profitOrLossTh" class="align-L">
+                                    Pot Profit
+                                 </th>
+                                 <th *ngIf="showActions">Action</th>
+                                 <ng-container *ngFor="
+                                   let x of counter(
+                                   commonService?.agentUserType - currentUser?.userType
+                                   );
+                                   let $index = index;
+                                   trackBy: trackByIndex
+                                   ">
+                                    <th width="5%" class="align-L">
+                                       {{ heirarchyMap[currentUser?.userType + $index + 1] }}
+                                    </th>
+                                 </ng-container>
+                              </tr>
+                              <tr id="matchRowTemplate" *ngFor="
+                                let bet of liveFancyBetsList
+                                | paginate
+                                : {
+                                id: 'fancyBets',
+                                itemsPerPage: n, currentPage: p,totalItems:liveFancyBetsList.length
+                                };
+                                trackBy: trackByFn
+                                ">
+                                 <td id="playerId" class="align-L">{{ bet.userName }}</td>
+                                 <td class="align-L">
+                                    <a id="betID">{{ bet.consolidateId }} </a>
+                                 </td>
+                                 <td class="align-L">
+                                    <span id="betPlaced" class="small-date">{{ bet.betTime | date: "yyyy-MM-dd HH:mm:ss"
+                                       }}
+                                    </span>
+                                 </td>
+                                 <td id="ip" class="align-L">{{ bet.ipAddress }}</td>
+                                 <td id="matchTitle" class="align-L">
+                                    {{
+                                    bet.betType === "yes" || bet.betType === "no"
+                                    ? "Fancy Bet"
+                                    : bet.marketName
+                                    }}
+                                 </td>
+                                 <td id="matchSelection" class="align-L">{{ bet.selName }}</td>
+                                 <td class="align-C">
+                                    <span id="matchType" class="{{ bet.betType.toLowerCase() }}">{{ bet.betType |
+                                       titlecase }}
+                                    </span>
+                                 </td>
+                                 <td id="matchOddsReq">{{ bet.odds.replace(":", "/") }}</td>
+                                 <td id="matchStake">{{ bet.stake | number: "0.2" }}</td>
+                                 <td id="liability" class="loss-text-dark">
+                                    {{ bet.potLiab | number: "0.2" }}
+                                 </td>
+                                 <td class="profit-text-dark">
+                                    {{ bet.potProf | number: "0.2" }}
+                                    <span id="pol" class="small-date"></span>
+                                 </td>
+                                 <td width="5%" *ngIf="showActionsvoid">
+                                    <button class="btn" title="Void Bet" (click)="confirmCancelVoidBet(bet, 1)">
+                                       V
+                                    </button>
+                                    <!-- <button class="btn" title="Cancel Bet" (click)="confirmCancelVoidBet(bet, 2)">
+                                       C
+                                    </button> -->
+                                 </td>
+                                 <ng-container *ngFor="
+                                   let x of counter(
+                                   commonService?.agentUserType - currentUser?.userType
+                                   );
+                                   let $index = index;
+                                   trackBy: trackByIndex
+                                   ">
+                                    <td id="agentUserId2" class="align-L">
+                                       {{ bet.parentName[currentUser?.userType + $index + 1] }}
+                                    </td>
+                                 </ng-container>
+                              </tr>
+                           </tbody>
+                           <tfoot *ngIf="!liveFancyBetsList || liveFancyBetsList?.length==0">
+                              <tr>
+                                 <td colspan="5">
+                                    <p class="no-data">You have no bets in this time period.</p>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                        </table>
+                        <ng-container *ngIf="sportId">
+                           <pagination-template pagination-controls
+                              *ngIf="liveFancyBetsList && liveFancyBetsList?.length > 10" #p2="paginationApi"
+                              (pageChange)="page1 = $event" id="fancyBets">
+                              <ul id="pageNumberContent" class="pages" style="display: flex; justify-content: center">
+                                 <li id="prev">
+                                    <a *ngIf="p2.isFirstPage(); else prevTemp" class="disable">Prev</a>
+                                    <ng-template #prevTemp>
+                                       <a (click)="p2.previous()">Prev</a>
+                                    </ng-template>
+                                 </li>
+                                 <ng-container *ngFor="let page of p2.pages">
+                                    <li id="pageNumber">
+                                       <a (click)="p2.setCurrent(page.value)" *ngIf="p2.getCurrent() != page.value"
+                                          class="btn">{{ page.value }}
+                                       </a>
+                                       <a *ngIf="p2.getCurrent() == page.value" class="select"
+                                          style="pointer-events: none">{{ page.value }}
+                                       </a>
+                                    </li>
+                                 </ng-container>
+                                 <li id="next">
+                                    <a *ngIf="p2.isLastPage(); else nextTemp" class="disable">Next</a>
+                                    <ng-template #nextTemp>
+                                       <a (click)="p2.next()">Next</a>
+                                    </ng-template>
+                                 </li>
+                              </ul>
+                           </pagination-template>
+                        </ng-container>
+                     </div>
+                  </section>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<app-modal [(open)]="isBookModalOpen">
+   <div class="modal-header">
+      <h3>Fancy Book</h3>
+   </div>
+   <div class="modal-content" style="height: 250px; overflow-y: auto">
+      <div class="table-container">
+         <table class="table01 table-pt" style="text-align: center">
+            <thead>
+               <tr>
+                  <th width="50%">Score</th>
+                  <th>Amount</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let book of selectedFancyExpBook">
+                  <td>{{ book[0] }}</td>
+                  <td>
+                     <span *ngIf="book[1]>=0">{{ book[1] }}</span>
+                     <span *ngIf="book[1]<0" [ngClass]="book[1]<0?'red':'green'">({{ book[1] }})</span>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <div class="btn_box">
+         <button (click)="isBookModalOpen = false" class="btn">Close</button>
+      </div>
+   </div>
+</app-modal>
+<app-modal [(open)]="isRejectBetModalOpen">
+   <div class="modal-header">
+      <h3>Reject Bet</h3>
+   </div>
+   <div class="modal-content white-wrap">
+      <div class="input-group">
+         <label for="betid">Bet ID: </label>
+         <input type="text" />
+      </div>
+   </div>
+   <div class="modal-footer">
+      <div class="btn_box inline-form">
+         <div class="form_list">
+            <label>Password: </label><input id="changeStatusPassword" type="password" placeholder="Enter" />
+         </div>
+         <div class="btn_box">
+            <button class="btn-send">Change</button>
+         </div>
+      </div>
+   </div>
+</app-modal>
+<app-modal [(open)]="isVoidBetModalOpen">
+   <h3>Confirm Void Bet</h3>
+   <div class="modal-content">
+      <table class="table-s">
+         <tbody>
+            <tr>
+               <th>UID</th>
+               <th>Event</th>
+               <th>Market</th>
+               <th>Type</th>
+               <th>Odds</th>
+               <th>Stake</th>
+            </tr>
+            <tr>
+               <td>{{ selectedBet?.userName }}</td>
+               <td>
+                  {{ selectedBet?.sportName | titlecase }}
+                  <img class="fromto" *ngIf="selectedBet?.tounamentName" src="assets/images/transparent.gif" />
+                  {{ selectedBet?.tounamentName }}
+                  <img class="fromto" src="assets/images/transparent.gif" />
+                  {{ selectedBet?.marketName }}
+               </td>
+               <td>{{ selectedBet?.selName }}</td>
+               <td>
+                  <span class="{{ selectedBet?.betType.toLowerCase() }}">
+                     {{ selectedBet?.betType | titlecase }}
+                  </span>
+               </td>
+               <td>{{ selectedBet?.odds }}</td>
+               <td>{{ selectedBet?.stake | number: "0.2" }}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <form [formGroup]="voidForm">
+      <ul class="btn-wrap">
+         <li>
+            <label>Password:</label>
+            <input class="padding" id="password" type="password" placeholder="Enter" formControlName="password"
+               required />
+            <!-- <button class="btn" (click)="closeCancelVoidModal()">Cancel</button> -->
+         </li>
+         <li>
+            <button id="changeCreditReferenceBtn" class="btn-send" type="submit" (click)="cancelVoidBet(1)">
+               Submit
+            </button>
+         </li>
+      </ul>
+   </form>
+</app-modal>
+<app-modal [(open)]="isCancelBetModalOpen">
+   <h3>Confirm Cancel Bet</h3>
+   <div class="modal-content">
+      <table class="table-s">
+         <tbody>
+            <tr>
+               <th>UID</th>
+               <th>Event</th>
+               <th>Market</th>
+               <th>Type</th>
+               <th>Odds</th>
+               <th>Stake</th>
+            </tr>
+            <tr>
+               <td>{{ selectedBet?.userName }}</td>
+               <td>
+                  {{ selectedBet?.sportName | titlecase }}
+                  <img class="fromto" *ngIf="selectedBet?.tounamentName" src="assets/images/transparent.gif" />
+                  {{ selectedBet?.tounamentName }}
+                  <img class="fromto" src="assets/images/transparent.gif" />
+                  {{ selectedBet?.marketName }}
+               </td>
+               <td>{{ selectedBet?.selName }}</td>
+               <td>
+                  <span class="{{ selectedBet?.betType.toLowerCase() }}">{{ selectedBet?.betType | titlecase }}
+                  </span>
+               </td>
+               <td>{{ selectedBet?.odds }}</td>
+               <td>{{ selectedBet?.stake | number: "0.2" }}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <form [formGroup]="voidForm">
+      <ul class="btn-wrap">
+         <li>
+            <label>Password:</label>
+            <input id="password" type="password" placeholder="Enter" formControlName="password" class="padding"
+               required />
+            <!-- <button class="btn" (click)="closeCancelVoidModal()">Cancel</button> -->
+         </li>
+         <li>
+            <button id="changeCreditReferenceBtn" class="btn-send" type="submit" (click)="cancelVoidBet(2)">
+               Submit
+            </button>
+         </li>
+      </ul>
+   </form>
+</app-modal>

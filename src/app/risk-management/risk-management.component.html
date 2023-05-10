@@ -1,0 +1,514 @@
+<div class="full-wrap" style="height: calc(100% - 105px)">
+  <!-- Center Column -->
+  <div class="over-wrap">
+    <!-- Loading Wrap -->
+
+    <!-- Message -->
+    <div id="message" class="message-wrap success">
+      <a class="btn-close">Close</a>
+      <p></p>
+    </div>
+
+    <div class="function-wrap">
+      <ul class="input-list diaplayflex">
+        <li id="eventRadioBtnList">
+          <input
+            id="All"
+            type="radio"
+            name="events"
+            value=""
+            checked
+            (change)="selectSport($event.target.value)"
+          />
+          <label for="All">All </label>
+          <ng-container *ngFor="let sport of sportFilterList">
+            <input
+              id="{{ sport.name }}"
+              type="radio"
+              name="events"
+              value="{{ sport.id }}"
+              (change)="selectSport($event.target.value)"
+            />
+            <label for="{{ sport.name }}">{{ sport.name }}</label>
+          </ng-container>
+        </li>
+        <li>
+          <span>
+            <label>Last:</label>
+            <select
+              name="limit"
+              id="limit"
+              (change)="selectNoRows($event.target.value)"
+            >
+              <option value="100" selected="">100 Txn</option>
+              <option value="50">50 Txn</option>
+              <option value="25">25 Txn</option>
+              <option value="10">10 Txn</option>
+              <option value=betList.length >Full</option>
+            </select>
+          </span>
+        </li>
+        <li>
+          <a id="getPL" (click)="getriskIP()" class="btn-send">Risk IP</a>
+        </li>
+        <li *ngIf="clickedRiskIp">
+          <ng-select (change)="selectIP($event)"   [(ngModel)]="selectedIP">
+            <ng-option value="0" selected=""> Select IP </ng-option>
+            <ng-option *ngFor="let event of riskIps" [value]="event">
+              {{ event.ipAddress }}
+            </ng-option>
+          </ng-select>
+        </li>
+      </ul>
+
+      <ul class="input-list contentclass">
+        <li>
+          <label>Search :</label> <input type="text"  appInputRestriction="noSpecialChars3" [(ngModel)]="searchTerm" (ngModelChange)="filterByTerm($event, true)" name="" id="" placeholder="Search ,betId,username">
+          <label> Stake >= </label><input type="number" [(ngModel)]="Volumecheck" name="Volume Check"  placeholder="Volume">
+        </li>
+        <li><label>Period:</label></li>
+        <li>
+          <input
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            readonly="true"
+            [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <input
+            id="startTime"
+            class="time-input"
+            type="text"
+            [(ngModel)]="fromTime"
+            [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'"
+            [mode]="'time'"
+            placeholder="09:00"
+            placeholder="09:00"
+            maxlength="5"
+          />
+          to
+          <br>
+          <input
+            id="endDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            readonly="true"
+            [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            autocomplete="off"
+          />
+          <input
+            id="endTime"
+            class="time-input"
+            type="text"
+            [(ngModel)]="toTime"
+            [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'"
+            [mode]="'time'"
+            placeholder="08:59"
+            maxlength="5"
+          />
+        </li>
+        <li style="display: none">(TimeZone:IST)</li>
+        <li style="display: none">
+          <a id="last7days" href="#" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" href="#" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" href="#" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" href="#" class="btn">Last 3 Months</a>
+        </li>
+        <li>
+          <a id="getPL" (click)="listBets()" class="btn-send">Get Reports</a>
+        </li>
+        <li>
+          <ng-select (change)="selectEvent($event)" [(ngModel)]="selectedEvent">
+            <ng-option value="0" selected=""> Select Event </ng-option>
+            <ng-option *ngFor="let event of activeEvents" [value]="event.eventId">
+              {{ event.eventName }}
+            </ng-option>
+          </ng-select>
+        </li>
+        <li>
+          <ng-select (change)="selectMarket($event)" [(ngModel)]="selectedMarket">
+            <ng-option value="0" selected=""> Select Market </ng-option>
+            <ng-container *ngFor="let event of filtered">
+              <ng-option [value]="event">
+                {{ event }}
+              </ng-option>
+            </ng-container>
+          </ng-select>
+        </li>
+        <li><span class="total-users"> Total Records: {{ betlistCount }} </span></li>
+      </ul>
+    </div>
+    <!-- function end-->
+
+    <!-- Report Table -->
+    <div class="table-responsive data-table" >
+    <!-- Report Table -->
+    <div id="report">
+      <table id="table_DL" class="table-s" style="display: table">
+        <tbody>
+          <tr>
+            
+            <th width="5%" class="align-L">PL ID</th>
+            <th width="5%" class="align-L">Username</th>
+            <th width="5%" class="align-L">Sport</th>
+            <th width="5%" class="align-L">Bet ID
+              <span *ngIf="selectedSport == 'teenpatti'">/Round Id</span>
+            </th>
+            <th id="betTime" width="6%" class="align-L">Bet taken</th>
+            <th width="7%" class="align-L">IP Address</th>
+            <th width="" class="align-L">Event / Market</th>
+            <th width="" class="align-L">Selection</th>
+            <th width="4%" class="align-C">Type</th>
+            <th width="4%">Odds req.</th>
+            <th width="5%">Stake</th>
+            <th width="5%" name="profitOrLossTh">Profit/Loss</th>
+            <th *ngIf="showActions">Action</th>
+          </tr>
+
+          <tr
+            id="matchRow{{ i }}"
+            *ngFor="
+              let bet of betList
+                | paginate: { itemsPerPage: n, currentPage: p,totalItems:betlistCount };
+              index as i
+            "
+          >
+            <td id="playerId" class="align-L">{{ bet.userId }}</td>
+            <td id="userName" class="align-L">{{ bet.userName }}</td>
+            <td id="sportName" class="align-L">{{ bet.sportName }}</td>
+            <td class="align-L">
+              <a id="betID" href="javascript: void(0);" (click)="confirmCheatbets(bet)">{{
+                bet.consolidateId
+              }}</a>
+            </td>
+            <td class="align-L">
+              <span id="betPlaced" class="small-date">{{
+                bet.betTime | date: "yyyy-MM-dd HH:mm:ss" :
+                timeFormat
+              }}</span>
+            </td>
+            <td id="ip" class="align-L">{{ bet.ipAddress }}</td>
+            <td id="matchTitle" class="align-L" [title]="getFullEventName(bet)">
+              {{ bet.sportName | titlecase }}
+              <img class="fromto" src="assets/images/transparent.gif" />
+              {{ bet.eventName }} ({{ bet.eventId }})
+              <img class="fromto" src="assets/images/transparent.gif" />
+              {{
+                bet.betType === "yes" || bet.betType === "no"
+                  ? "Fancy Bet"
+                  : bet.marketName
+              }} ({{ bet.marketId }})
+            </td>
+            <td id="matchSelection" class="align-L" [title]="getFullEventdetails(bet)">{{ bet.selName }}</td>
+
+            <td class="align-C">
+              <span id="matchType" class="{{ bet.betType.toLowerCase() }}">{{
+                bet.betType | titlecase
+              }}</span>
+            </td>
+            <td id="matchOddsReq">{{ bet.odds }}</td>
+            <td id="matchStake">{{ bet.stake | indianCurrency }}</td>
+
+            <td>
+              <span
+                id="pol"
+                class="small-date"
+                [ngClass]="bet.PL < 0 ? 'loss-text' : 'profit-text'"
+                >{{ bet.potProf | indianCurrency }}</span
+              >
+            </td>
+
+            <td *ngIf="showActions" width="5%">
+              <button
+                class="btn"
+                title="Void Bet"
+                (click)="confirmCancelVoidBet(bet, 1)"
+              >
+                V
+              </button>
+              <button
+                class="btn"
+                title="Cancel Bet"
+                (click)="confirmCancelVoidBet(bet, 2)"
+              >
+                C
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="table-other" style="margin-top: 5px">
+        Bet List is shown net of commission.
+      </p>
+    </div>
+
+    <pagination-template
+      *ngIf="betList && betlistCount > n"
+      #pagination="paginationApi"
+      (pageChange)="pageChanged($event)"
+    >
+      <ul id="pageNumberContent" class="pages">
+        <li id="prev">
+          <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+            >Prev</a
+          >
+          <ng-template #prevTemp>
+            <a (click)="pagination.previous()">Prev</a>
+          </ng-template>
+        </li>
+        <ng-container *ngFor="let page of pagination.pages">
+          <li id="pageNumber">
+            <a
+              (click)="pagination.setCurrent(page.value)"
+              *ngIf="pagination.getCurrent() != page.value"
+              class="btn"
+              >{{ page.value }}
+            </a>
+            <a
+              *ngIf="pagination.getCurrent() == page.value"
+              class="select"
+              style="pointer-events: none"
+              >{{ page.value }}
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+        <li id="next">
+          <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable"
+            >Next</a
+          >
+          <ng-template #nextTemp>
+            <a (click)="pagination.next()">Next</a>
+          </ng-template>
+        </li>
+      </ul>
+    </pagination-template>
+    </div>
+
+  </div>
+</div>
+
+<app-modal [(open)]="isVoidBetModalOpen" [width]="'590px'">
+  <h3>Confirm Void Bet</h3>
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th>UID</th>
+          <th>Event</th>
+          <th>Market</th>
+          <th>Type</th>
+          <th>Odds</th>
+          <th>Stake</th>
+        </tr>
+        <tr>
+          <td>{{ selectedBet?.userName }}</td>
+          <td>
+            {{ selectedBet?.sportName | titlecase }}
+            <img class="fromto" src="assets/images/transparent.gif" />
+            {{ selectedBet?.marketName }}
+          </td>
+          <td>{{ selectedBet?.selName }}</td>
+          <td>
+            <span class="{{ selectedBet?.betType.toLowerCase() }}">
+              {{ selectedBet?.betType | titlecase }}
+            </span>
+            1
+          </td>
+          <td>{{ selectedBet?.odds }}</td>
+          <td>{{ selectedBet?.stake | indianCurrency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <form [formGroup]="voidForm">
+    <ul class="btn-wrap">
+      <li>
+        <label>Password:</label>
+        <input
+          type="password"
+          placeholder="Enter"
+          formControlName="password"
+          required
+        />
+        <!-- <button class="btn" (click)="closeCancelVoidModal()">Cancel</button> -->
+      </li>
+      <li>
+        <button
+          id="changeCreditReferenceBtn"
+          class="btn-send"
+          type="submit"
+          (click)="cancelVoidBet(1)"
+        >
+          Submit
+        </button>
+      </li>
+    </ul>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="isCancelBetModalOpen" [width]="'590px'">
+  <h3>Confirm Cancel Bet</h3>
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th>UID</th>
+          <th>Event</th>
+          <th>Market</th>
+          <th>Type</th>
+          <th>Odds</th>
+          <th>Stake</th>
+        </tr>
+        <tr>
+          <td>{{ selectedBet?.userName }}</td>
+          <td>
+            {{ selectedBet?.sportName | titlecase }}
+            <img class="fromto" src="assets/images/transparent.gif" />
+            {{ selectedBet?.marketName }}
+          </td>
+          <td>{{ selectedBet?.selName }}</td>
+          <td>
+            <span class="{{ selectedBet?.betType.toLowerCase() }}"
+              >{{ selectedBet?.betType | titlecase }}
+            </span>
+          </td>
+          <td>{{ selectedBet?.odds }}</td>
+          <td>{{ selectedBet?.stake | indianCurrency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <form [formGroup]="cancelForm">
+    <ul class="btn-wrap">
+      <li>
+        <label>Password:</label>
+        <input
+          type="password"
+          placeholder="Enter"
+          formControlName="password"
+          required
+        />
+        <!-- <button class="btn" (click)="closeCancelVoidModal()">Cancel</button> -->
+      </li>
+      <li>
+        <button
+          id="changeCreditReferenceBtn"
+          class="btn-send"
+          type="submit"
+          (click)="cancelVoidBet1(2)"
+        >
+          Submit
+        </button>
+      </li>
+    </ul>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="isCheatBetModelOpen" [width]="'700px'">
+  <h3>Cheater</h3>
+  <div class="modal-content" *ngIf="cheaterInfo">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th>UID</th>
+          <th>Bet Time</th>
+          <th>Event</th>
+          <th>Market</th>
+          <th>Type</th>
+          <th>Odds</th>
+          <th>Stake</th>
+        </tr>
+        <tr>
+          <td>{{ cheaterInfo?.userName }}</td>
+          <td>{{ cheaterInfo?.betTime | date: "yyyy-MM-dd HH:mm:ss" :timeFormat}}</td>
+          <td>
+            {{ cheaterInfo?.sportName | titlecase }}
+            <img class="fromto" src="assets/images/transparent.gif" />
+            {{ cheaterInfo?.eventName }}
+          </td>
+          <td>{{ cheaterInfo?.marketName }}</td>
+          <td>
+            <span class="{{ cheaterInfo?.betType.toLowerCase() }}">
+              {{ cheaterInfo?.betType | titlecase }}
+            </span>
+          </td>
+          <td>{{ cheaterInfo?.odds }}</td>
+          <td>{{ cheaterInfo?.stake | indianCurrency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Reference Bets</h3>
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th>UID</th>
+          <th>Bet Time</th>
+          <th>Event</th>
+          <th>Market</th>
+          <th>Type</th>
+          <th>Odds</th>
+          <th>Stake</th>
+        </tr>
+        <tr *ngFor="let bet of cheatBets?.refBets;index as i">
+          <td>{{ bet?.userName }}</td>
+          <td>{{ bet?.betTime | date: "yyyy-MM-dd HH:mm:ss" :timeFormat}}</td>
+          <td>
+            {{ bet?.sportName | titlecase }}
+            <img class="fromto" src="assets/images/transparent.gif" />
+            {{ bet?.eventName }}
+          </td>
+          <td>{{ bet?.marketName }}</td>
+          <td>
+            <span class="{{ bet?.betType.toLowerCase() }}">
+              {{ bet?.betType | titlecase }}
+            </span>
+          </td>
+          <td>{{ bet?.odds }}</td>
+          <td>{{ bet?.stake | indianCurrency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Reference Odds</h3>
+  <div class="modal-content">
+    <table class="table-s">
+      <tbody>
+        <tr>
+          <th>Time</th>
+          <th>RunnerName</th>
+          <th>Back</th>
+          <th>Lay</th>
+          <th>LastPriceTraded</th>
+        </tr>
+        <tr *ngFor="let bet of cheatBets?.refOdds;index as i">
+          <td>{{ bet?.updateTime | date: "yyyy-MM-dd HH:mm:ss" :timeFormat}}</td>
+          <td>{{ bet?.runnerName }}</td>
+          <td class="back">{{ bet?.ExchangePrices?.AvailableToBack[0].price }}</td>
+          <td class="lay">{{ bet?.ExchangePrices?.AvailableToLay[0].price }}</td>
+          <td>{{ bet?.LastPriceTraded }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-modal>

@@ -1,0 +1,144 @@
+@import "src/assets/scss/tables";
+
+.report-tab-wrap {
+  position: relative;
+  margin-top: 16px;
+  list-style-type: none;
+
+  .report-tab {
+    display: inline-block;
+    padding: 5px 24px 9px;
+    margin-right: 2px;
+    background-color: #ffffff;
+    border: 1px solid #3b5160;
+    border-radius: 3px 3px 0 0;
+    color: #3b5160;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.select {
+      background-color: #3b5160;
+      color: #ffffff;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #3b5160;
+      }
+    }
+  }
+}
+
+.table-pt {
+  td {
+    padding: 4px 3px;
+  }
+  th,
+  td {
+    border-right: 1px solid rgba($color: #000000, $alpha: 0.1);
+    text-align: center;
+  }
+}
+
+.table-pt .expand td:first-child {
+  padding-left: unset;
+}
+
+.expand .market {
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+input[type="checkbox"] {
+  margin: 0;
+}
+
+.header td {
+  background: #e4e4e4;
+}
+
+tbody.header th {
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+}
+
+.markets {
+  display: flex;
+  flex-flow: column;
+}
+
+.sub_market {
+  margin-left: 20px;
+}
+
+th.header {
+  position: relative;
+
+  .add-button {
+    text-decoration: none;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: inherit;
+    border: 0;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+
+    .fa {
+      font-size: 1.5em;
+    }
+  }
+}
+
+::ng-deep {
+  .grid {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .grid-col-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid-col-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    select {
+      width: 97%;
+    }
+
+    .cal-input {
+      width: 97%;
+    }
+  }
+
+  .modal-footer {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .form-group {
+    padding: 4px 0;
+  }
+}
+
+#sortCondition {
+  width: 150px;
+  margin-left: 10px;
+}

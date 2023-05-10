@@ -1,0 +1,340 @@
+<div class="full-wrap">
+    <ul class="report-tab-wrap" style="display: flex">
+      <li class="report-tab"  [class.select]="selectedTabIndex === 0" (click)="selectTab(0)">
+        Bank Details
+      </li>
+      <li class="report-tab" [class.select]="selectedTabIndex === 1" (click)="selectTab(1)">
+        UPI Details
+      </li>
+      <li class="report-tab" [class.select]="selectedTabIndex === 2" (click)="selectTab(2)">
+        QR Code Details
+      </li>
+    </ul>
+    <div *ngIf="selectedTabIndex === 0" class="function-wrap">
+      <ul class="input-list contentclass">
+        <li class="import-button" style="margin-left: 0 !important;">
+          <a class="btn-send" (click)="showOverlayInfo('#addBankDialog');">Add Bank Details</a>
+          <button class="btn-send" style="margin-left: 8px;" (click)="getBankAccountList()">Refresh</button>
+        </li>
+      </ul>
+    </div>
+      <div *ngIf="selectedTabIndex === 0" class="over-wrap" style="max-height: calc(100% - 108px)">
+        <!-- <div class="function-wrap clearfix"> -->
+  
+        <!-- </div> -->
+        <div class="table-responsive data-table" >
+        <table id="table_transfer" class="table01 tab-transfer tab-banking">
+          <tbody>
+            <tr>
+              <th width="10%" class="align-C border-l tblth">Account Holder Name</th>
+              <th width="10%" class="align-C border-l">Account Number</th>
+              <th width="10%" class="align-C border-l tblth">Bank Name</th>
+              <th width="15%" class="align-C border-l">IFSC Code</th>
+              <th width="8%" data-name="availableBalance" class="align-C border-l tblth">Actions</th>
+            </tr>
+          </tbody>
+          <tbody id="content">
+            <tr style="white-space: nowrap;"
+              id="{{ bank.bank_id }}"
+              *ngFor="
+                let bank of bankList
+                  | paginate: { itemsPerPage: itemsPerPage, currentPage: p };
+                let i = index;
+                trackBy: trackById
+              "
+            >
+              <ng-container
+                *ngIf="bankList && bankList.length"
+              >
+              <td class="align-C">{{bank.account_holder}}</td>
+              <td class="border-l align-C"> {{bank.account_number}}</td>
+              <td class="border-l align-C"> {{bank.bank_name}}</td>
+              <td class="border-l align-C"> {{bank.ifsc_code}}</td>
+              <td class="border-l align-C">
+                <ul>
+                    <button title="Preferred" class="btn_replay btn" (click)="showconfirmation('#confirmation','0',bank);"><img class="starimg" [src]= "bank.isPreferred=='1'?'assets/images/star_fill.png':'assets/images/star_outline.png'"></button>
+                    <button title="Edit" class="btn_replay btn" (click)="showEditBank('#editBankDialog',bank);"><img class="starimg" src= "assets/images/edit.png"></button>
+                    <button title="Delete" class="btn_replay btn" (click)="showconfirmation('#confirmation','2',bank);"><img class="starimg" src= "assets/images/trash.png"></button>
+                </ul>
+              </td>                 
+              </ng-container>
+            </tr>
+           
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div *ngIf="selectedTabIndex === 1" class="function-wrap">
+        <ul class="input-list contentclass">
+          <li class="import-button" style="margin-left: 0 !important;">
+            <a class="btn-send" (click)="showOverlayInfo('#addUpiDialog');">Add UPI Details</a>
+            <button class="btn-send" style="margin-left: 8px;" (click)="getUpiList()">Refresh</button>
+          </li>
+        </ul>
+      </div>
+        <div *ngIf="selectedTabIndex === 1" class="over-wrap" style="max-height: calc(100% - 108px)">
+          <!-- <div class="function-wrap clearfix"> -->
+    
+          <!-- </div> -->
+          <div class="table-responsive data-table" >
+          <table id="table_transfer" class="table01 tab-transfer tab-banking">
+            <tbody>
+              <tr>
+                <th width="10%" class="align-C border-l tblth">UPI Name</th>
+                <th width="10%" class="align-C border-l tblth">UPI Type</th>
+                <th width="10%" class="align-C border-l">UPI</th>
+                <th width="15%" class="align-C border-l">Actions</th>
+              </tr>
+            </tbody>
+            <tbody id="content">
+              <tr style="white-space: nowrap;"
+                id="{{ upi.upi_id }}"
+                *ngFor="
+                  let upi of upiList
+                    | paginate: { itemsPerPage: itemsPerPage, currentPage: p };
+                  let i = index;
+                  trackBy: trackById
+                "
+              >
+                <ng-container
+                  *ngIf="upiList && upiList.length"
+                >
+                <td class="align-C">{{upi.name}}</td>
+                <td class="border-l align-C"> {{upi.type}}</td>
+                <td class="border-l align-C"> {{upi.value}}</td>
+                <td class="border-l align-C">
+                  <ul>
+                      <button title="Preferred" class="btn_replay btn" (click)="showconfirmation('#confirmation','1',upi);"><img class="starimg" [src]= "upi.isPreferred=='1'?'assets/images/star_fill.png':'assets/images/star_outline.png'"></button>
+                      <button title="Edit" class="btn_replay btn" (click)="showEditUpi('#editUpiDialog',upi);"><img class="starimg" src= "assets/images/edit.png"></button>
+                      <button title="Delete" class="btn_replay btn" (click)="showconfirmation('#confirmation','3',upi);"><img class="starimg" src= "assets/images/trash.png"></button>
+                  </ul>
+                </td>                 
+                </ng-container>
+              </tr>
+             
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div *ngIf="selectedTabIndex === 2" class="function-wrap">
+          <ul class="input-list contentclass">
+            <li class="import-button" style="margin-left: 0 !important;">
+              <a class="btn-send" (click)="showOverlayInfo('#addQRDialog');">Add QR Code</a>
+              <button class="btn-send" style="margin-left: 8px;" (click)="getQrList()">Refresh</button>
+            </li>
+          </ul>
+        </div>
+          <div *ngIf="selectedTabIndex === 2" class="over-wrap" style="max-height: calc(100% - 108px)">
+            <!-- <div class="function-wrap clearfix"> -->
+      
+            <!-- </div> -->
+            <div class="table-responsive data-table" >
+            <table id="table_transfer" class="table01 tab-transfer tab-banking">
+              <tbody>
+                <tr>
+                  <th width="10%" class="align-C border-l tblth">Display Name</th>
+                  <th width="10%" class="align-C border-l tblth">QR Code</th>
+                  <th width="15%" class="align-C border-l">Actions</th>
+                </tr>
+              </tbody>
+              <tbody id="content">
+                <tr style="white-space: nowrap;"
+                  id="{{ qr.qr_id }}"
+                  *ngFor="
+                    let qr of qrList
+                      | paginate: { itemsPerPage: itemsPerPage, currentPage: p };
+                    let i = index;
+                    trackBy: trackById
+                  "
+                >
+                  <ng-container
+                    *ngIf="qrList && qrList.length"
+                  >
+                  <td class="align-C">{{qr.display_name}}</td>
+                  <td class="border-l align-C">
+                    <button title="QR Code" class="btn_replay btn" style="width: 44px;" (click)="showQR(qr.img);">QR</button>
+                  </td>
+                  <td class="border-l align-C">
+                    <ul>
+                        <button title="Preferred" class="btn_replay btn" (click)="showconfirmation('#confirmation','4',qr);"><img class="starimg" [src]= "qr.isPreferred=='1'?'assets/images/star_fill.png':'assets/images/star_outline.png'"></button>
+                        <button title="Edit" class="btn_replay btn" (click)="showEditUpi('#editUpiDialog',upi);"><img class="starimg" src= "assets/images/edit.png"></button>
+                        <button title="Delete" class="btn_replay btn" (click)="showconfirmation('#confirmation','5',qr);"><img class="starimg" src= "assets/images/trash.png"></button>
+                    </ul>
+                  </td>                 
+                  </ng-container>
+                </tr>
+               
+              </tbody>
+            </table>
+            </div>
+          </div>
+  </div>
+
+  <div>
+    <div id="bigQR" class="pop_bg" >
+      <div class="pop_box">
+        <a class="close_pop" (click)="closeQR()">close_pop</a>
+        <img src={{imgURL}} class="ssimg">
+      </div>
+    </div>
+  </div>
+
+  
+<div id="addBankDialog" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Add Your Bank Account</h3>
+          </div>
+          <div style="margin: 8px 8px 14px 8px;
+          font-size: 14px;">
+              <span>Adding Bank Details is mandatory for processing Deposit.</span>
+          </div>
+          <form [formGroup]="BankForm" class="form-login" (ngSubmit)="addBank()">
+              <select id="select"  formControlName="bank_name"  (change)="selectBank($event.target.value)">
+                  <option value="" selected>Select Bank</option>
+                  <option *ngFor="let name of Banks" [value]="name">
+                      {{name}}
+                  </option>
+              </select>
+              <input type="number" formControlName="account_number" placeholder="Account Number" class="bankInput_1">
+              <input oninput="this.value = this.value.toUpperCase()" formControlName="ifsc_code" type="text" placeholder="IFSC" class="bankInput_2">
+              <input formControlName="account_holder" type="text" placeholder="Account Holder Name" class="bankInput_3">
+              <div class="form-login btn-margin" >
+                  <a class="btn-send btn-padding" (click)="hideOverlayInfo('#addBankDialog');">CLOSE</a>
+                  <a class="btn-send btn-padding" type="submit" style="margin-left: 8px;" (click)="addBank()">SAVE</a>
+              </div>
+          </form>
+          
+      </div>
+  </div>
+</div>
+
+<div id="editBankDialog" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Edit Bank Account</h3>
+          </div>
+          <form [formGroup]="editBankForm" class="form-login" style="margin: auto;padding: 8px;" (ngSubmit)="updateBank()">
+              <select id="select"  formControlName="bank_name"  (change)="selectBank($event.target.value)">
+                  <option *ngFor="let name of Banks" [value]="name">
+                      {{name}}
+                  </option>
+              </select>
+              <input type="number" formControlName="account_number" placeholder="Account Number"  class="bankInput_1">
+              <input oninput="this.value = this.value.toUpperCase()" formControlName="ifsc_code" type="text" placeholder="IFSC" class="bankInput_2">
+              <input formControlName="account_holder" type="text" placeholder="Account Holder Name" class="bankInput_3">
+              <div class="form-login btn-margin">
+                  <a class="btn-send btn-padding" (click)="hideOverlayInfo('#editBankDialog');">CLOSE</a>
+                  <a class="btn-send btn-padding" type="submit" style="margin-left: 8px;" (click)="updateBank()">SAVE</a>
+              </div>
+          </form>
+          
+      </div>
+  </div>
+</div>
+
+<div id="confirmation" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Confirmation</h3>
+          </div>
+          <div class="dialogbody">
+              <span>{{from=='0'?'Are you sure you want to set this as your preferred bank.':from=='1'?'Are you sure you want to set this as your preferred UPI.':from=='2'?'Are you sure you want to delete this bank.':from=='3'?'Are you sure you want to delete this UPI.':from=='4'?'Are you sure you want to set this as your preferred QR Code.':'Are you sure you want to delete this QR.'}}</span>
+          </div>
+          <div class="form-login btn-margin">
+              <a class="btn-send btn-padding" (click)="hideOverlayInfo('#confirmation');">No</a>
+              <a class="btn-send btn-padding" style="margin-left: 8px;" (click)="from=='0'?setPreferredBank():from=='1'?setPreferredUpi():from=='2'?deleteBank():from=='3'?deleteUpi():from=='4'?setPreferredQr():deleteQr()">Yes</a>
+          </div>
+      </div>
+  </div>
+</div> 
+
+<div id="addUpiDialog" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Add Your UPI</h3>
+          </div>
+          <div style="margin: 8px 8px 14px 8px;
+          font-size: 14px;">
+              <span>Adding UPI Details is mandatory for processing Deposit.</span>
+          </div>
+          <form [formGroup]="upiForm" class="form-login" (ngSubmit)="addUpi()">
+              <select formControlName="type" id="select" (change)="selectProvider($event.target.value)">
+                  <option value="" selected>Select Provider</option>
+                  <option *ngFor="let name of Provider" [value]="name">
+                      {{name}}
+                  </option>
+              </select>
+              <input formControlName="name" type="text" placeholder="Display Name" class="bankInput_1">
+              <input formControlName="value" type="text" placeholder="UPI" class="bankInput_2">
+              <div class="form-login" style="display: flex;margin-left: 40%;">
+                  <a class="btn-send" (click)="hideOverlayInfo('#addUpiDialog');">CLOSE</a>
+                  <a class="btn-send" style="margin-left: 8px;" (click)="addUpi()">SAVE</a>
+              </div>
+          </form>
+          
+      </div>
+  </div>
+</div>
+
+<div id="editUpiDialog" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Edit UPI</h3>
+          </div>
+          <form [formGroup]="editUpiForm" class="form-login" style="margin: auto;padding: 8px;" (ngSubmit)="updateUpi()">
+              <select formControlName="type" id="select" (change)="selectProvider($event.target.value)">
+                  <option *ngFor="let name of Provider" [value]="name">
+                      {{name}}
+                  </option>
+              </select>
+              <input formControlName="name" type="text" placeholder="Display Name" class="bankInput_1">
+              <input formControlName="value" type="text" placeholder="UPI" class="bankInput_2">
+              <div class="form-login" style="display: flex;margin-left: 40%;">
+                  <a class="btn-send" (click)="hideOverlayInfo('#editUpiDialog');">CLOSE</a>
+                  <a class="btn-send" style="margin-left: 8px;" (click)="updateUpi()">SAVE</a>
+              </div>
+          </form>
+          
+      </div>
+  </div>
+</div>
+
+<div id="addQRDialog" class="overlay" style="display: none;z-index: 98;">
+  <div class="frame-wrap pop_box">
+      <div class="news-wrap-frame">
+          <div class="side-head">
+              <h3>Add Your QR Code</h3>
+          </div>
+          <div style="margin: 8px 8px 14px 8px;
+          font-size: 14px;">
+              <span>Adding QR Details is mandatory for processing Deposit.</span>
+          </div>
+          <form [formGroup]="qrForm" class="form-login" style="padding: 8px;" (ngSubmit)="addQR()">
+            <dl class="form_list" style="padding: 0;">
+              <dt style="width: 72px;">Choose File :</dt>
+              <dd style="padding-left: 84px;">
+                <input
+                  type="file"
+                  placeholder="Choose File"
+                  style="width: 100%;"
+                  (change)="saveImage($event.target.files)"
+                />
+              </dd>
+            </dl>
+              <input formControlName="display_name" type="text" placeholder="Display Name" class="bankInput_1">
+              <div class="form-login" style="display: flex;margin-left: 40%;">
+                  <a class="btn-send" (click)="hideOverlayInfo('#addQRDialog');qrFormReset();">CLOSE</a>
+                  <a class="btn-send" type="submit" style="margin-left: 8px;" (click)="addQR()">SAVE</a>
+              </div>
+          </form>
+          
+      </div>
+  </div>
+</div>

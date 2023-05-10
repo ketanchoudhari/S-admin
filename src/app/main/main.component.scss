@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.content-wrapper {
+  // border: 1px solid rgba(0, 0, 0, 0.2);
+  min-height: 440px;
+}
+
+
+.passwordErrorClass i{
+  position: absolute;
+  right: 28%;
+  top: 5%;
+}
+
+.fa-2x {
+font-size: 14px;
+}
+.pop_box{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #eee;
+  width: 400px;
+  border-radius: 5px;
+  padding: 15px;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 4px 5px #00000080;
+}
+.pop_bg{
+  top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 80;
+    background: linear-gradient(45deg,rgba(0,0,0,.3),rgba(0,0,0,.3));
+    position: fixed;
+}
+
+@media (max-width: 750px) {
+  .pop_box {
+    // min-width: 100%;
+    width: 375px;
+    // padding: 5px;
+  }
+}
+.loading-wrap {
+  display: none;
+  top: 25%;
+  height: 90px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 50%);
+  padding-top: 25px;
+  z-index: 99;
+  position: absolute;
+  left: 50%;
+  width: 190px;
+  margin-left: -95px;
+}

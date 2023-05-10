@@ -1,0 +1,18 @@
+<h2>{{Update?.AccountSummary}}</h2>
+<div class="white-wrap">
+  <dl class="head-balance">
+    <dt>{{Update?.YourBalances}}</dt>
+    <dd id="yourBalance">
+      <span> <ng-container *ngIf="showCurrency"  >
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container></span>
+
+      {{ balance | indianCurrency }}
+    </dd>
+  </dl>
+</div>

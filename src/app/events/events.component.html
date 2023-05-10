@@ -1,0 +1,841 @@
+<div class="importing-games" *ngIf="importingGames">
+  <div class="container">
+    <span>Importing Games...</span>
+  </div>
+</div>
+<div class="importing-games" *ngIf="deactivatingGames">
+  <div class="container">
+    <span>Deactivating Games...</span>
+  </div>
+</div>
+
+<div class="main_wrap">
+  <ul class="report-tab-wrap" style="display: flex">
+    <li class="report-tab" id="reportType_sportsBook" [class.select]="selectedTabIndex === 0" (click)="selectTab(0)">
+      {{Update?.Import}}
+    </li>
+    <li class="report-tab" id="reportType_exchange" [class.select]="selectedTabIndex === 1" (click)="selectTab(1)">
+      {{Update?.Inplay}}
+    </li>
+
+    <li class="report-tab" id="reportType_casino" [class.select]="selectedTabIndex === 2" (click)="selectTab(2)">
+      {{Update?.Upcoming}}
+    </li>
+    <!-- <li class="report-tab" id="reportType_casino" [class.select]="selectedTabIndex === 3" (click)="selectTab(3)">
+      {{Update?.Virtual}}
+    </li> -->
+    <li class="spacer"></li>
+    <li class="web">{{Update?.OnlineUsers}}: {{ totalOnlineUser | number }} &nbsp;</li>
+    <li class="web">{{Update?.TotalUsers}}: {{ usersListfilter?.length | number }}</li>
+  </ul>
+  <div class="function-wrap">
+    <ul class="input-list contentclass">
+      <li id="eventRadioBtnList" class="eventRadioBtnList" *ngIf="selectedTabIndex != 3">
+        <input type="radio" name="events" id="events_0" data-eventtype="1" checked (change)="filterSport($event)"
+          value="0" />
+        <label for="events_0">{{Update?.All}}</label>
+        <input type="radio" name="events" id="events_1" data-eventtype="1" (change)="filterSport($event)" value="1" />
+        <label for="events_1">Soccer</label>
+        <input type="radio" name="events" id="events_2" data-eventtype="2" (change)="filterSport($event)" value="2" />
+        <label for="events_2">Tennis</label>
+        <input type="radio" name="events" id="events_4" data-eventtype="4" (change)="filterSport($event)" value="4" />
+        <label for="events_4">Cricket</label>
+        <input type="radio" name="events" id="events_52" data-eventtype="52" (change)="filterSport($event)"
+          value="52" />
+        <label for="events_52">Kabaddi</label>
+      </li>
+      <li>
+        <div id="userSearchUl" class="search-wrap">
+          <input appInputRestriction="noSpecialChars" type="text" name="userId" id="userId"
+            placeholder="{{Update?.SearchEventsTournaments}}" [(ngModel)]="searchTerm"
+            (keyup)="searchTerm$.next($event.target.value)" class="search-input" /><button id="searchUserId"
+            class="search-but">
+            {{Update?.Search}}
+          </button>
+        </div>
+        <!-- <input type="text" placeholder="Search Events, Tournaments" [(ngModel)]="searchTerm" (keyup)="searchTerm$.next($event.target.value)"> -->
+      </li>
+      <li class="spacer"></li>
+      <ng-container *ngIf="selectedTabIndex == 0; else deactivateTemp">
+        <li class="activated-text">{{Update?.Activateselected}}:</li>
+        <li class="activated-switch">
+          <label class="xyz activated-checkbox">
+            <input type="checkbox" id="activateGamesToggle" (change)="activatedCheck($event)" /><span
+              class="slider round"></span></label>
+        </li>
+      </ng-container>
+      <ng-template #deactivateTemp>
+        <li *ngIf="showActions" class="activated-text">{{Update?.Deactivateselected}}:</li>
+        <li *ngIf="showActions" class="activated-switch">
+          <label class="xyz activated-checkbox">
+            <input type="checkbox" id="deactivateGamesToggle" (change)="deactivateCheck($event)" checked />
+            <span class="slider round"></span></label>
+        </li>
+      </ng-template>
+
+      <li class="import-button">
+        <button class="btn-send" (click)="onRefresh()">{{Update?.Refresh}}</button>
+      </li>
+      <li class="mobile">{{Update?.OnlineUsers}}: {{ totalOnlineUser | number }}</li>
+      <li class="mobile">{{Update?.TotalUsers}}: {{ usersListfilter?.length | number }}</li>
+    </ul>
+  </div>
+</div>
+<div class="main_wrap">
+  <div class="table-responsive data-table">
+    <!-- <ng-template [ngIf]="selectedTabIndex === 0"> -->
+    <table class="table01 table-pt" *ngIf="selectedTabIndex === 0">
+      <tbody class="header">
+        <tr>
+          <th rowspan="2">
+            <input type="checkbox" [(ngModel)]="selectAll" (click)="toggleSelectAll($event.target.checked, 0)"
+              name="selectAll" id="selectAll" />
+          </th>
+          <th class="header align-C" colspan="" rowspan="2">{{Update?.SportName}}</th>
+
+          <th class="header align-C" colspan="" rowspan="2">{{Update?.Tournament}}</th>
+
+          <th width="20%" class="header align-C" colspan="" rowspan="2">
+            {{Update?.Matches}}
+          </th>
+
+          <th class="header align-C" colspan="4">{{Update?.Bets}}</th>
+        </tr>
+
+        <tr class="ng-scope">
+          <td class="align-C">{{Update?.MatchDate}}</td>
+          <td class="align-C">{{Update?.Status}}</td>
+          <td class="align-C">{{Update?.BFstatus}}</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <ng-container *ngFor="let event of eventsLists">
+          <tr>
+            <td width="2%" class="align-C">
+              <input type="checkbox" [(ngModel)]="event.activeStatus" />
+            </td>
+            <!-- <td width="2%" class="ng-scope" class="align-C"></td> -->
+            <td class="align-C">{{ event.sportsName | titlecase }}</td>
+            <!-- <td width="2%" class="align-C"></td> -->
+            <!-- <td width="2%" class="align-C"></td> -->
+            <!-- <td class="ng-scope" width="2%" class="align-C"></td> -->
+            <td class="align-C">{{ event.competitionName }}</td>
+            <!-- <td width="2%" class="align-C"></td>
+            <td width="2%" class="align-C"></td>
+            <td width="2%" class="align-C" class="ng-scope"></td> -->
+            <td class="align-C">
+              <a class="expand-close" (click)="toggleExpand($event, 'sub_' + event.eventId)"></a>
+              {{ event.eventName }}
+            </td>
+            <!-- <td width="2%" class="align-C"></td> -->
+            <td width="10%" class="align-C">
+              {{ event.time | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+            </td>
+            <td title="Status" class="align-C">
+              <label class="xyz">
+                <input type="checkbox" [(ngModel)]="event.status" (change)="
+                    activateEvent($event.target.checked, event.eventId)
+                  " /><span class="slider round"></span></label>
+            </td>
+
+            <td>open</td>
+          </tr>
+          <tr id="sub_{{ event.eventId }}" class="expand first import" style="display: none">
+            <td colspan="1"></td>
+            <td colspan="13">
+              <ng-container *ngFor="let market of event.markets; index as i">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class="align-C">
+                        <input type="checkbox" [ngModel]="event.activeStatus"
+                          (change)="activateGame($event, market.gameId)" />
+                      </td>
+                      <td width="100%" class="align-L">
+                        <a *ngIf="market.runners && market.runners.length" class="expand-close" (click)="
+                            toggleMarkets(
+                              $event,
+                              'market_' + event.eventId + '_' + i
+                            )
+                          "></a>
+                        <span>{{ market.marketName }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <!-- <span class="spacer"></span> -->
+                  <!-- <button class="btn">R</button> -->
+                </table>
+                <div *ngIf="market.runners && market.runners.length" id="market_{{ event.eventId }}_{{ i }}"
+                  class="markets" style="display: none">
+                  <div *ngFor="let runner of market.runners" class="market sub_market">
+                    {{ runner.selName }}
+                    <span class="spacer"></span>
+                    <button class="btn">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <!-- </ng-template> -->
+
+  </div>
+
+
+  <div class="table-responsive data-table">
+    <table *ngIf="selectedTabIndex === 1" id="table_DL" class="table01 table-pt">
+      <tbody>
+        <tr id="head">
+          <!-- <th width="3%"></th> -->
+          <th width="2%" class="align-C">
+            <input type="checkbox" name="select_all" [(ngModel)]="selectAll"
+              (change)="toggleSelectAll($event.target.checked, 1)" id="select_all" />
+          </th>
+          <th id="market_info" class="align-C">{{Update?.MarketInfo}}</th>
+          <th width="5%" class="align-C">{{Update?.Status}}</th>
+          <th *ngIf="showActions" width="6%" class="align-C">{{Update?.Inplay}}</th>
+          <th width="5%" class="align-C">{{Update?.TV}}</th>
+          <th width="5%" class="align-C">{{Update?.Time}}</th>
+          <th width="8%" class="align-C">{{Update?.UserOnline}}</th>
+          <th width="8%" class="align-C">{{Update?.Nooffbets}}</th>
+          <!-- <th *ngIf="showActions" width="8%" class="align-C">Session</th> -->
+          <th *ngIf="showActions" width="8%" class="align-C">{{Update?.Action}}</th>
+          <!-- <th *ngIf="showActions" width="6%" class="align-C">Reverse</th> -->
+          <!-- <th width="8%" *ngIf="showActivateFancy" class="align-C">Adv. fancy</th> -->
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            Fancy D
+          </th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            Fancy S
+          </th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            {{Update?.Premium}}
+          </th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            {{Update?.MatchOdds}}
+          </th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            {{Update?.Tiedmarket}}
+          </th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            {{Update?.Tossmarket}}
+          </th>
+          <!-- <th width="8%" *ngIf="showActivateFancy" class="align-C">
+           Draw
+        </th> -->
+          <th width="8%" *ngIf="showActivateFancy" class="align-C"> BM D</th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C"> BM S</th>
+          <th width="8%" *ngIf="showActivateFancy" class="align-C">
+            {{Update?.UnderOver}}
+          </th>
+          <!-- <th width="8%" *ngIf="showActivateFancy" class="align-C">Close Event</th> -->
+        </tr>
+      </tbody>
+      <tbody id="content">
+        <ng-container *ngFor="let event of activeGames">
+          <tr id="event_{{ event.eventId }}" *ngIf="event.isInPlay === 1">
+            <!-- <td class="align-C">
+            <a
+              (click)="toggleEventStatus(event)"
+              *ngIf="event.status === 1; else suspendTemp"
+            >
+              <i class="fa fa-play-circle fa-2x"></i>
+            </a>
+            <ng-template #suspendTemp>
+              <a (click)="toggleEventStatus(event)">
+                <i class="fa fa-pause-circle fa-2x loss-text"></i>
+              </a>
+            </ng-template>
+          </td> -->
+            <td class="align-C">
+              <input type="checkbox" name="select" [(ngModel)]="event.activeStatus" id="select" />
+            </td>
+            <td class="align-L">
+              <a class="expand-close" (click)="toggleExpand($event, 'sub_' + event.eventId)"></a>
+              {{ event.eventName }} <b *ngIf="event.competitionName"> - [ {{event.competitionName}} ]</b>
+            </td>
+            <td id="status_{{ event.eventId }}" class="align-C">
+              <label class="xyz">
+                <input type="checkbox" [(ngModel)]="event.status" (change)="
+                  toggleEventStatus($event.target.checked, event)
+                " /><span class="slider round"></span></label>
+            </td>
+            <td *ngIf="showActions" id="isinplay_{{ event.eventId }}" class="align-C">
+              <input type="checkbox" checked="checked" (change)="deactivateEvent(false, event.eventId)" id="bet" />
+            </td>
+            <td id="tv_{{ event.eventId }}" class="align-C">
+              <span class="red">
+                <i *ngIf="event.tv === 1; else noTvTemp" class="fa fa-television"></i>
+                <ng-template #noTvTemp>-</ng-template>
+              </span>
+            </td>
+            <td id="time_{{ event.eventId }}" class="align-C">
+              <span class="red">{{ event.time | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+              </span>
+            </td>
+            <td id="user_online_{{ event.eventId }}" class="align-C">
+              {{ event.usersOnline }}
+            </td>
+            <td id="no_bet_{{ event.eventId }}" class="align-C">
+              {{ event.noOfBets }}
+            </td>
+            <!-- <td *ngIf="showActions" id="session_{{ event.eventId }}" class="align-C">
+            A<input type="radio" [(ngModel)]="event.session" name="sesssion_{{ event.eventId }}"
+              id="session__{{ event.eventId }}" value="A" title="Auto" />
+            M<input type="radio" [(ngModel)]="event.session" name="session_{{ event.eventId }}"
+              id="session__{{ event.eventId }}" value="M" title="Manual" />
+          </td> -->
+            <td *ngIf="showActions" id="action_{{ event.eventId }}" class="align-C">
+              <button title="Bet Suspend" class="btn" [class.bet-suspend]="event.betLock == 1" (click)="
+                toggleSuspend(event.betLock, event.sportId, event.eventId)
+              " [disabled]="isSuspendInTransit">
+                BS
+              </button>
+            </td>
+            <!-- <td *ngIf="showActions" id="reverse_{{ event.eventId }}" class="align-C">
+            <button title="Reverse" class="align-C btn">Reverse</button>
+          </td> -->
+            <!-- <td *ngIf="showActivateFancy" width="8%" class="align-C">
+            <input *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')" type="checkbox"
+            [(ngModel)]="event.fancyInplay"
+            (change)="toggleActivateFancy($event, event.eventId)"
+            >
+          </td> -->
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.fancyInplay_source0"
+                (change)="toggleActivateFancy($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.fancyInplay_source1"
+                (change)="toggleActivateFancy($event, event.eventId,1)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input type="checkbox" [(ngModel)]="event.premiumInplay"
+                (change)="toggleActivatepremium($event, event.eventId)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input type="checkbox" [(ngModel)]="event.matchOddsInplay"
+                (change)="toggleActivateMO($event, event.eventId)" />
+            </td>
+
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.tiedMatchInplay
+              " (change)="toggleActivateTM($event, event.eventId)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.winTheTossInplay
+              " (change)="toggleActivateTossM($event, event.eventId)" />
+            </td>
+            <!-- <td *ngIf="showActivateFancy" width="8%" class="align-C">
+            <input *ngIf="event.sportsName.toLowerCase().includes('cricket')" type="checkbox"
+              [(ngModel)]="event.winTheTossInplay" (change)="toggleActivateDraw($event, event.eventId)" />
+          </td> -->
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.bookmakerInplay_source0" (change)="toggleBM($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.bookmakerInplay_source1" (change)="toggleBM($event, event.eventId,1)" />
+            </td>
+            <!-- <td>
+            <button class="btn" (click)="closeEvent(event.sportId ,event.eventId)">
+              C
+            </button>
+          </td> -->
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input *ngIf="event.sportsName.toLowerCase().includes('soccer')" type="checkbox" [(ngModel)]="event.overUnderInplay
+              " (change)="toggleActivateOU($event, event.eventId)" />
+            </td>
+          </tr>
+          <tr id="sub_{{ event.eventId }}" class="expand first" style="display: none">
+            <td></td>
+            <td colspan="14">
+              <ng-container *ngFor="let market of event.markets; index as i">
+                <div class="market">
+                  <a *ngIf="market.runners && market.runners.length" class="expand-close" (click)="
+                    toggleMarkets($event, 'market_' + event.eventId + '_' + i)
+                  "></a>
+                  {{ market.marketName }}
+                  <span class="spacer"></span>
+                  <ng-container *ngIf="showActivateFancy">
+
+                    <button title="Back All" class="btn back" [ngClass]="{'lock':market.lockBackALL}"
+                      (click)="lockRunner(market,'all','back')">Back All</button>
+                    <button title="Lay All" class="btn lay" [ngClass]="{'lock':market.lockLayALL}"
+                      (click)="lockRunner(market,'all','lay')">Lay All</button>
+
+                  </ng-container>
+                  <!-- <button title="Reverse" class="btn">R</button> -->
+                  <label class="xyz">
+                    <input type="checkbox" [(ngModel)]="market.status" (change)="
+                  toggleMarketStatus($event.target.checked, market.gameId)
+                    " /><span class="slider round"></span></label>
+                </div>
+                <div *ngIf="market.runners && market.runners.length" id="market_{{ event.eventId }}_{{ i }}"
+                  class="markets" style="display: none">
+                  <div *ngFor="let runner of market.runners" class="market sub_market">
+                    {{ runner.selName }}
+                    <span class="spacer"></span>
+                    <ng-container *ngIf="showActivateFancy">
+
+                      <button title="BackLay All" class="btn both"
+                        [ngClass]="{'lock':runner.lockBackBets && runner.lockLayBets}"
+                        (click)="lockRunner(market,runner.selName,'backlay')">Both</button>
+                      <button title="Back" class="btn back"
+                        [ngClass]="{'lock':runner.lockBackBets}"
+                        (click)="lockRunner(market,runner.selName,'back')">Back</button>
+                      <button title="Lay" class="btn lay"
+                        [ngClass]="{'lock':runner.lockLayBets}"
+                        (click)="lockRunner(market,runner.selName,'lay')">Lay</button>
+                    </ng-container>
+                    <button class="btn">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+  </div>
+
+
+  <div class="table-responsive data-table">
+    <table *ngIf="selectedTabIndex === 2" id="table_DL" class="table01 table-pt">
+      <tbody>
+        <tr id="head">
+          <!-- <th width="3%"></th> -->
+          <th width="2%" class="align-C">
+            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.target.checked, 2)"
+              name="select_all" id="select_all" />
+          </th>
+          <th id="market_info" class="align-C">{{Update?.MarketInfo}}</th>
+          <th width="5%" class="align-C">{{Update?.Status}}</th>
+          <th *ngIf="showActions" width="8%" class="align-C">{{Update?.IsInplay}}</th>
+          <th width="5%" class="align-C">Time</th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">
+            {{Update?.Activate}} fancy D
+          </th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">
+            {{Update?.Activate}} fancy S
+          </th>
+          <th *ngIf="showActivateFancy" width="10%" class="align-C">
+            {{Update?.Activate}} {{Update?.Premium}}
+          </th>
+          <th *ngIf="showActivateFancy" width="10%" class="align-C">
+            {{Update?.Activate}} {{Update?.MatchOdds}}
+          </th>
+
+          <th *ngIf="showActivateFancy" width="10%" class="align-C">
+            {{Update?.Activate}} {{Update?.Tiedmarket}}
+          </th>
+          <th *ngIf="showActivateFancy" width="10%" class="align-C">
+            {{Update?.Activate}} {{Update?.Tossmarket}}
+          </th>
+          <!-- <th *ngIf="showActivateFancy" width="8%" class="align-C">
+          Activate Draw
+        </th> -->
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">{{Update?.Activate}} BM D</th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">{{Update?.Activate}} BM S</th>
+          <th *ngIf="showActivateFancy" width="10%" class="align-C">
+            {{Update?.Activate}} {{Update?.UnderOver}}
+          </th>
+        </tr>
+      </tbody>
+      <tbody id="content">
+        <ng-container *ngFor="let event of activeGames">
+          <tr id="event_{{ event.eventId }}" *ngIf="event.isInPlay === 0 && event.status === 1">
+            <!-- <td class="align-C">
+            <a (click)="toggleEventStatus(event)" *ngIf="event.status === 1; else suspendTemp">
+              <i class="fa fa-play-circle fa-2x"></i>
+            </a>
+            <ng-template #suspendTemp>
+              <a (click)="toggleEventStatus(event)">
+                <i class="fa fa-pause-circle fa-2x loss-text"></i>
+              </a>
+            </ng-template>
+          </td> -->
+            <td class="align-C">
+              <input type="checkbox" [(ngModel)]="event.activeStatus" name="select" id="select" />
+            </td>
+            <td class="align-L">
+              <a class="expand-close" (click)="toggleExpand($event, 'sub_' + event.eventId)"></a>
+              {{ event.eventName }} <b *ngIf="event.competitionName"> - [ {{event.competitionName}} ]</b>
+            </td>
+            <td id="status_{{ event.eventId }}" class="align-C">
+              <label class="xyz">
+                <input type="checkbox" [(ngModel)]="event.status" (change)="
+                  toggleEventStatus($event.target.checked, event)
+                " /><span class="slider round"></span></label>
+            </td>
+            <td *ngIf="showActions" id="isinplay_{{ event.eventId }}" class="align-C">
+              <input type="checkbox" (change)="toggleInplay(event.eventId)" id="bet" />
+            <td id="time_{{ event.eventId }}" class="align-C">
+              <span class="red">{{ event.time | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+              </span>
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.fancyInplay_source0"
+                (change)="toggleActivateFancy($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.fancyInplay_source1"
+                (change)="toggleActivateFancy($event, event.eventId,1)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input type="checkbox" [(ngModel)]="event.premiumInplay"
+                (change)="toggleActivatepremium($event, event.eventId)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input type="checkbox" [(ngModel)]="event.matchOddsInplay
+              " (change)="toggleActivateMO($event, event.eventId)" />
+            </td>
+
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.tiedMatchInplay
+              " (change)="toggleActivateTM($event, event.eventId)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket')  || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.winTheTossInplay
+              " (change)="toggleActivateTossM($event, event.eventId)" />
+            </td>
+            <!-- <td *ngIf="showActivateFancy" width="8%" class="align-C">
+            <input *ngIf="event.sportsName.toLowerCase().includes('cricket')" type="checkbox"
+              [(ngModel)]="event.winTheTossInplay" (change)="toggleActivateDraw($event, event.eventId)" />
+          </td> -->
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.bookmakerInplay_source0"
+                (change)="toggleActivateBM($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input
+                *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')"
+                type="checkbox" [(ngModel)]="event.bookmakerInplay_source1"
+                (change)="toggleActivateBM($event, event.eventId,1)" />
+            </td>
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input *ngIf="event.sportsName.toLowerCase().includes('soccer')" type="checkbox" [(ngModel)]="event.overUnderInplay
+              " (change)="toggleActivateOU($event, event.eventId)" />
+            </td>
+          </tr>
+          <tr id="sub_{{ event.eventId }}" class="expand first" style="display: none">
+            <td colspan="1"></td>
+            <td colspan="14">
+              <ng-container *ngFor="let market of event.markets; index as i">
+                <div class="market">
+                  <a *ngIf="market.runners && market.runners.length" class="expand-close" (click)="
+                    toggleMarkets($event, 'market_' + event.eventId + '_' + i)
+                  "></a>
+                  {{ market.marketName }}
+                  <span class="spacer"></span>
+                  <!-- <button class="btn">R</button> -->
+                  <ng-container *ngIf="showActivateFancy">
+                    <button title="Back All" class="btn back" [ngClass]="{'lock':market.lockBackALL}"
+                      (click)="lockRunner(market,'all','back')">Back All</button>
+                    <button title="Lay All" class="btn lay" [ngClass]="{'lock':market.lockLayALL}"
+                      (click)="lockRunner(market,'all','lay')">Lay All</button>
+                  </ng-container>
+                  <label class="xyz">
+                    <input type="checkbox" [(ngModel)]="market.status" (change)="
+                  toggleMarketStatus($event.target.checked, market.gameId)
+                    " /><span class="slider round"></span></label>
+                </div>
+                <div *ngIf="market.runners && market.runners.length" id="market_{{ event.eventId }}_{{ i }}"
+                  class="markets" style="display: none">
+                  <div *ngFor="let runner of market.runners" class="market sub_market">
+                    {{ runner.selName }}
+                    <span class="spacer"></span>
+                    <ng-container *ngIf="showActivateFancy">
+
+                      <button title="BackLay All" class="btn both"
+                        [ngClass]="{'lock':runner.lockBackBets && runner.lockLayBets}"
+                        (click)="lockRunner(market,runner.selName,'backlay')">Both</button>
+                      <button title="Back" class="btn back"
+                        [ngClass]="{'lock':runner.lockBackBets}"
+                        (click)="lockRunner(market,runner.selName,'back')">Back</button>
+                      <button title="Lay" class="btn lay"
+                        [ngClass]="{'lock':runner.lockLayBets}"
+                        (click)="lockRunner(market,runner.selName,'lay')">Lay</button>
+                    </ng-container>
+                    <button class="btn">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-responsive data-table">
+    <table *ngIf="selectedTabIndex === 3" id="table_DL" class="table01 table-pt">
+      <tbody>
+        <tr id="head">
+          <!-- <th width="3%"></th> -->
+          <th width="2%" class="align-C">
+            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.target.checked, 2)"
+              name="select_all" id="select_all" />
+          </th>
+          <th id="market_info" class="align-C">{{Update?.MarketInfo}}</th>
+          <th width="5%" class="align-C">{{Update?.Status}}</th>
+          <th *ngIf="showActions" width="8%" class="align-C">{{Update?.IsInplay}}</th>
+          <th width="5%" class="align-C">Time</th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">
+            {{Update?.Activate}} fancy D
+          </th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">
+            {{Update?.Activate}} fancy S
+          </th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">{{Update?.Activate}} BM D</th>
+          <th *ngIf="showActivateFancy" width="8%" class="align-C">{{Update?.Activate}} BM S</th>
+          <!-- <th *ngIf="showActivateFancy" width="8%" class="align-C">Activate Draw</th> -->
+        </tr>
+      </tbody>
+      <tbody id="content">
+        <ng-container *ngFor="let event of eventsLists">
+          <tr id="event_{{ event.eventId }}">
+            <!-- <td class="align-C">
+            <a (click)="toggleEventStatus(event)" *ngIf="event.status === 1; else suspendTemp">
+              <i class="fa fa-play-circle fa-2x"></i>
+            </a>
+            <ng-template #suspendTemp>
+              <a (click)="toggleEventStatus(event)">
+                <i class="fa fa-pause-circle fa-2x loss-text"></i>
+              </a>
+            </ng-template>
+          </td> -->
+            <td class="align-C">
+              <input type="checkbox" [(ngModel)]="event.activeStatus" name="select" id="select" />
+            </td>
+            <td class="align-L">
+              <a class="expand-close" (click)="toggleExpand($event, 'sub_' + event.eventId)"></a>
+              {{ event.eventName }}
+            </td>
+            <td id="status_{{ event.eventId }}" class="align-C">
+              <label class="xyz">
+                <input type="checkbox" [(ngModel)]="event.status" (change)="
+                  toggleVirtualActivation($event.target.checked, event.eventId)
+                " /><span class="slider round"></span></label>
+            </td>
+            <td *ngIf="showActions" id="isinplay_{{ event.eventId }}" class="align-C">
+              <input type="checkbox" (change)="toggleVirtualInplay($event.target.checked,event.eventId)" id="bet" />
+            <td id="time_{{ event.eventId }}" class="align-C">
+              <span class="red">{{ event.time | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+              </span>
+            </td>
+            <!-- <td id="action_{{ event.eventId }}" class="align-C">
+            <button title="Bet Suspend" class="btn" [class.bet-suspend]="event.betLock == 1" (click)="
+              toggleSuspend(event.betLock, event.sportId, event.eventId)
+            ">
+              BS
+            </button>
+          </td> -->
+            <td *ngIf="showActivateFancy" id="" width="8%" class="align-C">
+              <input *ngIf="event.sportsName.toLowerCase().includes('cricket')" type="checkbox"
+                [(ngModel)]="event.fancyInplay" (change)="toggleVirtualActivateFancy($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input *ngIf="event.sportsName.toLowerCase().includes('cricket')" type="checkbox"
+                [(ngModel)]="event.bookmakerInplay_source0
+                " (change)="toggleActivateBM($event, event.eventId,0)" />
+            </td>
+            <td *ngIf="showActivateFancy" width="8%" class="align-C">
+              <input *ngIf="event.sportsName.toLowerCase().includes('cricket')" type="checkbox"
+                [(ngModel)]="event.bookmakerInplay_source1
+                " (change)="toggleActivateBM($event, event.eventId,1)" />
+            </td>
+            <!-- <td *ngIf="showActivateFancy" width="8%" class="align-C">
+            <input *ngIf="event.sportsName.toLowerCase().includes('cricket') || event.sportsName.toLowerCase().includes('kabaddi')" type="checkbox"
+            [(ngModel)]="event.winTheTossInplay"
+            (change)="toggleActivateDraw($event, event.eventId)"
+            >
+          </td> -->
+          </tr>
+          <tr id="sub_{{ event.eventId }}" class="expand first" style="display: none">
+            <td colspan="1"></td>
+            <td colspan="14">
+              <ng-container *ngFor="let market of event.markets; index as i">
+                <div class="market">
+                  <a *ngIf="market.runners && market.runners.length" class="expand-close" (click)="
+                    toggleMarkets($event, 'market_' + event.eventId + '_' + i)
+                  "></a>
+                  {{ market.marketName }}
+                  <span class="spacer"></span>
+                  <!-- <button class="btn">R</button> -->
+                </div>
+                <div *ngIf="market.runners && market.runners.length" id="market_{{ event.eventId }}_{{ i }}"
+                  class="markets" style="display: none">
+                  <div *ngFor="let runner of market.runners" class="market sub_market">
+                    {{ runner.selName }}
+                    <span class="spacer"></span>
+                    <button class="btn">
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-modal [(open)]="isSportModalOpen">
+  <div class="modal-header">
+    <h3>Sport Detail</h3>
+  </div>
+  <div class="modal-content">
+    <div class="grid grid-col-2">
+      <input type="text" class="input" placeholder="Sport Name" />
+
+      <input type="file" class="input" />
+
+      <input type="text" class="input" placeholder="Betfair ID" />
+    </div>
+    <div class="form-group">
+      <input type="checkbox" name="active" id="active" /> Is Active
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn-send">Save</button>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="isTourModalOpen">
+  <div class="modal-header">
+    <h3>Tournament Detail</h3>
+  </div>
+  <div class="modal-content">
+    <div class="grid grid-col-2">
+      <select name="sport" id="sport">
+        <option value="">Select Sport</option>
+        <option value="cricket">Cricket</option>
+        <option value="soccer">Soccer</option>
+        <option value="tennis">Tennis</option>
+      </select>
+      <input type="text" class="input" placeholder="Tournament Name" />
+
+      <input type="text" class="input" placeholder="Betfair ID" />
+    </div>
+    <div class="form-group">
+      <input type="checkbox" name="active" id="active" /> Is Active
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn-send">Save</button>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="isMatchModalOpen">
+  <div class="modal-header">
+    <h3>Match Detail</h3>
+  </div>
+  <div class="modal-content">
+    <div class="grid grid-col-2">
+      <select name="sport" id="sport">
+        <option value="">Select Sport</option>
+        <option value="cricket">Cricket</option>
+        <option value="soccer">Soccer</option>
+        <option value="tennis">Tennis</option>
+      </select>
+      <select name="tournament" id="tournament">
+        <option value="">Select Tournament</option>
+        <option value="ipl">Indian Premier League</option>
+        <option value="soccer">Australian Women's Cup</option>
+      </select>
+      <input type="text" class="input" placeholder="Match name" />
+
+      <input type="text" class="input" placeholder="Betfair ID" />
+
+      <div>
+        <input class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate" [dpDayPicker]="dateConfig"
+          [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+      </div>
+
+      <select name="status" id="status">
+        <option value="">Select Status</option>
+        <option value="1">Open</option>
+        <option value="2">Closed</option>
+        <option value="3">Settled</option>
+        <option value="4">Inactive</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="checkbox" name="active" id="active" /> Is Active
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn-send">Save</button>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="isBetModalOpen">
+  <div class="modal-header">
+    <h3>Bet Detail</h3>
+  </div>
+  <div class="modal-content">
+    <div class="grid grid-col-2">
+      <select name="sport" id="sport">
+        <option value="">Select Sport</option>
+        <option value="cricket">Cricket</option>
+        <option value="soccer">Soccer</option>
+        <option value="tennis">Tennis</option>
+      </select>
+
+      <select name="tournament" id="tournament">
+        <option value="">Select Tournament</option>
+        <option value="ipl">Indian Premier League</option>
+        <option value="soccer">Australian Women's Cup</option>
+      </select>
+
+      <select name="match" id="match">
+        <option value="">Select Match</option>
+        <option value="1">Sri Lanka v Bangladesh</option>
+        <option value="2">Australia v India</option>
+        <option value="3">India v Sri Lanka</option>
+      </select>
+
+      <input type="text" placeholder="Bet Name" />
+      <input type="text" placeholder="Betfair ID" />
+    </div>
+    <div class="form-group"><input type="checkbox" /> Is Active</div>
+    <div class="form-group"><input type="checkbox" /> Is Bet Allow</div>
+    <div class="form-group"><input type="checkbox" /> Is Allow Limit</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn-send">Save</button>
+  </div>
+</app-modal>

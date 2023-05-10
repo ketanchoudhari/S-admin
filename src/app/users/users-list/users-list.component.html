@@ -1,0 +1,49 @@
+<div class="main_wrap">
+  <!-- <div class="marquee-box">
+    <h4>News</h4>
+    <div class="marquee">
+      <a>Test news</a>
+    </div>
+  </div> -->
+
+  <div class="marquee-box">
+    <h4>{{Update?.News}}</h4>
+    <div class="marquee">
+      <div>
+        <a>Welcome to Exchange</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main_wrap">
+  <div class="total_all">
+    <div class="agent_path">
+      <div class="search-wrap" id="userSearchUl" *ngIf="isShowSearchbox">
+        <input #searchInput appInputRestriction="noSpecialChars" (keyup)="searchUser(searchInput.value)"
+          [formControl]="searchField" class="search-input" type="text" name="userId" id="userId"
+          placeholder="{{Update?.Findmember}}">
+        <button class="search-but" (click)="searchUser(searchInput.value)" id="searchUserId">{{Update?.Search}}</button>
+      </div>
+      <!-- <breadcrumb #parent>
+        <ul *ngIf="parent && parent?.breadcrumbs?.length !== 0" id="agentPath" class="agent_path-L">
+          <ng-container *ngFor="let route of parent?.breadcrumbs">
+            <li *ngIf="!route.terminal" id="path4">
+              <a [routerLink]="route.url">
+                <span class="lv_{{route.displayName.userType}}"> </span>
+                <strong>{{ route.displayName.userName }}</strong>
+                {{log(parent)}}
+              </a>
+            </li>
+            <li *ngIf="route.terminal" id="path3" class="last_li" style="">
+              <a>
+                <span class="lv_{{route.displayName.userType}}"> </span>
+                <strong>{{ route.displayName.userName }}</strong>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </breadcrumb> -->
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

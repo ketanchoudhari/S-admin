@@ -1,0 +1,347 @@
+<div class="full-wrap">
+  <h2>
+    Cricket > T10 Cricket League > Bengal Tigers v Maratha Arabians > Fancy Rate
+  </h2>
+  <div class="total_all">
+    <ul class="input-list">
+      <li id="eventType_checkBox">
+        <input
+          type="radio"
+          name=""
+          id="events_all"
+          value="0"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />Inactive
+      </li>
+      <li>
+        <input
+          type="radio"
+          name="events"
+          id="events_1"
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+          value="1"
+        />
+        Close
+      </li>
+      <li>
+        <input
+          type="checkbox"
+          name=""
+          id=""
+          min="0"
+          onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+        />
+        Bet Allow
+      </li>
+    </ul>
+    <a class="btn_replay" href="javascript:void(0);" id="refresh_Top_Racing"
+      ><img src="assets/images/transparent.gif"
+    /></a>
+  </div>
+  <div class="flex input-list">
+    <div class="input-group">
+      <label for="rateDifference"> Rate Difference: </label>
+      <input
+        type="number"
+        id="rateDifference"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="maxStakePerRate"> Max Stake Per Rate: </label>
+      <input
+        type="number"
+        id="maxStakePerRate"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+
+    <div class="input-group">
+      <label for="minStake"> Min Stake: </label>
+      <input
+        type="number"
+        id="minStake"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="maxStake"> Max Stake: </label>
+      <input
+        type="number"
+        id="maxStake"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="rateRange"> Min Rate: </label>
+      <input
+        type="number"
+        id="rateRange"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+    <div class="input-group">
+      <label for="rateRange"> Max Rate: </label>
+      <input
+        type="number"
+        id="rateRange"
+        min="0"
+        onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+      />
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table01">
+      <thead class="matchOddTh">
+        <tr>
+          <th class="">Runner Name</th>
+
+          <th>Back</th>
+
+          <th>Lay</th>
+
+          <th colspan="4" style="text-align: center">
+            ACTION
+            <!-- <span class="label label-warning cursor-pointer">Place Bet</span> -->
+          </th>
+
+          <!-- <th class="" colspan="2"></th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="ng-scope">
+          <td class="teamA">
+            <p style="font-weight: bold; font-size: 12px" class="ng-binding">
+              Bengal Tigers
+            </p>
+
+            <p class="text-danger" id="BmBook-0">0</p>
+          </td>
+
+          <td class="matchOdds back BACK" role="button" tabindex="0">
+            <strong id="BackPrice-65" class="Odds ng-binding">--</strong>
+
+            <br />
+
+            <span id="BackSize-65" class="volume ng-binding"> -- </span>
+          </td>
+
+          <td class="matchOdds lay LAY" role="button" tabindex="0">
+            <strong id="LayPrice-65" class="Odds ng-binding">--</strong><br />
+
+            <span id="LaySize-65" class="volume ng-binding"> -- </span>
+          </td>
+
+          <td colspan="4" class="matchOdds" role="button" tabindex="0">
+            <div class="">
+              <input
+                type="text"
+                maxlength="12"
+                id="txt-65"
+                ng-model="txtRateformula"
+                class=""
+                ng-keypress="$event.keyCode == 13 ? BookRate(runner.id,1) : null"
+                ng-keydown="($event.keyCode === 13 &amp;&amp; $event.altKey) ? BookRate(runner.id,0) : null"
+                style="
+                  text-transform: uppercase;
+                  background-color: #eee;
+                  margin-right: 4px;
+                "
+              />
+
+              <input
+                type="radio"
+                ng-model="rbtnstatus"
+                value="Act-65"
+                id="rbtact-65"
+                class=""
+                name="active"
+              />
+
+              <label for="rbtact-65"> Active </label>
+              <input
+                type="radio"
+                ng-model="rbtnstatus"
+                value="Ball-65"
+                id="rbtball-65"
+                class=""
+                name="active"
+              />
+
+              <label for="rbtball-65"> Suspended </label>
+            </div>
+          </td>
+        </tr>
+        <tr class="ng-scope">
+          <td class="teamA">
+            <p style="font-weight: bold; font-size: 12px" class="ng-binding">
+              Maratha Arabians
+            </p>
+
+            <p class="text-danger" id="BmBook-1">0</p>
+          </td>
+
+          <td class="matchOdds back BACK" role="button" tabindex="0">
+            <strong id="BackPrice-66" class="Odds ng-binding">--</strong>
+            <br />
+            <span id="BackSize-66" class="volume ng-binding"> -- </span>
+          </td>
+
+          <td class="matchOdds lay LAY" role="button" tabindex="0">
+            <strong id="LayPrice-66" class="Odds ng-binding">--</strong><br />
+            <span id="LaySize-66" class="volume ng-binding"> -- </span>
+          </td>
+
+          <td colspan="4" class="matchOdds" role="button" tabindex="0">
+            <div>
+              <input
+                type="text"
+                maxlength="12"
+                id="txt-66"
+                ng-model="txtRateformula"
+                class="input-sm form-control inline text-right clsOpenClass setPlaceRateFontsize ng-valid-maxlength"
+                ng-keypress="$event.keyCode == 13 ? BookRate(runner.id,1) : null"
+                ng-keydown="($event.keyCode === 13 &amp;&amp; $event.altKey) ? BookRate(runner.id,0) : null"
+                style="
+                  text-transform: uppercase;
+                  background-color: #eee;
+                  margin-right: 4px;
+                "
+              />
+
+              <input
+                type="radio"
+                ng-model="rbtnstatus"
+                value="Act-66"
+                id="rbtact-66"
+                ng-click="UpdRunnerStatus(runner.id,1)"
+                class=""
+                name="suspend"
+              />
+
+              <label for="rbtact-66"> Active </label>
+
+              <input
+                type="radio"
+                ng-model="rbtnstatus"
+                value="Ball-66"
+                id="rbtball-66"
+                ng-click="UpdRunnerStatus(runner.id,3)"
+                class=""
+                name="suspend"
+              />
+              <label for="rbtball-66"> Suspended </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-container">
+    <table class="table01">
+      <thead>
+        <tr>
+          <th>
+            <input type="checkbox" />
+          </th>
+
+          <th class="header">Action</th>
+
+          <th class="header">MDL Name</th>
+
+          <th class="header">DL Name</th>
+
+          <th class="header">Client</th>
+
+          <th class="header">Back/Lay</th>
+
+          <th class="header">Odds</th>
+
+          <th class="header">Stake</th>
+
+          <th class="header">Matched Time</th>
+
+          <th width="3%" class="header">Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="" *ngFor="let l of [1, 1, 1, 1]">
+          <td>
+            <input type="checkbox" name="" id="" />
+          </td>
+          <td title="'Action'">
+            <button class="btn btn-xs btn-danger">X</button>
+          </td>
+          <td title="'MDL'" class="ng-binding">Leanne Graham</td>
+          <td title="'DL'" class="ng-binding">Bret</td>
+          <td title="'Client'" class="ng-binding">client1</td>
+          <td title="'Back/Lay'" class="ng-binding">back</td>
+          <td title="'Odds'" class="ng-binding">167</td>
+          <td title="'Stake'" class="ng-binding">500</td>
+          <td
+            title="'Matched Time'"
+            data-title-text="Matched Time"
+            class="ng-binding"
+          >
+            02/01/2019
+          </td>
+          <td title="'Info'">
+            <a title=""
+              ><i class="fa fa-mobile-phone fa-2x" aria-hidden="true"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<pagination-template #pagination="paginationApi">
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a
+        href="javascript:void(0);"
+        class="disable"
+        (click)="pagination.previous()"
+        >Prev</a
+      >
+    </li>
+    <li id="pageNumber">
+      <ng-template *ngFor="let page of pagination.pages">
+        <!-- <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+        <!-- <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a> -->
+      </ng-template>
+
+      <a class="select" style="pointer-events: none">1 </a>
+    </li>
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a
+        href="javascript:void(0);"
+        [class.disabled]="pagination.isLastPage()"
+        (click)="pagination.next()"
+        >Next</a
+      >
+    </li>
+  </ul>
+</pagination-template>

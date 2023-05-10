@@ -1,0 +1,107 @@
+<ng-container *ngIf="!isMobile && !isBajilogin">
+  <div appTheme class="over-wrap loading-overlay" style="display: none" [style.display]="loading ? 'flex' : 'none'">
+    <div id="loading" class="loading-wrap" style="display: block;">
+      <ul class="loading">
+        <li *ngIf="!isPremiumSite"><img class="loaderclass" src="assets/images/loading40.gif" /></li>
+        <li *ngIf="isPremiumSite && siteName != 'lc247' && siteName != 'lc247'"><img class="loaderclass" src="assets/images/loading40.gif" /></li>
+        <li *ngIf="isPremiumSite && siteName == 'lc247'"><img class="loaderclass" src="assets/images/lc247.gif" /></li>
+        <li *ngIf="isPremiumSite && siteName == 'luck247'"><img class="loaderclass" src="assets/images/luck247.gif" /></li>
+        <li style="padding: 10px">Loading...
+        </li>
+        <br>
+        <li><span id="progress"></span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="dynamicBack">
+    <div class="scene"></div>
+    <div appTheme class="login-wrap">
+      <div class="kv">
+        <img src="assets/images/transparent.gif" alt="Logo" />
+      </div>
+
+      <form class="login-panel" [formGroup]="loginForm" (ngSubmit)="login()">
+        <!-- <img class="logo" src="assets/images/transparent.gif" alt="Logo"> -->
+        <div class="header">Agent Login</div>
+        <input formControlName="userName" autocomplete="on" id="loginName" type="text" placeholder="Username"
+          appInputRestriction="noSpecialChars" required />
+        <div class="password-group">
+          <input formControlName="password" autocomplete="on" id="Password" [type]="visiblePassword ? 'text' : 'password'"
+            placeholder="Password" required />
+          <i *ngIf="!isPremiumSite" class="fa fa-eye" aria-hidden="true" style="color: #000" (click)="showPassword()"></i>
+        </div>
+
+        <div class="captcha-group" *ngIf="showCaptcha">
+          <input formControlName="captcha" id="captha" autocomplete="on" type="number" placeholder="Validation Code" required />
+          <img [src]="captchaImg" alt="" (click)="getCaptcha()" />
+        </div>
+        <button type="submit" class="btn-send">
+          Login <img class="icon-login" />
+        </button>
+        <div class="apk-container" *ngIf="
+          !(
+            themeName.name.includes('lcExch') ||
+            themeName.name.includes('skyExchange8') ||
+            themeName.name.includes('sawTaka')
+          )
+        ">
+          <a href="assets/apk/{{ themeName.name }}.apk" id="apk" download="{{ themeName.actualName }}.apk"><img
+              src="assets/apk/android.png" width="auto" /></a>
+        </div>
+        <span id="errorMsg" class="error" *ngIf="loginForm.invalid || serverError">{{ errorMsg }}
+        </span>
+      </form>
+
+      <!-- <dl class="login-panel">
+    <dt>Agent login</dt>
+    <dd><input id="loginName" type="text" placeholder="Username" /></dd>
+    <dd><input id="password" type="password" placeholder="Password" /></dd>
+    <dd class="valid-code">
+      <input
+        id="validCode"
+        type="text"
+        placeholder="Validation Code"
+        maxlength="4"
+      />
+    </dd>
+    <dd>
+      <input
+        id="valid"
+        name="valid"
+        type="hidden"
+      />
+    </dd>
+    <dd>
+      <a
+        id="loginBtn"
+        href="#"
+        class="btn-send"
+        onclick="javascript: return LoginHandler.check(event);"
+        >Login
+        <img class="icon-login" src="assets/images/transparent.gif"
+      /></a>
+    </dd>
+    <dd id="errorMsg" class="error" style="display: none"></dd>
+  </dl> -->
+    </div>
+  </div>
+
+</ng-container>
+
+<!-- mobile view -->
+
+
+
+
+
+<ng-container *ngIf="isMobile && !isBajilogin">
+
+  <app-login-mob> </app-login-mob>
+
+</ng-container>
+<ng-container *ngIf="isBajilogin">
+
+  <app-bajilogin></app-bajilogin>
+
+
+</ng-container>

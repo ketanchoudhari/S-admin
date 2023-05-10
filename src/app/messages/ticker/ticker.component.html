@@ -1,0 +1,129 @@
+<div class="main_wrap">
+  <h2>{{Update?.Ticker}}</h2>
+  <div class="function-wrap">
+    <div>
+      <button class="btn" (click)="deleteTickers()">{{Update?.Delete}}</button>
+      <span class="spacer"></span>
+      <a (click)="openAddNewModal()" class="btn-send">{{Update?.AddNew}}</a>
+    </div>
+
+    <div>
+      <span class="spacer"></span>
+      <p class="vertical-align: middle">{{Update?.TotalRecords}}: {{ tickers.length }}</p>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table01">
+      <thead>
+        <tr class="ng-table-sort-header">
+          <th width="3%">
+            <div ng-if="template" ng-include="template">
+              <input
+                type="checkbox"
+                id="select_all"
+                name="filter-checkbox"
+                [checked]="isAllTickersSelected"
+                (change)="onSelectAllTickers($event)"
+              />
+            </div>
+          </th>
+          <th width="3%">{{Update?.Edit}}</th>
+          <th width="10%" class="align-L">{{Update?.Id}}</th>
+          <th class="align-L">{{Update?.Ticker}}</th>
+          <th width="8%" class="align-L">{{Update?.IsActive}}</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="tickers.length === 0">
+        <tr>
+          <td colspan="5" class="align-C"><em>No Tickers</em></td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="tickers.length !== 0">
+        <tr *ngFor="let ticker of tickers; let id = index">
+          <td>
+            <input
+              type="checkbox"
+              aria-label="checkbox"
+              class="ng-pristine ng-untouched ng-valid ng-empty"
+              [(ngModel)]="selectedItems[id]"
+            />
+          </td>
+
+          <td title=" 'Edit' ">
+            <a (click)="openEditModal(id)">
+              <i class="fa fa-pencil-square-o fa-2x"></i>
+            </a>
+          </td>
+
+          <td title=" 'ID' " class="align-L">{{ id + 1 }}</td>
+
+          <td title=" 'Ticker Name' " class="align-L">
+            {{ ticker.ticker }}
+          </td>
+
+          <td width="8%" title=" 'IsActive' " class="align-L">
+            <a *ngIf="ticker.active; else notActive" (click)="updateTicker(id)">
+              <i class="fa fa-check-circle fa-2x" style="color: green"></i>
+            </a>
+            <ng-template #notActive>
+              <a (click)="updateTicker(id)">
+                <i class="fa fa-times-circle fa-2x" style="color: red"></i>
+              </a>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-modal [(open)]="isAddNewModalOpen">
+  <div class="modal-header">
+    <h3>Add New Ticker</h3>
+  </div>
+  <div class="modal-content">
+    <div class="ticker-details">
+      <div class="input-group">
+        <label for="title" style="display: block;">Title: </label>
+        <!-- <input type="text" [(ngModel)]="newTicker.ticker"> -->
+        <textarea [(ngModel)]="newTicker.ticker" rows="10" cols="50"></textarea>
+      </div>
+      <div class="container">
+        <label for="isActive">
+          <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="newTicker.active"> Is Active
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button class="btn-send" (click)="addTicker()">Add New</button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal [(open)]="isEditModalOpen">
+  <div class="modal-header">
+    <h3>Edit Ticker</h3>
+  </div>
+  <div class="modal-content">
+    <div class="ticker-details">
+      <div class="input-group">
+        <label for="title" style="display: block;">Title: </label>
+        <!-- <input type="text" [(ngModel)]="editTicker.ticker"> -->
+        <textarea [(ngModel)]="editTicker.ticker" rows="10" cols="50"></textarea>
+
+      </div>
+      <div class="container">
+        <label for="isActive">
+          <input type="checkbox" name="isActive" id="isActive" [(ngModel)]="editTicker.active"> Is Active
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_box">
+      <button class="btn-send" (click)="confirmEdit()">Edit</button>
+    </div>
+  </div>
+</app-modal>

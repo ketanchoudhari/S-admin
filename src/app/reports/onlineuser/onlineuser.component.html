@@ -1,0 +1,78 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <h2>Fancy Detail</h2>
+    <h2 class="push"><a id="default" class="btn-send" (click)="Onlineuser()">Show Default</a></h2>
+  </div>
+  <div class="main_wrap">
+    <div class="function-wrap">
+      <ul class="input-list contentclass">
+        <li>
+          <label>Last:</label>
+          <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+            <option value="100">100 Txn</option>
+            <option value="50">50 Txn</option>
+            <option value="25">25 Txn</option>
+            <option value="10" selected="">10 Txn</option>
+            <option value="{{onlineuserdata?.count}}">Full</option>
+          </select>
+        </li>
+        <li>
+          <input [(ngModel)]="searchTerm" (ngModelChange)="filterByUser($event)" name="" id=""
+            placeholder="Find user...">
+
+        </li>
+      </ul>
+    </div>
+    <div class="table-responsive data-table">
+      <div class="table-container">
+        <table id="table_DL" class="table01" style="text-align: center; white-space: nowrap">
+          <thead>
+       
+              <th class="sort_asc" [appSort]="filterdata" data-order="asc" data-name="userName" colspan=""
+                rowspan="2">User Name</th>
+              <th class="sort_asc" colspan="" rowspan="2">Actions</th>
+        
+
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of filterdata | paginate: { itemsPerPage: n, currentPage: p };">
+              <tr>
+                <td>{{data.userName}}</td>
+                <td>{{data.userId}}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <pagination-template *ngIf="onlineuserdata && filterdata?.length > n" #pagination="paginationApi"
+          (pageChange)="p = $event">
+          <ul id="pageNumberContent" class="pages">
+            <li id="prev">
+              <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+              <ng-template #prevTemp>
+                <a (click)="pagination.previous()">Prev</a>
+              </ng-template>
+            </li>
+            <ng-container *ngFor="let page of pagination.pages">
+              <li id="pageNumber">
+                <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value"
+                  class="btn">{{ page.value }}
+                </a>
+                <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{
+                  page.value }}
+                </a>
+              </li>
+            </ng-container>
+
+            <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+            <li id="next">
+              <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+              <ng-template #nextTemp>
+                <a (click)="pagination.next()">Next</a>
+              </ng-template>
+            </li>
+          </ul>
+        </pagination-template>
+      </div>
+    </div>
+  </div>
+</div>

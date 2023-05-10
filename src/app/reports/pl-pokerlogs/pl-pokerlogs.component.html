@@ -1,0 +1,251 @@
+<div class="main_wrap">
+    <div class="box">
+      <h2>{{Update?.ReportByPoker}}</h2>
+      <h2 class="push"><a id="default" class="btn-send" (click)="tabIndex==0?ReportPokerLog():null">{{Update?.ShowDefault}}</a>
+      </h2>
+    </div>
+    <!-- function -->
+    <ul class="report-tab-wrap">
+      <li class="report-tab" [ngClass]="tabIndex==0?'select':'null'" id="reportType_exchange" data-reporttabtype="0"
+        (click)="tabChangeFunction(0)"><a>Poker Reports</a>
+      </li>
+    </ul>
+    <div class="function-wrap">
+      <ul class="input-list flowroot">
+        <div id="statusCondition" style="display: none">
+          <li><label>Bet Status:</label></li>
+          <li>
+            <select name="betStatus" id="betStatus"></select>
+          </li>
+        </div>
+  
+        <li></li>
+  
+        <li><label>{{Update?.Period}}</label></li>
+        <li class="contentclass">
+          <input id="startDate" class="cal-input marleft" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="startTime" class="time-input" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5"  />
+          to
+          <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="endTime" class="time-input" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5"  />
+        </li>
+        <li style="display: none">({{Update?.TimeZone}}:IST)</li>
+      </ul>
+      <ul class="input-list flowroot">
+        <li>
+          <a id="today" (click)="getReportDate('today')" class="btn">{{Update?.Justfortoday}}</a>
+        </li>
+        <li>
+          <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">{{Update?.Fromyesterday}}</a>
+        </li>
+        <li style="display: none">
+          <a id="last7days" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" class="btn">Last 3 Months</a>
+        </li>
+        <li>
+          <a id="getPL" (click)="tabIndex==0?ReportPokerLog():null" class="btn-send">{{Update?.GetPL}}</a>
+        </li>
+        <!-- <li>
+          <a id="getPL" class="btn-send">Expand All</a>
+        </li> -->
+        <!-- <li>
+          <a id="getPL" class="btn-send" (click)="getgreenred(0)">Get Green</a>
+        </li>
+        <li>
+          <a id="getPL" class="btn-send" (click)="getgreenred(1)">Get Red</a>
+        </li> -->
+        <!-- <ng-container *ngIf="tabIndex==0">
+          <li style="font-weight: bold;">
+            Upline PL: <span [ngClass]="{'profit-text': totalUplinePL > 0, 'loss-text': totalUplinePL < 0}">
+              {{totalUplinePL | indianCurrency}} </span>
+          </li>
+          <li style="font-weight: bold;">
+            Own PL: <span [ngClass]="{'profit-text': totalOwnPl > 0, 'loss-text': totalOwnPl < 0}">
+              {{totalOwnPl | indianCurrency}} </span>
+          </li>
+          <li style="font-weight: bold;">
+            Downline PL: <span [ngClass]="{'profit-text': totalDownlinePl > 0, 'loss-text': totalDownlinePl < 0}">
+              {{totalDownlinePl | indianCurrency}} </span>
+          </li>
+          <li style="font-weight: bold;">
+            Comm: <span [ngClass]="{'profit-text': totalComm > 0, 'loss-text': totalComm < 0}">
+              {{totalComm | indianCurrency}} </span>
+          </li>
+          <li class="spacer"></li>
+          <li style="color: red; margin: 0;">
+            <strong>G</strong>: Gross, <strong>N</strong>: Nett
+          </li>
+        </ng-container> -->
+      </ul>
+    </div>
+    <!-- No Report Message -->
+    <div id="noReportMessage"></div>
+    <!-- function end-->
+  
+    <div class="total_all" id="userTreeDiv">
+      <span>
+        <label>{{Update?.Last}}:</label>
+        <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+          <option value="100">100 Txn</option>
+          <option value="50">50 Txn</option>
+          <option value="25">25 Txn</option>
+          <option value="10" selected="">10 Txn</option>
+          <option value=downlineList.length>Full</option>
+        </select>
+      </span>
+      <ul style="display: none">
+        <li id="tempTree" class="">
+          <a><span class="lv_1"></span></a>
+        </li>
+        <li id="tempCurrencyTree" class="currency_tag"><strong></strong></li>
+      </ul>
+  
+      <div id="treePath" class="agent_path">
+        <!-- <ul class="agent_path-L" id="userTree">
+          <li id="tempTree" class="last_li">
+            <a><span class="lv_2"></span>demost</a>
+          </li>
+        </ul> -->
+      </div>
+      <div id="expandAllDiv" style="display: none">
+        <a id="showDetail" class="btn_expand">Expand All</a>
+      </div>
+  
+      <span class="spacer"></span>
+      <span class="total-users">{{Update?.TotalRecords}}: {{ downlineList?.length }} </span>
+  
+      <div class="download-reports">
+        <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button (click)="exportPdf()" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+  
+    <div id="reportDiv" *ngIf="tabIndex==0" class="over-wrap" style="max-height: calc(100% - 32px - 93px - 55px)">
+      <div class="table-responsive data-table">
+        <table id="table_DL" class="table01 table-pt">
+          <tbody>
+            <tr id="table_DL">
+              <th id="header_userName" width="15%" class="align-L sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="userName">{{Update?.UserName}}</th>
+              <th id="header_profitLoss_downLine" width="13%" class="sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="downLinePL">
+                {{Update?.AmountBet}}
+              </th>
+              <th id="header_tax_agent_2" width="10%" class="sort_asc" [appSort]="downlineList" data-order="asc"
+                data-name="commision">{{Update?.AmountWon}}</th>
+            </tr>
+          </tbody>
+          <tbody id="content">
+              <ng-container *ngFor="let pl of downlineList | paginate: { itemsPerPage: n, currentPage: p }">
+                <tr id="table_DL" [class.expand]="level > 1" [ngClass]="level > 1? 'expand_' + level: ''">
+                  <td class="align-L">{{pl.userName}}</td>
+                  <td>{{pl.AmountBet | indianCurrency}}</td>
+                  <td>
+                    <span *ngIf="pl.AmountWon < 0; else plusDownPLTemp" class="loss-text">({{ pl.AmountWon |
+                        indianCurrency }})</span>
+                      <ng-template #plusDownPLTemp>
+                        <span [class.profit-text]="pl.AmountWon > 0">{{
+                          pl.AmountWon | indianCurrency
+                          }}</span>
+                      </ng-template>
+                  </td>
+
+                </tr>
+              </ng-container>
+              <tr class="total">
+                <td class="align-L">Total</td>
+                <td class="align-R">
+                  <div *ngIf="!isPremiumSite">
+                    <span *ngIf="totStake < 0; else plusPlayerPL" class="loss-text"> {{ totStake | indianCurrency }}
+                    </span>
+                    <ng-template #plusPlayerPL>
+                      <span [class.profit-text]="totStake > 0">{{
+                        totStake | indianCurrency }}
+                      </span>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="isPremiumSite">
+                    <span *ngIf="totStake < 0; else plusPlayerPL" class="loss-text"> ({{ totStake*-1 | indianCurrency
+                      }})
+                    </span>
+                    <ng-template #plusPlayerPL>
+                      <span>{{ totStake | indianCurrency }}
+                      </span>
+                    </ng-template>
+                  </div>
+                </td>
+                <td class="align-R">
+                  <div *ngIf="!isPremiumSite">
+                    <span *ngIf="totPNL < 0; else plusPlayerPL" class="loss-text"> {{ totPNL | indianCurrency }}
+                    </span>
+                    <ng-template #plusPlayerPL>
+                      <span [class.profit-text]="totPNL > 0">{{
+                        totPNL | indianCurrency }}
+                      </span>
+                    </ng-template>
+                  </div>
+                  <div *ngIf="isPremiumSite">
+                    <span *ngIf="totPNL < 0; else plusPlayerPL" class="loss-text"> ({{ totPNL*-1 | indianCurrency
+                      }})
+                    </span>
+                    <ng-template #plusPlayerPL>
+                      <span>{{ totPNL | indianCurrency }}
+                      </span>
+                    </ng-template>
+                  </div>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <pagination-template *ngIf="downlineList && downlineList?.length > n" #pagination="paginationApi"
+        (pageChange)="pageChanged($event)">
+        <ul id="pageNumberContent" class="pages">
+          <li id="prev">
+            <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+            <ng-template #prevTemp>
+              <a (click)="pagination.previous()">Prev</a>
+            </ng-template>
+          </li>
+          <ng-container *ngFor="let page of pagination.pages">
+            <li id="pageNumber">
+              <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+                page.value }}
+              </a>
+              <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value
+                }}
+              </a>
+            </li>
+          </ng-container>
+  
+          <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+          <li id="next">
+            <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+            <ng-template #nextTemp>
+              <a (click)="pagination.next()">Next</a>
+            </ng-template>
+          </li>
+        </ul>
+      </pagination-template>
+    </div>
+  </div>

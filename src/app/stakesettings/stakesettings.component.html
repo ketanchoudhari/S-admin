@@ -1,0 +1,68 @@
+<div class="full-wrap">
+    <form [formGroup]="stakeSettingForm" (ngSubmit)="submit()">
+        <div class="main_wrap">
+            <div class="container settings-container">
+                <div>
+                    <h2>{{Update?.EditStake}}</h2>
+                    <div class="grid-stake">
+                        <div class="input-group">
+                            <label for="">Stake1: </label>
+                            <input autocomplete="off" type="number" formControlName="stake1" placeholder="100"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake2: </label>
+                            <input autocomplete="off" type="number" formControlName="stake2" placeholder="500"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake3: </label>
+                            <input autocomplete="off" type="number" formControlName="stake3" placeholder="1000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake4: </label>
+                            <input autocomplete="off" type="number" formControlName="stake4" placeholder="5000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake5: </label>
+                            <input autocomplete="off" type="number" formControlName="stake5" placeholder="10000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+
+                        <div class="input-group">
+                            <label for="">Stake6: </label>
+                            <input autocomplete="off" type="number" formControlName="stake6" placeholder="25000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake7: </label>
+                            <input autocomplete="off" type="number" formControlName="stake7" placeholder="50000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake8: </label>
+                            <input autocomplete="off" type="number" formControlName="stake8" placeholder="100000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake9: </label>
+                            <input autocomplete="off" type="number" formControlName="stake9" placeholder="200000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                        <div class="input-group">
+                            <label for="">Stake10: </label>
+                            <input autocomplete="off" type="number" formControlName="stake10" placeholder="500000"
+                                numberOnly [allowNull]='false' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn_box">
+                <button type="submit" class="btn-send">{{Update?.Save}}</button>
+                <button type="button" (click)="back()"class="btn">{{Update?.Cancel}}</button>
+            </div>
+        </div>
+    </form>
+</div>

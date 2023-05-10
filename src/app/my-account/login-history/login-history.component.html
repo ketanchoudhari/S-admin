@@ -1,0 +1,107 @@
+<h2>{{Update?.ActivityLog}}</h2>
+<div class="box">
+  <span>
+    <label>{{Update?.Last}}:</label>
+    <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+      <option value="100">100 Txn</option>
+      <option value="50">50 Txn</option>
+      <option value="25">25 Txn</option>
+      <option value="10" selected="">10 Txn</option>
+      <option value="{{listCount}}">Full {{listCount}}</option>
+    </select>
+    <button (click)="getloginhistory()" class="btn-send" >{{Update?.ShowDefault}}</button>
+  </span>
+  <div class="push" >
+    <div class="download-reports" >
+      <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button (click)="exportPdf()" class="pdf btn" title="Export Pdf">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+      <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+        <img src="assets/images/transparent.gif" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+<div class="table-responsive data-table" >
+<table id="table01" class="table01">
+  <tbody>
+    <tr>
+      <th width="15%" class="align-L sort_asc"  [appSort]="logList" data-order="asc" data-name="loginTime">{{Update?.LoginDateTime}}</th>
+      <th width="15%" class="align-L sort_asc" [appSort]="logList" data-order="asc" data-name="loginStatus">{{Update?.LoginStatus}}</th>
+      <th width="12%" class="sort_asc" [appSort]="logList" data-order="asc" data-name="loginIp">{{Update?.IPAddress}}</th>
+      <th width="28%" class="sort_asc" [appSort]="logList" data-order="asc" data-name="ISP">ISP</th>
+      <th width="" class="sort_asc" [appSort]="logList" data-order="asc" data-name="origin">{{Update?.CityStateCountry}}</th>
+    </tr>
+  </tbody>
+  <tbody id="content">
+    <tr
+      id="tempTr"
+      *ngFor="
+        let log of logList | paginate: { itemsPerPage: n, currentPage: p,totalItems:listCount }
+      "
+    >
+      <td class="align-L" id="loginDate">
+        {{ log.loginTime | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+      </td>
+      <td
+        class="align-L"
+        [ngClass]="{
+          success: log.loginStatus === 1,
+          danger: log.loginStatus === 0
+        }"
+        id="loginMessage"
+      >
+        Login Success
+      </td>
+      <td id="ipAddress">{{ log.loginIp }}</td>
+      <td id="isp">{{ log.ISP }}</td>
+      <td id="location">{{ log.origin }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<pagination-template
+  *ngIf="logList && listCount > n"
+  #pagination="paginationApi"
+  (pageChange)="pageChanged($event)"
+>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+        >Prev</a
+      >
+      <ng-template #prevTemp>
+        <a (click)="pagination.previous()">Prev</a>
+      </ng-template>
+    </li>
+    <ng-container *ngFor="let page of pagination.pages">
+      <li id="pageNumber">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          class="btn"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+      <ng-template #nextTemp>
+        <a (click)="pagination.next()">Next</a>
+      </ng-template>
+    </li>
+  </ul>
+</pagination-template>
+</div>
+

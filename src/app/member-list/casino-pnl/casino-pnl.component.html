@@ -1,0 +1,188 @@
+<div class="">
+    <div class="over-wrap">
+        <div class="total_all">
+            <span>
+                <strong>ETG Casino Pnl</strong>
+            </span>
+            <div class="spacer"></div>
+            <!-- <span class="total-users"> Total Records: <strong>{{etglistCount}}</strong> </span>&nbsp;
+            <span class="total-users"> Page Total PL: <strong>{{totalPL}} </strong></span> -->
+
+
+        </div>
+        <div class="function-wrap">
+            <ul class="input-list contentclass">
+                <li><label>Period:</label></li>
+                <li>
+                    <input class="cal-input" type="text" placeholder="YYYY-MM-DD" readonly="true" [(ngModel)]="fromDate"
+                        [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+                    <input id="startTime" class="time-input" type="text" [(ngModel)]="fromTime"
+                        [dpDayPicker]="timeConfig" [theme]="'dp-material'" [mode]="'time'" placeholder="09:00"
+                        placeholder="09:00" maxlength="5" />
+                    to
+                    <br>
+                    <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" readonly="true"
+                        [(ngModel)]="toDate" [dpDayPicker]="dateConfig" [theme]="'dp-material'" autocomplete="off" />
+                    <input id="endTime" class="time-input" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+                        [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+                </li>
+            </ul>
+            <ul class="input-list diaplayflex">
+
+                <li>
+                    <label>Last:</label>
+                    <select name="limit" id="limit" [(ngModel)]="selectPagelimit" (change)="selectNoRows($event)">
+                        <option value="10">10 Txn</option>
+                        <option value="25">25 Txn</option>
+                        <option value="50">50 Txn</option>
+                        <option value="100">100 Txn</option>
+
+                        <option value="{{etglist?.length}}">Full - {{etglist?.length}}</option>
+                    </select>
+                </li>
+                <li>
+                    <a id="getPL" (click)="EtgCasino()" class="btn-send">Get History</a>
+                </li>
+            </ul>
+
+
+
+        </div>
+        <div class="table-responsive data-table">
+            <!-- Report Table -->
+            <div id="report">
+                <table id="table_DL" class="table-s" style="display: table">
+                    <tbody>
+                        <tr>
+                            <th id="betTime" width="6%" class="align-L " data-name="userName">
+                                SportName </th>
+                            <th width="5%" class="align-r " data-name="total">Total Profit/loss</th>
+                            <th width="5%" class="align-r " data-name="total">Total Stake</th>
+
+
+                        </tr>
+                        <ng-container
+                            *ngFor="let bet of etglist | paginate: {itemsPerPage: n, currentPage: p}; let i = index">
+                            <tr>
+                                <td class="align-L ">
+                                    <a class="expand-close" style="width: 15px;" (click)="toggleExpand($event, 'sub_' + i)"> </a>
+                                       <a> <span class="sprtcls">{{bet.sportName}}</span></a>
+                                </td>
+                                <!-- <td class="align-L">
+                                    <a id="_byMarket" class="expand-close" style="width: 15px;"
+                                        (click)="toggleExpand($event, 'sub_' + i)"></a>
+                                    <a> <span id="_eventType" class="sprtcls">{{bet.sportName}}</span></a>
+                                </td> -->
+
+                                <td class="align-r" [ngClass]="bet.totPNL > 0? 'profit-text': 'loss-text'">
+                                    {{bet.totPNL | indianCurrency}}</td>
+                                <td class="align-r" [ngClass]="bet.totalStake > 0? 'profit-text': 'loss-text'">
+                                    {{bet.totalStake | indianCurrency}}</td>
+
+                            </tr>
+                            <tr id="sub_{{i}}" class="expand" style="display: none">
+                                <td colspan="4">
+                                    <img class="expand-arrow-R" src="assets/images/transparent.gif" />
+
+                                    <table class="table-commission">
+                                        <tbody>
+                                            <tr>
+                                                <th width="25%" class="align-L">EventName</th>
+                                                <th width="12%">Total Profit/loss</th>
+                                                <th width="23%">Total Stake</th>
+
+                                            </tr>
+                                            <ng-container *ngFor="let bet of bet.pnlsByEvent">
+                                                <tr class="even">
+                                                    <!-- <td id="placed">
+                                                        <a class="expand-close"
+                                                            (click)="toggleExpand1($event, 'sub1_' + i)"
+                                                            style="text-decoration:none;">
+                                                            <span class="sprtcls">{{bet.eventName}}</span>
+                                                        </a>
+                                                    </td> -->
+                                                    <td class="align-L"><a id="_byMarket" class="expand-close"
+                                                            style="width: 15px;"
+                                                            (click)="toggleExpand1($event, 'sub1_' + i)"></a><a><span
+                                                                id="_eventType"
+                                                                class="sprtcls">{{bet.eventName}}</span></a></td>
+                                                    <td id="totPNL"
+                                                        [ngClass]="bet.totPNL > 0? 'profit-text': 'loss-text'">
+                                                        {{bet.totPNL | indianCurrency}}</td>
+                                                    <td id="txLiability"
+                                                        [ngClass]="bet.totalStake > 0? 'profit-text': 'loss-text'">
+                                                        {{bet.totalStake | indianCurrency}}
+                                                    </td>
+                                                </tr>
+                                                <tr id="sub1_{{i}}" class="expand" style="display: none">
+                                                    <td colspan="4">
+                                                        <img class="expand-arrow-R"
+                                                            src="assets/images/transparent.gif" />
+
+                                                        <table class="table-commission">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th width="13%" class="align-L">marketName</th>
+                                                                    <th width="12%">Total Profit/loss</th>
+                                                                    <th width="23%">Total Stake</th>
+
+                                                                </tr>
+                                                                <tr class="even" *ngFor="let bet of bet.pnlsByMarket">
+                                                                    <td id="placed" class="align-L">{{bet.marketName}}
+                                                                    </td>
+                                                                    <td id="totPNL"
+                                                                        [ngClass]="bet.totPNL > 0? 'profit-text': 'loss-text'">
+                                                                        {{bet.totPNL | indianCurrency}}</td>
+                                                                    <td id="txLiability"
+                                                                        [ngClass]="bet.totalStake > 0? 'profit-text': 'loss-text'">
+                                                                        {{bet.totalStake | indianCurrency}}
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <pagination-template *ngIf="etglist?.length > n" #pagination="paginationApi"
+                (pageChange)="pageChanged($event)">
+                <ul id="pageNumberContent" class="pages">
+                    <li id="prev">
+                        <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">Prev</a>
+                        <ng-template #prevTemp>
+                            <a (click)="pagination.previous()">Prev</a>
+                        </ng-template>
+                    </li>
+                    <ng-container *ngFor="let page of pagination.pages">
+                        <li id="pageNumber">
+                            <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value"
+                                class="btn">{{ page.value }}
+                            </a>
+                            <a *ngIf="pagination.getCurrent() == page.value" class="select"
+                                style="pointer-events: none">{{ page.value
+                                }}
+                            </a>
+                        </li>
+                    </ng-container>
+
+                    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+                    <li id="next">
+                        <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+                        <ng-template #nextTemp>
+                            <a (click)="pagination.next()">Next</a>
+                        </ng-template>
+                    </li>
+                </ul>
+            </pagination-template>
+        </div>
+    </div>
+</div>

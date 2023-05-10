@@ -1,0 +1,187 @@
+@import "src/assets/scss/tables";
+
+.play_race-wrap {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.top_player-wrap {
+  width: calc(100% - 467px - 15px);
+  margin-right: 15px;
+}
+
+.top_player-wrap,
+.racing-wrap {
+  margin-bottom: 0;
+}
+
+.top_player-wrap,
+.racing-wrap,
+.game-wrap,
+.game-highlight-wrap,
+.favor-wrap,
+.sub_path,
+.pop-title {
+  background-color: #fff;
+  border-bottom: 1px solid #7e97a7;
+  margin-bottom: 1px;
+}
+
+.match-wrap {
+  background: #dddcd7;
+  box-shadow: 0 2px 0 0 #fff, inset 0 2px 0 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 7px 10px 5px;
+  margin-bottom: 25px;
+
+  td {
+    padding: 4px 10px;
+    line-height: 25px;
+  }
+}
+
+.bg-yellow {
+  background-color: #f3dfb0 !important;
+}
+
+.tab-topplay {
+  position: absolute;
+  top: -3px;
+  left: 12px;
+
+  li {
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    font-weight: bold;
+    padding: 0 19px 0 5px;
+    margin-left: -12px;
+
+    &:before {
+      position: absolute;
+      left: 0;
+      content: "";
+      background-position: -53px -364px;
+      height: 28px;
+      width: 5px;
+    }
+
+    &:after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      content: "";
+      background-position: -39px -422px;
+      height: 28px;
+      width: 19px;
+    }
+  }
+}
+
+.slip-head {
+  background-color: #ced5da;
+  padding: 0 10px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+
+  .col-playID {
+    width: calc(100% - 100px - 130px);
+  }
+  .col-exp {
+    width: 100px;
+  }
+  .col-amount {
+    width: 130px;
+  }
+}
+
+.play_race-wrap {
+  height: 210px;
+}
+.col-2 {
+  width: 50%;
+  height: 100%;
+
+  .table01 {
+    margin: 0;
+  }
+}
+
+:host ::ng-deep {
+  .tabs__tab-bar,
+  .tabs__tab,
+  .tabs__tab::after,
+  .tabs__tab::before,
+  .tabs__tab.active {
+    background-image: url("../../assets/images/sprite/bg-s2ccfda7730.png");
+    background-repeat: no-repeat;
+  }
+
+  tabs {
+    height: 100%;
+    min-height: unset !important;
+    width: calc(100% - 467px - 15px);
+    padding: 0 !important;
+  }
+
+  .tabs__tab-bar {
+    align-self: flex-start !important;
+    margin-bottom: 0 !important;
+    height: 32px !important;
+    width: 100% !important;
+    background-color: rgb(40 65 81);
+    border-radius: 0 !important;
+    z-index: 98 !important;
+    display: flex;
+    align-items: center;
+    border: 1px solid #7e97a7;
+
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+    background-position: 0 -6273px;
+
+    .tabs__tab {
+      position: relative;
+      line-height: 28px;
+      font-weight: bold;
+      height: 100% !important;
+      display: inline-flex !important;
+      align-items: center;
+      padding: 0 19px 0 10px !important;
+      color: #fff;
+      background-repeat: repeat-x;
+      padding-left: 10px;
+      background-position: 0 -10751px;
+
+      &:before {
+        position: absolute;
+        left: 0;
+        content: "";
+        background-position: -53px -364px;
+        height: 28px;
+        width: 5px;
+      }
+
+      &:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        content: "";
+        background-position: -39px -422px;
+        height: 28px;
+        width: 19px;
+      }
+      &.active {
+        color: #254d6a;
+        background-repeat: repeat-x;
+        background-position: 0 -10721px;
+        // background-color: #83878a !important;
+        background-image: url("../../assets/images/sprite/bg-s2ccfda7730.png");
+      }
+    }
+  }
+
+  .tabs__panel {
+    padding: 0 !important;
+  }
+}

@@ -1,0 +1,23 @@
+@import "src/assets/scss/tables";
+@import "src/assets/scss/pop_box";
+
+p {
+  margin-bottom: 7px;
+}
+
+.over-wrap {
+  padding-bottom: 12px;
+}
+
+.table-s caption {
+  line-height: 2;
+}
+.input-list input{
+  margin-bottom: 4px;
+}
+
+.delete {
+  background: url("/assets/images/sprite/main-s1aea395e8c.png") no-repeat -388px -1140px;
+  height: 20px;
+  margin-top: 2px;
+} 

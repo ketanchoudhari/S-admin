@@ -1,0 +1,751 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<div class="top">
+
+  <div class="header">
+    <div class="bars hideweb" (click)="toggleSidebar(); " *ngIf="!isOpen">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+
+    <h1>
+      <a [routerLink]="['/users',currentUser?.userType+1]">
+        <img src="assets/images/transparent.gif" alt="" />
+      </a>
+    </h1>
+
+    <!--  -->
+
+    <span class="timer_zone" *ngIf="!isPremiumSite">
+      <span> {{ dateTime | date: "medium":timeFormat }} </span>
+    </span>
+    <!-- <div class="apk-container"
+      *ngIf="!(themeName.name.includes('lcExch') || themeName.name.includes('skyExchange8') || themeName.name.includes('sawTaka'))">
+      <a href="assets/apk/{{themeName.name}}.apk" id="apk" download="{{themeName.actualName}}.apk"><img
+          src="assets/apk/android.png" width="auto" /></a>
+    </div> -->
+    <div class="spacer">
+    </div>
+    <div class="dropdown hideweb">
+      <a class="dropdown-item" *ngIf="siteName=='runexchange'" style="white-space: nowrap;">
+        <strong>
+          <ng-container *ngIf="!fixCurrency">
+            {{ currencyCode }}
+          </ng-container>
+          <ng-container *ngIf="fixCurrency">
+            {{ currencyCode }} {{fixCurrency}}
+          </ng-container>
+          {{ balance | indianCurrency }}
+        </strong>
+      </a>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" style="background-color: #333333;color: white;margin-right: 10px;">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        {{ currentUser?.userName }} {{ (currentUser?.prepaid)?(currentUser.lcbd)?"[L]":"[P]":"" }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" *ngIf="siteName!='runexchange'">
+          <strong>
+            <ng-container *ngIf="!fixCurrency">
+              {{ currencyCode }}
+            </ng-container>
+
+            <ng-container *ngIf="fixCurrency">
+              {{fixCurrency}}
+            </ng-container>
+            {{ balance | indianCurrency }}
+          </strong>
+        </a>
+        <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+        <a class="dropdown-item"
+          *ngIf="!(themeName.name?.includes('lcExch') || themeName.name.includes('weexch666') || themeName.name.includes('skyExchange8') || themeName.name.includes('sawTaka')) "
+          href="assets/apk/{{themeName.name}}.apk" id="apk" download="{{themeName.actualName}}.apk"><i
+            class="fa fa-android" aria-hidden="true"></i>Get APK</a>
+      </div>
+    </div>
+    <ng-container *ngIf="islanguage">
+      <select id="select" class="select2" style="margin-left: 10px;" (change)="selectlanguage($event.target.value)">
+        <option value="en" selected>Select language</option>
+        <option value="en">English</option>
+        <option value="bd">Bangla</option>
+        <option value="sp">Spanish</option>
+        <option value="pg">portuguese</option>
+        <option value="tu">Turkish</option>
+      </select>
+    </ng-container>
+    <ul class="account-wrap">
+      <li *ngIf="isVrnladmin">
+        <span class="unlock" (click)="lockallbets()" title="Bet Unlocked" *ngIf="belock==0"><i class="fa fa-play-circle"
+            aria-hidden="true"></i></span>
+        <span class="lock" (click)="unlockallbets()" title="Bet Locked" *ngIf="belock==1"><i class="fa fa-pause-circle"
+            aria-hidden="true"></i></span>
+        <span class="unlock" (click)="lockTransfer()" title="Transfer Unlocked" *ngIf="transferLock==0"><i
+            class="fa fa-money" aria-hidden="true"></i> </span>
+        <span class="lock" (click)="unlockTransfer()" title="Transfer Locked" *ngIf="transferLock==1"><i
+            class="fa fa-money" aria-hidden="true"></i> </span>
+      </li>
+      <li>
+        <span
+          class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ currentUser?.userType }}"></span><strong>{{
+          currentUser?.userName }} {{ (currentUser?.prepaid)?(currentUser.lcbd)?"[L]":"[P]":"" }}</strong>
+      </li>
+      <li *ngIf="!isBalanceLoader">
+
+        <span>{{balanceLabel}}</span>
+        <strong id="mainBalance">
+          <ng-container *ngIf="!fixCurrency">
+            <!-- {{fixCurrency}} -->
+            {{ currencyCode }}
+          </ng-container>
+
+          <ng-container *ngIf="fixCurrency">
+            {{fixCurrency}}
+          </ng-container>
+          {{ balance | indianCurrency }}
+        </strong>
+      </li>
+      <p class="loading-bar" *ngIf="isBalanceLoader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </p>
+      <li id="topRefreshIcon" style="display: block">
+        <img class="refresh-bar" src="assets/images/transparent.gif" />
+      </li>
+      <li (click)="updateBalance()" class="main-wallet no-multi">
+        <a id="topRefresh" style="color: var(--on-primary);" class="a-refresh" style="cursor: pointer"><img
+            src="assets/images/transparent.gif"></a>
+      </li>
+      <li class="main-wallet no-multi" title="Logout" *ngIf="!isPremiumSite">
+        <a style="color: var(--on-primary);" class="a-refresh" style="cursor: pointer" (click)="logout()"><i
+            class="fa fa-sign-out" aria-hidden="true"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar" *ngIf="isOpen">
+    <div class="times hideweb" (click)="closeSideBar()" *ngIf="isOpen">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div style="margin-top: 20px;">
+      <a *ngIf="!isVrnladmin && !isPremiumSite && !xpgPay" routerLink="/analysis"
+        [class.select]="router.url.includes('/analysis')" (click)="closeSideBar()">
+        {{(isPremiumSite)?'Risk Management':'Analysis'}}
+      </a>
+      <hr *ngIf="!isVrnladmin && !isPremiumSite && !xpgPay">
+      <a *ngIf="!xpgPay" class="accordion-heading" data-toggle="collapse" data-target="#submenu2" [class.select]="
+              router.url.includes('/users') ||
+              router.url.includes('/memberList')
+            ">
+        <span class="nav-header-primary">{{(isPremiumSite)?'Downline List':'Users'}} <span class="pull-right"><b
+              class="caret"></b></span></span>
+      </a>
+
+      <ul class="nav nav-list collapse" id="submenu2">
+        <li>
+          <ng-container *ngFor="let level of heirarchyList">
+        <li
+          *ngIf="!((currentUser.userType == common.vrnlUserType || currentUser.userType == common.whitelabelUserType) && level.id == common.clientUserType)">
+          <a routerLink="/users/{{ level.id }}" (click)="closeSideBar()">
+            {{ level.name | titlecase }}
+          </a>
+        </li>
+        </ng-container>
+        </li>
+        <li>
+          <a routerLink="/users/alluser" (click)="closeSideBar()">Reports</a>
+        </li>
+      </ul>
+      <hr>
+      <a *ngIf="restrictedTabs && showsettingtab && !xpgPay" routerLink="/settings" (click)="closeSideBar()">
+        {{Update?.Settings}}
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay" routerLink="/my-account" (click)="closeSideBar()">
+        {{Update?.MyAccount}}
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay" class="accordion-heading" data-toggle="collapse" data-target="#submenu1">
+        <span class="nav-header-primary">{{Update?.MyReport}} <span class="pull-right"><b
+              class="caret"></b></span></span>
+      </a>
+
+      <ul *ngIf="!xpgPay" class="nav nav-list collapse" id="submenu1">
+        <li>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/pl-downline"
+            (click)="closeSideBar()">{{Update?.ProfitLossReportbyDownline}} <span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/pl-market"
+            (click)="closeSideBar()">{{Update?.ProfitLossReportbyMarket}}<span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/pnl-downline"
+            (click)="closeSideBar()">Profit/Loss Report by All Casino <span class="pull-right"></span></a>
+          <a *ngIf="!internationalCasino && !isPremiumSite || isVrnladmin" class="accordion-heading"
+            data-toggle="collapse" data-target="#submenu1" routerLink="/reports/pl-diacasino"
+            (click)="closeSideBar()">{{Update?.ProfitLossReportbyDiamondCasino}} <span class="pull-right"></span></a>
+          <a *ngIf="siteName=='cricBuzzer'  && !isVrnladmin" class="accordion-heading" data-toggle="collapse"
+            data-target="#submenu1" routerLink="/reports/pl-diacasino"
+            (click)="closeSideBar()">{{Update?.ProfitLossReportbyDiamondCasino}} <span class="pull-right"></span></a>
+          <a *ngIf="internationalCasino && !isPremiumSite || isVrnladmin" class="accordion-heading"
+            data-toggle="collapse" data-target="#submenu7" routerLink="/reports/pl-casino" (click)="closeSideBar()">
+            {{Update?.ProfitLossReportbyCasino}}<span class="pull-right"></span></a>
+          <a *ngIf="isSupernova || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/reports/pl-sncasino" (click)="closeSideBar()">
+            {{Update?.ProfitLossReportbySupernowaCasino}}<span class="pull-right"></span></a>
+          <a *ngIf="isSlot || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu8"
+            routerLink="/reports/pl-slotcasino" (click)="closeSideBar()"> {{Update?.ProfitLossReportbySlotCasino}}<span
+              class="pull-right"></span></a>
+          <a *ngIf="isbetgame" class="accordion-heading" data-toggle="collapse" data-target="#submenu8"
+            routerLink="/reports/pl-betgames" (click)="closeSideBar()"> {{Update?.ProfitLossReportbyBetgames}}<span
+              class="pull-right"></span></a>
+          <a *ngIf="isPoker || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu8"
+            routerLink="/reports/pl-pokerlogs" (click)="closeSideBar()"> {{Update?.ReportByPoker}}<span
+              class="pull-right"></span></a>
+          <a *ngIf="isAWCcasino || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu8"
+            routerLink="/reports/pl-awccasino" (click)="closeSideBar()"> {{Update?.ProfitLossReportbyAWC}} <span
+              class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/loginlogout"
+            (click)="closeSideBar()">{{Update?.LoginLogoutReport}} <span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/new-accounts"
+            (click)="closeSideBar()">{{Update?.RecentlyCreatedAccount}} <span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu1" routerLink="/reports/onlineuser"
+            (click)="closeSideBar()">{{Update?.onlineuser}} <span class="pull-right"></span></a>
+
+        </li>
+      </ul>
+      <hr>
+      <a *ngIf="!xpgPay && siteName!='skybet369' && siteName!='bdbet88'" routerLink="/bet-list/bet-list"
+        (click)="closeSideBar()">
+        BetList
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay && siteName=='skybet369' || siteName=='bdbet88'" routerLink="/bet-list/livebets"
+        (click)="closeSideBar()">
+        Live bets
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay && siteName=='skybet369' || siteName=='bdbet88'" routerLink="/bet-list/settled-bets"
+        (click)="closeSideBar()">
+        Settled bets
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay && siteName!='skybet369' || siteName=='bdbet88'" routerLink="/bet-list/bet-list-live"
+        (click)="closeSideBar()">
+        BetListLive
+      </a>
+      <hr>
+      <a *ngIf="!isVrnladmin && isPremiumSite && !xpgPay" routerLink="/risk-management/riskManagement"
+        [class.select]="router.url.includes('risk-management')" (click)="closeSideBar()">
+        {{(isPremiumSite)?'Risk Management':'Analysis'}}
+      </a>
+      <hr *ngIf="!isVrnladmin && isPremiumSite && !xpgPay">
+      <a routerLink="/banking" (click)="closeSideBar()">
+        Banking
+      </a>
+      <hr *ngIf="b2c && !xpgPay">
+      <a *ngIf="b2c && !xpgPay" routerLink="/bankingreq" (click)="closeSideBar()">
+        D/W Request
+      </a>
+      <hr *ngIf="xpgPay">
+      <a *ngIf="xpgPay" routerLink="/bankingreqxpg" (click)="closeSideBar()">
+        D/W Request XPG
+      </a>
+      <hr>
+      <a *ngIf="!xpgPay && restrictedTab" class="accordion-heading" data-toggle="collapse" data-target="#submenu7">
+        <span class="nav-header-primary">{{(isPremiumSite)?'Casino Control':'Casino'}} <span class="pull-right"><b
+              class="caret"></b></span></span>
+      </a>
+
+      <ul *ngIf="!xpgPay && restrictedTab" class="nav nav-list collapse" id="submenu7">
+        <li>
+          <a *ngIf="internationalCasino" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/Etgcasino" (click)="closeSideBar()">{{Update?.CasinoBets}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="internationalCasino" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/awccasino-bets" (click)="closeSideBar()">{{Update?.awcCasinoBets}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isSupernova" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/sncasino" (click)="closeSideBar()">{{Update?.SNCasinoBets}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="!internationalCasino" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/casino" (click)="closeSideBar()"> Live Casino<span class="pull-right"></span></a>
+          <a *ngIf="showActions && internationalCasino || isVrnladmin" class="accordion-heading" data-toggle="collapse"
+            data-target="#submenu7" routerLink="/Etgcasino/casino-productlist" (click)="closeSideBar()"> Casino Products
+            <span class="pull-right"></span></a>
+          <a *ngIf="isAWCcasino || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/awcCasino/awccasino-providerlist" (click)="closeSideBar()"> {{Update?.awcCasinoProducts}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isSupernova || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/sncasino/sncasino-providerlist" (click)="closeSideBar()"> {{Update?.SNCasinoProviders}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isSlot || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/slotlist/CasinoCategories" (click)="closeSideBar()"> {{Update?.SlotCasinoCategories}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isSlot || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/slotlist/slotcasinobets" (click)="closeSideBar()"> {{Update?.SlotCasinobets}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isbetgame  || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/betgames/betgameslist" (click)="closeSideBar()"> {{Update?.BetgamesList}}
+            <span class="pull-right"></span></a>
+          <a *ngIf="isbetgame  || isVrnladmin" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/betgames/betgamesbets" (click)="closeSideBar()"> Betgames Bets
+            <span class="pull-right"></span></a>
+        </li>
+      </ul>
+      <hr *ngIf="b2c">
+      <a *ngIf="b2c" routerLink="/bankupi" (click)="closeSideBar()">
+        Bank/UPI
+      </a>
+      <hr *ngIf="restrictedTabs && restrictedTab && showmmtab && !xpgPay">
+      <a *ngIf="restrictedTabs && restrictedTab &&  showmmtab &&  !xpgPay" routerLink="/events" (click)="closeSideBar()">
+        MM
+      </a>
+      <hr>
+      <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" *ngIf="showsport && !xpgPay">
+        <span class="nav-header-primary">Import <span class="pull-right"><b class="caret"></b></span></span>
+      </a>
+
+      <ul *ngIf="!xpgPay" class="nav nav-list collapse" id="submenu6">
+        <li>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" routerLink="/races"
+            (click)="closeSideBar()">Races Import
+            <span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" routerLink="/sports"
+            (click)="closeSideBar()"> Sports Import<span class="pull-right"></span></a>
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" routerLink="/teenpatti"
+            (click)="closeSideBar()"> Teenpatti Import <span class="pull-right"></span></a>
+
+        </li>
+      </ul>
+      <hr>
+      <a class="accordion-heading" data-toggle="collapse" data-target="#submenu7" *ngIf="showsport && !xpgPay">
+        <span class="nav-header-primary">Casino <span class="pull-right"><b class="caret"></b></span></span>
+      </a>
+
+      <ul *ngIf="!xpgPay" class="nav nav-list collapse" id="submenu7">
+        <li>
+          <a *ngIf="showTeenpatti" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/teenpatti" (click)="closeSideBar()">Teenpatti
+            <span class="pull-right"></span></a>
+          <a *ngIf="showActions && internationalCasino || isVrnladmin" class="accordion-heading" data-toggle="collapse"
+            data-target="#submenu7" routerLink="/Etgcasino/casino-productlist" (click)="closeSideBar()"> Casino
+            Products<span class="pull-right"></span></a>
+          <a *ngIf="showActions && isSupernova || isVrnladmin" class="accordion-heading" data-toggle="collapse"
+            data-target="#submenu7" routerLink="/sncasino/sncasino-providerlist" (click)="closeSideBar()"> SN Casino
+            Providerslist<span class="pull-right"></span></a>
+          <a *ngIf="!internationalCasino" class="accordion-heading" data-toggle="collapse" data-target="#submenu7"
+            routerLink="/casino" (click)="closeSideBar()"> Live Casino <span class="pull-right"></span></a>
+
+        </li>
+      </ul>
+      <hr>
+      <a *ngIf="showTeenpatti && showsport && !xpgPay" routerLink="/races" (click)="closeSideBar()">
+        Races
+      </a>
+      <hr>
+      <a *ngIf="isVrnladmin && !xpgPay" routerLink="/settlement" (click)="closeSideBar()">
+        Settlement
+      </a>
+      <hr>
+      <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"
+        *ngIf="restrictedTabs && restrictedTab && !xpgPay">
+        <span class="nav-header-primary">Messages <span class="pull-right"><b class="caret"></b></span></span>
+      </a>
+
+      <ul class="nav nav-list collapse" id="submenu3">
+        <li>
+          <!-- <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3" routerLink="/messages/rules" (click)="closeSideBar()">Rules
+            <span class="pull-right"></span></a> -->
+          <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3" routerLink="/messages/ticker"
+            (click)="closeSideBar()">{{Update?.Ticker}}<span class="pull-right"></span></a>
+          <!-- <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"
+            routerLink="/messages/commentary" (click)="closeSideBar()">Commentary <span class="pull-right"></span></a> -->
+          <!-- <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3" routerLink="/messages/logs" (click)="closeSideBar()">Logs
+            <span class="pull-right"></span></a> -->
+          <a *ngIf="showActions && showsport" class="accordion-heading" data-toggle="collapse" data-target="#submenu3"
+            routerLink="/stakesettings" (click)="closeSideBar()">{{Update?.StakeSettings}}
+          </a>
+        </li>
+      </ul>
+
+
+      <!-- <hr> -->
+      <!-- <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" >
+      <span class="nav-header-primary">Live Score/Tv <span class="pull-right"><b class="caret"></b></span></span>
+    </a> -->
+
+      <!-- <ul class="nav nav-list collapse" id="submenu6">
+      <li>
+        <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6" routerLink="/others/tv" (click)="closeSideBar()">Live TV
+          <span class="pull-right"></span></a>
+        <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6"
+        href="#" (click)="closeSideBar()">Live Score<span class="pull-right"></span></a>
+        <a class="accordion-heading" data-toggle="collapse" data-target="#submenu6"
+        href="#" (click)="closeSideBar()">Online Users <span class="pull-right"></span></a>
+      </li>
+    </ul> -->
+    </div>
+
+    <hr>
+
+    <a (click)="logout()">
+      Logout
+      <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+    </a>
+  </div>
+  <!-- Menu Wrap -->
+  <div class="menu-wrap">
+    <div class="main_wrap">
+      <ul class="menu">
+        <li *ngIf="!isVrnladmin && !isPremiumSite && !xpgPay">
+          <a id="menu_downline_list" routerLink="/analysis" routerLinkActive="select"
+            [class.select]="router.url.includes('/analysis')">{{(isPremiumSite)?'Risk Management':'Analysis'}}
+          </a>
+        </li>
+        <li *ngIf="!xpgPay">
+          <a id="menu_my_report" class="menu-drop" [class.select]="
+              router.url.includes('/users') ||
+              router.url.includes('/memberList')
+            " (click)="clickedMenu()">{{(isPremiumSite)?'Downline List':'Users'}}
+          </a>
+          <ul>
+            <ng-container *ngFor="let level of heirarchyList">
+              <li
+                *ngIf="!((currentUser.userType == common.vrnlUserType || currentUser.userType == common.whitelabelUserType) && level.id == common.clientUserType)">
+                <a routerLink="/users/{{ level.id }}">
+                  {{ level.name | titlecase }}
+                </a>
+              </li>
+            </ng-container>
+            <!-- <li>
+              <a [routerLink]="['/users/search'] " [queryParams]="{user:'search'}">
+                Search
+              </a>
+            </li> -->
+            <li>
+              <a routerLink="/users/alluser">{{Update?.Search}}</a>
+            </li>
+            <!-- <li>
+              <a routerLink="/users/search">
+                Search User
+              </a>
+            </li> -->
+          </ul>
+        </li>
+        <li *ngIf="restrictedTabs && showsettingtab && !xpgPay">
+          <a routerLink="/settings" routerLinkActive="select">{{Update?.Settings}}</a>
+        </li>
+        <!-- <li>
+          <a
+            id="menu_downline_list"
+            routerLink="/downline"
+            routerLinkActive="select"
+            [class.select]="
+              router.url.includes('/memberList') ||
+              router.url.includes('/downline')
+            "
+            >Downline List
+          </a>
+        </li> -->
+
+        <li *ngIf="!xpgPay">
+          <a id="menu_my_account" class="" routerLink="/my-account"
+            [class.select]="router.url.includes('my-account')">{{Update?.MyAccount}}
+          </a>
+        </li>
+
+        <li *ngIf="!xpgPay">
+          <a id="menu_my_report" class="menu-drop" [class.select]="router.url.includes('/reports')"
+            (click)="clickedMenu()">{{Update?.MyReport}}
+          </a>
+          <ul>
+            <li>
+              <a routerLink="/reports/pl-downline">{{Update?.ProfitLossReportbyDownline}}
+              </a>
+            </li>
+            <li>
+              <a routerLink="/reports/pl-market">{{Update?.ProfitLossReportbyMarket}}
+              </a>
+            </li>
+            <li>
+              <a routerLink="/reports/pnl-downline">Profit/Loss Report by All Casino
+              </a>
+            </li>
+            <li *ngIf="!internationalCasino && !isPremiumSite || isVrnladmin">
+              <a routerLink="/reports/pl-diacasino" title="Diamond Casino">{{Update?.ProfitLossReportbyDiamondCasino}}
+              </a>
+            </li>
+            <li *ngIf="siteName=='cricBuzzer' && !isVrnladmin">
+              <a routerLink="/reports/pl-diacasino" title="Diamond Casino">{{Update?.ProfitLossReportbyDiamondCasino}}
+              </a>
+            </li>
+            <li *ngIf="internationalCasino && !isPremiumSite || isVrnladmin">
+              <a routerLink="/reports/pl-casino" title="Casino">{{Update?.ProfitLossReportbyCasino}}
+              </a>
+            </li>
+            <li *ngIf="isSupernova || isVrnladmin">
+              <a routerLink="/reports/pl-sncasino" title="Casino">{{Update?.ProfitLossReportbySupernowaCasino}}
+              </a>
+            </li>
+            <li *ngIf="isSlot || isVrnladmin">
+              <a routerLink="/reports/pl-slotcasino" title="Casino">{{Update?.ProfitLossReportbySlotCasino}}
+              </a>
+            </li>
+            <li *ngIf="isbetgame || isVrnladmin">
+              <a routerLink="/reports/pl-betgames" title="Casino">{{Update?.ProfitLossReportbyBetgames}}
+              </a>
+            </li>
+            <li *ngIf="isPoker || isVrnladmin">
+              <a routerLink="/reports/pl-pokerlogs" title="Casino">{{Update?.ReportByPoker}}
+              </a>
+            </li>
+            <li *ngIf="isAWCcasino || isVrnladmin">
+              <a routerLink="/reports/pl-awccasino" title="Casino">{{Update?.ProfitLossReportbyAWC}}
+              </a>
+            </li>
+            <li>
+              <a routerLink="/reports/loginlogout">{{Update?.LoginLogoutReport}} </a>
+            </li>
+
+            <!-- <li>
+              <a routerLink="/reports/reject-bet-history"
+                >Reject Bet History
+              </a>
+            </li>
+            <li>
+              <a routerLink="/reports/void-bets">Void Bets </a>
+            </li> -->
+            <li>
+              <a routerLink="/reports/new-accounts">Recently Created Account
+              </a>
+            </li>
+            <!-- <li>
+              <a routerLink="/reports/onlineuser">Onlineuser</a>
+            </li> -->
+          </ul>
+        </li>
+
+        <li *ngIf="!xpgPay && siteName!='skybet369' && siteName!='bdbet88'">
+          <a id="menu_bet_list" class="" routerLink="/bet-list/bet-list" routerLinkActive="select">{{Update?.BetList}}
+          </a>
+        </li>
+        <li *ngIf="!xpgPay && siteName=='skybet369' || siteName=='bdbet88'">
+          <a id="menu_bet_list" class="" routerLink="/bet-list/livebets" routerLinkActive="select">Live bets
+          </a>
+        </li>
+        <li *ngIf="!xpgPay && siteName=='skybet369' || siteName=='bdbet88'">
+          <a id="menu_bet_list" class="" routerLink="/bet-list/settled-bets" routerLinkActive="select">Settled bets
+          </a>
+        </li>
+        <li *ngIf="!xpgPay && siteName!='skybet369' || siteName=='bdbet88'">
+          <a id="menu_bet_list_live" class="betlist-live" routerLink="/bet-list/bet-list-live"
+            routerLinkActive="select">{{Update?.BetListLive}}
+          </a>
+        </li>
+        <li *ngIf="!isVrnladmin && isPremiumSite && !xpgPay">
+          <a id="menu_downline_list" routerLink="/risk-management/riskManagement" routerLinkActive="select"
+            [class.select]="router.url.includes('risk-management')">{{(isPremiumSite)?'Risk Management':'Analysis'}}
+          </a>
+        </li>
+        <li *ngIf="!xpgPay">
+          <a id="menu_banking" class="" routerLink="/banking" routerLinkActive="select">{{Update?.Banking}}
+          </a>
+        </li>
+        <li *ngIf="b2c && !xpgPay">
+          <a id="menu_banking_req" class="" routerLink="/bankingreq" routerLinkActive="select">D/W Request
+          </a>
+        </li>
+
+        <li *ngIf="xpgPay ">
+          <a id="menu_banking_req_xpg" class="" routerLink="/bankingreqxpg" routerLinkActive="select">D/W Request XPG
+          </a>
+        </li>
+        <!-- <li *ngIf="themeName.name.includes('cricExch') || themeName.name.includes('cricBuzzer')">
+          <a id="commission" routerLink="/reports/commission" routerLinkActive="select">Commission
+          </a>
+        </li> -->
+        <!-- <li *ngIf="showTeenpatti">
+          <a id="menu_event" class="" routerLink="/teenpatti" title="Teenpatti" routerLinkActive="select">Teenpatti
+          </a>
+        </li>
+        <li *ngIf="showActions">
+          <a id="menu_event" class="" routerLink="/Etgcasino/casino-productlist" title="Teenpatti" routerLinkActive="select">Casino Productlist
+          </a>
+        </li>
+        <li>
+          <a id="menu_event" class="" [routerLink]="['/casino']" title="Teenpatti" routerLinkActive="select">Live Casino
+          </a>
+        </li> -->
+        <li *ngIf="!xpgPay && restrictedTab">
+          <a class="menu-drop" [class.select]="router.url.includes('/casino') || router.url.includes('/Etgcasino')"
+            (click)="clickedMenu()">
+            {{(isPremiumSite)?'Casino Control':'Casino'}}
+          </a>
+          <ul>
+            <li *ngIf="internationalCasino || isVrnladmin">
+              <a id="menu_event" class="" [routerLink]="['/Etgcasino']" title="Etgcasino"> {{Update?.CasinoBets}}
+              </a>
+            </li>
+            <li *ngIf="isAWCcasino || isVrnladmin">
+              <a id="menu_event" class="" [routerLink]="['/awcCasino']" title="AWC Casino"> {{Update?.awcCasinoBets}}
+              </a>
+            </li>
+            <li *ngIf="isSupernova || isVrnladmin">
+              <a id="menu_event" class="" [routerLink]="['/sncasino']" title="SNcasino"> {{Update?.SNCasinoBets}}
+              </a>
+            </li>
+            <li *ngIf="isSlot || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/slotlist/slotcasinobets"
+                title="Teenpatti">{{Update?.SlotCasinobets}}
+              </a>
+            </li>
+            <li *ngIf="isbetgame">
+              <a id="menu_event" class="" routerLink="/betgames/betgamesbets" title="Betgames">Betgames bets
+              </a>
+            </li>
+            <li *ngIf="!internationalCasino">
+              <a id="menu_event" class="" [routerLink]="['/casino']" title="Teenpatti">Live Casino
+              </a>
+            </li>
+            <li *ngIf="showActions && internationalCasino || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/Etgcasino/casino-productlist"
+                title="Teenpatti">{{Update?.CasinoProducts}}
+              </a>
+            </li>
+            <li *ngIf="isAWCcasino || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/awcCasino/awccasino-providerlist"
+                title="Teenpatti">{{Update?.awcCasinoProducts}}
+              </a>
+            </li>
+            <li *ngIf="isSlot || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/slotlist/CasinoCategories" title="Teenpatti">
+                {{Update?.SlotCasinoCategories}}
+              </a>
+            </li>
+            <li *ngIf="isbetgame || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/betgames/betgameslist" title="Teenpatti">{{Update?.BetgamesList}}
+              </a>
+            </li>
+
+
+            <li *ngIf="isSupernova || isVrnladmin">
+              <a id="menu_event" class="" routerLink="/sncasino/sncasino-providerlist"
+                title="SN casino">{{Update?.SNCasinoProviders}}
+              </a>
+            </li>
+
+
+          </ul>
+        </li>
+        <li *ngIf="restrictedTabs && restrictedTab && showmmtab && !xpgPay">
+          <a id="menu_event" class="" routerLink="/events" title="Match Management" routerLinkActive="select">MM
+          </a>
+        </li>
+        <li *ngIf="b2c|| xpgPay">
+          <a id="menu_bank_upi" class="" routerLink="/bankupi" routerLinkActive="select">Bank/UPI
+          </a>
+        </li>
+        <li *ngIf="showTeenpatti && showsport && !xpgPay">
+          <a class="menu-drop" [class.select]="router.url.includes('/races') || router.url.includes('/sports')"
+            (click)="clickedMenu()">
+            {{Update?.Import}}
+          </a>
+          <ul>
+            <li>
+              <a id="menu_event" class="" routerLink="/races" title="Races">{{Update?.RacesImport}}
+              </a>
+            </li>
+            <li>
+              <a id="menu_event" class="" routerLink="/sports" title="Races">{{Update.Sportsimport}}
+              </a>
+            </li>
+            <li *ngIf="!internationalCasino">
+              <a id="menu_event" class="" routerLink="/teenpatti" title="Teenpatti">Teenpatti Import
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- <li *ngIf="isVrnladmin">
+          <a class="menu-drop" [class.select]="router.url.includes('/manual')" (click)="clickedMenu()">
+            Manual
+          </a>
+          <ul>
+            <li *ngIf="manual">
+              <a id="menu_event" class="" title="Fancy Management" routerLink="/manual/fancy" >Fancy
+              </a>
+            </li>
+            <li>
+              <a id="menu_event" class="" title="Fancy Management" routerLink="/manual/pendingfancy">Pending Fancy
+              </a>
+            </li>
+            <li *ngIf="manual">
+              <a id="menu_event" class="" routerLink="/manual/bookmaking" title="Book Making Management"
+                >Book Making
+              </a>
+            </li>
+          </ul>
+        </li> -->
+
+        <li *ngIf="restrictedTabs && restrictedTab && !xpgPay">
+          <a class="menu-drop" [class.select]="router.url.includes('/messages')" (click)="clickedMenu()">
+            {{Update?.Messages}}
+          </a>
+          <ul>
+            <!-- <li *ngIf="showMenu">
+              <a id="menu_event" class="" title="Rules" routerLink="/messages/rules" >Rules
+              </a>
+            </li> -->
+            <li>
+              <a id="menu_event" class="" routerLink="/messages/ticker" title="Ticker">{{Update?.Ticker}}
+              </a>
+            </li>
+            <li *ngIf="showActions && showsport">
+              <a id="stake_setting" class="" routerLink="/stakesettings"
+                routerLinkActive="select">{{Update?.StakeSettings}}
+              </a>
+            </li>
+            <!-- <li *ngIf="showMenu">
+              <a id="menu_event" class="" routerLink="/messages/commentary" title="Commentary"
+                >Commentary
+              </a>
+            </li>
+            <li>
+              <a id="menu_event" class="" routerLink="/messages/logs" title="Logs" >Logs
+              </a>
+            </li> -->
+          </ul>
+        </li>
+        <li *ngIf="isVrnladmin && !xpgPay">
+          <a id="menu_event" class="" routerLink="/settlement" title="Races"
+            routerLinkActive="select">{{Update?.Settlement}}
+          </a>
+        </li>
+
+        <!-- <li *ngIf="isVrnladmin">
+          <a routerLink="/website" routerLinkActive="select">Website</a>
+        </li> -->
+        <li class="time_zone" *ngIf="isPremiumSite && siteName!='baji365'"><span>{{Update?.TimeZone}} :</span> GMT+5:30
+        </li>
+        <li class="time_zone" *ngIf="siteName=='baji365'"><span>{{Update?.TimeZone}} :</span> GMT+ 6:00
+        </li>
+
+        <li (click)="logout()" class="logout" *ngIf="isPremiumSite">
+          <a id="logout">{{Update?.Logout}}<img src="assets/images/transparent.gif"></a>
+        </li>
+        <span class="spacer"></span>
+
+        <!-- <li class="tv" title="Live TV">
+          <a routerLink="/others/tv"><img src="assets/images/retro-tv.png" alt="" /></a>
+        </li>
+        <li class="score" title="Live Score">
+          <a href="#"><img src="assets/images/score-board.png" alt="" /></a>
+        </li>
+        <li class="online-users" title="Online Users">
+          <a href="#"><img src="assets/images/online-users.png" alt="" /></a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+
+</div>

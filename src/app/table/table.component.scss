@@ -1,0 +1,386 @@
+::ng-deep {
+  .table01,
+  .table-s,
+  .table_one {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    border-bottom: 1px solid #7e97a7;
+    margin-bottom: 15px;
+    text-align: right;
+
+    th {
+      color: #243a48;
+      background-color: #e4e4e4;
+      border: 1px solid #7e97a7;
+      border-width: 1px 0 1px 0;
+      padding: 8px 10px;
+    }
+    td {
+      position: relative;
+      border-top: 1px solid #eee;
+      padding: 8px 10px;
+      vertical-align: middle;
+    }
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    span {
+      vertical-align: middle;
+    }
+    .action {
+      a {
+        width: 26px;
+        height: 26px;
+        margin-left: 3px;
+      }
+      .status:hover {
+        background-position: -32px -1540px;
+      }
+      .profile:hover {
+        background-position: -32px -1449px;
+      }
+      .p_l:hover {
+        background-position: -32px -1397px;
+      }
+      .betting_history:hover {
+        background-position: -32px -282px;
+      }
+    }
+    caption {
+      background-color: #3b5160;
+      border-bottom: 1px solid #7e97a7;
+      color: #fff;
+      line-height: 24px;
+      font-weight: bold;
+      padding: 0 10px;
+    }
+
+    .border-l {
+      border-left: 1px solid #7e97a7;
+    }
+
+    .order {
+      width: 22px;
+      margin-right: 7px;
+      font-weight: bold;
+    }
+
+    .border-l {
+      border-left: 1px solid #7e97a7;
+    }
+
+    .expand-open,
+    .expand-close {
+      float: left;
+      // width: 13px;
+      height: 15px;
+      padding-right: 0;
+      margin-right: 4px;
+    }
+
+    input {
+      margin: 0;
+    }
+  }
+
+  .expand-close,
+  .expand-open {
+    text-decoration: none;
+    color: #000;
+    padding-right: 20px;
+    background-position: 100% -136px;
+  }
+
+  .expand {
+    & > td {
+      padding: 0;
+    }
+    table {
+      width: 85%;
+      border-left: 1px solid #7e97a7;
+      border-bottom-width: 0;
+      margin-left: 15%;
+
+      td {
+        border-width: 0;
+        padding: 8px 10px;
+      }
+
+      .even {
+        background-color: #f2f4f7;
+      }
+      .sum-pl {
+        background-color: #d9e4ec;
+        border-top: 1px solid #7e97a7;
+        dl {
+          padding: 5px 0;
+        }
+        dt {
+          width: 82%;
+          padding: 0 10px 5px;
+          color: #243a48;
+        }
+        dd {
+          padding: 0 10px 5px;
+        }
+        .net_total {
+          padding-top: 5px;
+          border-top: 1px dotted #7e97a7;
+        }
+        td {
+          padding: 0;
+        }
+      }
+    }
+    .table-commission {
+      width: 75%;
+      margin-left: 23%;
+      border-right: 1px solid #7e97a7;
+    }
+    & > td {
+      position: relative;
+      border-top-color: #7e97a7;
+      border-bottom: 1px solid #7e97a7;
+    }
+  }
+
+  .table-pnl {
+    .expand-open,
+    .expand-close,
+    .expand-open {
+      display: block;
+      width: inherit;
+      padding-right: 20px;
+      float: none;
+    }
+  }
+
+  .expand-close {
+    background-position: 100% -136px;
+  }
+
+  .expand-open {
+    background-position: 100% -151px;
+  }
+  .expand-arrow-R {
+    position: absolute;
+    left: 98%;
+    margin-top: -1px;
+    background-position: -17px -118px;
+    height: 9px;
+    width: 10px;
+  }
+
+  .expand-arrow {
+    position: absolute;
+    left: 15%;
+    margin-left: -10px;
+    background-position: -17px -127px;
+    height: 9px;
+    width: 10px;
+  }
+
+  .table01 .btn,
+  .table-s .btn,
+  .table_one .btn,
+  .table01 .btn-send,
+  .table-s .btn-send,
+  .table_one .btn-send,
+  .table01 .pages a,
+  .pages .table01 a,
+  .table-s .pages a,
+  .pages .table-s a,
+  .table_one .pages a,
+  .pages .table_one a,
+  .table01 .calendarTable_inputBox input,
+  .calendarTable_inputBox .table01 input,
+  .table-s .calendarTable_inputBox input,
+  .calendarTable_inputBox .table-s input,
+  .table_one .calendarTable_inputBox input,
+  .calendarTable_inputBox .table_one input,
+  .table01 .calendarTable_inputBox textarea,
+  .calendarTable_inputBox .table01 textarea,
+  .table-s .calendarTable_inputBox textarea,
+  .calendarTable_inputBox .table-s textarea,
+  .table_one .calendarTable_inputBox textarea,
+  .calendarTable_inputBox .table_one textarea,
+  .table01 .calendarTable_inputBox .member_select a,
+  .calendarTable_inputBox .member_select .table01 a,
+  .table-s .calendarTable_inputBox .member_select a,
+  .calendarTable_inputBox .member_select .table-s a,
+  .table_one .calendarTable_inputBox .member_select a,
+  .calendarTable_inputBox .member_select .table_one a,
+  .table01 .member_select .calendarTable_inputBox a,
+  .member_select .calendarTable_inputBox .table01 a,
+  .table-s .member_select .calendarTable_inputBox a,
+  .member_select .calendarTable_inputBox .table-s a,
+  .table_one .member_select .calendarTable_inputBox a,
+  .member_select .calendarTable_inputBox .table_one a,
+  .table01 .total_all .btn_replay,
+  .total_all .table01 .btn_replay,
+  .table-s .total_all .btn_replay,
+  .total_all .table-s .btn_replay,
+  .table_one .total_all .btn_replay,
+  .total_all .table_one .btn_replay,
+  .table01 .btn_expand,
+  .table-s .btn_expand,
+  .table_one .btn_expand,
+  .table01 .add_member,
+  .table-s .add_member,
+  .table_one .add_member {
+    text-decoration: none;
+  }
+
+  .fromto {
+    margin: 0 5px;
+    background-position: -20px -182px;
+    height: 8px;
+    width: 7px;
+    vertical-align: middle;
+  }
+
+  .over-wrap .table01:last-of-type,
+  .over-wrap .table-s:last-of-type,
+  .over-wrap .table_one:last-of-type {
+    margin-bottom: 0;
+  }
+  table .btn,
+  table .btn-send,
+  table .marquee-pop .pages a,
+  .marquee-pop .pages table a,
+  table .pages a,
+  .pages table a,
+  table .calendarTable_inputBox input,
+  .calendarTable_inputBox table input,
+  table .calendarTable_inputBox textarea,
+  .calendarTable_inputBox table textarea,
+  table .calendarTable_inputBox .member_select a,
+  .calendarTable_inputBox .member_select table a,
+  table .member_select .calendarTable_inputBox a,
+  .member_select .calendarTable_inputBox table a,
+  table .total_all .btn_replay,
+  .total_all table .btn_replay,
+  table .btn_expand,
+  table .add_member {
+    margin: 0;
+  }
+
+  .DW-amount {
+    border-left: 1px solid #7e97a7;
+  }
+
+  .DW-amount input,
+  .DW-amount textarea,
+  .DW-amount .member_select a,
+  .member_select .DW-amount a {
+    width: calc(100% - 63px - 47px - 14px);
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 7px;
+  }
+
+  .total,
+  .grand-total {
+    font-weight: bold;
+    color: #243a48;
+
+    td {
+      border-top-color: #7e97a7;
+      border-bottom: 1px solid #7e97a7;
+    }
+  }
+
+  .table-pt {
+    .expand {
+      &.first {
+        box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.1);
+      }
+      td {
+        border-bottom-color: #e2e8ed;
+
+        &:first-child {
+          padding-left: 50px;
+        }
+      }
+    }
+    td,
+    th {
+      padding: 8px 5px;
+    }
+
+    .expand-open,
+    .expand-close {
+      // width: 15px;
+      // height: 15px;
+      padding-left: 0;
+      // padding-right: 20px;
+      // float: none;
+    }
+    & > td {
+      padding: 0;
+    }
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .table-pt td {
+      padding: 8px 3px;
+    }
+  }
+
+  .expand {
+    background-color: #e2e8ed;
+    & > td {
+      position: relative;
+      border-top-color: #7e97a7;
+      border-bottom: 1px solid #7e97a7;
+    }
+
+    table {
+      width: 85%;
+      border-left: 1px solid #7e97a7;
+      border-bottom-width: 0;
+      margin-left: 15%;
+
+      th {
+        background-color: transparent;
+        border-top-width: 0;
+      }
+
+      td {
+        border-width: 0;
+        padding: 8px 10px;
+      }
+    }
+  }
+
+  .expand-balance th {
+    padding: 8px 10px;
+  }
+
+  .expand > td,
+  .table01 .border-t td,
+  .table-s .border-t td,
+  .table_one .border-t td,
+  .slip-head {
+    box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .expand-arrow {
+    visibility: visible;
+  }
+
+  .table01 .btn-recall,
+  .table-s .btn-recall,
+  .table_one .btn-recall {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    font-size: 11px;
+    line-height: 2;
+    text-decoration: none;
+    padding: 0;
+  }
+}

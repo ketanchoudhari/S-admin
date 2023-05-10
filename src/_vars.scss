@@ -1,0 +1,104 @@
+$primary: #444;
+$accent: #ffb80c;
+
+// $back: rgb(130, 255, 182);
+// $lay: rgb(123, 200, 255);
+
+$back: rgb(123, 200, 255);
+$lay: rgb(130, 255, 182);
+
+$profit: #0bac0b;
+$loss: #d42c2c;
+
+@mixin button {
+  background: #eee;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  color: #1e1e1e;
+  font-weight: bold;
+  line-height: 23px;
+  font-size: 12px;
+  // margin: 0 5px 10px 0;
+  padding: 0 8px;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  outline: 0;
+  font-family: Tahoma, Helvetica, sans-serif;
+
+  &.btn:hover:not(:disabled) {
+    text-decoration: none;
+    background: #fff url("assets/images/bg-btn_hover.gif") repeat-x;
+  }
+}
+
+.button {
+  @include button();
+}
+
+.btn.elevated {
+  box-shadow: 0 2px 2px 1px rgba($color: #000000, $alpha: 0.15)
+}
+
+.btn-cancel {
+  @include button;
+  background:#f13e3e;
+  color: #444444;
+}
+
+.back, .yes {
+  background-color: $back;
+}
+
+.back1 {
+  background-color: lighten($color: $back, $amount: 5%);
+}
+
+.back2 {
+  background-color: lighten($color: $back, $amount: 10%);
+}
+
+.back3 {
+  background-color: lighten($color: $back, $amount: 15%);
+}
+
+.lay, .no {
+  background-color: $lay;
+}
+
+
+.lay1 {
+  background-color: lighten($color: $lay, $amount: 5%);
+}
+
+.lay2 {
+  background-color: lighten($color: $lay, $amount: 10%);
+}
+
+.lay3 {
+  background-color: lighten($color: $lay, $amount: 15%);
+}
+
+.profit-text {
+  color: $profit;
+}
+
+.loss-text {
+  color: $loss;
+}
+
+.profit-text-dark {
+  color: darken($profit, 10%);
+}
+
+.loss-text-dark {
+  color: darken($loss, 10%);
+}
+
+.success-text {
+  color: rgb(18, 161, 18);
+}
+
+.danger-text {
+  color: rgb(214, 57, 57);
+}

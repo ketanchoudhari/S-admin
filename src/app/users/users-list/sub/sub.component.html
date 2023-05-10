@@ -1,0 +1,1644 @@
+<!-- <app-users-list></app-users-list> -->
+<div id="message" class="message-wrap" [ngClass]="[userStatusresult.errorCode ==0?'success':'error']" *ngIf="userStatusresult">
+  <a class="btn-close">Close</a>
+  <p *ngIf="userStatusresult.errorCode ==0">Changed status successfully</p>
+  <p *ngIf="userStatusresult.errorCode ==1">{{userStatusresult.errorDescription}}</p>
+</div>
+<div class="total_all" *ngIf="!isPremiumSite">
+  <h2>
+    <ng-container *ngIf="selectedUid !== currentUser?.userId; else listTemp">
+      Downline
+    </ng-container>
+    <ng-template #listTemp>{{ member?.name | titlecase }} List</ng-template>
+  </h2>
+</div>
+<div class="total_all">
+  <ng-select (change)="selectUserstatus($event)" [(ngModel)]="usersStatus">
+    <ng-option *ngFor="let status of statusList;" [value]="status.id">
+      {{ status.name }}
+    </ng-option>
+  </ng-select>
+  <span class="spacer"></span>
+  <span class="total-users" *ngIf="!isPremiumSite">Total Records: {{ userList?.users?.length }}</span>
+  <button
+    *ngIf="
+      showAddMemberButton &&
+      selectedUid === currentUser?.userId &&
+      !isSearchPage
+    "
+    class="add_member btn"
+    (click)="toggleAddMemberModal()"
+  >
+    <img src="assets/images/transparent.gif" />Add
+    {{ member?.name | titlecase }}
+  </button>
+  <button id="refresh" class="btn_replay btn" (click)="refreshList()">
+    <img src="assets/images/transparent.gif" />
+  </button>
+</div>
+<div style="display: flex;">
+  <div style="justify-content: flex-start;">
+    
+  </div>
+</div>
+<div id="totalBox" class="total_box filtertotaldivweb">
+  <!-- <dl id="yourBalance" class="total_dl">
+    <dt>Total Balance</dt>
+    <dd id="myCreditLimit">
+      {{ currentUser?.currencyCode
+      }}{{ userList?.totalBalance | indianCurrency }}
+    </dd>
+  </dl> -->
+  <dl id="creditLimitDL" class="total_dl" *ngIf="isPremiumSite">
+    <dt> {{(!isPremiumSite)? 'Credit Reference' : 'Total Balance'}}</dt>
+    <dd id="myCreditLimit">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+      {{ userList?.creditRef | indianCurrency }}
+    </dd>
+  </dl>
+  <dl id="totalExposureDL" class="total_dl">
+    <dt>{{(!isPremiumSite)? 'Total Exposure' : 'Net Exposure'}}</dt>
+    <dd id="totalExposure">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+
+      <span class="red">({{ userList?.totalExposure | indianCurrency }})</span>
+    </dd>
+  </dl>
+
+  <dl id="availableBalanceDL" class="total_dl">
+    <dt> {{(!isPremiumSite)? 'Total Avail. bal.' : 'Balance'}}</dt>
+    <dd id="totalAvailBal">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+      {{ userList?.totalAvailableBalance | indianCurrency }}
+    </dd>
+  </dl>
+  <dl id="balanceDownline" class="total_dl">
+    <dt>{{Update?.BalanceinDownline}}</dt>
+    <dd id="myCreditLimit">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+      {{ userList?.downlineBalance | indianCurrency }}
+    </dd>
+  </dl>
+  <dl id="creditLimitDL" class="total_dl" *ngIf="!isPremiumSite">
+    <dt> {{(!isPremiumSite)? 'Credit Reference' : 'Total Balance'}}</dt>
+    <dd id="myCreditLimit">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+      {{ userList?.creditRef | indianCurrency }}
+    </dd>
+  </dl>
+  <dl id="creditGivenOutDL" class="total_dl">
+    <dt>{{(!isPremiumSite)? 'Reference PL' : 'Transferable P/L with Upline'}}</dt>
+    <dd id="totalCreditGivenOut">
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          {{ currentUser?.currencyCode }}
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          {{ fixCurrency }}
+        </ng-container>
+      </ng-container>
+      <!-- {{ ((userList?.refPL === 0) ? totalRow?.refPL : userList?.refPL) | indianCurrency }} -->
+      <span *ngIf="totalRow?.refPL < 0" class="loss-text"> ({{ totalRow?.refPL * -1 | indianCurrency }})
+      </span>
+        <span *ngIf="totalRow?.refPL >= 0">{{ totalRow?.refPL | indianCurrency }}
+        </span>
+    </dd>
+  </dl>
+  <dl  class="total_dl" *ngIf="isPremiumSite">
+    <dt>{{Update?.TotalUsers}}</dt>
+    <dd>
+      {{ userList?.users?.length }}
+    </dd>
+  </dl>
+</div>
+
+<div *ngIf="showTotalBox" id="totalBox" class="total_box filtertotaldivmob">
+  <!-- <dl id="yourBalance" class="total_dl">
+    <dt>Total Balance</dt>
+    <dd id="myCreditLimit">
+      {{ currentUser?.currencyCode
+      }}{{ userList?.totalBalance | indianCurrency }}
+    </dd>
+  </dl> -->
+  <dl id="creditLimitDL" class="total_dl_mob">
+    <dt>{{(!isPremiumSite)? 'Credit Reference' : 'Total Balance'}}</dt>
+    <dd id="myCreditLimit" class="push">
+      <strong> {{ userList?.creditRef | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="balanceDownline" class="total_dl_mob">
+    <dt>{{Update?.BalanceinDownline}}</dt>
+    <dd id="myCreditLimit" class="push">
+      <strong> {{ userList?.downlineBalance | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl  *ngIf="isShow" id="availableBalanceDL" class="total_dl_mob">
+    <dt>Total Avail. bal.</dt>
+    <dd id="totalAvailBal" class="push">
+      <strong>{{ userList?.totalAvailableBalance | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+
+  <dl *ngIf="isShow" id="totalExposureDL" class="total_dl_mob">
+    <dt>{{(!isPremiumSite)? 'Total Exposure' : 'Net Exposure'}}</dt>
+    <dd id="totalExposure" class="push">
+      <strong> {{ userList?.totalExposure | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+ 
+ 
+  <dl *ngIf="isShow" id="creditGivenOutDL" class="total_dl_mob">
+    <dt>{{(!isPremiumSite)? 'Reference PL' : 'Transferable P/L with Upline'}}</dt>
+    <dd id="totalCreditGivenOut" class="push">
+      <strong> {{ ((userList?.refPL === 0) ? totalRow?.refPL : userList?.refPL) | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="creditAvailBalDL" class="total_dl_mob" style="display: none">
+    <dt>Credit Avail Bal</dt>
+    <dd id="myCreditAvailBal" class="push">
+      <!-- even {{ userData.currencyTypeName }} {{ userData.myCreditAvailBal }} -->
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="totalBalanceDL" class="total_dl_mob" style="display: none">
+    <dt>Total Balance</dt>
+    <dd id="totalBalance" class="push">
+      <strong> {{ userList?.totalBalance | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="myCurrentPLDL" class="total_dl_mob" style="display: none">
+    <dt>Today P/L with Upline</dt>
+    <!-- <dd id="myCurrentPL">{{ userData.currencyTypeName }} 0.0</dd> -->
+  </dl>
+  <dl *ngIf="isShow" id="availableBalanceDL" class="total_dl_mob" style="display: none">
+    <dt>Total Avail. bal.</dt>
+    <dd id="totalAvailBal" class="push">
+      <strong> {{ userList?.totalAvailableBalance | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="masterBalanceDL" class="total_dl_mob" style="display: none">
+    <dt>Balance</dt>
+    <dd id="mastersBalance" class="push">
+      <strong> {{ userList?.totalBalance | indianCurrency }}</strong>
+      <ng-container *ngIf="showCurrency">
+        <ng-container *ngIf="!fixCurrency">
+          ({{ currentUser?.currencyCode }})
+        </ng-container>
+        <ng-container *ngIf="fixCurrency">
+          ({{ fixCurrency }})
+        </ng-container>
+      </ng-container>
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="masterAvailableBalanceDL" class="total_dl_mob" style="display: none">
+    <dt>Available Balance</dt>
+    <dd id="mastersAvailBal" class="push">
+      <!-- {{ userData.currencyTypeName }}
+        {{ userData.mastersAvailBal + userData.totalBalance | indianCurrency }} -->
+    </dd>
+  </dl>
+  <dl *ngIf="isShow" id="transferablePLWithUplineDL" class="total_dl_mob" style="display: none">
+    <dt>Transferable P/L with Upline</dt>
+    <!-- <dd id="transferablePLWithUpline">{{ userData.currencyTypeName }} 0.00</dd> -->
+  </dl>
+  <div class="text-center">
+    <span (click)="showHide()" id="user">
+      <i [ngClass]="showUp ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+    </span>
+  </div>
+</div>
+<div class="table-responsive data-table" >
+<div id="widthAll" class="width-all">
+  <!-- Report Table -->
+
+  <app-table
+    id="resultTable"
+    class="table01 margin-table sortable"
+    style="display: table"
+  >
+    <tbody *ngIf="userList">
+      <tr>
+        <th id="accountTh" width="10%" class="align-L sort_asc" [appSort]="userList?.users" data-order="asc" data-name="userName">{{Update?.Account}}</th>
+        <th class="sort_asc" [appSort]="userList?.users" data-order="asc" data-name="domain"
+          id="domainTh"
+          width="10%"
+          *ngIf="userType === commonService.whitelabelUserType"
+        >
+          {{Update?.Domain}}
+        </th>
+        <th id="creditRefTh" width="10%">{{Update?.CreditReference}}</th>
+        <!-- <th id="creditLimitTh" width="10%" style="display: none">
+          Credit Limit
+        </th> -->
+
+        <!-- <th id="currentPLTh" width="10%" style="display: none">Current P/L</th>
+        <th id="transferablePLTh" width="10%" style="display: none">
+          Transferable P/L
+        </th> -->
+        <th id="balanceTh" width="10%" class="sort_asc" [appSort]="userList?.users" data-order="asc" data-name="balance">{{Update?.Balance}}</th>
+        <th id="exposureTh" width="10%" class="sort_asc" [appSort]="userList?.users" data-order="asc" data-name="exposure">
+          <ng-container
+            *ngIf="
+              userType === commonService.clientUserType;
+              else exposureLabelTemp
+            "
+          >
+            {{Update?.exposure}}
+          </ng-container>
+          <!-- <ng-template #exposureLabelTemp> Exposure in Downline </ng-template> -->
+          <ng-template #exposureLabelTemp> {{Update?.exposure}} </ng-template>
+        </th>
+        <th id="availableBalanceTh" class="sort_asc" width="10%" [appSort]="userList?.users" data-order="asc" data-name="availableBalance">{{Update?.Availablebalalance}}</th>
+        <th id="creditPLTh" width="10%" style="display: none">{{Update?.Balance}}</th>
+        <th id="creditPLTh" width="10%" *ngIf="userType !== commonService.clientUserType && isPremiumSite">{{Update?.TotalBalance}}</th>
+        <th class="sort_asc" width="10%" [appSort]="userList?.users" data-order="asc" data-name="playerBalance"
+          id="playerBalanceTh"
+          *ngIf="userType !== commonService.clientUserType"
+          width="10%"
+        >
+         {{Update?.PlayerBalance}}
+        </th>
+        <th id="exposureLimitTh" width="10%" style="display: none">
+          {{Update?.ExposureLimit}}
+        </th>
+
+        <th id="refPLTh" class="sort_asc" width="10%" [appSort]="userList?.users" data-order="asc" data-name="refPL">{{Update?.Reference}}</th>
+        <th id="statusTh" class="sort_asc" width="7%" [appSort]="userList?.users" data-order="asc" data-name="userStatus">{{Update?.Status}}</th>
+        <th id="actionTh"  width="15%" >{{Update?.Action}}</th>
+      </tr>
+
+      <ng-container
+        *ngFor="
+          let user of userList?.users
+            | paginate: { itemsPerPage: 10, currentPage: p };
+          index as i;
+          trackBy: trackBy
+        "
+      >
+        <tr
+          id="{{ user.userId }}"
+          style="display: table-row"
+          [style.color]="user.userStatus === 1 ? 'rgba(0,0,0,0.5)' : 'initial'"
+        >
+          <td id="accountCol" class="align-L">
+            <a
+              id="account{{ i }}"
+              *ngIf="user.userType !== clientUserType; else playerTemp"
+              class="ico_account"
+              [style.color]="user.userStatus === 1 ? 'inherit' : ''"
+              [routerLink]="['sub', user.userId]"
+              (click)="
+                pushDataToRoute({
+                  userType: user.userType,
+                  userName: user.userName
+                })
+              "
+              ><span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ user.userType }}"></span
+              >{{ user.userName }}</a
+            >
+            <ng-template #playerTemp>
+              <span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ user.userType }}"></span>{{ user.userName }}
+            </ng-template>
+          </td>
+          <td *ngIf="userType === commonService.whitelabelUserType">
+            {{ user.domain }}
+          </td>
+          <td id="creditRef{{ i }}" class="credit-amount-member">
+            <!-- <a
+              id="creditRefBtn"
+              class="favor-set"
+              *ngIf="currentUser?.userId === user.parentId; else credTemp"
+              (click)="openCreditRefModal(user)"
+              >{{ user.creditRef | indianCurrency }}</a
+            > -->
+            <span>{{ user.creditRef | indianCurrency }}</span>
+            <!-- <ng-template #credTemp>
+              <span>{{ user.creditRef | indianCurrency }}</span>
+            </ng-template> -->
+          </td>
+          <!-- <td id="creditLimit{{ i }}" style="display: none">
+            {{ user.balance | indianCurrency }}
+          </td>
+
+          <td id="currentPL{{ i }}" style="display: none">
+            {{ user.balance | indianCurrency }}
+          </td> -->
+          <!-- <td id="transferablePL{{ i }}" style="display: none">0.0</td> -->
+          <td id="balance{{ i }}">
+            <!-- *ngIf="this.currentUser?.userId !== user.parentId; else balanceTemp" -->
+            {{ user.balance | indianCurrency }}
+            <!-- <a (click)="showBalanceDetail(user)" class="link-open">{{
+              user.balance | indianCurrency
+            }}</a> -->
+            <ng-template #balanceTemp>
+              {{ user.playerBalance | indianCurrency }}
+            </ng-template>
+          </td>
+          <td id="currentExposure{{ i }}">
+            <span class="red">({{ user.exposure | indianCurrency }})</span>
+          </td>
+          <td id="available{{ i }}">
+            {{ user.availableBalance | indianCurrency }}
+          </td>
+          <td *ngIf="userType !== commonService.clientUserType && isPremiumSite" id="available{{ i }}">
+            {{ user.balanceTotal | indianCurrency }}
+          </td>
+          <td id="creditPL{{ i }}" style="display: none">
+            {{ user.balance | indianCurrency }}
+          </td>
+          <td
+            id="playerBalance{{ i }}"
+            *ngIf="userType !== commonService.clientUserType"
+            style="display: table-cell"
+          >
+            {{
+              user.userType !== commonService.clientUserType
+                ? (user.playerBalance | indianCurrency)
+                : "-"
+            }}
+          </td>
+          <td id="exposureLimit" style="display: none"></td>
+
+          <td id="refPL{{ i }}">
+            <span *ngIf="user.refPL < 0" class="loss-text"> ({{ user.refPL * -1 | indianCurrency }})
+            </span>
+              <span *ngIf="user.refPL >= 0">{{ user.refPL | indianCurrency }}
+              </span>
+          </td>
+          <td id="statusCol" style="white-space: nowrap;">
+            <ul id="tipsPopup" class="status-popup" style="display: none"></ul>
+            <span
+              id="status{{ i }}"
+              class="status-suspend"
+              [ngClass]="{
+                'status-active': user.userStatus === 0,
+                'status-suspend': user.userStatus === 1,
+                'status-lock': user.userStatus === 2
+              }"
+              ><img src="assets/images/transparent.gif" />
+              <!-- {{ user }} -->
+              {{ statusMap[user.userStatus] }}
+            </span>
+          </td>
+          <td id="actionCol">
+            <ul class="action">
+              <li>
+                <!-- <a
+                id="banking"
+                class="bank"
+                href="#bank"
+                [ngStyle]="{
+                  display: user.userType === 0 ? 'block' : 'none'
+                }"
+                >Bank</a
+              > -->
+              </li>
+              <li *ngIf="user.failedLogin > 4">
+                <a (click)="Resetlogin(user.userId)"  class="b_L btn" id="resetlogin" style="color: #000;background: #ffb80c;">F</a>
+              </li>
+
+              <li *ngIf="!isPremiumSite">
+                <a
+                  id="b_s{{ i }}"
+                  class="b_s btn"
+                  title="Bet Suspend"
+                  [ngStyle]="{
+                    display:
+                      currentUser?.userId === user.parentId
+                        ? 'inline-flex'
+                        : 'none'
+                  }"
+                  >BS</a
+                >
+              </li>
+              <!-- <li>
+                <a
+                  id="u_b{{ i }}"
+                  class="u_b btn"
+                  [class.active]="user.unmatched == 1"
+                  title="Bet Suspend"
+                  [ngStyle]="{
+                    display:
+                      user?.userType === commonService.whitelabelUserType
+                        ? 'inline-flex'
+                        : 'none'
+                  }"
+                  (click)="toggleUnmatched(user.userId, user.unmatched)"
+                  >UM</a
+                >
+              </li> -->
+              <li>
+                <a
+                  id="p_l{{ i }}"
+                  class="p_l"
+                  title="Profit & Loss"
+                  [routerLink]="['sub', user.userId, 'profitAndLoss']"
+                  [ngStyle]="{
+                    display: user.userType === clientUserType ? 'block' : 'none'
+                  }"
+                  [state]="{ userType: user.userType }"
+                  (click)="
+                    pushDataToRoute({
+                      userType: user.userType,
+                      userName: user.userName
+                    })
+                  "
+                  >Betting Profit &amp; Loss</a
+                >
+              </li>
+              <li>
+                <a
+                  id="betting_history{{ i }}"
+                  class="betting_history"
+                  title="Betting History"
+                  [routerLink]="['sub', user.userId, 'bettingHistory']"
+                  [ngStyle]="{
+                    display: user.userType === clientUserType ? 'block' : 'none'
+                  }"
+                  [state]="{ userType: user.userType }"
+                  (click)="
+                    pushDataToRoute({
+                      userType: user.userType,
+                      userName: user.userName
+                    })
+                  "
+                  >Betting History</a
+                >
+              </li>
+              <li>
+                <a
+                  id="change{{ i }}"
+                  class="status"
+                  title="Change Status"
+                  [ngStyle]="{
+                    display:
+                      currentUser?.userId === user.parentId ? 'block' : 'none'
+                  }"
+                  (click)="openChangeStatusModal(user)"
+                  >{{Update?.Changestatus}}</a
+                >
+              </li>
+              <li>
+                <a
+                  id="profile{{ i }}"
+                  class="profile"
+                  title="Account Summary"
+                  [routerLink]="['sub', user.userId, 'accountSummary']"
+                  [state]="{ userType: user.userType }"
+                  (click)="
+                    pushDataToRoute({
+                      userType: user.userType,
+                      userName: user.userName
+                    })
+                  "
+                  >Profile</a
+                >
+              </li>
+              <!-- <li
+                *ngIf="showDeleteButton && currentUser.userId == user.parentId"
+              >
+                <a
+                  id="delete{ i }"
+                  title="Delete User"
+                  class="delete"
+                  (click)="confirmDelete(user)"
+                >
+                  D
+                </a>
+              </li> -->
+            </ul>
+          </td>
+        </tr>
+        <tr
+          id="tempBalanceTr_{{ user.userId }}"
+          *ngIf="user.showBalance"
+          class="expand first expand-balance"
+        >
+          <td colspan="2"></td>
+          <td colspan="7">
+            <img class="expand-arrow" src="assets/images/transparent.gif" />
+            <table>
+              <tbody id="tempVendorContent">
+                <tr>
+                  <th width="12%" class="align-L">Game</th>
+                  <th width="13%">Balance</th>
+                  <th width="8%">
+                    <a id="recallAll" href="#" class="btn-recall">Recall All</a>
+                  </th>
+                  <th></th>
+                </tr>
+                <tr id="#tempVendorTr_prabhu007">
+                  <td id="vendorTitle_3" class="align-L">BPoker</td>
+                  <td id="vendorBalance_3">0</td>
+                  <td>
+                    <a id="recall_3" class="btn-recall">Recall</a>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </ng-container>
+      <tr style="font-weight: 700">
+        <td class="align-L">Total</td>
+        <td *ngIf="userType === commonService.whitelabelUserType"></td>
+        <td>{{ totalRow?.creditRef | indianCurrency }}</td>
+        <td>{{ totalRow?.downlineBalance | indianCurrency }}</td>
+        <td><span class="red">({{ totalRow?.exposure | indianCurrency }})</span></td>
+        <td>{{ totalRow?.availableBalance | indianCurrency }}</td>
+        <td *ngIf="userType !== commonService.clientUserType && isPremiumSite">{{ totalRow?.balanceTotal | indianCurrency }}</td>
+        <td *ngIf="userType !== commonService.clientUserType">
+          {{
+            userType !== commonService.clientUserType
+              ? (totalRow?.playerBalance | indianCurrency)
+              : "-"
+          }}
+        </td>
+
+        <td><span *ngIf="totalRow?.refPL < 0" class="loss-text"> ({{ totalRow?.refPL * -1 | indianCurrency }})
+        </span>
+          <span *ngIf="totalRow?.refPL >= 0">{{ totalRow?.refPL | indianCurrency }}
+          </span></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </app-table>
+</div>
+<pagination-template
+  *ngIf="userList && userList?.users?.length > 10"
+  #pagination="paginationApi"
+  (pageChange)="p = $event"
+>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+        >Prev</a
+      >
+      <ng-template #prevTemp>
+        <a (click)="pagination.previous()">Prev</a>
+      </ng-template>
+    </li>
+    <ng-container *ngFor="let page of pagination.pages">
+      <li id="pageNumber">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          class="btn"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+      <ng-template #nextTemp>
+        <a (click)="pagination.next()">Next</a>
+      </ng-template>
+    </li>
+  </ul>
+</pagination-template>
+</div>
+<div class="footer_info" *ngIf="isPremiumSite">
+	<div class="main_wrap">
+		<ul class="action">
+			<li class="bank"><p>{{Update?.Bank}}
+			</p></li>
+			<li class="p_l"><p>{{Update?.BettingProfitLoss}}
+			</p></li>
+			<li class="betting_history"><p>{{Update?.BettingHistory}}
+			</p></li>
+			<li class="profile"><p>{{Update?.Profile}}
+			</p></li>
+			<li class="status"><p>{{Update?.Changestatus}}
+			</p></li>
+		</ul>
+	</div>
+</div>
+
+
+<app-modal [(open)]="confirmDeleteModalOpen">
+  <h3 class="modal-header">
+    Do you want to delete {{ selectedUser?.userName }}
+  </h3>
+
+  <div class="modal-footer">
+    <form
+      [formGroup]="deleteUserForm"
+      (ngSubmit)="delete(selectedUser?.userId)"
+    >
+      <ul class="btn-wrap">
+        <li>
+          <label for="password">Password: </label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Enter"
+          />
+          <button class="btn-send" type="submit">Submit</button>
+        </li>
+      </ul>
+    </form>
+    <!-- <div class="btn_box">
+      <button
+        type="button"
+        (click)="delete(selectedUser?.userId)"
+        class="btn-send"
+      >
+        Confirm Delete
+      </button>
+    </div> -->
+  </div>
+</app-modal>
+
+<app-modal [(open)]="addMemberModalOpen">
+  <h3 class="modal-header">Add {{ member?.name }}</h3>
+
+  <form
+    style="display: flex; flex-flow: column"
+    [formGroup]="userRegForm"
+    (ngSubmit)="register()"
+  >
+    <div class="modal-content" style="max-height: 400px; overflow-y: scroll">
+      <ul class="half_box add-member-box">
+        <li class="add_account_box">
+          <dl class="border_b">
+            <dt>{{Update?.Username}}</dt>
+            <dd>
+              <input
+                id="userName"
+                type="text"
+                placeholder="Enter"
+                formControlName="userName"
+                maxlength="20"
+                appInputRestriction="noSpecialChars"
+                required
+              />
+              <span class="must">＊</span>
+              <span
+                id="userNameErrorText"
+                class="error-text"
+                style="display: none"
+              ></span>
+            </dd>
+            <dt>{{Update?.Password}}</dt>
+            <dd>
+              <input
+              appInputRestriction="noSpecialChars2"
+                id="userPassword"
+                type="password"
+                placeholder="Enter"
+                formControlName="password"
+                maxlength="20"
+                required
+              />
+              <span class="must">＊</span>
+              <div
+                class="errors"
+                *ngIf="
+                  userRegForm?.get('password').invalid &&
+                  (userRegForm?.get('password').touched ||
+                    userRegForm?.get('password').dirty)
+                "
+              >
+                <div *ngIf="userRegForm?.get('password').hasError('required')">
+                  Password is required
+                </div>
+
+                <div *ngIf="userRegForm?.get('password').errors.minlength">
+                  Password must be at least 8 characters
+                </div>
+
+                <div
+                  class="error-text"
+                  *ngIf="
+                    userRegForm?.get('password').hasError('passwordStrength')
+                  "
+                >
+                  {{ userRegForm?.get("password").errors["passwordStrength"] }}
+                </div>
+              </div>
+              <span
+                id="passwordErrorText"
+                class="error-text"
+                style="display: none"
+              ></span>
+            </dd>
+            <ng-template [ngIf]="showCurrencyDropdown">
+              <dt>{{Update?.Currency}}:</dt>
+              <dd>
+                <select
+                  id="currencyCode"
+                  type=""
+                  placeholder="Enter"
+                  formControlName="currency"
+                >
+                  <option value="">{{Update?.SelectCurrency}}</option>
+                  <option
+                    [ngValue]="currency"
+                    *ngFor="let currency of currencyMap"
+                  >
+                    {{ currency.name }}
+                  </option>
+                </select>
+                <span class="must">＊</span>
+                <span
+                  id="userNameErrorText"
+                  class="error-text"
+                  style="display: none"
+                ></span>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showDomainInput">
+              <dt>{{Update?.Domain}}:</dt>
+              <dd>
+                <input
+                appInputRestriction="noSpecialChars1"
+                  id="domain"
+                  type="text"
+                  placeholder="Enter"
+                  formControlName="maindomain"
+                  maxlength="30"
+                />
+                <span class="must">＊</span>
+                <span
+                  id="userNameErrorText"
+                  class="error-text"
+                  style="display: none"
+                ></span>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showselectDomainInput">
+              <dt>{{Update?.Domain}}:</dt>
+              <dd>
+                <select
+                  id="domain"
+                  type=""
+                  placeholder="Enter"
+                  formControlName="domain"
+                >
+                  <option value="">{{Update?.SelectDomain}}</option>
+                  <option
+                    [ngValue]="dom"
+                    *ngFor="let dom of domainMap"
+                  >
+                    {{ dom.name }}
+                  </option>
+                </select>
+                <span class="must">＊</span>
+                <span
+                  id="userNameErrorText"
+                  class="error-text"
+                  style="display: none"
+                ></span>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showisPrepaid">
+              <dt>Settlement Type:</dt>
+              <dd>
+                <!-- <input
+                  id="isPrepaid"
+                  type="checkbox"
+                  formControlName="prepaid"
+                  (change)="showSharing($event.target.checked)"
+                />
+                <label for="isPrepaid"> isPrepaid </label> -->
+                <select
+                  id="prepaidCode"
+                  type=""
+                  placeholder="Enter"
+                  formControlName="prepaid"
+                  (change)="showprepaidSharing($event.target.value)"
+                >
+                <!-- <option value="">Select Type</option> -->
+                  <option
+                    [value]="setle.id"
+                    *ngFor="let setle of settlementMap"
+                  >
+                    {{ setle.name }}
+                  </option>
+                </select>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showDomainCheckbox">
+              <dt></dt>
+              <dd>
+                <input
+                  id="domainAllocation"
+                  type="checkbox"
+                  placeholder="Enter"
+                  formControlName="allowDomainAllocation"
+                />
+                <label for="domainAllocation"> Allow Domain Allocation</label>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showisPrepaid">
+              <dt></dt>
+              <dd>
+                <input
+                  id="captcha"
+                  type="checkbox"
+                  (change)="checkcaptcha($event.target.checked)"
+                  formControlName="captcha"
+                />
+                <label for="captcha"> Allow Captcha </label>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="isWhitelabel">
+              <dt></dt>
+              <dd>
+                <input
+                  id="lcbd"
+                  type="checkbox"
+                  (change)="checklcbd($event.target.checked)"
+                  formControlName="lcbd"
+                />
+                <label for="lcbd"> LCBD </label>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="showisPrepaid">
+              <dt></dt>
+              <dd>
+                <input
+                  id="stakesetting"
+                  type="checkbox"
+                  formControlName="showstake"
+                  (change)="showstakevalues($event.target.checked)"
+                />
+                <label for="stakesetting"> Edit Default Stake </label>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="isprepaidOpen && isClient && !isPremiumSite">
+              <dt></dt>
+              <dd>
+                <input
+                  id="fullShareCom"
+                  type="checkbox"
+                  (change)="fullsharecomm($event.target.checked)"
+                />
+                <label for="fullShareCom"> Full Share Commission </label>
+              </dd>
+            </ng-template>
+          </dl>
+          <dl class="border_b" *ngIf="showstakesetting">
+            <div style="text-align: center; font-weight: 700" class="">
+              {{Update?.StakeSettings}}
+            </div>
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake1"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake2"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake3"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake4"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake5"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake6"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake7"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake8"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake9"
+            />
+            <input
+              type="text"
+              placeholder="stake"
+              maxlength="50"
+              formControlName="stake10"
+            />
+          </dl>
+          <dl class="">
+            <dt>{{Update?.FullName}}</dt>
+            <dd>
+              <input
+                id="firstName"
+                type="text"
+                placeholder="Enter"
+                maxlength="50"
+                appInputRestriction="noSpecialCharFN"
+                formControlName="fullName"
+              />
+            </dd>
+            <!-- <dt>Credit Ref</dt>
+            <dd>
+              <input
+                id="creditRef"
+                type="number"
+                placeholder="Enter"
+                formControlName="creditRef"
+                min="0"
+                (keypress)="
+                  ($event.charCode == 8 || $event.charCode == 0
+                    ? null
+                    : ($event.charCode >= 48 && $event.charCode <= 57) ||
+                      $event.charCode === 13)
+                "
+              />
+            </dd> -->
+
+            <ng-template
+              [ngIf]="!isClient && !isDifferentSharingOpen && !isprepaidOpen"
+            >
+              <dt>{{Update?.SelfShare}}(%)</dt>
+              <dd>
+                <input
+                  id="commission"
+                  type="number"
+                  placeholder="Enter"
+                  max="100"
+                  name="sharePercent"
+                  formControlName="sharePercent"
+                  required
+                  (keypress)="
+                    ($event.charCode == 8 || $event.charCode == 0
+                      ? null
+                      : ($event.charCode >= 48 && $event.charCode <= 57) ||
+                        $event.charCode === 13)
+                  "
+                  numberRange
+                />
+                <span class="must">＊</span>
+                <small style="display: block; color: #5f5f5f"
+                  >0 - {{ minMaxSharing }}%
+                </small>
+              </dd>
+            </ng-template>
+            <ng-template [ngIf]="!isClient && !isprepaidOpen">
+              <dl>
+                <dt>
+                  <label for="differentSharing"> {{Update?.DifferentSharing}} </label>
+                </dt>
+                <dd>
+                  <input
+                    id="differentSharing"
+                    type="checkbox"
+                    #differentSharing
+                    (change)="showDifferentSharing($event.target.checked)"
+                  />
+                </dd>
+              </dl>
+            </ng-template>
+            <div
+              *ngIf="isDifferentSharingOpen"
+              class="col-2"
+              style="border-bottom: 1px solid #bfbfbf"
+            >
+              <div class="input-group">
+                <label>Cricket Share(%):</label>
+                <input
+                  type="number"
+                  min="0"
+                  formControlName="cricketSharing"
+                  placeholder="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.cricketSharing }}% </small>
+              </div>
+              <div class="input-group">
+                <label>Cricket Fancy Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="cricketFancySharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.cricketFancySharing }}% </small>
+              </div>
+
+              <div class="input-group">
+                <label>Soccer Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="soccerSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.soccerSharing }}% </small>
+              </div>
+              <div class="input-group">
+                <label>Soccer Goal Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="soccerGoalsSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.soccerGoalsSharing }}% </small>
+              </div>
+              <div class="input-group">
+                <label>Tennis Share(%):</label>
+                <input
+                  disabled=""
+                  type="number"
+                  formControlName="tennisSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - 0% </small>
+              </div>
+              <div class="input-group">
+                <label>BookMaker Share(%):</label>
+                <input
+                  disabled=""
+                  type="number"
+                  formControlName="bmCommission"
+                  min="0"
+                  numberOnly
+                  placeholder="0"
+                  numberRange
+                />
+                <small>0 - 0% </small>
+              </div>
+              <div class="input-group">
+                <label>Casino Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="indianCasinoSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.indianCasinoSharing }}% </small>
+              </div>
+              <div class="input-group">
+                <label>Horse Race Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="horseRaceSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.horseRaceSharing }}% </small>
+              </div>
+
+              <div class="input-group">
+                <label>Greyhound Race Share(%):</label>
+                <input
+                  type="number"
+                  formControlName="dogRaceSharing"
+                  placeholder="0"
+                  min="0"
+                  numberOnly
+                  numberRange
+                />
+                <small>0 - {{ 100 - sharingMap.dogRaceSharing }}% </small>
+              </div>
+            </div>
+            <ng-template [ngIf]="activeTheme?.name.includes('cricBuzzer')">
+              <ng-template
+                [ngIf]="currentUser?.userType == commonService.vrnlUserType"
+              >
+                <dl>
+                  <dt>
+                    <label for="rollingCommission">
+                      Allow Rolling Commission</label
+                    >
+                  </dt>
+                  <dd>
+                    <input
+                      id="rollingCommission"
+                      type="checkbox"
+                      placeholder="Enter"
+                      formControlName="allowRollingCommission"
+                      (change)="toggleAllowRollingComm($event.target.checked)"
+                    />
+                  </dd>
+                </dl>
+              </ng-template>
+
+              <ng-template
+                [ngIf]="
+                  (currentUser.userType == commonService.vrnlUserType &&
+                    isRollingCommChecked) ||
+                  currentUser.allowRollingCommission
+                "
+              >
+                <ng-template [ngIf]="isClient">
+                  <dl>
+                    <dt>
+                      <label for="rollCommission"> Rolling commission </label>
+                    </dt>
+                    <dd>
+                      <input
+                        id="rollCommission"
+                        type="checkbox"
+                        (change)="showRollingCommission($event.target.checked)"
+                      />
+                    </dd>
+                  </dl>
+                </ng-template>
+                <ng-template [ngIf]="!isClient">
+                  <dl>
+                    <dt>
+                      <label for="rollCommission"> Rolling commission </label>
+                    </dt>
+                    <dd>
+                      <input
+                        id="rollCommission"
+                        type="checkbox"
+                        (change)="showRollingCommission($event.target.checked)"
+                      />
+                    </dd>
+                  </dl>
+                </ng-template>
+                <dl
+                  class="border_b"
+                  formGroupName="rollingCommission"
+                  *ngIf="isRollingCommission"
+                >
+                  <dt>Fancy</dt>
+                  <dd>
+                    <input
+                      id="fancy"
+                      value="0.5"
+                      type="text"
+                      placeholder="Fancy commission"
+                      formControlName="fancy"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Casino</dt>
+                  <dd>
+                    <input
+                      id="casino"
+                      value="0.5"
+                      type="text"
+                      placeholder="casino commission"
+                      formControlName="casino"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Exchange</dt>
+                  <dd>
+                    <input
+                      id="exchange"
+                      value="0.5"
+                      type="text"
+                      placeholder="exchange commission"
+                      formControlName="exchange"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Bookmaker</dt>
+                  <dd>
+                    <input
+                      id="bookmaker"
+                      value="0.5"
+                      type="text"
+                      placeholder="Enter Bookmaker commision"
+                      formControlName="bookMaker"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+                </dl>
+                <ng-template [ngIf]="!isClient">
+                  <dl>
+                    <dt>
+                      <label for="agentRollCommission"
+                        >Agent rolling commission
+                      </label>
+                    </dt>
+                    <dd>
+                      <input
+                        id="agentRollCommission"
+                        type="checkbox"
+                        (change)="
+                          showAgentRollingCommission($event.target.checked)
+                        "
+                      />
+                    </dd>
+                  </dl>
+                </ng-template>
+                <br />
+                <dl
+                  class="border_b"
+                  formGroupName="agentRollingCommission"
+                  *ngIf="isAgentRollingCommission"
+                >
+                  <dt>Fancy</dt>
+                  <dd>
+                    <input
+                      id="afancy"
+                      value="2"
+                      type="text"
+                      placeholder="fancy commission"
+                      formControlName="fancy"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Casino</dt>
+                  <dd>
+                    <input
+                      id="acasino"
+                      value="2"
+                      type="text"
+                      placeholder="casino commission"
+                      formControlName="casino"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Exchange</dt>
+                  <dd>
+                    <input
+                      id="exchange"
+                      value="2"
+                      type="text"
+                      placeholder="exchange commission"
+                      formControlName="exchange"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+
+                  <dt>Bookmaker</dt>
+                  <dd>
+                    <input
+                      id="bookmaker"
+                      value="2"
+                      type="text"
+                      placeholder="bookmaker commission"
+                      formControlName="bookMaker"
+                      maxlength="20"
+                      numberOnly
+                      [allowDecimals]="true"
+                      required
+                    />
+                    <!-- <span class="must">＊</span> -->
+                    <!-- <span id="userNameErrorText" class="error-text" style="display: none"></span> -->
+                  </dd>
+                </dl>
+              </ng-template>
+            </ng-template>
+          </dl>
+
+          <!-- </form> -->
+        </li>
+      </ul>
+    </div>
+
+    <div class="modal-footer">
+      <div class="btn_box">
+        <button type="submit" class="btn-send">Create</button>
+      </div>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="creditRefModalOpen">
+  <h3>Credit Reference Edit</h3>
+  <form [formGroup]="creditRefForm" (ngSubmit)="transferCreditRef()">
+    <div formArrayName="users" class="modal-content">
+      <ng-container formGroupName="0">
+        <div class="wrap-refer_edit">
+          <dl>
+            <dt>Current</dt>
+            <dd>
+              <a
+                class="btn"
+                id="creditReferenceLog"
+                (click)="
+                  openCreditRefWindow(
+                    creditRefUser.userId,
+                    creditRefUser.userName
+                  )
+                "
+                >Log</a
+              >
+              <strong id="creditReference"
+                >{{ creditRefUser?.creditRef | number: "0.2" }}
+              </strong>
+            </dd>
+          </dl>
+
+          <dl>
+            <dt>New</dt>
+            <dd>
+              <input
+                type="number"
+                id="newCreditReference"
+                formControlName="amount"
+                placeholder="Enter"
+                min="0"
+                (keypress)="
+                  ($event.charCode == 8 || $event.charCode == 0
+                    ? null
+                    : ($event.charCode >= 48 && $event.charCode <= 57) ||
+                      $event.charCode === 13)
+                "
+              />
+            </dd>
+          </dl>
+
+          <!-- <dl>
+            <dt>Password</dt>
+            <dd>
+
+            </dd>
+          </dl> -->
+        </div>
+      </ng-container>
+    </div>
+    <ul class="btn-wrap">
+      <li>
+        <label for="password">{{Update?.Password}}: </label>
+        <input
+          id="changeCreditReferencePassword"
+          type="password"
+          formControlName="password"
+          placeholder="Enter"
+          maxlength="12"
+          minlength="6"
+        />
+        <button id="changeCreditReferenceBtn" class="btn-send" type="submit">
+          Submit
+        </button>
+      </li>
+    </ul>
+  </form>
+</app-modal>
+
+<app-modal [(open)]="changeStatusOpen" (openChange)="resetStatusModal()">
+  <div class="modal-header">
+    <h3>{{Update?.Changestatus}}</h3>
+  </div>
+  <div class="modal-content">
+    <div class="status_id">
+      <p id="changeAccount">
+        <span class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ statusUser?.userType }} "></span
+        >{{ statusUser?.userName }}
+      </p>
+      <p
+        [ngClass]="{
+          'status-active': statusUser?.userStatus === 0,
+          'status-suspend': statusUser?.userStatus === 1,
+          'status-lock': statusUser?.userStatus === 2
+        }"
+        id="originalStatus"
+      >
+        <img src="assets/images/transparent.gif" />{{
+          statusMap[statusUser?.userStatus]
+        }}
+      </p>
+    </div>
+    <div class="white-wrap">
+      <ul id="statusBtn" class="status_but">
+        <li>
+          <a
+            id="activeBtn"
+            class="but_active"
+            [ngClass]="{
+              disable: statusUser?.userStatus === 0,
+              open: selectedStatus === 0
+            }"
+            [attr.disabled]="statusUser?.userStatus === 0"
+            (click)="selectStatus($event, 0)"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            Active
+          </a>
+        </li>
+        <li>
+          <a
+            id="suspendBtn"
+            class="{{(isPremiumSite)?'but_locked':'but_suspend'}}"
+            [ngClass]="{
+              disable: statusUser?.userStatus === 1,
+              open: selectedStatus === 1
+            }"
+            [attr.disabled]="statusUser?.userStatus === 1"
+            (click)="selectStatus($event, 1)"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            {{(isPremiumSite)?'Locked':'Suspend'}}
+          </a>
+        </li>
+        <li>
+          <a
+            id="lockedBtn"
+            class="{{(isPremiumSite)?'but_suspend':'but_locked'}}"
+            [ngClass]="{
+              disable: statusUser?.userStatus === 2,
+              open: selectedStatus === 2
+            }"
+            [attr.disabled]="statusUser?.userStatus === 2"
+            (click)="selectStatus($event, 2)"
+          >
+            <img class="" src="assets/images/transparent.gif" />
+            {{(isPremiumSite)?'Suspend':'Locked'}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <form
+        [formGroup]="statusForm"
+        (ngSubmit)="changeStatus()"
+        class="btn_box inline-form"
+      >
+        <div class="form_list">
+          <label>{{Update?.Password}}: </label>
+          <input
+            id="changeStatusPassword"
+            type="password"
+            placeholder="Enter"
+            formControlName="password"
+            required
+          />
+        </div>
+        <div class="btn_box">
+          <button id="changeStatusBtn" class="btn-send" type="submit">
+         Change
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-modal>

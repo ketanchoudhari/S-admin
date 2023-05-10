@@ -1,0 +1,180 @@
+<div class="box" style="align-items: baseline;">
+  <h2>{{Update?.AccountStatement}}</h2>
+  <div class="push" >
+      <a id="getPL" style="vertical-align: baseline;" (click)="getStatement()" class="btn-send">Show Default</a>
+  </div>
+</div>
+<div class="function-wrap">
+    <ul class="input-list">
+        <div id="statusCondition" style="display: none">
+          <li><label>{{Update?.BetStatus}}:</label></li>
+          <li>
+            <select name="betStatus" id="betStatus"></select>
+          </li>
+        </div>
+    
+        <li><label>{{Update?.Period}}</label></li>
+        <li class="blockdis">
+          <div class="webhide ">
+          <input id="startDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="startTime" class="time-input disable" type="text" [(ngModel)]="fromTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="09:00" maxlength="5" />
+            </div>
+          to
+          <input id="endDate" class="cal-input" type="text" placeholder="YYYY-MM-DD" [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig" [theme]="'dp-material'" [mode]="'day'" autocomplete="off" />
+          <input id="endTime" class="time-input disable" type="text" [(ngModel)]="toTime" [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'" [mode]="'time'" placeholder="08:59" maxlength="5" />
+        </li>
+      </ul>
+    
+      <ul class="input-list">
+        <li><a id="today" (click)="getReportDate('today')" class="btn">J{{Update?.Justfortoday}}</a></li>
+        <li>
+          <a id="yesterday" (click)="getReportDate('yesterday')" class="btn">{{Update?.Fromyesterday}}</a>
+        </li>
+        <li style="display: none">
+          <a id="last7days" href="#" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" href="#" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" href="#" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" href="#" class="btn">Last 3 Months</a>
+        </li>
+        <li><a id="getPL" (click)="getStatement()" class="btn-send">{{Update?.LoadStatement}}</a></li>
+      </ul>
+</div>
+<div class=" data-table" >
+  <button _ngcontent-rga-c86="" class="add_member btn" *ngIf="openbets" (click)="onBackbuttonn()">Back</button>
+<table id="table_log" class="table01 table-responsive" *ngIf="!openbets">
+  <tbody>
+    <tr>
+      <th width="10%" class="align-L sort_asc" [appSort]="userLogs" data-order="asc" data-name="settlementDate">{{Update?.DateTime}}</th>
+      <th width="10%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="credit">{{Update?.Deposit}}</th>
+      <th width="10%"  class="sort_asc"[appSort]="userLogs" data-order="asc" data-name="debit">{{Update?.Withdraw}}</th>
+      <th width="10%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="runningBalance">{{Update?.Balance}}</th>
+      <th width="15%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="narration">{{Update?.Remark}}</th>
+    </tr>
+  </tbody>
+  <tbody id="content">
+    <tr
+      *ngFor="
+        let log of userLogs | paginate: { itemsPerPage: 1000, currentPage: p }
+      "
+    >
+      <td id="createDate" class="align-L">
+        {{ log.settlementDate | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+      </td>
+      <td class="green">
+        {{ log.credit ? (log.credit | indianCurrency) : "-" }}
+      </td>
+      <td>
+        <span class="red">{{
+          log.debit ? (log.debit | indianCurrency) : "-"
+        }}</span>
+      </td>
+      <td id="balance">{{ log.runningBalance | indianCurrency }}</td>
+      <td id="remark" (click)="(log.marketId!==null)?openStatementBets(log.bets):''">
+        <a *ngIf="log.marketId!==null">{{ log.narration }}</a>
+        <span *ngIf="log.marketId==null">{{ log.narration }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table id="table_marketbets" class="table01 table-responsive" *ngIf="openbets">
+  <tbody>
+    <tr>
+      <th width="10%" class="align-L sort_asc" [appSort]="marketBets" data-order="asc" data-name="betTime">Placed on</th>
+      <th width="10%" class="align-L sort_asc" [appSort]="marketBets" data-order="asc" data-name="settlementDate">Settled On</th>
+      <th width="10%"class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="betId">Betid</th>
+      <th width="10%"class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="betType">betType</th>
+      <th width="10%"class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="odd">odds</th>
+      <th width="10%"class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="stake">stake</th>
+      <th width="15%" class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="selectionName">selectionName</th>
+      <th width="10%" class="sort_asc" [appSort]="marketBets" data-order="asc" data-name="status">Won / Lose</th>
+
+    </tr>
+  </tbody>
+  <tbody id="content">
+    <ng-container>
+      
+    </ng-container>
+    <tr
+      *ngFor="
+        let bet of marketBets
+      "
+      [ngClass]="bet.betType=== 'back' || bet.betType=== 'yes'?'back':'lay'"
+    >
+      <td class="align-L">
+        {{ bet.betTime | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+      </td>
+      <td class="align-L">
+        {{ bet.settlementDate | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+      </td>
+      <td>
+        {{ bet.betId }}
+      </td>
+      <td>
+        <span>{{
+          bet.betType
+        }}</span>
+      </td>
+      <td>{{ bet.odd }}</td>
+      <td>{{ bet.stake | indianCurrency }}</td>
+      <td>{{ bet.selectionName }}</td>
+      <td [ngClass]="bet.status=== 'WON'?'green':'red'">{{ bet.status }}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <pagination-template
+    *ngIf="userLogs && userLogs.length > 10"
+    #pagination="paginationApi"
+    (pageChange)="p = $event"
+  >
+    <ul id="pageNumberContent" class="pages">
+      <li id="prev">
+        <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+          >Prev</a
+        >
+        <ng-template #prevTemp>
+          <a (click)="pagination.previous()">Prev</a>
+        </ng-template>
+      </li>
+      <ng-container *ngFor="let page of pagination.pages">
+        <li id="pageNumber">
+          <a
+            (click)="pagination.setCurrent(page.value)"
+            *ngIf="pagination.getCurrent() != page.value"
+            class="btn"
+            >{{ page.value }}
+          </a>
+          <a
+            *ngIf="pagination.getCurrent() == page.value"
+            class="select"
+            style="pointer-events: none"
+            >{{ page.value }}
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+      <li id="next">
+        <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable"
+          >Next</a
+        >
+        <ng-template #nextTemp>
+          <a (click)="pagination.next()">Next</a>
+        </ng-template>
+      </li>
+    </ul>
+  </pagination-template>
+</div>
+</div>
+

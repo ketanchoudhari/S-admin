@@ -1,0 +1,152 @@
+<h2>{{Update?.AccountStatement}}</h2>
+<div class="spacer"></div>
+<div class="total_all box">
+  <span>
+    <label>{{Update?.Last}}:</label>
+    <select name="limit" id="limit" (change)="selectNoRows($event.target.value)">
+      <option value="100">100 Txn</option>
+      <option value="50">50 Txn</option>
+      <option value="25">25 Txn</option>
+      <option value="10" selected="">10 Txn</option>
+      <option value="{{listCount}}">Full {{listCount}}</option>
+    </select>
+  </span>
+  <a id="getPL" (click)="getaccount()" class="btn-send" style="margin-bottom: 4px;">{{Update?.ShowDefault}}</a>
+  <div class="download-reports push">
+    <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+    <button (click)="exportPdf()" class="pdf btn" title="Export Pdf">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+    <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+      <img src="assets/images/transparent.gif" alt="" />
+    </button>
+  </div>
+</div>
+<div class="table-responsive data-table">
+  <table id="table_log" class="table01">
+    <tbody>
+      <tr>
+        <th width="12%" class="align-L sort_asc" [appSort]="userLogs" data-order="asc" data-name="dateTime">{{Update?.DateTime}}
+        </th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="amount">{{Update?.DepositbyUpline}}</th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="amount">{{Update?.DeposittoDownline}}
+        </th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="amount">{{Update?.WithdrawbyUpline}}
+        </th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="amount">{{Update?.WithdrawfromDownline}}
+        </th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="balance">{{Update?.Balance}}</th>
+        <th width="13%" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="description">{{Update?.Remark}}</th>
+        <th width="" class="sort_asc" [appSort]="userLogs" data-order="asc" data-name="from">{{Update?.FromTo}}</th>
+      </tr>
+    </tbody>
+    <tbody id="content">
+      <tr *ngFor="
+        let log of userLogs | paginate: { itemsPerPage: n, currentPage: p,totalItems:listCount }
+      ">
+        <td id="createDate" class="align-L">
+          {{ log.dateTime | date: "yyyy-MM-dd HH:mm:ss":timeFormat }}
+        </td>
+        <td>
+          {{ log.type == transactionType.DEPOSIT_UPLINE ? (log.amount | indianCurrency) : "-" }}
+        </td>
+        <td>
+          {{ log.type == transactionType.DEPOSIT_DOWNLINE ? (log.amount | indianCurrency) : "-" }}
+        </td>
+        <td>
+          <span class="red">{{
+            log.type == transactionType.WITHDRAW_UPLINE ? (log.amount | indianCurrency) : "-"
+            }}</span>
+        </td>
+        <td>
+          <span class="red">{{
+            log.type == transactionType.WITHDRAW_DOWNLINE ? (log.amount | indianCurrency) : "-"
+            }}</span>
+        </td>
+        <td id="balance">{{ log.balance | indianCurrency }}</td>
+        <td id="remark">{{ log.description }}</td>
+        <td>
+          <span id="from">{{ log.from }}</span>
+          <img class="fromto" src="assets/images/transparent.gif" />
+          <span id="to">{{ log.to }}</span>
+        </td>
+      </tr>
+      <tr class="total">
+        <td class="align-L">Total</td>
+        <td id="_totalDepositbyUpline">
+          <span *ngIf="totalDepositUpline < 0; else upLinePLTotal" class="red">
+            ({{ totalDepositUpline | indianCurrency }})
+          </span>
+          <ng-template #upLinePLTotal>
+            <span>
+              {{ totalDepositUpline | indianCurrency }}
+            </span>
+          </ng-template>
+        </td>
+        <td id="_totalDepositbyDownline">
+          <span *ngIf="totalDepositDownline < 0; else downLinePLTotal" class="red">
+            ({{ totalDepositDownline | indianCurrency }})
+          </span>
+          <ng-template #downLinePLTotal>
+            <span>
+              {{ totalDepositDownline | indianCurrency }}
+            </span>
+          </ng-template>
+        </td>
+        <td id="_totalWithdrawUpline">
+          <span *ngIf="totalWithdrawUpline < 0; else withdrawUpLinePLTotal" class="red">
+            ({{ totalWithdrawUpline | indianCurrency }})
+          </span>
+          <ng-template #withdrawUpLinePLTotal>
+            <span>
+              {{ totalWithdrawUpline | indianCurrency }}
+            </span>
+          </ng-template>
+        </td>
+        <td id="_totalWithdrawDownline">
+          <span *ngIf="totalWithdrawDownline < 0; else withdrawDownLinePLTotal" class="red">
+            ({{ totalWithdrawDownline | indianCurrency }})
+          </span>
+          <ng-template #withdrawDownLinePLTotal>
+            <span>
+              {{ totalWithdrawDownline | indianCurrency }}
+            </span>
+          </ng-template>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <pagination-template *ngIf="userLogs && listCount > n" #pagination="paginationApi" (pageChange)="pageChanged($event)">
+      <ul id="pageNumberContent" class="pages">
+        <li id="prev">
+          <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable">{{Update?.Previous}}</a>
+          <ng-template #prevTemp>
+            <a (click)="pagination.previous()">{{Update?.Previous}}</a>
+          </ng-template>
+        </li>
+        <ng-container *ngFor="let page of pagination.pages">
+          <li id="pageNumber">
+            <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() != page.value" class="btn">{{
+              page.value }}
+            </a>
+            <a *ngIf="pagination.getCurrent() == page.value" class="select" style="pointer-events: none">{{ page.value
+              }}
+            </a>
+          </li>
+        </ng-container>
+        <li id="next">
+          <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">{{Update?.Next}}</a>
+          <ng-template #nextTemp>
+            <a (click)="pagination.next()">{{Update?.Next}}</a>
+          </ng-template>
+        </li>
+      </ul>
+    </pagination-template>
+  </div>
+</div>

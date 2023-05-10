@@ -1,0 +1,1219 @@
+<div class="main_wrap">
+    <div class="total_all">
+        <h2>Risk Management Summary</h2><a class="btn_replay" id="refresh_Top_Racing" style="display: none;"><img
+                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a>
+    </div>
+    <div class="play_race-wrap">
+        <div class="top_player-wrap">
+            <h3>
+                <ul class="tab-topplay">
+                    <li id="top10MatchedAmountLi" [ngClass]="{'select': tabIndex == 1,'': tabIndex == 2}"
+                        (click)="changeTop10Tab(1)"><a>Top 10 Matched Amount Player</a></li>
+                    <li id="top10ExposureLi" [ngClass]="{'select': tabIndex == 2,'': tabIndex == 1}"
+                        (click)="changeTop10Tab(2)"><a>Top 10 Exposure Player</a></li>
+                </ul>
+            </h3>
+            <div class="col-2" *ngIf="tabIndex == 1">
+                <ul class="slip-head">
+                    <li class="col-playID">UID</li>
+                    <li class="col-exp">Exposure</li>
+                    <li class="col-amount" [ngClass]="{'sort-this': tabIndex == 1}">Matched Amount</li>
+                </ul>
+                <table class="table01">
+                    <tbody id="content_top_1_5">
+                        <ng-container *ngFor="let player of topMatchedplayers; let i = index">
+                            <tr *ngIf="i < 5">
+                                <td class="align-L"><span class="order" id="number">{{i+1}}.</span><a id="userId"
+                                        [routerLink]="['/users','8','sub', player.playerId,'accountSummary']">{{player.userName}}</a>
+                                </td>
+                                <td id="exposure" width="80" style="text-align: left !important;"><span
+                                        class="red">({{player.liability | number:'0.2'}})</span></td>
+                                <td id="amount" width="110">{{player.stake | number:'0.2'}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-2" *ngIf="tabIndex == 1">
+                <ul class="slip-head">
+                    <li class="col-playID">UID</li>
+                    <li class="col-exp">Exposure</li>
+                    <li class="col-amount" [ngClass]="{'sort-this': tabIndex == 1}">Matched Amount</li>
+                </ul>
+                <table class="table01">
+                    <tbody id="content_top_6_10">
+                        <ng-container *ngFor="let player of topMatchedplayers; let i = index">
+                            <tr *ngIf="i>=5">
+                                <td class="align-L"><span class="order" id="number">{{i+1}}.</span><a
+                                        [routerLink]="['/users','8','sub', player.playerId,'accountSummary']">{{player.userName}}</a>
+                                </td>
+                                <td id="exposure" width="80" style="text-align: left !important;"><span
+                                        class="red">({{player.liability | number:'0.2'}})</span></td>
+                                <td id="amount" width="110">{{player.stake | number:'0.2'}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-2" *ngIf="tabIndex == 2">
+                <ul class="slip-head">
+                    <li class="col-playID">UID</li>
+                    <li class="col-exp" [ngClass]="{'sort-this': tabIndex == 2}">Exposure</li>
+                    <li class="col-amount">Matched Amount</li>
+                </ul>
+                <table class="table01">
+                    <tbody id="content_top_1_5">
+                        <ng-container *ngFor="let player of topExposureplayers; let i = index">
+                            <tr *ngIf="i < 5">
+                                <td class="align-L"><span class="order" id="number">{{i+1}}.</span><a
+                                        [routerLink]="['/users','8','sub', player.playerId,'accountSummary']">{{player.userName}}</a>
+                                </td>
+                                <td id="exposure" width="80" style="text-align: left !important;"><span
+                                        class="red">({{player.exposure | number:'0.2'}})</span></td>
+                                <td id="amount" width="110">{{player.exposure | number:'0.2'}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-2" *ngIf="tabIndex == 2">
+                <ul class="slip-head">
+                    <li class="col-playID">UID</li>
+                    <li class="col-exp" [ngClass]="{'sort-this': tabIndex == 2}">Exposure</li>
+                    <li class="col-amount">Matched Amount</li>
+                </ul>
+                <table class="table01">
+                    <tbody id="content_top_6_10">
+                        <ng-container *ngFor="let player of topExposureplayers; let i = index">
+                            <tr *ngIf="i>=5">
+                                <td class="align-L"><span class="order" id="number">{{i+1}}.</span><a
+                                        [routerLink]="['/users','8','sub', player.playerId,'accountSummary']">{{player.userName}}</a>
+                                </td>
+                                <td id="exposure" width="80" style="text-align: left !important;"><span
+                                        class="red">({{player.exposure | number:'0.2'}})</span></td>
+                                <td id="amount" width="110">{{player.exposure | number:'0.2'}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="racing-wrap">
+            <h3>Horse Racing &amp; Greyhound Racing</h3>
+            <ul class="slip-head">
+                <li class="col-type">Type</li>
+                <li class="col-country">Country</li>
+                <li class="col-local">Events</li>
+                <li class="col-amount">Matched Amount</li>
+            </ul>
+            <div class="over-wrap" style="height: 160px;">
+                <table style="display: none;">
+                    <tbody>
+                        <tr id="tempTr_racing">
+                            <td width="30" class="td-type"><span id="eventType"></span></td>
+                            <td width="60" class="align-L"><a id="country" href="javascript:void (0);"></a></td>
+                            <td class="align-L"><a href="javascript:void (0);" id="eventName"></a></td>
+                            <td width="100" id="amount"></td>
+                        </tr>
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table01">
+                    <tbody id="content_racing">
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr id="tempTr_noData_racing">
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngFor="let sport of sportWiseanalysisbooks;let $index = index;trackBy: trackByIndex">
+        <div class="match-wrap1">
+            <div class="total_all">
+                <h2>Match Odds</h2>
+                <h2><img class="png-match" src="/assets/images/{{sport.sportName}}.png"></h2><a
+                    (click)="analysisListBooks()" class="btn_replay" id="refresh_Match_Odds"><img
+                        src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a><a
+                    class="btn_replay" id="downloadFile_Sportsbook" style="display: none; width: 70px;">Download</a>
+            </div>
+            <table class="table011 risk_matchodd">
+                <tbody>
+                    <tr>
+                        <th width="10%" class="align-L" rowspan="2">Sports</th>
+                        <th width="8.1%" class="align-L" rowspan="2">Market</th>
+                        <th class="align-L" rowspan="2">Event/Market Name</th>
+                        <th width="21%" class="align-C border-l bg-yellow" colspan="3">Player P/L</th>
+                        <th width="6%" class="align-C border-l" rowspan="2">Downline P/L</th>
+                    </tr>
+                    <tr>
+                        <th width="7%" class="border-l bg-yellow" style="text-align: center;">1</th>
+                        <th width="7%" class="bg-yellow" style="text-align: center;">X</th>
+                        <th width="7%" class="bg-yellow" style="text-align: center;">2</th>
+                    </tr>
+                </tbody>
+                <ng-container *ngFor="let eb of sport.analysisbooks;let $index = index;trackBy: trackByIndex">
+                    <tbody id="content_MATCH_ODDS_DRAW">
+
+                        <tr id="tempTr_MATCH_ODDS_DRAW" class="border-t">
+                            <td class="align-L" rowspan="2" id="0_1" style="padding: 8px 10px;"><a id="eventType">{{
+                                    eb.sportName | titlecase }}</a>
+                            </td>
+                            <td class="align-L border-l" rowspan="2" id="1_1" style="padding: 8px 10px;">
+                                {{eb.marketName}}
+                            </td>
+                            <td class="align-L border-l" id="linerh" style="padding: 8px 10px;"><a
+                                    (click)="toggleExpand($event,'expand_'+eb.eventId,eb.eventId,eb.sportName)"
+                                    class="btn open-odds" name="oddsBtn_{{eb.eventId}}">Open</a><a
+                                    id="marketPath"><strong id="eventName">{{eb.eventName}}</strong></a></td>
+                            <td class="border-l" style="text-align: center;">
+                                <a *ngIf="eventNamewiseRunnerBook(eb.eventName.split(' v ')[0],eb)>=0"
+                                    [ngClass]="{'green': eventNamewiseRunnerBook(eb.eventName.split(' v ')[0],eb)>=0}">{{eventNamewiseRunnerBook(eb.eventName.split('
+                                    v ')[0],eb)
+                                    | number: '0.2'}}</a>
+                                <a *ngIf="eventNamewiseRunnerBook(eb.eventName.split(' v ')[0],eb)<0"
+                                    [ngClass]="{'red': eventNamewiseRunnerBook(eb.eventName.split(' v ')[0],eb)<0}">({{(eventNamewiseRunnerBook(eb.eventName.split('
+                                    v ')[0],eb)
+                                    * -1)
+                                    | number: '0.2'}})</a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a *ngIf="eventNamewiseRunnerBook('The Draw',eb)>=0"
+                                    [ngClass]="{'green': eventNamewiseRunnerBook('The Draw',eb)>=0}">{{eventNamewiseRunnerBook('The
+                                    Draw',eb)
+                                    | number: '0.2'}}</a>
+                                <a *ngIf="eventNamewiseRunnerBook('The Draw',eb)<0"
+                                    [ngClass]="{'red': eventNamewiseRunnerBook('The Draw',eb)<0}">({{(eventNamewiseRunnerBook('The
+                                    Draw',eb)
+                                    * -1)
+                                    | number: '0.2'}})</a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a *ngIf="eventNamewiseRunnerBook(eb.eventName.split(' v ')[1],eb)>=0"
+                                    [ngClass]="{'green': eventNamewiseRunnerBook(eb.eventName.split(' v ')[1],eb)>=0}">{{eventNamewiseRunnerBook(eb.eventName.split('
+                                    v ')[1],eb)
+                                    | number: '0.2'}}</a>
+                                <a *ngIf="eventNamewiseRunnerBook(eb.eventName.split(' v ')[1],eb)<0"
+                                    [ngClass]="{'red': eventNamewiseRunnerBook(eb.eventName.split(' v ')[1],eb)<0}">({{(eventNamewiseRunnerBook(eb.eventName.split('
+                                    v ')[1],eb)
+                                    * -1)
+                                    | number: '0.2'}})</a>
+                            </td>
+                            <td class="align-C border-l" (click)="openMoBookModal(eb)"><a class="btn" id="view">View</a>
+                            </td>
+                        </tr>
+                        <tr id="expand_{{eb.eventId}}" class="expanded marketsSection" style="display:none;">
+                            <td class="border-l align-L" colspan="4">
+                                <img class="expand-arrow" src="assets/images/transparent.gif">
+                                <div class="iframert" style="height: 400px;">
+                                    <ng-container
+                                        *ngFor="let ad of analysisDatabyevent;let $index = index;trackBy: trackByIndex">
+                                        <ng-container *ngIf="ad.marketName=='Match Odds'">
+                                            <div class="for-agent">
+                                                <div class="head-bets-agent"><span class="game-low_liq"
+                                                        id="lowLiquidity" style="display: none;">Low Liquidity</span>
+                                                    <dl class="game-matched">
+                                                        <dt>{{ad.marketName}}</dt>
+                                                    </dl>
+                                                    <dl class="game-matched">
+                                                        <dt>Matched</dt>
+                                                    </dl>
+                                                    <ul class="game-info">
+                                                        <li class="" id="inPlay"><img class="icon-irun"
+                                                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==">In-Play
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="bets-wrap"><span class="refer_only"><span
+                                                            id="selectionCount">{{ad?.selections?.length}}</span>
+                                                        Selections</span>
+                                                    <table class="bets" id="marketOdds">
+                                                        <tbody>
+                                                            <tr class="bet-all">
+                                                                <td></td>
+                                                                <td class="refer-bet" colspan="2" id="backPercent">
+                                                                    0.0%</td>
+                                                                <td><a class="back-all"><span>Back all</span></a></td>
+                                                                <td><a class="lay-all"><span>Lay all</span></a></td>
+                                                                <td class="refer-book" colspan="2" id="layPercent">0.0%
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody id="content">
+                                                            <tr id="selection_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}"
+                                                                *ngFor="let runner of ad.selections;let $index = index;trackBy: trackByFn">
+                                                                <th id="selection">
+                                                                    <p><a id="marketDepth"><img class="icon-predict"
+                                                                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a>{{runner.selName}}
+                                                                        <span *ngIf="runner.totalPL>=0"
+                                                                            [ngClass]="{'green': runner.totalPL>=0}"
+                                                                            style="float: right;">{{runner.totalPL |
+                                                                            number: '0.2'}}</span>
+                                                                        <span *ngIf="runner.totalPL<0"
+                                                                            [ngClass]="{'red': runner.totalPL<0}"
+                                                                            style="float: right;">({{runner.totalPL * -1
+                                                                            | number: '0.2'}})</span>
+                                                                    </p>
+                                                                </th>
+                                                                <td class="back-3"
+                                                                    id="back_3_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd3 == 1 || runner.backOdd3 == 0) ? '#d7e8f4' : ''}">{{runner.backOdd3}}</a><span></span>
+                                                                </td>
+                                                                <td class="back-2"
+                                                                    id="back_2_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd2 == 1 || runner.backOdd2 == 0) ? '#b7d5eb' : ''}">{{runner.backOdd2}}</a><span></span>
+                                                                </td>
+                                                                <td class="back-1"
+                                                                    id="back_1_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd1 == 1 || runner.backOdd1 == 0) ? '#72bbef' : ''}">{{runner.backOdd1}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-1"
+                                                                    id="lay_1_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd1 == 1 || runner.layOdd1 == 0) ? '#faa9ba' : ''}">{{runner.layOdd1}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-2"
+                                                                    id="lay_2_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd2 == 1 || runner.layOdd2 == 0) ? '#efd3d9' : ''}">{{runner.layOdd2}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-3"
+                                                                    id="lay_3_{{removeSpacefilter(ad.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd3 == 1 || runner.layOdd3 == 0) ? '#f6e6ea' : ''}">{{runner.layOdd3}}</a><span></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                    </ng-container>
+
+                                    <div id="bookMakerWrap__{{eb.eventId}}"
+                                        *ngIf="eb.sportName == 'cricket' && bookmData && bookmData.length>0"
+                                        class="bets-wrap  bookmaker_bet">
+                                        <table id="bookMakerMarketList" class="bets bets-bookmaker">
+                                            <colgroup>
+                                                <col span="1" width="280">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                            </colgroup>
+                                            <tbody id="bookMakerMarket_31135408_138039"
+                                                style="display: table-row-group;">
+                                                <tr class="colgroup-adjust">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr id="bookMakerSpecialBet" class="special_bet"
+                                                    style="background-color: rgb(240, 244, 246);">
+                                                    <td colspan="6">
+                                                        <h3>
+                                                            <p style="color: black;">Bookmaker</p>
+                                                        </h3>
+                                                    </td>
+                                                    <td class="border-l" (click)="openBMBookModal(bookmData[0])"><a
+                                                            class="btn" id="view">View</a></td>
+                                                </tr>
+                                                <tr class="bet-all">
+                                                    <td colspan="3"></td>
+                                                    <td>Back</td>
+                                                    <td>Lay</td>
+                                                    <td class="refer-book" colspan="2"></td>
+                                                </tr>
+
+                                                <ng-container *ngIf="bookmData">
+                                                    <ng-container
+                                                        *ngFor="let bookm of bookmData;let $index = index;trackBy: trackByIndex">
+                                                        <ng-container
+                                                            *ngIf="bookm.eventId == eb.eventId && bookm.marketName == 'Bookmaker'">
+                                                            <ng-container
+                                                                *ngFor="let bm of bookm.selections;let $index = index;trackBy: trackByFn">
+                                                                <tr *ngIf="bm.status != 'ACTIVE'"
+                                                                    id="bookMakerSuspend_31135408_138039_407290"
+                                                                    class="fancy-suspend-tr" marketid="138039">
+                                                                    <th></th>
+                                                                    <td class="fancy-suspend-td" colspan="6">
+                                                                        <div id="suspendClass" class="fancy-suspend">
+                                                                            <span id="info">{{bm.status}}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr *ngIf="bm.backOdd1 == 1 && bm.layOdd1 == 1"
+                                                                    id="bookMakerSuspend_31135408_138039_407290"
+                                                                    class="fancy-suspend-tr" marketid="138039">
+                                                                    <th></th>
+                                                                    <td class="fancy-suspend-td" colspan="6">
+                                                                        <div id="suspendClass" class="fancy-suspend">
+                                                                            <span id="info">Suspend</span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="bookMakerSelection_31135408_138039_407290"
+                                                                    style="display: table-row;">
+                                                                    <th class="predict">
+                                                                        <p id="runnerName">{{bm.selName}}
+                                                                            <span *ngIf="bm.totalPL>=0"
+                                                                                [ngClass]="{'green': bm.totalPL>=0}"
+                                                                                style="float: right;">{{bm.totalPL
+                                                                                |
+                                                                                number: '0.2'}}</span>
+                                                                            <span *ngIf="bm.totalPL<0"
+                                                                                [ngClass]="{'red': bm.totalPL<0}"
+                                                                                style="float: right;">({{bm.totalPL
+                                                                                * -1
+                                                                                | number: '0.2'}})</span>
+                                                                        </p>
+                                                                    </th>
+                                                                    <td colspan="3">
+                                                                        <dl class="back-gradient">
+                                                                            <dd id="back_3" style="cursor: pointer;">
+                                                                                <p></p>
+                                                                            </dd>
+                                                                            <dd id="back_2" style="cursor: pointer;">
+                                                                                <p></p>
+                                                                            </dd>
+                                                                            <dd id="back_1" style="cursor: pointer;">
+                                                                                <a>{{(bm.backOdd1 == 1 || bm.backOdd1 ==
+                                                                                    0)?'':bm.backOdd1}}
+                                                                                </a>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </td>
+                                                                    <td colspan="3">
+                                                                        <dl class="lay-gradient">
+                                                                            <dd id="lay_1" style="cursor: pointer;">
+                                                                                <a>
+                                                                                    {{(bm.layOdd1 == 1 || bm.layOdd1 ==
+                                                                                    0) ? '':bm.layOdd1}}
+                                                                                </a>
+                                                                            </dd>
+                                                                            <dd id="lay_2" style="cursor: pointer;">
+                                                                                <p></p>
+                                                                            </dd>
+                                                                            <dd id="lay_3" style="cursor: pointer;">
+                                                                                <p></p>
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="fancyBetTable_{{eb.eventId}}"
+                                        *ngIf="(eb.sportName == 'cricket' || eb.sportName == 'Election') && fancyData && fancyData.length>0"
+                                        class="bets-wrap fancy_bet" name="multiMarketItem">
+                                        <p id="fancyBetNoBet" class="no_bet" style="display: none;">has no
+                                            markets</p>
+                                        <table id="fancyBetMarketList" class="bets">
+                                            <colgroup>
+                                                <col span="1" width="280">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                                <col span="1" width="70">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr class="colgroup-adjust">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr id="fancyBetSpecialBet" class="special_bet"
+                                                    style="background-color: rgb(240, 244, 246);">
+                                                    <td colspan="6">
+                                                        <h3>
+                                                            <p style="color: black;">Fancy</p>
+                                                        </h3>
+                                                    </td>
+                                                    <td class="border-l" (click)="openSettledFancyModal(eb)"><a
+                                                            class="btn" id="view">Declared
+                                                            fancy</a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="bet-all">
+                                                    <td></td>
+                                                    <td class="refer-bet" colspan="2"></td>
+                                                    <td>No</td>
+                                                    <td>Yes</td>
+                                                    <td class="refer-book" colspan="2"></td>
+                                                </tr>
+                                                <ng-container *ngIf="fancyData">
+                                                    <ng-container
+                                                        *ngFor="let fancy of fancyData;let $index = index;trackBy: trackByIndex">
+                                                        <ng-container *ngIf="fancy.eventId == eventId">
+                                                            <tr *ngIf="fancy.gstatus != ''"
+                                                                id="bookMakerSuspend_30194778_66628_197445"
+                                                                class="fancy-suspend-tr" marketid="66628">
+                                                                <th colspan="3"></th>
+                                                                <td class="fancy-suspend-td" colspan="2">
+                                                                    <div id="suspendClass" class="fancy-suspend"
+                                                                        style="height: 42px;"><span
+                                                                            id="info">{{fancy.gstatus ? fancy.gstatus :
+                                                                            'Suspend'}}</span></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="fancyBetMarket_405923" class="fancybet">
+                                                                <th colspan="3">
+                                                                    <dl class="fancy-th-layout">
+                                                                        <dt>
+                                                                            <p id="marketName">
+                                                                                {{fancy.marketName}}</p>
+                                                                        </dt>
+                                                                        <dd class="dd-tips">
+                                                                            <ul class="fancy-tips"><a
+                                                                                    id="fancyBetBookBtn"
+                                                                                    (click)="openBookModal(fancy)"
+                                                                                    class="btn-book">Book</a>
+                                                                            </ul>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </th>
+                                                                <td colspan="2" class="multi_select ">
+                                                                    <ul>
+                                                                        <li class="lay-1" id="lay_1"><a id="runsInfo"
+                                                                                style="cursor: pointer;"
+                                                                                [ngStyle]="{'color': fancy.noRuns ? '' : '#faa9ba'}">{{(fancy.noRuns?fancy.noRuns:0)
+                                                                                | number: '0.0'}}<span
+                                                                                    [ngStyle]="{'color': fancy.noOdd ? '' : '#faa9ba'}">{{(fancy.noOdd?fancy.noOdd:0)
+                                                                                    | number: '0.0'}}</span></a>
+                                                                        </li>
+                                                                        <li class="back-1" id="back_1"><a id="runsInfo"
+                                                                                style="cursor: pointer;"
+                                                                                [ngStyle]="{'color': fancy.yesRuns ? '' : '#72bbef'}">{{(fancy.yesRuns?fancy.yesRuns:0)
+                                                                                | number: '0.0'}}<span
+                                                                                    [ngStyle]="{'color': fancy.yesOdd ? '' : '#72bbef'}">{{(fancy.yesOdd?fancy.yesOdd:0)
+                                                                                    | number: '0.0'}}</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                                <td class="td-fancy_merge" colspan="2"></td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <ng-container
+                                        *ngFor="let om of analysisDatabyevent;let $index = index;trackBy: trackByIndex">
+                                        <ng-container *ngIf="om.marketName!='Match Odds'">
+                                            <div class="" style="margin-top: 4%;">
+                                                <div class="head-bets-agent"><span class="game-low_liq"
+                                                        id="lowLiquidity" style="display: none;">Low Liquidity</span>
+                                                    <dl class="game-matched">
+                                                        <dt>{{om.marketName}}</dt>
+                                                    </dl>
+                                                    <dl class="game-matched">
+                                                    </dl>
+                                                    <ul class="game-info">
+                                                        <li class="" id="inPlay"><a class="btn"
+                                                                (click)="openBMBookModal(om)">View</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="bets-wrap"><span class="refer_only"><span
+                                                            id="selectionCount">{{om?.selections?.length}}</span>
+                                                        Selections</span>
+                                                    <table class="bets" id="marketOdds">
+                                                        <tbody>
+                                                            <tr class="bet-all">
+                                                                <td></td>
+                                                                <td class="refer-bet" colspan="2" id="backPercent">
+                                                                    0.0%</td>
+                                                                <td><a class="back-all"><span>Back all</span></a>
+                                                                </td>
+                                                                <td><a class="lay-all"><span>Lay all</span></a></td>
+                                                                <td class="refer-book" colspan="2" id="layPercent">
+                                                                    0.0%
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody id="content">
+                                                            <tr id="selection_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}"
+                                                                *ngFor="let runner of om.selections;let $index = index;trackBy: trackByFn">
+                                                                <th id="selection">
+                                                                    <p><a id="marketDepth"><img class="icon-predict"
+                                                                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a>{{runner.selName}}
+                                                                        <span *ngIf="runner.totalPL>=0"
+                                                                            [ngClass]="{'green': runner.totalPL>=0}"
+                                                                            style="float: right;">{{runner.totalPL |
+                                                                            number: '0.2'}}</span>
+                                                                        <span *ngIf="runner.totalPL<0"
+                                                                            [ngClass]="{'red': runner.totalPL<0}"
+                                                                            style="float: right;">({{runner.totalPL
+                                                                            * -1
+                                                                            | number: '0.2'}})</span>
+                                                                    </p>
+                                                                </th>
+                                                                <td class="back-3"
+                                                                    id="back_3_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd3 == 1 || runner.backOdd3 == 0) ? '#d7e8f4' : ''}">{{runner.backOdd3}}</a><span></span>
+                                                                </td>
+                                                                <td class="back-2"
+                                                                    id="back_2_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd2 == 1 || runner.backOdd2 == 0) ? '#b7d5eb' : ''}">{{runner.backOdd2}}</a><span></span>
+                                                                </td>
+                                                                <td class="back-1"
+                                                                    id="back_1_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.backOdd1 == 1 || runner.backOdd1 == 0) ? '#72bbef' : ''}">{{runner.backOdd1}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-1"
+                                                                    id="lay_1_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd1 == 1 || runner.layOdd1 == 0) ? '#faa9ba' : ''}">{{runner.layOdd1}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-2"
+                                                                    id="lay_2_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd2 == 1 || runner.layOdd2 == 0) ? '#efd3d9' : ''}">{{runner.layOdd2}}</a><span></span>
+                                                                </td>
+                                                                <td class="lay-3"
+                                                                    id="lay_3_{{removeSpacefilter(om.marketId)}}_{{runner.selectionId}}">
+                                                                    <a
+                                                                        [ngStyle]="{'color': (runner.layOdd3 == 1 || runner.layOdd3 == 0) ? '#f6e6ea' : ''}">{{runner.layOdd3}}</a><span></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="premiumbookData && premiumbookData.length>0">
+                                        <div>
+                                            <div class="bets-wrap"><span class="refer_only"></span>
+                                                <table class="table01">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="align-L" rowspan="2">Premium - Event/Market Name
+                                                            </th>
+                                                            <th width="21%" class="align-C border-l bg-yellow"
+                                                                colspan="3">Player P/L</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th width="7%" class="border-l bg-yellow"
+                                                                style="text-align: center;">1</th>
+                                                            <th width="7%" class="bg-yellow"
+                                                                style="text-align: center;">X</th>
+                                                            <th width="7%" class="bg-yellow"
+                                                                style="text-align: center;">2</th>
+                                                        </tr>
+                                                    </tbody>
+                                                    <ng-container
+                                                        *ngFor="let pm of premiumbookData;let $index = index;trackBy: trackByIndex">
+                                                        <tbody id="content_Sportradar">
+                                                            <tr id="tempTr_Sportradar" class="border-t">
+                                                                <td class="align-L border-l">
+                                                                    <a href="javascript:void(0);"
+                                                                        (click)="openBMBookModal(pm)" id="marketPath">
+                                                                        <strong
+                                                                            id="eventName-{{pm.eventId}}">{{pm.eventName}}</strong>
+                                                                        <img class="fromto"
+                                                                            src="assets/images/transparent.gif">
+                                                                        <span
+                                                                            id="marketName-{{pm.marketId}}">{{pm.marketName}}</span>
+                                                                    </a>
+                                                                </td>
+                                                                <td class="border-l align-C" id="amount"><a
+                                                                        *ngIf="pm?.selections[0]?.totalPL>=0"
+                                                                        [ngClass]="{'green': pm?.selections[0]?.totalPL>=0}">{{pm?.selections[0]?.totalPL
+                                                                        | number: '0.2'}}</a>
+                                                                    <a *ngIf="pm?.selections[0]?.totalPL<0"
+                                                                        [ngClass]="{'red': pm?.selections[0]?.totalPL<0}">({{(pm?.selections[0]?.totalPL
+                                                                        * -1)
+                                                                        | number: '0.2'}})</a>
+                                                                </td>
+                                                                <td class="border-l align-C" id="amount"><a
+                                                                        *ngIf="pm?.selections[2]?.totalPL>=0"
+                                                                        [ngClass]="{'green': pm?.selections[2]?.totalPL>=0}">{{((pm?.selections[2])?pm?.selections[2]?.totalPL:0)
+                                                                        | number: '0.2'}}</a>
+                                                                    <a *ngIf="pm?.selections[2]?.totalPL<0"
+                                                                        [ngClass]="{'red': pm?.selections[2]?.totalPL<0}">({{((pm?.selections[2])?(pm?.selections[2]?.totalPL
+                                                                        * -1):0)
+                                                                        | number: '0.2'}})</a>
+                                                                </td>
+                                                                <td class="border-l align-C" id="amount"><a
+                                                                        *ngIf="pm?.selections[1]?.totalPL>=0"
+                                                                        [ngClass]="{'green': pm?.selections[1]?.totalPL>=0}">{{pm?.selections[1]?.totalPL
+                                                                        | number: '0.2'}}</a>
+                                                                    <a *ngIf="pm?.selections[1]?.totalPL<0"
+                                                                        [ngClass]="{'red': pm?.selections[1]?.totalPL<0}">({{(pm?.selections[1]?.totalPL
+                                                                        * -1)
+                                                                        | number: '0.2'}})</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </ng-container>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td width="80" class="border-l"></td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+            </table>
+        </div>
+    </ng-container>
+    <!-- <div class="equalwidth">
+        <div class="match-wrap">
+            <div class="total_all">
+                <h2>Premium </h2><a class="btn_replay" id="refresh_Sportradar"><img
+                        src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a><a
+                    class="btn_replay" id="downloadFile_Sportradar" style="display: none; width: 70px;">Download</a>
+            </div>
+            <table style="display: none;">
+                <tbody>
+                    <tr id="tempTr_Sportradar">
+                        <td class="align-L" rowspan="1"><a id="eventType"></a></td>
+                        <td class="align-L border-l" rowspan="1" id="marketTime"></td>
+                        <td class="align-L border-l"><a id="marketPath"><strong id="eventName"></strong><img
+                                    class="fromto"
+                                    src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="><span
+                                    id="marketName"></span></a></td>
+                        <td class="border-l" id="amount"></td>
+                    </tr>
+                    <tr id="tempTr_noData_Sportradar">
+                        <td class="no-data" colspan="4">
+                            <p>No Data</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table01">
+                <tbody>
+                    <tr>
+                        <th width="10%" class="align-L">Sports</th>
+                        <th width="8%" class="align-L">Market Date</th>
+                        <th class="align-L">Event/Market Name</th>
+                        <th width="26%">Matched Amount</th>
+                    </tr>
+                </tbody>
+                <tbody id="content_Sportradar">
+                    <tr id="tempTr_noData_Sportradar">
+                        <td class="no-data" colspan="4">
+                            <p>No Data</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="match-wrap">
+            <div class="total_all">
+                <h2>Other Markets</h2><a class="btn_replay" id="refresh_Other_Market"><img
+                        src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="></a><a
+                    class="btn_replay" id="downloadFile_Other_Market" style="display: none; width: 70px;">Download</a>
+            </div>
+            <table style="display: none;">
+                <tbody>
+                    <tr id="tempTr_OTHER_MARKET">
+                        <td class="align-L" rowspan="1"><a id="eventType"></a></td>
+                        <td class="align-L border-l" rowspan="1" id="marketTime"></td>
+                        <td class="align-L border-l"><a id="marketPath"><strong id="eventName"></strong><img
+                                    class="fromto"
+                                    src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="><span
+                                    id="marketName"></span></a></td>
+                        <td class="border-l" id="amount"></td>
+                    </tr>
+                    <tr id="tempTr_noData_OTHER_MARKET">
+                        <td class="no-data" colspan="4">
+                            <p>No Data</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table01">
+                <tbody>
+                    <tr>
+                        <th width="10%" class="align-L">Sports</th>
+                        <th width="8%" class="align-L">Market Date</th>
+                        <th class="align-L">Event/Market Name</th>
+                        <th width="26%">Matched Amount</th>
+                    </tr>
+                </tbody>
+                <tbody id="content_OTHER_MARKET">
+                    <tr id="tempTr_noData_OTHER_MARKET">
+                        <td class="no-data" colspan="4">
+                            <p>No Data</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+</div>
+
+<div class="pop_bg" style="top: 0px;" [ngStyle]="{'display':isMOModalOpen ? 'block' : 'none' }">
+    <div class="log-wrap" style="margin-top: 9vh; overflow: auto;">
+        <table class="game-team">
+            <tbody>
+                <tr>
+                    <td class="game-name">{{eventInfo?.eventName}} - {{eventInfo?.marketName}}<a
+                            (click)="openMoBookModal(undefined)" class="pop-close" style="top: -1px;"><img
+                                class="icon-back"
+                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==">Close</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="agent_path">
+            <ul id="agentPath" class="agent_path-L">
+                <li id="path5" class="last_li"><a (click)="expandBookFunc(null,'Match Odds')"><span
+                            class="lv_{{ currentUser?.userType }}"></span><strong>{{
+                            currentUser?.userName }} </strong></a></li>
+            </ul>
+        </div>
+        <div class="pop-content">
+            <div class="pop-title">
+                <div>
+                    <ul id="path_tip" class="agent-path" style="display: none;">
+                        <li class="point-agent-path"></li>
+                        <li style="display: none;"><span class="lv_1">One</span><span id="agent_0"></span></li>
+                        <li style="display: none;"><span class="lv_2">SS</span><span id="agent_1"></span></li>
+                        <li style="display: none;"><span class="lv_3">SUP</span><span id="agent_2"></span></li>
+                        <li class="last-lv" style="display: none;"><span class="lv_4">MA</span><span
+                                id="agent_3"></span></li>
+                    </ul>
+                </div>
+                <table style="display: none;">
+                    <tbody>
+                        <tr id="tempTr">
+                            <td class="td-UID"><span class="order" id="number"></span><a
+                                    id="userId"><strong></strong></a></td>
+                            <td id="selection_exposure_1">-</td>
+                            <td id="selection_exposure_3" style="display: none;">-</td>
+                            <td id="selection_exposure_2">-</td>
+                        </tr>
+                        <tr class="total" id="tempTotalTr">
+                            <td class="align-L">Total</td>
+                            <td id="total_selection_exposure_1"></td>
+                            <td id="total_selection_exposure_3" style="display: none;"></td>
+                            <td id="total_selection_exposure_2"></td>
+                        </tr>
+                        <tr id="tempTr_noData">
+                            <td class="no-data" colspan="4">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table01">
+                    <tbody>
+                        <tr *ngIf="bookMoData">
+                            <th class="align-L" width="" rowspan="2">Downline</th>
+                            <th class="align-C border-l bgcolor-sub" width=""
+                                [attr.colspan]="bookMoData[0]?.users[0]?.selections?.length">Player P/L</th>
+                        </tr>
+                        <tr *ngIf="bookMoData">
+                            <th class="border-l bgcolor-sub" *ngFor="
+                                   let selection of bookMoData[0]?.users[0]?.selections;
+                                   trackBy: trackByFn
+                                   ">
+                                {{ selection.selName }}
+                            </th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <ng-container *ngFor="let eb of bookMoData; trackBy: trackByFn">
+                            <ng-container *ngIf="!isLowerData">
+                                <tr id="tempTr" *ngFor="let user1 of eb.users;let $index = index; trackBy: trackByFn;">
+                                    <td class="td-UID"><span class="order" id="number">{{$index+1}}.</span><span
+                                            class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{user1.userType}}"></span><a
+                                            [routerLink]="(user1.userType < 8)?[]:['/users',user1.userType,'sub', user1.userId,'accountSummary']"
+                                            (click)="(user1.userType < 8)?expandBookFunc(user1,'Match Odds'):''"
+                                            id="{{user1.userId}}"><strong>{{user1.userName}}</strong></a></td>
+                                    <td *ngFor="let selection of user1.selections">
+                                        <span *ngIf="selection.totalPL>=0" [ngClass]="{'green': selection.totalPL>=0}"
+                                            style="float: right;">{{selection.totalPL
+                                            |
+                                            number: '0.2'}}</span>
+                                        <span *ngIf="selection.totalPL<0" [ngClass]="{'red': selection.totalPL<0}"
+                                            style="float: right;">({{selection.totalPL
+                                            * -1
+                                            | number: '0.2'}})</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr class="total" *ngIf="!isLowerData && totalBMBookRunner?.length>0">
+                            <td class="align-L">Total
+                            </td>
+                            <td *ngFor="
+                                   let book of totalBMBookRunner;
+                                   trackBy: trackByFn
+                                   ">
+                                <span *ngIf="book.totalPL<0" [ngClass]="{'red': book.totalPL<0}">({{book.totalPL * -1 |
+                                    number: '0.2'}})</span>
+                                <span *ngIf="book.totalPL>0">{{book.totalPL | number: '0.2'}}</span>
+                            </td>
+                        </tr>
+                        <tr id="tempTr_noData" *ngIf="!isLowerData && bookMoData?.length==0">
+                            <td class="no-data" [attr.colspan]="bookMoData[0]?.selections?.length + 1">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let user2 of lowerbookMoData;let $index = index;trackBy: trackByIndex;">
+                            <ng-container *ngIf="isLowerData">
+                                <tr id="tempTr">
+                                    <td class="td-UID"><span class="order">{{$index+1}}.</span><span
+                                            class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{user2.userType}}"></span><a
+                                            [routerLink]="(user2.userType < 8)?[]:['/users',user2.userType,'sub', user2.userId,'accountSummary']"
+                                            (click)="(user2.userType < 8)?expandBookFunc(user2,'Match Odds'):''"
+                                            id="{{user2.userId}}"><strong>{{user2.userName}}</strong></a></td>
+                                    <td
+                                        *ngFor="let selection of user2.selections;let $index = index; trackBy: trackByFn">
+                                        <span *ngIf="selection.totalPL>=0" [ngClass]="{'green': selection.totalPL>=0}"
+                                            style="float: right;">{{selection.totalPL
+                                            |
+                                            number: '0.2'}}</span>
+                                        <span *ngIf="selection.totalPL<0" [ngClass]="{'red': selection.totalPL<0}"
+                                            style="float: right;">({{selection.totalPL
+                                            * -1
+                                            | number: '0.2'}})</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr class="total" *ngIf="isLowerData && totalBookRunner?.length>0">
+                            <td class="align-L">Total
+                            </td>
+                            <td *ngFor="
+                                   let book of totalBookRunner;
+                                   trackBy: trackByFn
+                                   ">
+                                <span *ngIf="book.totalPL<0" [ngClass]="{'red': book.totalPL<0}">({{book.totalPL * -1 |
+                                    number: '0.2'}})</span>
+                                <span *ngIf="book.totalPL>0">{{book.totalPL | number: '0.2'}}</span>
+                            </td>
+                        </tr>
+                        <tr id="tempTr_noData" *ngIf="isLowerData && lowerbookMoData?.length==0">
+                            <td class="no-data" [attr.colspan]="bookMoData[0]?.selections?.length + 1">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pop_bg" style="top: 0px;" [ngStyle]="{'display':isBMModalOpen ? 'block' : 'none' }">
+    <div class="log-wrap" style="margin-top: 9vh; overflow: auto;">
+        <table class="game-team">
+            <tbody>
+                <tr>
+                    <td class="game-name">{{eventInfo?.eventName}} - {{eventInfo?.marketName}}<a
+                            (click)="openBMBookModal(undefined)" class="pop-close" style="top: -1px;"><img
+                                class="icon-back"
+                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==">Close</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="agent_path">
+            <ul id="agentPath" class="agent_path-L">
+                <li id="path5" class="last_li"><a (click)="expandBookFunc(null,'Bookmaker')"><span
+                            class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{ currentUser?.userType }}"></span><strong>{{
+                            currentUser?.userName }} </strong></a></li>
+            </ul>
+        </div>
+        <div class="pop-content">
+            <div class="pop-title">
+                <div>
+                    <ul id="path_tip" class="agent-path" style="display: none;">
+                        <li class="point-agent-path"></li>
+                        <li style="display: none;"><span class="lv_1">One</span><span id="agent_0"></span></li>
+                        <li style="display: none;"><span class="lv_2">SS</span><span id="agent_1"></span></li>
+                        <li style="display: none;"><span class="lv_3">SUP</span><span id="agent_2"></span></li>
+                        <li class="last-lv" style="display: none;"><span class="lv_4">MA</span><span
+                                id="agent_3"></span></li>
+                    </ul>
+                </div>
+                <table style="display: none;">
+                    <tbody>
+                        <tr id="tempTr">
+                            <td class="td-UID"><span class="order" id="number"></span><a
+                                    id="userId"><strong></strong></a></td>
+                            <td id="selection_exposure_1">-</td>
+                            <td id="selection_exposure_3" style="display: none;">-</td>
+                            <td id="selection_exposure_2">-</td>
+                        </tr>
+                        <tr class="total" id="tempTotalTr">
+                            <td class="align-L">Total</td>
+                            <td id="total_selection_exposure_1"></td>
+                            <td id="total_selection_exposure_3" style="display: none;"></td>
+                            <td id="total_selection_exposure_2"></td>
+                        </tr>
+                        <tr id="tempTr_noData">
+                            <td class="no-data" colspan="4">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table01">
+                    <tbody>
+                        <tr *ngIf="AllbookmData">
+                            <th class="align-L" width="" rowspan="2">Downline</th>
+                            <th class="align-C border-l bgcolor-sub" width=""
+                                [attr.colspan]="AllbookmData[0]?.selections?.length">Player P/L</th>
+                        </tr>
+                        <tr *ngIf="AllbookmData">
+                            <th class="border-l bgcolor-sub" *ngFor="
+                                   let selection of AllbookmData[0]?.selections;
+                                   trackBy: trackByFn
+                                   ">
+                                {{ selection.selName }}
+                            </th>
+                        </tr>
+                    </tbody>
+                    <tbody id="content">
+                        <ng-container *ngFor="let eb of AllbookmData; trackBy: trackByFn">
+                            <ng-container *ngIf="!isLowerData">
+                                <tr id="tempTr" *ngFor="let user1 of eb.users;let $index = index; trackBy: trackByFn">
+                                    <td class="td-UID"><span class="order" id="number">{{$index+1}}.</span><span
+                                            class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{user1.userType}}"></span><a
+                                            [routerLink]="(user1.userType < 8)?[]:['/users',user1.userType,'sub', user1.userId,'accountSummary']"
+                                            (click)="(user1.userType < 8)?expandBookFunc(user1,'Bookmaker'):''"
+                                            id="{{user1.userId}}"><strong>{{user1.userName}}</strong></a></td>
+                                    <td
+                                        *ngFor="let selection of user1.selections let $index = index; trackBy: trackByFn">
+                                        <span *ngIf="selection.totalPL>=0" [ngClass]="{'green': selection.totalPL>=0}"
+                                            style="float: right;">{{selection.totalPL
+                                            |
+                                            number: '0.2'}}</span>
+                                        <span *ngIf="selection.totalPL<0" [ngClass]="{'red': selection.totalPL<0}"
+                                            style="float: right;">({{selection.totalPL
+                                            * -1
+                                            | number: '0.2'}})</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr class="total" *ngIf="!isLowerData && totalMOBookRunner?.length>0">
+                            <td class="align-L">Total
+                            </td>
+                            <td *ngFor="
+                                       let book of totalMOBookRunner;
+                                       trackBy: trackByFn
+                                       ">
+                                <span *ngIf="book.totalPL<0" [ngClass]="{'red': book.totalPL<0}">({{book.totalPL * -1 |
+                                    number: '0.2'}})</span>
+                                <span *ngIf="book.totalPL>0">{{book.totalPL | number: '0.2'}}</span>
+                            </td>
+                        </tr>
+                        <tr id="tempTr_noData" *ngIf="!isLowerData && AllbookmData?.length==0">
+                            <td class="no-data" [attr.colspan]="AllbookmData[0]?.selections?.length + 1">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let user2 of lowerbookMoData;let $index = index; trackBy: trackByFn">
+                            <ng-container *ngIf="isLowerData">
+                                <tr id="tempTr">
+                                    <td class="td-UID"><span class="order">{{$index+1}}.</span><span
+                                            class="{{(isPremiumSite && !isRental)?'premium':'isRental'}} {{(isBdlevel)?'Bdlevel':''}} lv_{{user2.userType}}"></span><a
+                                            [routerLink]="(user2.userType < 8)?[]:['/users',user2.userType,'sub', user2.userId,'accountSummary']"
+                                            (click)="(user2.userType < 8)?expandBookFunc(user2,'Bookmaker'):''"
+                                            id="{{user2.userId}}"><strong>{{user2.userName}}</strong></a></td>
+                                    <td
+                                        *ngFor="let selection of user2.selections let $index = index; trackBy: trackByFn">
+                                        <span *ngIf="selection.totalPL>=0" [ngClass]="{'green': selection.totalPL>=0}"
+                                            style="float: right;">{{selection.totalPL
+                                            |
+                                            number: '0.2'}}</span>
+                                        <span *ngIf="selection.totalPL<0" [ngClass]="{'red': selection.totalPL<0}"
+                                            style="float: right;">({{selection.totalPL
+                                            * -1
+                                            | number: '0.2'}})</span>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr class="total" *ngIf="isLowerData && totalBookRunner?.length>0">
+                            <td class="align-L">Total
+                            </td>
+                            <td *ngFor="
+                                   let book of totalBookRunner;
+                                   trackBy: trackByFn
+                                   ">
+                                <span *ngIf="book.totalPL<0" [ngClass]="{'red': book.totalPL<0}">({{book.totalPL * -1 |
+                                    number: '0.2'}})</span>
+                                <span *ngIf="book.totalPL>0">{{book.totalPL | number: '0.2'}}</span>
+                            </td>
+                        </tr>
+                        <tr id="tempTr_noData" *ngIf="isLowerData && lowerbookMoData?.length==0">
+                            <td class="no-data" [attr.colspan]="AllbookmData[0]?.selections?.length + 1">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pop_bg" style="top: 0px;" [ngStyle]="{'display':isBookModalOpen ? 'block' : 'none' }">
+    <div class="pop-content">
+        <div id="logWrap" class="log-wrap" style="margin-top: 9vh; width: 600px;overflow: auto;">
+            <table class="game-team">
+                <tbody>
+                    <tr>
+                        <td class="game-name">{{fancyInfo?.marketName}}<a (click)="openBookModal(undefined)"
+                                class="pop-close"><img class="icon-back"
+                                    src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==">Close</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pop-content">
+                <table id="table" class="table01 tab-depth">
+                    <tr>
+                        <th width="50%" class="align-L">Runs</th>
+                        <th width="50%" class="border-l">Amount</th>
+                    </tr>
+                    <tr *ngFor="let book of selectedFancyExpBook">
+                        <td class="align-L">{{ book[0] }}</td>
+                        <td>
+                            <span *ngIf="book[1]>=0">{{ book[1][0] | number: '0.2' }}</span>
+                            <span *ngIf="book[1]<0" [ngClass]="book[1]<0?'red':'green'">({{ book[1][0] | number:
+                                '0.2'}})</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pop_bg" style="top: 0px;" [ngStyle]="{'display':issettledFancyModalOpen ? 'block' : 'none' }">
+    <div class="log-wrap" style="margin-top: 9vh; overflow: auto;">
+        <table class="game-team">
+            <tbody>
+                <tr>
+                    <td class="game-name">{{eventInfo?.eventName}} - Declared Fancy<a class="pop-close"
+                            style="top: -1px;" (click)="openSettledFancyModal(undefined)"><img class="icon-back"
+                                src="data:image/gif;base64,R0lGODdhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==">Close</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pop-content">
+            <div class="pop-title">
+                <div>
+                    <ul id="path_tip" class="agent-path" style="display: none;">
+                        <li class="point-agent-path"></li>
+                        <li style="display: none;"><span class="lv_1">One</span><span id="agent_0"></span></li>
+                        <li style="display: none;"><span class="lv_2">SS</span><span id="agent_1"></span></li>
+                        <li style="display: none;"><span class="lv_3">SUP</span><span id="agent_2"></span></li>
+                        <li class="last-lv" style="display: none;"><span class="lv_4">MA</span><span
+                                id="agent_3"></span></li>
+                    </ul>
+                </div>
+                <table style="display: none;">
+                    <tbody>
+                        <tr id="tempTr">
+                            <td class="td-UID"><span class="order" id="number"></span><a
+                                    id="userId"><strong></strong></a></td>
+                            <td id="selection_exposure_1">-</td>
+                            <td id="selection_exposure_3" style="display: none;">-</td>
+                            <td id="selection_exposure_2">-</td>
+                        </tr>
+                        <tr class="total" id="tempTotalTr">
+                            <td class="align-L">Total</td>
+                            <td id="total_selection_exposure_1"></td>
+                            <td id="total_selection_exposure_3" style="display: none;"></td>
+                            <td id="total_selection_exposure_2"></td>
+                        </tr>
+                        <tr id="tempTr_noData">
+                            <td class="no-data" colspan="4">
+                                <p>No Data</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table01">
+                    <tbody>
+                        <tr>
+                            <th class="align-L" width="" rowspan="2">Fancy</th>
+                            <th class="align-C border-l bgcolor-sub" width="100px" colspan="1">P/L</th>
+                            <th class="align-C border-l bgcolor-sub" width="100px" colspan="1">Results</th>
+                        </tr>
+                    </tbody>
+                    <tbody id="content">
+                        <tr *ngFor="let fn of settledFancyList?.markets;let $index = index;trackBy: trackByIndex">
+                            <td class="td-UID"><span class="order" id="number">{{fn.marketName}}</span></td>
+                            <td id="selection_exposure_1" style="text-align: center;"><span *ngIf="fn.totaPnl>=0">{{
+                                    fn.totaPnl | number: '0.2'
+                                    }}</span>
+                                <span *ngIf="fn.totaPnl<0" [ngClass]="fn.totaPnl<0?'red':'green'">({{ fn.totaPnl |
+                                    number:
+                                    '0.2'}})</span>
+                            </td>
+                            <td id="selection_exposure_2" style="text-align: center;">{{fn.result}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

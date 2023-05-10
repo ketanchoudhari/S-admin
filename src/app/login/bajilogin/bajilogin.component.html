@@ -1,0 +1,45 @@
+<main appTheme class="h-full ml-0 flex-center justify-center bg-no-repeat bg-cover"
+    style="background-image: url(assets/images/bg.jpg); min-width: 100%">
+    <div class="rounded-xl sm:flex justify-center items-center divide-x-0 sm:divide-x divide-white divide-opacity-30">
+        <div class="logo-theme"></div>
+        <form class="login-panel" style="margin-bottom: 25px;" [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="w-60 space-y-3 sm:pl-7">
+                <h3 class="lg-title text-white text-center"><span class="text-3xl mr-2">Agent</span>Sign in</h3>
+                <input class="h-10 leading-10" type="email" formControlName="userName" placeholder="Username"
+                    id="loginName" appInputRestriction="noSpecialChars" required>
+                <input formControlName="password" class="h-10 leading-10" type="password" placeholder="Password"
+                    id="password">
+
+                <div class="relative" *ngIf="showCaptcha">
+                    <input type="text" formControlName="captcha" id="validCode" pattern="[0-9]*" data-role="none"
+                        class="h-10 leading-10" placeholder="Validation Code" autocomplete="off" inputmode="numeric"
+                        maxlength="4">
+                    <img id="authenticateImage" [src]="captchaImg" alt="" (click)="getCaptcha()"
+                        class="absolute right-1 top-3 w-1/3">
+                </div>
+
+                <button id="loginBtn"
+                    class="btn btn-highlight w-full rounded-sm h-10 leading-10 text-black px-3 space-x-2">
+                    <span class="text-base">Login</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                </button>
+
+
+                <p id="errorMsg" style="color: red;" class="text-red-600 text-center sm:text-left"
+                    *ngIf="loginForm.invalid || serverError">
+                    {{ errorMsg }}</p>
+              
+            </div>
+        </form>
+        <ng-container *ngIf="siteName=='baaji24'">
+        <p class="login_">Note :- This Website is not for indian 
+            <br>Territory</p>
+        <p class="login_bot">{{whatsapp}}</p>
+    </ng-container>
+    </div>
+    
+</main>

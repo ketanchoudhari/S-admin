@@ -1,0 +1,185 @@
+<div class="full-wrap">
+  <div class="main_wrap">
+    <h2>Recent Created Accounts</h2>
+  </div>
+  <div class="main_wrap">
+    <div class="function-wrap">
+      <ul class="input-list">
+        <li>
+          <label for="perio">Period</label>
+        </li>
+        <li class="blockdis">
+          <div class="webhide ">
+          <input
+            id="startDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            [(ngModel)]="fromDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <input
+            id="startTime"
+            class="time-input disable"
+            type="text"
+            [(ngModel)]="fromTime"
+            [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'"
+            [mode]="'time'"
+            placeholder="09:00"
+            maxlength="5"
+          />
+        </div>
+          to
+          <input
+            id="endDate"
+            class="cal-input"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            [(ngModel)]="toDate"
+            [dpDayPicker]="dateConfig"
+            [theme]="'dp-material'"
+            [mode]="'day'"
+            autocomplete="off"
+          />
+          <input
+            id="endTime"
+            class="time-input disable"
+            type="text"
+            [(ngModel)]="toTime"
+            [dpDayPicker]="timeConfig"
+            [theme]="'dp-material'"
+            [mode]="'time'"
+            placeholder="08:59"
+            maxlength="5"
+          />
+        </li>
+      </ul>
+      <ul class="input-list">
+        <li>
+          <a id="today" (click)="getReportDate('today')" class="btn"
+            >Just For Today</a
+          >
+        </li>
+        <li style="display: none">
+          <a id="yesterday" href="#" class="btn">From Yesterday</a>
+        </li>
+        <li style="display: none">
+          <a id="last7days" href="#" class="btn">Last 7 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last30days" href="#" class="btn">Last 30 days</a>
+        </li>
+        <li style="display: none">
+          <a id="last2months" href="#" class="btn">Last 2 Months</a>
+        </li>
+        <li style="display: none">
+          <a id="last3months" href="#" class="btn">Last 3 Months</a>
+        </li>
+        <li>
+          <a id="getPL" (click)="getAccountList()" class="btn-send"
+            >Get Accounts</a
+          >
+        </li>
+        <li><a id="getPL " (click)="getAccountList()" class="btn-send">Show Default</a></li>
+      </ul>
+    </div>
+    <div class="total_all">
+      <div class="spacer"></div>
+      <span class="total-users">
+        Total Records: {{ accountsList?.length }}
+      </span>
+      <div class="download-reports">
+        <button (click)="exportExcel()" class="excel btn" title="Export Excel">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button [appExportData]="'pdf'" class="pdf btn" title="Export Pdf">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+        <button (click)="exportCsv()" class="csv btn" title="Export Csv">
+          <img src="assets/images/transparent.gif" alt="" />
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive data-table" >
+    <div class="table-container">
+      <table
+        id="table_DL"
+        class="table01"
+        style="text-align: center; white-space: nowrap"
+      >
+        <thead>
+          <th class="sort_asc" [appSort]="accountsList" data-order="asc" data-name="userId">Id</th>
+          <th class="sort_asc" [appSort]="accountsList" data-order="asc" data-name="userType">User Type</th>
+          <th class="sort_asc" [appSort]="accountsList" data-order="asc" data-name="userName">User Name</th>
+          <th class="sort_asc" [appSort]="accountsList" data-order="asc" data-name="creationDate">Account Creation Date</th>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="
+              let acc of accountsList
+                | paginate: { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <td title="'id'">{{ acc.userId }}</td>
+
+            <td title="'UserType'">{{ acc.userType | titlecase }}</td>
+
+            <td title="'UserName'">{{ acc.userName }}</td>
+
+            <td title="'AccountcreatedDate'">
+              {{ acc.creationDate | date: "YYYY-MM-dd HH:mm:ss" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination-template
+  *ngIf="accountsList && accountsList.length > 10"
+  #pagination="paginationApi"
+  (pageChange)="p = $event"
+>
+  <ul id="pageNumberContent" class="pages">
+    <li id="prev">
+      <a *ngIf="pagination.isFirstPage(); else prevTemp" class="disable"
+        >Prev</a
+      >
+      <ng-template #prevTemp>
+        <a (click)="pagination.previous()">Prev</a>
+      </ng-template>
+    </li>
+    <ng-container *ngFor="let page of pagination.pages">
+      <li id="pageNumber">
+        <a
+          (click)="pagination.setCurrent(page.value)"
+          *ngIf="pagination.getCurrent() != page.value"
+          class="btn"
+          >{{ page.value }}
+        </a>
+        <a
+          *ngIf="pagination.getCurrent() == page.value"
+          class="select"
+          style="pointer-events: none"
+          >{{ page.value }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- <li id="pageNumber"><a href="javascript:void(0);">2</a></li> -->
+    <li id="next">
+      <a *ngIf="pagination.isLastPage(); else nextTemp" class="disable">Next</a>
+      <ng-template #nextTemp>
+        <a (click)="pagination.next()">Next</a>
+      </ng-template>
+    </li>
+  </ul>
+</pagination-template>
+    </div>
+  </div>
+</div>
+
+

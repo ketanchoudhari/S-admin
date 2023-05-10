@@ -1,0 +1,94 @@
+<div class="main_wrap">
+  <ul class="report-tab-wrap" style="display: block">
+    <li
+      class="report-tab select"
+      id="reportType_sportsBook"
+      [class.select]="selectedTabIndex === 0"
+      (click)="selectTab(0)"
+    >
+      {{Update?.BetgamesList}}
+    </li>
+  </ul>
+  <div class="function-wrap">
+    <ul class="input-list">
+      <li *ngIf="currentUser?.userType === commonService?.vrnlUserType || currentUser?.userType === commonService?.whitelabelUserType">
+        <label>{{Update?.UserList}}:</label>
+        <ng-select
+          name="sortCondition"
+          id="sortCondition"
+          (change)="onChange(selectedUser)"
+          [(ngModel)]="selectedUser"
+        >
+          <ng-option value="" selected="selected">{{Update?.SelectUser}}</ng-option>
+          <ng-option [value]="users.userId" *ngFor="let users of usersList">
+            {{ users.userName }}
+          </ng-option>
+        </ng-select>
+      </li>
+      <li class="spacer">&nbsp;&nbsp;</li>
+      <li class="import-button">
+        <button class="btn-send" (click)="ActivateCasinoProducts()">{{Update?.Import}}</button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="main_wrap">
+  <table
+    *ngIf="selectedTabIndex === 0"
+    id="table_DL"
+    class="table01 table-pt"
+  >
+    <thead>
+      <tr class="ng-table-sort-header">
+        <th width="3%">
+          <div ng-if="template" ng-include="template">
+            <input 
+              type="checkbox"
+              id="select_all"
+              (click)="toggleSelectAll($event.target.checked)"
+            />
+          </div>
+        </th>
+        <th>{{Update?.ProviderId}}</th>
+        <th>{{Update?.ProviderName}}</th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="currentUser.userType === commonService?.vrnlUserType">
+      <tr *ngFor="let teenpatti of productlist">
+        <td>
+          <input
+          name="subscribe" id='{{teenpatti.name}}'
+            type="checkbox"
+            [(ngModel)]="teenpattiSelectMap[teenpatti.name]"
+          />
+        </td>
+        <td>
+          {{ teenpatti.id }}
+        </td>
+        <td>
+          {{ teenpatti.name }}
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="currentUser.userType === whitelabelUserType">
+      <tr *ngFor="let teenpatti of productlist">
+        <td>
+          <input
+          name="subscribe" id='{{teenpatti.name}}'
+            type="checkbox"
+            [(ngModel)]="teenpattiSelectMap[teenpatti.name]"
+          />
+        </td>
+        <td>
+          {{ teenpatti.id }}
+        </td>
+        <td
+        >
+          {{ teenpatti.name }}
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

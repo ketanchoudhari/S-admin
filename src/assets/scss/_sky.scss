@@ -1,0 +1,2344 @@
+.top-sprite,
+.login-wrap li.user,
+.account-wrap .account,
+.account-wrap .account.select,
+.language,
+.menu .casino:after,
+.setting-wrap .casino:after,
+.menu .bet-game:after,
+.setting-wrap .bet-game:after,
+.menu .tag-new:before,
+.setting-wrap .tag-new:before,
+.live-menu img,
+.one_click img,
+.one_click.select img,
+.col-edit img,
+.login-wrap li.user,
+.account-wrap .head-refresh a,
+.account-wrap .account,
+.one_click img,
+.one_click.select img {
+  background-image: url("../images/sprite/top-s5f29df32a5.png");
+  background-repeat: no-repeat;
+}
+
+.btn.disable,
+.disable.btn-send,
+.pages a.disable,
+.calendarTable_inputBox input.disable,
+.calendarTable_inputBox textarea.disable,
+.calendarTable_inputBox .member_select a.disable,
+.member_select .calendarTable_inputBox a.disable,
+.total_all .disable.btn_replay,
+.disable.btn_expand,
+.disable.add_member {
+  background: #dfdfdf;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.btn.select,
+.select.btn-send,
+.pages a.select,
+.pages a.select,
+.calendarTable_inputBox input.select,
+.calendarTable_inputBox input.select,
+.calendarTable_inputBox textarea.select,
+.calendarTable_inputBox textarea.select,
+.calendarTable_inputBox .member_select a.select,
+.calendarTable_inputBox .member_select a.select,
+.member_select .calendarTable_inputBox a.select,
+.member_select .calendarTable_inputBox a.select,
+.total_all .select.btn_replay,
+.total_all .select.btn_replay,
+.select.btn_expand,
+.select.add_member {
+  color: var(--on-primary);
+  background: var(--primary);
+  border-color: #222;
+}
+
+.agent-sprite,
+.close_pop,
+.go-back img,
+.pop-close img,
+.bank,
+.betting_history,
+.p_l,
+.profile,
+.status,
+.total_all .btn_replay img,
+.add_member img,
+.status-active img,
+.status-suspend img,
+.status-lock img,
+.table01 .ico_account img,
+.table-s .ico_account img,
+.table_one .ico_account img,
+.table01 .status_all .icon_active img,
+.table-s .status_all .icon_active img,
+.table_one .status_all .icon_active img,
+.table01 .status_all .icon_locked img,
+.table-s .status_all .icon_locked img,
+.table_one .status_all .icon_locked img,
+.table01 .status_all .icon_suspend img,
+.table-s .status_all .icon_suspend img,
+.table_one .status_all .icon_suspend img,
+.table01 .action .bank:hover,
+.table-s .action .bank:hover,
+.table_one .action .bank:hover,
+.table01 .action .betting_history:hover,
+.table-s .action .betting_history:hover,
+.table_one .action .betting_history:hover,
+.table01 .action .p_l:hover,
+.table-s .action .p_l:hover,
+.table_one .action .p_l:hover,
+.table01 .action .profile:hover,
+.table-s .action .profile:hover,
+.table_one .action .profile:hover,
+.table01 .action .status:hover,
+.table-s .action .status:hover,
+.table_one .action .status:hover,
+.btn_open,
+.btn_close,
+.ico_dot1,
+.ico_dot2,
+.ico_dot3,
+.toggle_on,
+.toggle_off,
+.status_but .but_active img,
+.status_but .but_suspend img,
+.status_but .but_locked img,
+.status_but .but_active.open img,
+.status_but .open.but_suspend img,
+.status_but .open.but_locked img,
+.status_but .but_active.disable img,
+.status_but .disable.but_suspend img,
+.status_but .disable.but_locked img,
+.agent_path-L li,
+.agent_path-L img,
+.currency_tag_all li.currency_tag,
+.currency_tag_all li:first-child,
+.drop_down_li a,
+.col-center .acc-info .user,
+.tab-topplay li:before,
+.tab-topplay li:after,
+.tab-topplay .select:before,
+.tab-topplay .select:after,
+.sort-this:after,
+.open-odds:before,
+.close-odds:before,
+.icon-date,
+.agent-path li,
+.agent-path .point-agent-path,
+.credit-amount-member .btn,
+.credit-amount-member .btn-send,
+.credit-amount-member .pages a,
+.pages .credit-amount-member a,
+.credit-amount-member .calendarTable_inputBox input,
+.calendarTable_inputBox .credit-amount-member input,
+.credit-amount-member .calendarTable_inputBox textarea,
+.calendarTable_inputBox .credit-amount-member textarea,
+.credit-amount-member .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .credit-amount-member a,
+.credit-amount-member .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .credit-amount-member a,
+.credit-amount-member .total_all .btn_replay,
+.total_all .credit-amount-member .btn_replay,
+.credit-amount-member .btn_expand,
+.credit-amount-member .add_member,
+.credit-amount-member .btn:hover,
+.credit-amount-member .btn-send:hover,
+.credit-amount-member .pages a:hover,
+.pages .credit-amount-member a:hover,
+.credit-amount-member .calendarTable_inputBox input:hover,
+.calendarTable_inputBox .credit-amount-member input:hover,
+.credit-amount-member .calendarTable_inputBox textarea:hover,
+.calendarTable_inputBox .credit-amount-member textarea:hover,
+.credit-amount-member .calendarTable_inputBox .member_select a:hover,
+.calendarTable_inputBox .member_select .credit-amount-member a:hover,
+.credit-amount-member .member_select .calendarTable_inputBox a:hover,
+.member_select .calendarTable_inputBox .credit-amount-member a:hover,
+.credit-amount-member .total_all .btn_replay:hover,
+.total_all .credit-amount-member .btn_replay:hover,
+.credit-amount-member .btn_expand:hover,
+.credit-amount-member .add_member:hover,
+.btn-add:before,
+.icon-select_all,
+.icon-select_partial {
+  background-image: url("../images/sprite/agent-sf42eb279ae.png");
+  background-repeat: no-repeat;
+}
+
+.displayB,
+.delete,
+.btn,
+.btn-send,
+.marquee-pop .pages a,
+.pages a,
+.calendarTable_inputBox input,
+.calendarTable_inputBox textarea,
+.calendarTable_inputBox .member_select a,
+.member_select .calendarTable_inputBox a,
+.total_all .btn_replay,
+.btn_expand,
+.add_member,
+.login-wrap,
+.account-wrap,
+.menu,
+.setting-wrap,
+.tab-highlight,
+.marquee-pop .input-list,
+.marquee-pop .filter-list,
+.tab,
+.input-list,
+.filter-list,
+.filter-pop ul,
+.acc-info,
+.total-show,
+.total_info,
+.action,
+.footer_fixed .action,
+.half_box,
+.pt_allowed dl,
+.status_but,
+.agent_path ul,
+.member_select,
+.tab-topplay,
+.slip-head,
+.agent-path,
+.agent_path,
+.btn_list-DW,
+.login-wrap li,
+.account-wrap li,
+.menu li,
+.setting-wrap li,
+.tab-highlight li,
+.marquee-pop .input-list li,
+.marquee-pop .filter-list li,
+.tab li,
+.input-list li,
+.filter-list li,
+.filter-pop ul li,
+.acc-info li,
+.total-show li,
+.total_info li,
+.action li,
+.footer_fixed .action li,
+.half_box li,
+.pt_allowed dl li,
+.status_but li,
+.agent_path ul li,
+.member_select li,
+.tab-topplay li,
+.slip-head li,
+.agent-path li,
+.btn_list-DW li,
+.tag-live strong:before,
+.age_box li .secondary:before,
+.age_box li .btn-send:before,
+.top_player-wrap h3 a,
+.racing-wrap h3 a,
+.game-wrap h3 a,
+.game-highlight-wrap h3 a,
+.favor-wrap h3 a,
+.sub_path h3 a,
+.pop-title h3 a,
+.btn-book,
+.account-wrap ul a,
+.selection-list a,
+.power-wrap h3 img,
+.power-wrap-b img,
+.btn_list-DW.select-D:after,
+.btn_list-DW.select-W:after,
+.login-wrap .btn-login,
+.login-wrap .btn-signup,
+.header a,
+.account-wrap li .refresh-bar,
+.language,
+.flag,
+.menu-wrap a,
+.menu li:hover ul,
+.setting-wrap li:hover ul,
+.menu-list a,
+.menu-list .Go,
+.favor-set,
+.path .path-back,
+.path-pop a,
+.favor,
+.kv-wrap a,
+.promo-banner-wrap a,
+.tab-highlight a,
+.event-left .slip-head span,
+.event-right .slip-head span,
+.app-link,
+.live-list a,
+.live-list a:after,
+.change-channel::before,
+.marquee-box h4:before,
+.marquee-box .tc-content h5:before,
+.tc-content .marquee-box h5:before,
+.marquee-box h4:after,
+.marquee-box .tc-content h5:after,
+.tc-content .marquee-box h5:after,
+.marquee-box .marquee a span,
+.announce-footer .confirm-checkbox,
+.close_pop,
+.error-text,
+.go-back,
+.pop-close,
+.tab a,
+.expand-close,
+.expand-open,
+.selection,
+.initial-balance dt span,
+.final-balance dt span,
+.btn_expand:before,
+.margin-table:after,
+.table01 .action a,
+.table-s .action a,
+.table_one .action a,
+.table-pt .expand-close,
+.table-pt .expand-open,
+.status_but .but_active,
+.status_but .but_suspend,
+.status_but .but_locked,
+.status_but .but_active img,
+.status_but .but_suspend img,
+.status_but .but_locked img,
+.agent_path a,
+.agent_path-L img,
+.member_select a,
+.odd-add a,
+.note,
+.tab-topplay li:before,
+.tab-topplay li:after,
+.tab-topplay a,
+.table01 .order,
+.table-s .order,
+.table_one .order,
+.open-odds:before,
+.close-odds:before,
+.banking-head dd span {
+  display: flex;
+}
+
+.displayIB,
+.menu-wrap a.menu-drop:after,
+.menu-wrap a.menu-drop.select:after,
+.favor-wrap .menu-list a,
+.upcome-wrap dt,
+.upcome-wrap dd,
+.app-link a,
+.announce-header h1:before,
+.announce-footer li,
+.toggle_on,
+.toggle_off,
+.form_list .radio_enter input,
+.add_account_box dl .radio_enter input,
+.pt_allowed dl .radio_enter input,
+.form_list .radio_enter textarea,
+.add_account_box dl .radio_enter textarea,
+.pt_allowed dl .radio_enter textarea,
+.form_list .radio_enter .member_select a,
+.member_select .form_list .radio_enter a,
+.add_account_box dl .radio_enter .member_select a,
+.member_select .add_account_box dl .radio_enter a,
+.pt_allowed dl .radio_enter .member_select a,
+.member_select .pt_allowed dl .radio_enter a,
+.form_list .radio_enter label,
+.add_account_box dl .radio_enter label,
+.pt_allowed dl .radio_enter label,
+.form_list .radio_enter .radio,
+.add_account_box dl .radio_enter .radio,
+.pt_allowed dl .radio_enter .radio,
+.form_list .add_btn .btn,
+.add_account_box dl .add_btn .btn,
+.pt_allowed dl .add_btn .btn,
+.form_list .add_btn .btn-send,
+.add_account_box dl .add_btn .btn-send,
+.pt_allowed dl .add_btn .btn-send,
+.form_list .add_btn .pages a,
+.pages .form_list .add_btn a,
+.add_account_box dl .add_btn .pages a,
+.pages .add_account_box dl .add_btn a,
+.pt_allowed dl .add_btn .pages a,
+.pages .pt_allowed dl .add_btn a,
+.form_list .add_btn .calendarTable_inputBox input,
+.calendarTable_inputBox .form_list .add_btn input,
+.add_account_box dl .add_btn .calendarTable_inputBox input,
+.calendarTable_inputBox .add_account_box dl .add_btn input,
+.pt_allowed dl .add_btn .calendarTable_inputBox input,
+.calendarTable_inputBox .pt_allowed dl .add_btn input,
+.form_list .add_btn .calendarTable_inputBox textarea,
+.calendarTable_inputBox .form_list .add_btn textarea,
+.add_account_box dl .add_btn .calendarTable_inputBox textarea,
+.calendarTable_inputBox .add_account_box dl .add_btn textarea,
+.pt_allowed dl .add_btn .calendarTable_inputBox textarea,
+.calendarTable_inputBox .pt_allowed dl .add_btn textarea,
+.form_list .add_btn .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .form_list .add_btn a,
+.add_account_box dl .add_btn .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .add_account_box dl .add_btn a,
+.pt_allowed dl .add_btn .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .pt_allowed dl .add_btn a,
+.form_list .add_btn .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .form_list .add_btn a,
+.add_account_box dl .add_btn .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .add_account_box dl .add_btn a,
+.pt_allowed dl .add_btn .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .pt_allowed dl .add_btn a,
+.form_list .add_btn .total_all .btn_replay,
+.total_all .form_list .add_btn .btn_replay,
+.add_account_box dl .add_btn .total_all .btn_replay,
+.total_all .add_account_box dl .add_btn .btn_replay,
+.pt_allowed dl .add_btn .total_all .btn_replay,
+.total_all .pt_allowed dl .add_btn .btn_replay,
+.form_list .add_btn .btn_expand,
+.add_account_box dl .add_btn .btn_expand,
+.pt_allowed dl .add_btn .btn_expand,
+.form_list .add_btn .add_member,
+.add_account_box dl .add_btn .add_member,
+.pt_allowed dl .add_btn .add_member,
+.btn_box .btn,
+.btn_box .btn-send,
+.btn_box .pages a,
+.pages .btn_box a,
+.btn_box .calendarTable_inputBox input,
+.calendarTable_inputBox .btn_box input,
+.btn_box .calendarTable_inputBox textarea,
+.calendarTable_inputBox .btn_box textarea,
+.btn_box .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .btn_box a,
+.btn_box .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .btn_box a,
+.btn_box .total_all .btn_replay,
+.total_all .btn_box .btn_replay,
+.btn_box .btn_expand,
+.btn_box .add_member,
+.fix-content .status_but li,
+.account-wrap li span,
+.submit-wrap li,
+.submit-wrap .btn-send,
+.submit-wrap .btn-send span,
+.sort-this:after,
+.table01 .expand-close,
+.table-s .expand-close,
+.table_one .expand-close,
+.table01 .expand-open,
+.table-s .expand-open,
+.table_one .expand-open,
+.banking-head dt,
+.banking-head dd,
+.form-edit label,
+.form-edit .btn,
+.form-edit .btn-send,
+.form-edit .pages a,
+.pages .form-edit a,
+.form-edit .calendarTable_inputBox input,
+.calendarTable_inputBox .form-edit input,
+.form-edit .calendarTable_inputBox textarea,
+.calendarTable_inputBox .form-edit textarea,
+.form-edit .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .form-edit a,
+.form-edit .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .form-edit a,
+.form-edit .total_all .btn_replay,
+.total_all .form-edit .btn_replay,
+.form-edit .btn_expand,
+.form-edit .add_member,
+.access-selection,
+.icon-select_all,
+.icon-select_partial,
+.footer-content dd {
+  display: inline-block;
+}
+
+.total_all {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+
+  &>* {
+    margin-right: 8px;
+  }
+
+  h2 {
+    font-size: 13px;
+    color: #243a48;
+  }
+
+  .btn_replay {
+    height: 30px;
+    width: 30px;
+    margin: 0 0 0 10px;
+
+    img {
+      margin-right: 0px;
+      margin-top: 5px;
+      background-position: -44px -980px;
+      height: 17px;
+      width: 14px;
+    }
+  }
+}
+
+.btn,
+.btn-send,
+.marquee-pop .pages a,
+.pages a,
+.calendarTable_inputBox input,
+.calendarTable_inputBox textarea,
+.calendarTable_inputBox .member_select a,
+.member_select .calendarTable_inputBox a,
+.total_all .btn_replay,
+.btn_expand,
+.add_member {
+  @include button;
+}
+
+.menu .select,
+.setting-wrap .select {
+  box-shadow: inset 0 1px 3px 0 rgba(52, 9, 9, 0.5);
+  background-image: linear-gradient(180deg, var(--primary) 0%, hsla(var(--primary), -50%) 61%);
+  background-position: inherit;
+
+  a {
+    background-color: #4d4d4d;
+  }
+}
+
+.menu a {
+  color: var(--on-secondary);
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.align-L,
+.table01 caption,
+.table-s caption,
+.table_one caption,
+.no-data,
+.status-popup,
+.access-popup,
+.table_one thead th,
+.table-pt .expand td.expand-event:first-child,
+.pt_allowed dl dt,
+.tab-transfer .full-amount,
+.tab-transfer .remark,
+.tips-popup,
+.slip-head .col-playID,
+.slip-head .col-type,
+.slip-head .col-country,
+.slip-head .col-local,
+.table01 .td-type,
+.table-s .td-type,
+.table_one .td-type,
+.table01 .td-UID,
+.table-s .td-UID,
+.table_one .td-UID,
+.td-uid,
+.DW-amount,
+.pop_bg .form-wrap h1 {
+  text-align: left !important;
+}
+
+.align-R,
+.table01,
+.table-s,
+.table_one,
+.account-wrap .main-wallet p,
+.time_zone,
+.path ul,
+.change-channel span,
+.form_list dt,
+.add_account_box dl dt,
+.pt_allowed dl dt,
+.table-trans .unit-num,
+.sports_set.pt_player dd,
+.pt_player.sports_set2 dd,
+.tab-transfer input,
+.tab-transfer textarea,
+.tab-transfer .member_select a,
+.member_select .tab-transfer a,
+.full-amount input,
+.full-amount textarea,
+.full-amount .member_select a,
+.member_select .full-amount a,
+.slip-head .col-exp,
+.slip-head .col-amount,
+.form-edit label,
+.table-subaccount th:nth-last-child(-n + 2),
+.table-subaccount td:nth-last-child(-n + 2),
+.footer-content,
+.casinopt-list dd,
+.profile-wrap .dl_list .casinopt-list dd,
+.sports_box .casinopt-list dd,
+.casinopt-list-head dd,
+.profile-wrap .dl_list .casinopt-list-head dd,
+.sports_box .casinopt-list-head dd {
+  text-align: right;
+}
+
+.align-C,
+.loading li,
+.btn,
+.btn-send,
+.marquee-pop .pages a,
+.pages a,
+.calendarTable_inputBox input,
+.calendarTable_inputBox textarea,
+.calendarTable_inputBox .member_select a,
+.member_select .calendarTable_inputBox a,
+.total_all .btn_replay,
+.btn_expand,
+.add_member,
+.change_pass,
+.btn-book,
+.browser-wrap,
+.sys-suspend .status-suspend,
+.sys-lock .status-suspend,
+.sys-suspend .status-lock,
+.sys-lock .status-lock,
+.btn_list-DW.select-D:after,
+.btn_list-DW.select-W:after,
+.login-wrap .btn-login,
+.login-wrap .btn-signup,
+.account-wrap ul .logout a,
+.stake-set .stake_edit-input,
+.odds-set .stake_edit-input,
+.col-edit a,
+.tab-highlight li,
+.message-wrap p,
+.dialog-wrap h4,
+.dialog-wrap-w h4,
+.dialog-wrap .tc-content h5,
+.tc-content .dialog-wrap h5,
+.dialog-wrap-w .tc-content h5,
+.tc-content .dialog-wrap-w h5,
+.dialog-wrap .break li,
+.dialog-wrap-w .break li,
+.support-wrap,
+.app-link,
+.announce-footer,
+.urgent-notice .announce-header h1,
+.announce-content table,
+.article-date,
+.news-wrap .announce-header,
+.apk-img,
+.marquee-pop .nofound .nofound_box dd,
+.confirm_box .white-wrap,
+.confirm_box .total_box,
+.confirm_box .fix-content,
+.go-back,
+.pop-close,
+.tab a,
+.pages,
+.chart-wrap,
+.initial-balance dt span,
+.final-balance dt span,
+.table-trans td,
+.table01 strong.no,
+.table-s strong.no,
+.table_one strong.no,
+.lv_1,
+.lv_2,
+.lv_3,
+.lv_4,
+.lv_5,
+.lv_6,
+.lv_7,
+.lv_8,
+.lv_sub,
+.pop_box p.note,
+.pop_refer p.note,
+.status_but,
+.btn_box,
+.suspend-wrap .status-suspend,
+.suspend-wrap .status-lock,
+.fix-content .status_but,
+.submit-wrap,
+.submit-wrap input,
+.submit-wrap textarea,
+.submit-wrap .member_select a,
+.member_select .submit-wrap a,
+.slip-head li,
+.table01 .order,
+.table-s .order,
+.table_one .order,
+.form-wrap h1,
+.btn-group,
+.table-subaccount {
+  text-align: center;
+}
+
+.float-L,
+.delete,
+.login-wrap li,
+.account-wrap li,
+.menu li,
+.setting-wrap li,
+.tab-highlight li,
+.marquee-pop .input-list li,
+.marquee-pop .filter-list li,
+.tab li,
+.input-list li,
+.filter-list li,
+.filter-pop ul li,
+.acc-info li,
+.total-show li,
+.total_info li,
+.action li,
+.footer_fixed .action li,
+.half_box li,
+.pt_allowed dl li,
+.status_but li,
+.agent_path ul li,
+.member_select li,
+.tab-topplay li,
+.slip-head li,
+.agent-path li,
+.btn_list-DW li,
+.login-panel,
+.change_pass .login-panel,
+.change_pass .note,
+.login-wrap .btn-login,
+.login-wrap .btn-signup,
+.header h1,
+.login-wrap input,
+.login-wrap textarea,
+.login-wrap .member_select a,
+.member_select .login-wrap a,
+.menu,
+.setting-wrap,
+.stake-set dd,
+.odds-set dd,
+.favor,
+.event-left,
+.event-right,
+.event-left .slip-head span,
+.event-right .slip-head span,
+.live-left,
+.live-right,
+.live-channel span,
+.marquee-box .marquee a,
+.profile-wrap dt,
+.form_list dt,
+.add_account_box dl dt,
+.pt_allowed dl dt,
+.filter-pop .btn-wrap .btn,
+.filter-pop .btn-wrap .btn-send,
+.filter-pop .btn-wrap .pages a,
+.pages .filter-pop .btn-wrap a,
+.filter-pop .btn-wrap .calendarTable_inputBox input,
+.calendarTable_inputBox .filter-pop .btn-wrap input,
+.filter-pop .btn-wrap .calendarTable_inputBox textarea,
+.calendarTable_inputBox .filter-pop .btn-wrap textarea,
+.filter-pop .btn-wrap .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .filter-pop .btn-wrap a,
+.filter-pop .btn-wrap .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .filter-pop .btn-wrap a,
+.filter-pop .btn-wrap .total_all .btn_replay,
+.total_all .filter-pop .btn-wrap .btn_replay,
+.filter-pop .btn-wrap .btn_expand,
+.filter-pop .btn-wrap .add_member,
+.market-float,
+.sum-pl dt,
+.head-balance,
+.pop-left,
+.pop-left dt,
+.select-betting .selection,
+.pop-right,
+.initial-balance dt,
+.final-balance dt,
+.initial-balance dd,
+.final-balance dd,
+.initial-balance dt span,
+.final-balance dt span,
+.total_box .total_dl,
+.total_all h2,
+.total_all .input-list,
+.total_all .filter-list,
+.total_info,
+.table01 strong.no,
+.table-s strong.no,
+.table_one strong.no,
+.table01 .ico_account,
+.table-s .ico_account,
+.table_one .ico_account,
+.btn_open,
+.btn_close,
+.ico_dot1,
+.ico_dot2,
+.ico_dot3,
+.table-pt .expand-close,
+.table-pt .expand-open,
+.pt_allowed dl,
+.status_id p,
+.agent_path ul,
+.agent_path-L,
+.agent_path-L img,
+.total_all .agent_path,
+.inline-form .form_list,
+.inline-form .add_account_box dl,
+.add_account_box .inline-form dl,
+.inline-form .pt_allowed dl,
+.pt_allowed .inline-form dl,
+.inline-form .btn,
+.inline-form .btn-send,
+.inline-form .pages a,
+.pages .inline-form a,
+.inline-form .calendarTable_inputBox input,
+.calendarTable_inputBox .inline-form input,
+.inline-form .calendarTable_inputBox textarea,
+.calendarTable_inputBox .inline-form textarea,
+.inline-form .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .inline-form a,
+.inline-form .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .inline-form a,
+.inline-form .total_all .btn_replay,
+.total_all .inline-form .btn_replay,
+.inline-form .btn_expand,
+.inline-form .add_member,
+.top_player-wrap,
+.racing-wrap,
+.col-2,
+.table01 .order,
+.table-s .order,
+.table_one .order,
+.open-odds,
+.close-odds,
+.btn-book,
+.banking-head dd span,
+.DW-amount input,
+.DW-amount textarea,
+.DW-amount .member_select a,
+.member_select .DW-amount a,
+.DW-amount .btn,
+.DW-amount .btn-send,
+.DW-amount .pages a,
+.pages .DW-amount a,
+.DW-amount .calendarTable_inputBox input,
+.calendarTable_inputBox .DW-amount input,
+.DW-amount .calendarTable_inputBox textarea,
+.calendarTable_inputBox .DW-amount textarea,
+.DW-amount .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .DW-amount a,
+.DW-amount .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .DW-amount a,
+.DW-amount .total_all .btn_replay,
+.total_all .DW-amount .btn_replay,
+.DW-amount .btn_expand,
+.DW-amount .add_member,
+.btn_list-DW,
+.credit-amount input,
+.credit-amount textarea,
+.credit-amount .member_select a,
+.member_select .credit-amount a,
+.wrap-refer_edit dt {
+  float: left;
+}
+
+.float-R,
+.pop-warp.no-match_odds .pop-left .select-betting .selection,
+.no-match_odds.log-wrap .pop-left .select-betting .selection,
+.no-match_odds.streaming-pop .pop-left .select-betting .selection,
+.btn-close,
+.login-wrap,
+.account-wrap,
+.language,
+.setting-wrap,
+.time_zone,
+.gmt,
+.menu-list .Go,
+.favor-set,
+.event-right,
+.live-head h3 span,
+.total-show .sports-switch,
+.menu .logout,
+.setting-wrap .logout,
+.menu .time_zone,
+.setting-wrap .time_zone,
+.total_all .btn_replay,
+.btn_expand,
+.add_member,
+.table01 .action a,
+.table-s .action a,
+.table_one .action a,
+.action,
+.footer_fixed .action,
+.status_id .status-active,
+.status_id .status-suspend,
+.status_id .status-lock,
+.full-amount .btn,
+.full-amount .btn-send,
+.full-amount .pages a,
+.pages .full-amount a,
+.full-amount .calendarTable_inputBox input,
+.calendarTable_inputBox .full-amount input,
+.full-amount .calendarTable_inputBox textarea,
+.calendarTable_inputBox .full-amount textarea,
+.full-amount .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .full-amount a,
+.full-amount .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .full-amount a,
+.full-amount .btn_expand,
+.full-amount .add_member,
+.credit-amount .btn,
+.credit-amount .btn-send,
+.credit-amount .pages a,
+.pages .credit-amount a,
+.credit-amount .calendarTable_inputBox input,
+.calendarTable_inputBox .credit-amount input,
+.credit-amount .calendarTable_inputBox textarea,
+.calendarTable_inputBox .credit-amount textarea,
+.credit-amount .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .credit-amount a,
+.credit-amount .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .credit-amount a,
+.credit-amount .btn_expand,
+.credit-amount .add_member,
+.credit-amount-member .btn,
+.credit-amount-member .btn-send,
+.credit-amount-member .pages a,
+.pages .credit-amount-member a,
+.credit-amount-member .calendarTable_inputBox input,
+.calendarTable_inputBox .credit-amount-member input,
+.credit-amount-member .calendarTable_inputBox textarea,
+.calendarTable_inputBox .credit-amount-member textarea,
+.credit-amount-member .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .credit-amount-member a,
+.credit-amount-member .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .credit-amount-member a,
+.credit-amount-member .btn_expand,
+.credit-amount-member .add_member,
+.wrap-refer_edit dd .btn,
+.wrap-refer_edit dd .btn-send,
+.wrap-refer_edit dd .pages a,
+.pages .wrap-refer_edit dd a,
+.wrap-refer_edit dd .calendarTable_inputBox input,
+.calendarTable_inputBox .wrap-refer_edit dd input,
+.wrap-refer_edit dd .calendarTable_inputBox textarea,
+.calendarTable_inputBox .wrap-refer_edit dd textarea,
+.wrap-refer_edit dd .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .wrap-refer_edit dd a,
+.wrap-refer_edit dd .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .wrap-refer_edit dd a,
+.wrap-refer_edit dd .total_all .btn_replay,
+.total_all .wrap-refer_edit dd .btn_replay,
+.wrap-refer_edit dd .btn_expand,
+.wrap-refer_edit dd .add_member,
+.btn-add {
+  float: right;
+}
+
+.left-sprite,
+.top_player-wrap .to-expand,
+.racing-wrap .to-expand,
+.game-wrap .to-expand,
+.game-highlight-wrap .to-expand,
+.favor-wrap .to-expand,
+.sub_path .to-expand,
+.pop-title .to-expand,
+.close.top_player-wrap .to-expand,
+.close.racing-wrap .to-expand,
+.close.game-wrap .to-expand,
+.close.game-highlight-wrap .to-expand,
+.close.favor-wrap .to-expand,
+.close.sub_path .to-expand,
+.close.pop-title .to-expand,
+.menu-list .Go,
+.star,
+.favor-wrap h3 .star,
+.favor-wrap .menu-list a.btn-star,
+.favor-set,
+.path li,
+.path .path-back,
+.path .path-back.select,
+.path-pop a,
+.to-go {
+  background-image: url("../images/sprite/left-s87016b32f7.png");
+  background-repeat: no-repeat;
+}
+
+.report-sprite,
+.cal-input,
+.upcome dd,
+.filter-list .filter-content span,
+.filter-list.golf-list .compt img,
+.filter-list.golf-list .compt:hover img,
+.expand-close,
+.expand-open,
+.align-L .expand-close,
+.table01 caption .expand-close,
+.table-s caption .expand-close,
+.table_one caption .expand-close,
+.no-data .expand-close,
+.status-popup .expand-close,
+.access-popup .expand-close,
+.table_one thead th .expand-close,
+.table-pt .expand td.expand-event:first-child .expand-close,
+.pt_allowed dl dt .expand-close,
+.tab-transfer .full-amount .expand-close,
+.tab-transfer .remark .expand-close,
+.tips-popup .expand-close,
+.slip-head .col-playID .expand-close,
+.slip-head .col-type .expand-close,
+.slip-head .col-country .expand-close,
+.slip-head .col-local .expand-close,
+.table01 .td-type .expand-close,
+.table-s .td-type .expand-close,
+.table_one .td-type .expand-close,
+.table01 .td-UID .expand-close,
+.table-s .td-UID .expand-close,
+.table_one .td-UID .expand-close,
+.td-uid .expand-close,
+.DW-amount .expand-close,
+.pop_bg .form-wrap h1 .expand-close,
+.align-L .expand-open,
+.table01 caption .expand-open,
+.table-s caption .expand-open,
+.table_one caption .expand-open,
+.no-data .expand-open,
+.status-popup .expand-open,
+.access-popup .expand-open,
+.table_one thead th .expand-open,
+.table-pt .expand td.expand-event:first-child .expand-open,
+.pt_allowed dl dt .expand-open,
+.tab-transfer .full-amount .expand-open,
+.tab-transfer .remark .expand-open,
+.tips-popup .expand-open,
+.slip-head .col-playID .expand-open,
+.slip-head .col-type .expand-open,
+.slip-head .col-country .expand-open,
+.slip-head .col-local .expand-open,
+.table01 .td-type .expand-open,
+.table-s .td-type .expand-open,
+.table_one .td-type .expand-open,
+.table01 .td-UID .expand-open,
+.table-s .td-UID .expand-open,
+.table_one .td-UID .expand-open,
+.td-uid .expand-open,
+.DW-amount .expand-open,
+.pop_bg .form-wrap h1 .expand-open,
+.expand-arrow,
+.expand-arrow-R,
+.acc-info .user,
+.acc-info .time,
+.fromto,
+.prevMonth,
+.nextMonth,
+.selection,
+.trans-replay,
+.btn_expand:before,
+.btn_expand.close:before {
+  background-image: url("../images/sprite/report-sf227858fbc.png");
+  background-repeat: no-repeat;
+}
+
+.lv_0,
+.lv_1,
+.lv_2,
+.lv_3,
+.lv_4,
+.lv_5,
+.lv_6,
+.lv_7,
+.lv_8,
+.lv_sub {
+  width: 26px;
+  height: 15px;
+  line-height: 1;
+  text-decoration: none !important;
+  color: #fff;
+  background: #d77319;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lv_1 {
+  background: #111111;
+  width: unset;
+
+  &::after {
+    content: "VRNL";
+  }
+}
+
+.lv_2 {
+  background: #a762b5;
+
+  &::after {
+    content: "WL";
+  }
+}
+
+.lv_3 {
+  background: #85b352;
+
+  &::after {
+    content: "AD";
+  }
+}
+
+.lv_4 {
+  background: #c8b356;
+
+  &::after {
+    content: "SA";
+  }
+}
+
+.lv_5 {
+  background: #7856c8;
+
+  &::after {
+    content: "SM";
+  }
+}
+
+.lv_6 {
+  background: #c85698;
+
+  &::after {
+    content: "MA";
+  }
+}
+
+.lv_7 {
+  background: #8027c9;
+
+  &::after {
+    content: "AG";
+  }
+}
+
+.lv_8 {
+  background: #568bc8;
+
+  &::after {
+    content: "PL";
+  }
+}
+
+.isRental {
+  .lv_1 {
+    background: #111111;
+    width: unset;
+
+    &::after {
+      content: "VRNL";
+    }
+  }
+
+  .lv_2 {
+    background: #a762b5;
+
+    &::after {
+      content: "WL";
+    }
+  }
+
+  .lv_3 {
+    background: #85b352;
+
+    &::after {
+      content: "AD";
+    }
+  }
+
+  .lv_4 {
+    background: #c8b356;
+
+    &::after {
+      content: "SA";
+    }
+  }
+
+  .lv_5 {
+    background: #7856c8;
+
+    &::after {
+      content: "SM";
+    }
+  }
+
+  .lv_6 {
+    background: #c85698;
+
+    &::after {
+      content: "MA";
+    }
+  }
+
+  .lv_7 {
+    background: #8027c9;
+
+    &::after {
+      content: "AG";
+    }
+  }
+
+  .lv_8 {
+    background: #568bc8;
+
+    &::after {
+      content: "PL";
+    }
+  }
+}
+
+.Bdlevel.lv_1 {
+  background: #111111;
+  width: unset;
+
+  &::after {
+    content: "VRNL";
+  }
+}
+
+.Bdlevel.lv_2 {
+  background: #a762b5;
+
+  &::after {
+    content: "MP" !important;
+  }
+}
+
+.Bdlevel.lv_3 {
+  background: #85b352;
+
+  &::after {
+    content: "WL" !important;
+  }
+}
+
+.Bdlevel.lv_4 {
+  background: #c8b356;
+
+  &::after {
+    content: "AD" !important;
+  }
+}
+
+.Bdlevel.lv_5 {
+  background: #7856c8;
+
+  &::after {
+    content: "SA" !important;
+  }
+}
+
+.Bdlevel.lv_6 {
+  background: #c85698;
+
+  &::after {
+    content: "SM" !important;
+  }
+}
+
+.Bdlevel.lv_7 {
+  background: #8027c9;
+
+  &::after {
+    content: "MA" !important;
+  }
+}
+
+.Bdlevel.lv_8 {
+  background: #568bc8;
+
+  &::after {
+    content: "PL" !important;
+  }
+}
+
+
+.premium.lv_1 {
+  background: #111111;
+  width: unset;
+
+  &::after {
+    content: "MAIN";
+  }
+}
+
+.premium.lv_2 {
+  background: #a762b5;
+
+  &::after {
+    content: "WL";
+  }
+}
+
+.premium.lv_3 {
+  background: #d65d5d;
+
+  &::after {
+    content: "AD";
+  }
+}
+
+.lv_4.premium {
+  background: #9e06bd;
+
+  &::after {
+    content: "SSA";
+  }
+}
+
+.premium.lv_5 {
+  background: #63b405;
+
+  &::after {
+    content: "SA";
+  }
+}
+
+.premium.lv_6 {
+  background: #055cc0;
+
+  &::after {
+    content: "SUP";
+  }
+}
+
+.premium.lv_7 {
+  background: #0a7460;
+
+  &::after {
+    content: "MA";
+  }
+}
+
+.premium.lv_8 {
+  background: #f17007;
+
+  &::after {
+    content: "PL";
+  }
+}
+
+a {
+  color: #2789ce;
+  outline: none;
+}
+
+.delete,
+.btn-close,
+.header h1,
+.language,
+.menu-list .Go,
+.path .path-back,
+.favor,
+.tag-live strong,
+.transfer-wrap .close,
+.login_to_go .close,
+.close_pop,
+.table01 .action a,
+.table-s .action a,
+.table_one .action a,
+.btn_open,
+.btn_close,
+.odd-add a,
+.open-odds,
+.close-odds,
+.credit-amount-member .btn,
+.credit-amount-member .btn-send,
+.credit-amount-member .pages a,
+.pages .credit-amount-member a,
+.credit-amount-member .calendarTable_inputBox input,
+.calendarTable_inputBox .credit-amount-member input,
+.credit-amount-member .calendarTable_inputBox textarea,
+.calendarTable_inputBox .credit-amount-member textarea,
+.credit-amount-member .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .credit-amount-member a,
+.credit-amount-member .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .credit-amount-member a,
+.credit-amount-member .total_all .btn_replay,
+.total_all .credit-amount-member .btn_replay,
+.credit-amount-member .btn_expand,
+.credit-amount-member .add_member {
+  font-size: 0;
+  text-indent: -99999px;
+}
+
+.pop-warp .game-name p,
+.log-wrap .game-name p,
+.streaming-pop .game-name p,
+.menu-list a,
+.path-pop a,
+.upcome,
+.live-list a,
+.live-channel,
+.filter-list .filter-content,
+.select-betting .selection,
+.table-pt td,
+.table-pt .ico_account,
+.table01 .td-UID,
+.table-s .td-UID,
+.table_one .td-UID,
+.td-uid {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.error-text {
+  color: rgb(240, 72, 72);
+}
+
+.status-active,
+.status-suspend,
+.status-lock {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+
+.status-active {
+  background-color: #e5f1dc;
+  border: 1px solid #bedca7;
+  color: #508d0e;
+
+  img {
+    background-position: -50px -1303px;
+    height: 8px;
+    width: 8px;
+    margin-right: 5px;
+  }
+}
+
+.status-suspend {
+  background-color: #f2e2e6;
+  border: 1px solid #deb6c0;
+  color: #d0021b;
+
+  img {
+    background-position: -50px -1319px;
+    height: 8px;
+    width: 8px;
+  }
+}
+
+.status-lock {
+  background-color: #e3e8eb;
+  border: 1px solid #b9c5cd;
+  color: #5a7384;
+
+  img {
+    background-position: -50px -1311px;
+    height: 8px;
+    width: 8px;
+  }
+}
+
+.profile {
+  background-position: -32px -1475px;
+}
+
+.status {
+  background-position: -32px -1566px;
+}
+
+.bank {
+  background-position: -32px -196px;
+}
+
+.p_l {
+  background-position: -32px -1423px;
+}
+
+.betting_history {
+  background-position: -32px -308px;
+}
+
+.agent_path {
+  margin: 0;
+
+  ul {
+    display: inline-flex;
+    // background: url("../../assets/images/ag_path_bg.gif");
+    // border: 1px solid #7e97a7;
+    // border-radius: 3px;
+
+    li {
+      position: relative;
+      font-size: 16px;
+      line-height: 30px;
+      font-weight: bold;
+      list-style: none;
+    }
+  }
+
+  a {
+    height: 30px;
+  }
+}
+
+.agent_path-L {
+  li {
+    padding: 0 15px 0 10px;
+    background-position: 100% -45px;
+  }
+
+  span {
+    font-weight: lighter;
+    text-align: center;
+  }
+
+  a,
+  button {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    color: #1e1e1e;
+    height: 100%;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .last_li {
+    background-image: none;
+    padding-right: 5px;
+  }
+
+  .account_pop {
+    top: 30px;
+
+    &:not(:target) {
+      display: none;
+    }
+  }
+}
+
+.menu-list {
+  li {
+    border-bottom-color: #efe1c1;
+  }
+
+  a {
+    color: #222;
+    line-height: 25px;
+    padding: 0 10px;
+
+    &.select,
+    &:hover {
+      background-color: #dadada;
+      color: #222;
+    }
+  }
+}
+
+.col-left {
+  // top: 35px;
+  position: absolute;
+  width: 17.36111%;
+
+  .class {
+    color: #fff;
+    padding: 0 10px;
+    background: var(--primary);
+    line-height: 25px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 750px) {
+  .col-left .class {
+    margin-top: 6px;
+  }
+
+  .col-left {
+    position: inherit;
+    width: 100%;
+  }
+}
+
+.col-center {
+  position: relative;
+  margin-left: 17.36111%;
+  margin-right: 26.04167%;
+  padding: 0 15px;
+
+  &.report {
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  h2 {
+    font-size: 16px;
+    line-height: 16px;
+    color: #243a48;
+    padding-top: 0;
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 750px) {
+  .col-center {
+    margin-left: 0%;
+    padding: 0;
+  }
+}
+
+.sub_path {
+  position: relative;
+}
+
+.top_player-wrap,
+.racing-wrap,
+.game-wrap,
+.game-highlight-wrap,
+.favor-wrap,
+.sub_path,
+.pop-title {
+  background-color: #fff;
+  border-bottom: 1px solid #7e97a7;
+  margin-bottom: 1px;
+}
+
+.white-wrap,
+.total_box,
+.fix-content {
+  background-color: #fff;
+  color: #3b5160;
+  padding: 10px;
+  border-bottom: 1px solid #7e97a7;
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.red {
+  color: #d0021b !important;
+}
+
+.green {
+  color: #00aa1ccc !important;
+}
+
+.pages {
+  margin: 25px 0;
+
+  li {
+    display: inline;
+    list-style: none;
+    line-height: 25px;
+    margin-right: 5px;
+  }
+
+  a {
+    display: inline;
+    font-weight: normal;
+    margin: 0;
+    padding: 4px 10px;
+  }
+}
+
+select {
+  width: 120px;
+  height: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  margin: 0 5px 5px 0;
+}
+
+.favor-set {
+  line-height: 25px;
+  border-bottom-width: 0;
+  padding-right: 23px;
+  background-position: 100% -1975px;
+  cursor: pointer;
+}
+
+.full-wrap {
+  position: relative;
+  min-width: 1350px;
+  max-width: calc(100% - 40px);
+  // height: calc(100% - 105px);
+  margin: 0 auto;
+}
+
+
+@media (max-width: 750px) {
+  .full-wrap {
+    position: relative;
+    min-width: 100%;
+    max-width: calc(100% - 40px);
+    // height: calc(100% - 105px);
+    margin: 0 auto;
+    padding: 5px;
+  }
+
+}
+
+h2 {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 20px;
+  padding-top: 6px;
+  margin-top: 0px;
+  margin-bottom: 6px;
+}
+
+.input-list input,
+.filter-list input,
+.input-list textarea,
+.filter-list textarea,
+.input-list .member_select a,
+.member_select .input-list a,
+.filter-list .member_select a,
+.member_select .filter-list a,
+.input-list select,
+.filter-list select {
+  margin: 0 8px;
+}
+
+.input-list .btn,
+.filter-list .btn,
+.input-list .btn-send,
+.filter-list .btn-send,
+.input-list .pages a,
+.pages .input-list a,
+.filter-list .pages a,
+.pages .filter-list a,
+.input-list .calendarTable_inputBox input,
+.calendarTable_inputBox .input-list input,
+.filter-list .calendarTable_inputBox input,
+.calendarTable_inputBox .filter-list input,
+.input-list .calendarTable_inputBox textarea,
+.calendarTable_inputBox .input-list textarea,
+.filter-list .calendarTable_inputBox textarea,
+.calendarTable_inputBox .filter-list textarea,
+.input-list .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .input-list a,
+.filter-list .calendarTable_inputBox .member_select a,
+.calendarTable_inputBox .member_select .filter-list a,
+.input-list .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .input-list a,
+.filter-list .member_select .calendarTable_inputBox a,
+.member_select .calendarTable_inputBox .filter-list a,
+.input-list .total_all .btn_replay,
+.total_all .input-list .btn_replay,
+.filter-list .total_all .btn_replay,
+.total_all .filter-list .btn_replay,
+.input-list .btn_expand,
+.filter-list .btn_expand,
+.input-list .add_member,
+.filter-list .add_member {
+  // width: 95px;
+  margin: 0;
+  font-weight: normal;
+}
+
+input,
+textarea,
+.member_select a {
+  font-family: Tahoma, Helvetica, sans-serif;
+  color: #1e1e1e;
+  font-size: 12px;
+  border: 0px #aaa solid;
+  background: #fff;
+  box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 5px;
+  margin: 0 5px 5px 0;
+  box-sizing: border-box;
+}
+
+input[type="checkbox"],
+textarea[type="checkbox"],
+.member_select a[type="checkbox"],
+input[type="radio"],
+textarea[type="radio"],
+.member_select a[type="radio"] {
+  width: auto !important;
+  height: auto !important;
+  border-width: 0;
+  border-radius: 0;
+  background-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: none;
+}
+
+.time-input {
+  width: 60px;
+}
+
+.cal-input {
+  width: 110px;
+  cursor: pointer;
+  background-position: 100% -23px;
+}
+
+.btn-send {
+  background-image: linear-gradient(180deg, var(--primary) 0%, var(--primary) 60%);
+  color: var(--on-primary);
+  border-color: #000;
+
+  &:hover {
+    background: #464646 linear-gradient(180deg, var(--primary) 50%, var(--primary) 100%) repeat-x;
+  }
+}
+
+.over-wrap {
+  // overflow: hidden;
+  // overflow-y: scroll;
+}
+
+.input-list,
+.filter-list {
+  margin-bottom: 5px;
+
+  li {
+    list-style: none;
+    line-height: 25px;
+    margin: 0 5px 5px 0;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+
+    // input[type=radio] {
+    //   margin-right: 12px;
+    // }
+  }
+
+  .time-input {
+    margin-left: -3px;
+  }
+
+  .btn-send {
+    width: 115px;
+    font-weight: bold;
+  }
+}
+
+.function-wrap {
+  position: relative;
+  padding: 10px 10px 0;
+  background-color: #e0e6e6;
+  border-bottom: 1px solid #7e97a7;
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: column;
+}
+
+.no-data {
+  background-color: #fff;
+  padding: 10px 10px 5px !important;
+}
+
+.submit-wrap {
+  border-top: 1px solid #d4d4d4;
+  padding: 15px 0;
+
+  li {
+    vertical-align: middle;
+  }
+
+  .submit-payment {
+    background-color: #c5d0d7;
+    border-radius: 6px;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  input,
+  textarea,
+  .member_select a,
+  .member_select a {
+    width: 180px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+  }
+
+  input {
+    text-align: center;
+  }
+
+  .btn,
+  .btn-send,
+  .pages a,
+  .pages a,
+  .calendarTable_inputBox input,
+  .calendarTable_inputBox input,
+  .calendarTable_inputBox textarea,
+  .calendarTable_inputBox textarea,
+  .calendarTable_inputBox .member_select a,
+  .calendarTable_inputBox .member_select a,
+  .member_select .calendarTable_inputBox a,
+  .member_select .calendarTable_inputBox a,
+  .total_all .btn_replay,
+  .total_all .btn_replay,
+  .btn_expand,
+  .add_member {
+    width: 130px;
+    line-height: 33px;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .btn-send span {
+    background-color: #cb8009;
+    background-color: #666;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 50%;
+    vertical-align: top;
+    margin-top: 4px;
+  }
+}
+
+.align-L .expand-open,
+.table01 caption .expand-open,
+.table-s caption .expand-open,
+.table_one caption .expand-open,
+.no-data .expand-open,
+.status-popup .expand-open,
+.access-popup .expand-open,
+.table_one thead th .expand-open,
+.table-pt .expand td.expand-event:first-child .expand-open,
+.pt_allowed dl dt .expand-open,
+.tab-transfer .full-amount .expand-open,
+.tab-transfer .remark .expand-open,
+.tips-popup .expand-open,
+.slip-head .col-playID .expand-open,
+.slip-head .col-type .expand-open,
+.slip-head .col-country .expand-open,
+.slip-head .col-local .expand-open,
+.table01 .td-type .expand-open,
+.table-s .td-type .expand-open,
+.table_one .td-type .expand-open,
+.table01 .td-UID .expand-open,
+.table-s .td-UID .expand-open,
+.table_one .td-UID .expand-open,
+.td-uid .expand-open,
+.DW-amount .expand-open,
+.pop_bg .form-wrap h1 .expand-open {
+  background-position: -16px -151px;
+}
+
+// .bg-sprite, .top_player-wrap h3, .racing-wrap h3, .game-wrap h3, .game-highlight-wrap h3, .favor-wrap h3, .sub_path h3, .pop-title h3, .one_click, .one_click.select, .path, .upcome-head, .tab-highlight, .live-head h3, .live-channel, .change-channel, .tab-topplay a, .tab-topplay .select a, .o_12bet .path, .o_12bet .slip-wrap h3, .o_12bet .matched-wrap h3, .o_12bet .slider-bar span, .o_12bet .upcome-head, .o_12bet .tab-highlight, .o_12bet .one_click-setting, .o_dafabet .path, .o_dafabet .slip-wrap h3, .o_dafabet .matched-wrap h3, .o_dafabet .slider-bar span, .o_dafabet .upcome-head, .o_dafabet .tab-highlight, .o_dafabet .one_click-setting, .mazaplay .tab-highlight, .mazaplay .one_click-setting, .mysports247 .path, .mysports247 .tab-highlight, .mysports247 .one_click-setting, .skyexchange .one_click-setting, .o_spondemo .path, .o_spondemo .slip-wrap h3, .o_spondemo .matched-wrap h3, .o_spondemo .slider-bar span, .o_spondemo .upcome-head, .o_spondemo .one_click-setting, .skyinplay .path, .skyinplay .tab-highlight, .skyinplay .one_click-setting, .bigexch .path, .bigexch .tab-highlight, .bigexch .one_click-setting, .masterexchange .path, .masterexchange .tab-highlight, .masterexchange .one_click-setting, .matador .tab-highlight, .matador .one_click-setting, .fairenter .path, .fairenter .tab-highlight, .fairenter .one_click-setting, .lucky7 .path, .lucky7 .tab-highlight, .lucky7 .one_click-setting, .qexch .path, .qexch .tab-highlight, .qexch .one_click-setting, .betmygame .path, .betmygame .tab-highlight, .betmygame .one_click-setting, .fancyfair .one_click, .fancyfair .one_click.select, .fancyfair .path, .fancyfair .tab-highlight, .fancyfair .one_click-setting, .maruti .tab-highlight, .maruti .one_click-setting, .marutibook .one_click, .marutibook .one_click.select, .marutibook .tab-highlight, .marutibook .one_click-setting, .skyexchange247 .one_click-setting, .oceanexch1 .path, .oceanexch1 .tab-highlight, .oceanbook1 .path, .oceanbook1 .tab-highlight, .probetx .path, .probetx .tab-highlight, .probetx .one_click-setting, .alphaexch .tab-highlight, .alphaexch .one_click-setting, .alphaexchlive .tab-highlight, .alphaexchlive .one_click-setting, .maxexch9 .path, .maxexch9 .tab-highlight, .maxexch9 .one_click-setting, .cftbet365 .one_click, .cftbet365 .one_click.select, .cftbet365 .tab-highlight, .cftbet365 .one_click-setting, .crickzoom .path, .crickzoom .tab-highlight, .crickzoom .one_click-setting, .crickzoomlive .path, .crickzoomlive .tab-highlight, .crickzoomlive .one_click-setting, .maxinplay .path, .maxinplay .tab-highlight, .maxinplay .one_click-setting, .betbarter .path, .betbarter .slip-wrap h3, .betbarter .matched-wrap h3, .betbarter .slider-bar span, .betbarter .upcome-head, .betbarter .tab-highlight, .betbarter .one_click-setting, .probet247 .path, .probet247 .tab-highlight, .probet247 .one_click-setting, .goexchange .one_click, .kingfair24 .tab-highlight, .kingfair24 .one_click-setting, .sgexch247 .path, .sgexch247 .tab-highlight, .sgexch247 .one_click-setting, .sixball .path, .sixball .tab-highlight, .sixball .one_click-setting, .sixballio .path, .sixballio .tab-highlight, .sixballio .one_click-setting, .wickets247 .one_click-setting, .crickex .tab-highlight, .crickex .one_click, .crickex .one_click.select, .crickex .one_click-setting, .iceEX .one_click, .iceinplay .path, .iceinplay .tab-highlight, .iceinplay .one_click-setting, .baji .one_click-setting, .baaji247 .one_click-setting, .sportsexchlive .one_click-setting {
+//   background-image: url("../images/sprite/bg-s2ccfda7730.png");
+//   background-repeat: no-repeat;
+// }
+
+.wrap-refer_edit input,
+.wrap-refer_edit textarea,
+.wrap-refer_edit .member_select a,
+.member_select .wrap-refer_edit a {
+  width: 100%;
+}
+
+.pop-warp .game-team .game-name,
+.log-wrap .game-team .game-name,
+.streaming-pop .game-team .game-name,
+.log-wrap .game-team .game-name {
+  padding-left: 10px;
+}
+
+.game-team {
+  width: 100%;
+  background-color: #1b2d38;
+  color: #fff;
+  line-height: 22px;
+  font-size: 18px;
+  font-weight: bold;
+
+  .game-name {
+    padding: 5px 10px 5px 30px;
+
+    span {
+      background-color: #fff;
+      color: #243a48;
+      padding: 1px 8px;
+      border-radius: 4px;
+      margin: 0 5px;
+    }
+  }
+
+  td {
+    position: relative;
+    width: 40%;
+    height: 28px;
+    vertical-align: top;
+  }
+}
+
+.pop-warp .game-name,
+.log-wrap .game-name,
+.streaming-pop .game-name {
+  position: relative;
+  padding-right: 130px;
+}
+
+.pop-warp .game-name span,
+.log-wrap .game-name span,
+.streaming-pop .game-name span {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+}
+
+.go-back,
+.pop-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 85px;
+  height: 100%;
+  line-height: 38px;
+  color: #fff;
+  font-weight: normal;
+  border-left: 1px solid #5f6c74;
+}
+
+.form_list,
+.add_account_box dl,
+.pt_allowed dl {
+  dd {
+    line-height: 24px;
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 132px;
+  }
+
+  dt {
+    width: 122px;
+    margin-right: 10px;
+    line-height: 24px;
+  }
+}
+
+.menu-list li {
+  border-bottom-color: #efe1c1;
+  border-bottom: 1px solid #e0e6e6;
+  list-style: none;
+}
+
+.menu .logout,
+.setting-wrap .logout {
+  border-left-width: 0;
+}
+
+.menu .logout {
+  margin-left: auto;
+  order: 2;
+  cursor: pointer;
+}
+
+.menu .logout img {
+  width: 10px;
+  height: 11px;
+  margin-left: 5px;
+  background: url('data:image/svg+xml,<svg width="10" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M5.71 7.706l1.432-1.604H1.778V4.898h5.39L5.71 3.294l.781-.86L9.278 5.5 6.49 8.565l-.78-.86zM1.12 0C.825 0 .564.124.339.372a1.24 1.24 0 0 0-.339.86v8.536c0 .325.113.611.339.86.225.248.486.372.78.372H8.88c.295 0 .556-.124.781-.372a1.24 1.24 0 0 0 .339-.86V7.333H8.88v2.435H1.12V1.232h7.76v2.435H10V1.232a1.24 1.24 0 0 0-.339-.86C9.436.124 9.175 0 8.881 0H1.12z" fill="%23000" fill-rule="evenodd"/></svg>') no-repeat;
+}
+
+
+
+.time_zone span {
+  color: #9a7816;
+  font-weight: 400;
+}
+
+
+.btn-recall {
+  color: #3b5160;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 2.2;
+  padding: 0 8px;
+  background-color: rgba(94, 190, 255, 0.15);
+  border-radius: 4px;
+  border: 1px solid #7e97a7;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(94, 190, 255, 0.3);
+  }
+}
+
+.expand-arrow {
+  position: absolute;
+  left: 15%;
+  margin-left: -10px;
+  background-position: -17px -127px;
+  height: 9px;
+  width: 10px;
+}
+
+.expand>td {
+  padding: 0;
+}
+
+.add_account_box {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+
+  dl {
+    width: 335px;
+    padding: 4px 8px;
+    margin-bottom: 15px;
+
+    &.border_b {
+      border-bottom: 1px solid #bfbfbf;
+    }
+
+    dt {
+      width: 122px;
+      margin-right: 10px;
+      line-height: 24px;
+      align-items: center;
+      display: inline-flex;
+      justify-content: flex-end;
+    }
+
+    dd {
+      line-height: 24px;
+
+      select {
+        width: 150px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.half_box {
+  // margin-top: 30px;
+
+  li {
+    width: 50%;
+  }
+}
+
+.add-member-box {
+  &>li:first-of-type {
+    width: 360px;
+  }
+
+  // & > li:last-of-type {
+  //   width: calc(100% - 360px);
+  // }
+}
+
+.wrap-refer_edit {
+  border: 1px solid #ccc;
+  border-width: 1px 0 1px 0;
+  padding: 15px 40px 0;
+
+  dl {
+    margin-bottom: 10px;
+    line-height: 28px;
+  }
+
+  dd {
+    padding-left: 60px;
+  }
+
+  strong {
+    font-size: 16px;
+  }
+}
+
+.pop_refer .btn-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+
+  li {
+    list-style: none;
+  }
+
+  .btn-send {
+    width: 140px;
+    margin: 0 auto;
+    margin-left: 5px;
+  }
+}
+
+.btn {
+  padding: 0px 5px !important;
+}
+
+.status_id {
+  background-color: #fff;
+  padding: 10px 7px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    line-height: 15px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .status-active,
+  .status-suspend,
+  .status-lock {
+    font-size: 12px;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.status_but {
+  width: 351px;
+  margin: 8px auto;
+
+  .disable.but_active,
+  .disable.but_suspend,
+  .disable.but_locked {
+    background: #fff;
+    color: #b0b0b0;
+    border: #ddd 1px solid;
+    cursor: not-allowed;
+  }
+
+  .but_active,
+  .but_suspend,
+  .but_locked {
+    width: 105px;
+    height: 70px;
+    display: flex;
+    flex-flow: column;
+    font-size: 15px;
+    line-height: 15px;
+    background-image: linear-gradient(-180deg, #fefefe 0%, #e0e0e0 100%);
+    border: 1px solid #9d9d9d;
+    border-radius: 8px;
+    margin: 0 5px;
+    padding: 8px 0;
+    color: #508d0e;
+    cursor: pointer;
+
+    img {
+      margin: auto;
+    }
+  }
+
+  @media (max-width: 750px) {
+
+    .but_active,
+    .but_suspend,
+    .but_locked {
+      width: 90px;
+      height: 70px;
+      display: flex;
+      flex-flow: column;
+      font-size: 15px;
+      line-height: 15px;
+      background-image: linear-gradient(-180deg, #fefefe 0%, #e0e0e0 100%);
+      border: 1px solid #9d9d9d;
+      border-radius: 8px;
+      margin: 0 5px;
+      padding: 8px 0;
+      color: #508d0e;
+      cursor: pointer;
+
+      img {
+        margin: auto;
+      }
+    }
+  }
+
+  .but_active {
+    &.open {
+      background-image: linear-gradient(-180deg, #8dd13b 3%, #4e7427 100%);
+      color: #fff;
+
+      img {
+        background-position: -25px -809px;
+      }
+    }
+
+    & img {
+      background-position: -25px -776px;
+      height: 33px;
+      width: 33px;
+    }
+  }
+
+  .but_suspend {
+    &.open {
+      background-image: linear-gradient(-180deg, #db2828 0%, #921313 100%);
+      color: #fff;
+
+      img {
+        background-position: -26px -1063px;
+      }
+    }
+
+    img {
+      background-position: -25px -997px;
+      height: 33px;
+      width: 33px;
+    }
+  }
+
+  .but_locked {
+    &.open {
+      background-image: linear-gradient(-180deg, #9ab6ce 0%, #536174 100%);
+      color: #fff;
+
+      img {
+        background-position: -25px -908px;
+      }
+    }
+
+    img {
+      background-position: -25px -842px;
+      height: 33px;
+      width: 33px;
+    }
+  }
+}
+
+.white-wrap,
+.total_box,
+.fix-content {
+  background-color: #fff;
+  color: #3b5160;
+  padding: 7px 10px 5px;
+  border-bottom: 1px solid #7e97a7;
+  margin-bottom: 15px;
+}
+
+.btn_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &>button {
+    margin-right: 8px;
+  }
+}
